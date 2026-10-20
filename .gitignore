@@ -10,3 +10,4 @@ playwright-report/
 .trace.mjs
 .coast.mjs
 .dbg.mjs
+.og.mjs

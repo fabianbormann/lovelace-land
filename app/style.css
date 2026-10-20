@@ -87,13 +87,7 @@ a { color: var(--brass); }
 }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand h1 { margin: 0; font: 400 1.45rem/1 var(--font-display); letter-spacing: 0.02em; white-space: nowrap; }
-.brand-mark {
-  width: 22px; height: 22px; border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, #2f5fe0 0 22%, transparent 23%),
-    conic-gradient(from 0deg, #2f5fe0 0 8%, transparent 8% 17%, #2f5fe0 17% 25%, transparent 25% 33%, #2f5fe0 33% 42%, transparent 42% 50%, #2f5fe0 50% 58%, transparent 58% 67%, #2f5fe0 67% 75%, transparent 75% 83%, #2f5fe0 83% 92%, transparent 92%);
-  -webkit-mask: radial-gradient(circle, #000 0 70%, transparent 71%);
-          mask: radial-gradient(circle, #000 0 70%, transparent 71%);
-}
+.brand-mark { width: 26px; height: 26px; border-radius: 6px; display: block; }
 .search { position: relative; flex: 1 1 220px; min-width: 0; max-width: 360px; }
 .search input {
   width: 100%; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper-2);

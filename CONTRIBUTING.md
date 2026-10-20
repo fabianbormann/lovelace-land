@@ -1,6 +1,6 @@
-# Contributing to Cardano Settlers
+# Contributing to Lovelace Land
 
-Cardano Settlers maps who builds on whom in the Cardano ecosystem:
+Lovelace Land maps who builds on whom in the Cardano ecosystem:
 - every **building** is a project;
 - every **road** is a "uses" relationship;
 - every **ship** is a real customer.
@@ -262,4 +262,4 @@ Every pull request:
 
 ## Licenses
 
-Code is MIT licensed. The data in `data/` is CC BY 4.0: reuse it with credit to "Cardano Settlers contributors".
+Code is MIT licensed. The data in `data/` is CC BY 4.0: reuse it with credit to "Lovelace Land contributors".

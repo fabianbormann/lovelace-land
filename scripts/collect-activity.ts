@@ -116,7 +116,7 @@ async function collectCommits(id: string, owner: string, repo: string) {
   const counts = await withRetry(`commits ${owner}/${repo}`, async () => {
     const res = await fetch('https://api.github.com/graphql', {
       method: 'POST',
-      headers: { authorization: `bearer ${githubToken()}`, 'content-type': 'application/json', 'user-agent': 'cardano-settlers' },
+      headers: { authorization: `bearer ${githubToken()}`, 'content-type': 'application/json', 'user-agent': 'lovelace-land' },
       body: JSON.stringify({ query: commitsQuery(owner, repo, months) }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
