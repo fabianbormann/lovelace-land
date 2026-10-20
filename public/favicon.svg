@@ -13,5 +13,5 @@
   <polygon points="46,39 50,41 50,36 46,34" fill="#d6c7a6"/>
   <polygon points="38,38.5 43,31 51,36 46,34.5" fill="#b24a32"/>
   <!-- lovelace -->
-  <circle cx="47" cy="15" r="6.5" fill="#ffd27a"/>
+  <circle cx="47" cy="15" r="6.5" fill="#ffffff"/>
 </svg>
