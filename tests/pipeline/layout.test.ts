@@ -37,6 +37,13 @@ describe('node placement', () => {
     expect(l.nodes.get('far')).toEqual([32, 0]);
   });
 
+  it('fills free plots in existing rows before growing a new row', () => {
+    const lock: LayoutLock = { version: 1, districts: {}, nodes: { far: [22, -40] } };
+    const l = layoutOf(makeData({ nodes: [node('far', 'core'), node('b', 'sdks', ['far']), node('c', 'sdks', ['far'])] }), lock);
+    expect(l.nodes.get('b')![1]).toBe(0);
+    expect(l.nodes.get('c')![1]).toBe(0);
+  });
+
   it('grows a district instead of failing when it is full', () => {
     const many = Array.from({ length: 10 }, (_, i) => node(`n${String(i).padStart(2, '0')}`, 'core'));
     const l = layoutOf(makeData({ nodes: many }));
@@ -91,9 +98,25 @@ describe('lock robustness', () => {
     expect(serializeLock(emptyLock())).toBe('{\n  "version": 1,\n  "districts": {},\n  "nodes": {}\n}\n');
   });
 
-  it('explains malformed lock files', () => {
-    expect(() => parseLock('{ nope')).toThrow(/invalid JSON.*delete the file to regenerate/);
-    expect(() => parseLock('{"version":1,"districts":{},"nodes":{"a":[1]}}')).toThrow(/nodes\.a.*delete the file to regenerate/);
+  it('explains malformed lock files without advising a full reset', () => {
+    expect(() => parseLock('{ nope')).toThrow(/invalid JSON.*keep the entries from both sides/);
+    expect(() => parseLock('{"version":1,"districts":{},"nodes":{"a":[1]}}')).toThrow(/nodes\.a.*keep the entries from both sides/);
+    expect(() => parseLock('{ nope')).not.toThrow(/delete/);
+  });
+
+  it('re-places a district whose locked columns overlap another one (merged PRs)', () => {
+    const lock: LayoutLock = {
+      version: 1,
+      districts: { core: { x0: 16, columns: 3 }, sdks: { x0: 16, columns: 3 }, products: { x0: 4, columns: 3 } },
+      nodes: { a: [18, 0], z: [18, 0] },
+    };
+    const l = layoutOf(makeData({ nodes: [node('a', 'core'), node('z', 'sdks'), node('p', 'products')] }), lock);
+    expect(l.lock.districts.core).toEqual({ x0: 16, columns: 3 });
+    expect(l.lock.districts.sdks.x0).toBeGreaterThanOrEqual(30);
+    expect(l.lock.districts.products.x0).toBeGreaterThanOrEqual(30);
+    expect(l.lock.districts.products.x0).not.toBe(l.lock.districts.sdks.x0);
+    const spots = [...l.nodes.values()].map((p) => p.join(','));
+    expect(new Set(spots).size).toBe(spots.length);
   });
 });
 

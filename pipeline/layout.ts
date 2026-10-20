@@ -33,7 +33,8 @@ const LockSchema = z
   })
   .strict();
 
-const REGENERATE = 'delete the file to regenerate positions';
+const REGENERATE =
+  'if this comes from a merge conflict, keep the entries from both sides and run npm run build:world again; overlapping positions are re-placed automatically';
 
 export function emptyLock(): LayoutLock {
   return { version: 1, districts: {}, nodes: {} };
@@ -77,13 +78,22 @@ export function computeLayout(graph: Graph, lock: LayoutLock): Layout {
   const sortedDistricts = [...districts].sort((a, b) => a.order - b.order || cmp(a.id, b.id));
   const next: LayoutLock = emptyLock();
 
-  // 1. District columns: locked ones keep their place, new ones are appended east.
+  // 1. District columns: locked ones keep their place unless they overlap the mountain or an
+  //    earlier locked district (e.g. two merged PRs that both appended at the same x0); those and
+  //    new districts are appended east.
+  const span = (d: { x0: number; columns: number }) => [d.x0, d.x0 + d.columns * PLOT + DISTRICT_GAP] as const;
+  const order = new Map(sortedDistricts.map((d, i) => [d.id, i] as const));
+  const lockedInOrder = sortedDistricts
+    .filter((d) => lock.districts[d.id])
+    .sort((a, b) => lock.districts[a.id].x0 - lock.districts[b.id].x0 || order.get(a.id)! - order.get(b.id)!);
+  const accepted: (readonly [number, number])[] = [];
   let nextX0 = MOUNTAIN_WIDTH;
-  for (const d of sortedDistricts) {
-    const locked = lock.districts[d.id];
-    if (!locked) continue;
-    next.districts[d.id] = { ...locked };
-    nextX0 = Math.max(nextX0, locked.x0 + locked.columns * PLOT + DISTRICT_GAP);
+  for (const d of lockedInOrder) {
+    const [start, end] = span(lock.districts[d.id]);
+    if (start < MOUNTAIN_WIDTH || accepted.some(([s0, e0]) => start < e0 && s0 < end)) continue;
+    accepted.push([start, end]);
+    next.districts[d.id] = { ...lock.districts[d.id] };
+    nextX0 = Math.max(nextX0, end);
   }
   for (const d of sortedDistricts) {
     if (next.districts[d.id]) continue;
@@ -135,11 +145,14 @@ export function computeLayout(graph: Graph, lock: LayoutLock): Layout {
       ? [neighbours.reduce((s, p) => s + p[0], 0) / neighbours.length, neighbours.reduce((s, p) => s + p[1], 0) / neighbours.length]
       : [x0 + (columns * PLOT) / 2, 0];
 
+    // Only grow the district (one row north and south) when its current rows are full.
     const taken = occupied.get(n.district)!;
-    let maxRow = 0;
-    for (const key of taken) maxRow = Math.max(maxRow, Math.abs(Number(key.split(',')[1])));
+    const rows = [...taken].map((key) => Number(key.split(',')[1]));
+    let minRow = rows.length ? Math.min(...rows) : 0;
+    let maxRow = rows.length ? Math.max(...rows) : 0;
+    if (rows.length >= (maxRow - minRow + 1) * columns) [minRow, maxRow] = [minRow - 1, maxRow + 1];
     let best: { c: number; r: number; score: number[] } | null = null;
-    for (let r = -(maxRow + 1); r <= maxRow + 1; r++) {
+    for (let r = minRow; r <= maxRow; r++) {
       for (let c = 0; c < columns; c++) {
         if (taken.has(`${c},${r}`)) continue;
         const [x, y] = plotPos(n.district, c, r);

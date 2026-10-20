@@ -57,12 +57,26 @@ function listEntryFiles(dir: string, sub: string, errors: string[]): string[] {
   const full = join(dir, sub);
   if (!existsSync(full)) return [];
   const files: string[] = [];
-  for (const name of readdirSync(full).sort()) {
+  const entries = readdirSync(full, { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  for (const entry of entries) {
+    const name = entry.name;
     if (name.startsWith('.')) continue;
-    if (name.endsWith('.yml')) errors.push(`${sub}/${name}: use the .yaml extension`);
-    else if (name.endsWith('.yaml')) files.push(`${sub}/${name}`);
+    if (entry.isDirectory()) errors.push(`${sub}/${name}: subfolders are not read; move its files directly into ${sub}/`);
+    else if (name.endsWith('.yml')) errors.push(`${sub}/${name}: use the .yaml extension`);
+    else if (!name.endsWith('.yaml')) errors.push(`${sub}/${name}: only lowercase .yaml files belong here; rename or move it`);
+    else files.push(`${sub}/${name}`);
   }
   return files;
+}
+
+const DATA_ROOT_ENTRIES = new Set(['districts.yaml', 'sectors.yaml', 'nodes', 'customers', 'layout.lock.json', 'LICENSE', 'README.md']);
+
+function checkDataRoot(dir: string, errors: string[]) {
+  if (!existsSync(dir)) return;
+  for (const name of readdirSync(dir).sort()) {
+    if (name.startsWith('.') || DATA_ROOT_ENTRIES.has(name)) continue;
+    errors.push(`${name}: unexpected entry in the data folder (expected districts.yaml, sectors.yaml, nodes/, customers/, layout.lock.json)`);
+  }
 }
 
 function loadEntries<T extends { id: string }>(
@@ -96,5 +110,6 @@ export function loadDataDir(dir: string): { data: LoadedData; errors: string[] }
   const sectors = sectorsRaw === undefined ? [] : (check(SectorsFileSchema, sectorsRaw, 'sectors.yaml', errors) ?? []);
   const nodes = loadEntries(dir, 'nodes', NodeSchema, errors);
   const customers = loadEntries(dir, 'customers', CustomerSchema, errors);
+  checkDataRoot(dir, errors);
   return { data: { districts, sectors, nodes, customers }, errors };
 }

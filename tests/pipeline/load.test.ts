@@ -71,14 +71,31 @@ describe('loadDataDir', () => {
     expect(loadDataDir(dir).errors).toEqual(['nodes/a.yml: use the .yaml extension']);
   });
 
-  it('ignores hidden files and non-YAML files', () => {
+  it('ignores hidden files', () => {
+    const dir = writeTree({ 'districts.yaml': DISTRICTS, 'sectors.yaml': SECTORS, 'nodes/.gitkeep': '' });
+    expect(loadDataDir(dir).errors).toEqual([]);
+  });
+
+  it('rejects anything in nodes/ or customers/ that is not a .yaml file, including subfolders', () => {
     const dir = writeTree({
       'districts.yaml': DISTRICTS,
       'sectors.yaml': SECTORS,
-      'nodes/.gitkeep': '',
       'nodes/README.md': '# notes',
+      'nodes/Foo.YAML': NODE_A,
+      'nodes/wallets/eternl.yaml': NODE_A,
+      'customers/x.json': '{}',
     });
-    expect(loadDataDir(dir).errors).toEqual([]);
+    expect(loadDataDir(dir).errors).toEqual([
+      'nodes/Foo.YAML: only lowercase .yaml files belong here; rename or move it',
+      'nodes/README.md: only lowercase .yaml files belong here; rename or move it',
+      'nodes/wallets: subfolders are not read; move its files directly into nodes/',
+      'customers/x.json: only lowercase .yaml files belong here; rename or move it',
+    ]);
+  });
+
+  it('rejects unknown entries in the data folder such as a misspelled nodes folder', () => {
+    const dir = writeTree({ 'districts.yaml': DISTRICTS, 'sectors.yaml': SECTORS, 'node/a.yaml': NODE_A, 'LICENSE': 'cc', 'layout.lock.json': '{}' });
+    expect(loadDataDir(dir).errors).toEqual(['node: unexpected entry in the data folder (expected districts.yaml, sectors.yaml, nodes/, customers/, layout.lock.json)']);
   });
 
   it('reports a typo key with file and message', () => {
