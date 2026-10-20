@@ -1,0 +1,33 @@
+id: pavia-landowners
+name: Pavia landowners
+type: segment
+sectors: [nfts-gaming-media]
+stage: ended
+description: Buyers of Pavia's NFT land parcels, sold in phases from October
+  2021. The metaverse they bought into stopped development in August 2024,
+  and its IP and land portfolio were sold to Metaverse Group in November 2024.
+uses:
+  - target: pavia
+    confidence: verified
+    evidence:
+      - url: https://dailyhodl.com/2022/01/19/cardano-ada-metaverse-launches-with-thousands-investing-in-its-digital-real-estate/
+        kind: article
+        retrieved: 2026-10-20
+        note: "there are now more than 8,300 virtual landowners in the Pavia ecosystem (19 January 2022)"
+      - url: https://cardanospot.beehiiv.com/p/cardanos-chang-update-rare-evo
+        kind: article
+        retrieved: 2026-10-20
+        note: "On August 6th Pavia announced that they have \"paused development\" and are seeking \"Merger and Acquisition (M&A) talks\" (9 August 2024)"
+      - url: https://www.manilatimes.net/2024/11/15/tmt-newswire/globenewswire/metaverse-group-acquires-pavia-metaverse/2004947
+        kind: announcement
+        retrieved: 2026-10-20
+        note: "Metaverse Group will take ownership of the Pavia Metaverse IP ... has also acquired Pavia's vast portfolio of metaverse land (14 November 2024)"
+metric:
+  label: Landowners (Jan 2022)
+  value: "8,300+"
+  source: https://dailyhodl.com/2022/01/19/cardano-ada-metaverse-launches-with-thousands-investing-in-its-digital-real-estate/
+  retrieved: 2026-10-20
+active:
+  from: 2021-10
+  until: 2024-08
+lastVerified: 2026-10-20

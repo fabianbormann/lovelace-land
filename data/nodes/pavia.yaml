@@ -1,0 +1,18 @@
+id: pavia
+name: Pavia
+district: products
+description: Cardano metaverse whose roughly 100,000 land parcels were sold as
+  NFTs from October 2021. Development was paused on 6 August 2024 while the
+  team sought a merger or acquisition, and in November 2024 Metaverse Group
+  bought the Pavia IP, its Metaverse-as-a-Service platform and its land
+  portfolio. Which libraries or services it was built on is not public.
+maintainer: Pavia
+links:
+  website: https://pavia.io
+status: deprecated
+primarySector: nfts-gaming-media
+uses: []
+active:
+  from: 2021-10
+  until: 2024-08
+lastVerified: 2026-10-20
