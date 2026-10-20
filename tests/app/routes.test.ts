@@ -35,3 +35,24 @@ describe('settlerPosition', () => {
     expect(settlerPosition(route, 2, 5, 12.34)).toEqual(settlerPosition(route, 2, 5, 12.34));
   });
 });
+
+describe('trail to the Cardano mark', () => {
+  it('walks over land, never through water, from any building to the peak', async () => {
+    const { buildTerrain } = await import('../../app/logic/terrain');
+    const { makeTrail } = await import('../../app/logic/routes');
+    const terrain = buildTerrain(world);
+    const trail = makeTrail(world, terrain);
+    for (const n of world.nodes) {
+      const path = trail(n.pos);
+      expect(path[path.length - 1]).toEqual(MOUNTAIN_PEAK);
+      for (const [x, y] of path) expect(terrain.isLand(x, y)).toBe(true);
+      for (let i = 1; i < path.length; i++) expect(Math.abs(path[i][0] - path[i - 1][0]) + Math.abs(path[i][1] - path[i - 1][1])).toBe(1);
+    }
+  });
+
+  it('is used for the last leg of every settler route', () => {
+    const marker: [number, number] = [-99, -99];
+    const routes = settlerRoutes(world, idx, 'harbor-traders', () => [marker]);
+    for (const r of routes) expect(r[r.length - 1]).toEqual(marker);
+  });
+});

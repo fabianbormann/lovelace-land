@@ -3,6 +3,7 @@ import type { World } from '../../pipeline/emit';
 import type { Target } from '../logic/hash';
 import { tileKey, type WorldIndex } from '../logic/index';
 import type { Appearance } from '../logic/lenses';
+import { makeTrail } from '../logic/routes';
 import { buildTerrain, MOUNTAIN_PEAK } from '../logic/terrain';
 import { cursorAt, flagsAt, seriesAt, shipPresence, surfaceAt } from '../logic/time';
 import { applyLook } from './appearance';
@@ -50,7 +51,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   const town = buildTown(world, stage, surfaceY);
   const harbors = buildHarbors(world, stage, surfaceY);
   stage.scene.add(harbors.group);
-  const settlers = buildSettlers(world, idx, stage, surfaceY);
+  const settlers = buildSettlers(world, idx, stage, surfaceY, makeTrail(world, terrain));
   stage.scene.add(settlers.mesh);
   addDistantIslands(world, stage);
 

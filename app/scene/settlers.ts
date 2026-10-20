@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import type { World } from '../../pipeline/emit';
 import type { WorldIndex } from '../logic/index';
-import { pointAt, settlerDistance, settlerRoutes } from '../logic/routes';
+import { pointAt, settlerDistance, settlerRoutes, type Trail } from '../logic/routes';
 import { cursorAt } from '../logic/time';
 import type { Stage } from './stage';
 
@@ -16,8 +16,8 @@ const PER_WEIGHT = 3;
  * Cardano mark. How many walk depends on that month's flow; where they are depends only on the
  * settler's index and the clock, so every visitor sees the same procession.
  */
-export function buildSettlers(world: World, idx: WorldIndex, stage: Stage, surfaceY: (x: number, y: number) => number) {
-  const routes = new Map(world.customers.map((c) => [c.id, settlerRoutes(world, idx, c.id)] as const));
+export function buildSettlers(world: World, idx: WorldIndex, stage: Stage, surfaceY: (x: number, y: number) => number, trail: Trail) {
+  const routes = new Map(world.customers.map((c) => [c.id, settlerRoutes(world, idx, c.id, trail)] as const));
   const body = new THREE.CylinderGeometry(0.07, 0.11, 0.32, 5).translate(0, 0.16, 0);
   const head = new THREE.IcosahedronGeometry(0.08, 0).translate(0, 0.4, 0);
   const pack = new THREE.BoxGeometry(0.12, 0.12, 0.12).translate(0, 0.27, -0.1);
