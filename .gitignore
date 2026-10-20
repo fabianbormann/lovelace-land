@@ -3,3 +3,5 @@ public/world.json
 dist/
 .superpowers/
 .shot.mjs
+test-results/
+playwright-report/
