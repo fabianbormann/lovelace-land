@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_run:
+    # redeploy after the lock bot commits new positions
+    workflows: ['Keep the layout lock current']
+    types: [completed]
   workflow_dispatch:
 
 permissions:

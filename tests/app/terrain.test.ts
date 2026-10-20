@@ -48,3 +48,13 @@ describe('buildTerrain', () => {
     }
   });
 });
+
+describe('river path', () => {
+  it('runs in flow order from the mountain to the sea over river tiles', () => {
+    const { riverPath } = buildTerrain(world);
+    expect(riverPath.length).toBeGreaterThan(5);
+    for (const [x, y] of riverPath) expect(t.isRiver(x, y)).toBe(true);
+    for (let i = 1; i < riverPath.length; i++)
+      expect(Math.abs(riverPath[i][0] - riverPath[i - 1][0]) + Math.abs(riverPath[i][1] - riverPath[i - 1][1])).toBe(1);
+  });
+});

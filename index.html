@@ -46,6 +46,7 @@
         <div class="filter-group">
           <h2>Map</h2>
           <label class="toggle"><input id="toggle-settlers" type="checkbox" checked /> Settlers walking</label>
+          <label class="toggle"><input id="toggle-reported" type="checkbox" checked /> Show reported roads (third-party sources)</label>
           <label class="toggle"><input id="toggle-rumors" type="checkbox" /> Show rumors (unconfirmed roads)</label>
         </div>
       </section>
@@ -53,7 +54,7 @@
       <main id="map" class="map"></main>
       <p id="lens-hint" class="lens-hint" hidden></p>
 
-      <aside id="panel" class="panel" hidden aria-live="polite"></aside>
+      <aside id="panel" class="panel" hidden aria-label="Details"></aside>
       <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
 
       <details class="legend" open>

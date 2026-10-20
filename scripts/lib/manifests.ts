@@ -43,11 +43,15 @@ function namesIn(file: string, text: string): string[] {
       for (const line of text.split('\n')) {
         const section = /^\s*\[([^\]]+)\]/.exec(line);
         if (section) {
-          inDeps = /(^|\.)(build-)?dependencies$/.test(section[1].trim());
+          const name = section[1].trim();
+          // [dependencies.pallas] declares one dependency as a table
+          const table = /(?:^|\.)(build-)?dependencies\.([A-Za-z0-9_-]+)$/.exec(name);
+          if (table && !/dev-dependencies/.test(name)) names.push(table[2]);
+          inDeps = /(^|\.)(build-)?dependencies$/.test(name);
           continue;
         }
         if (!inDeps) continue;
-        const entry = /^\s*([A-Za-z0-9_-]+)\s*=/.exec(line);
+        const entry = /^\s*([A-Za-z0-9_-]+)(?:\.workspace)?\s*=/.exec(line);
         if (entry) names.push(entry[1]);
         const renamed = /package\s*=\s*"([^"]+)"/.exec(line);
         if (renamed) names.push(renamed[1]);
@@ -56,7 +60,13 @@ function namesIn(file: string, text: string): string[] {
     }
     case 'pom.xml': {
       const names: string[] = [];
-      for (const m of text.matchAll(/<groupId>\s*([^<\s]+)\s*<\/groupId>\s*<artifactId>\s*([^<\s]+)\s*<\/artifactId>/g)) names.push(`${m[1]}:${m[2]}`);
+      for (const dep of text.matchAll(/<dependency>([\s\S]*?)<\/dependency>/g)) {
+        const body = dep[1];
+        if (/<scope>\s*test\s*<\/scope>/.test(body)) continue;
+        const g = /<groupId>\s*([^<\s]+)\s*<\/groupId>/.exec(body);
+        const a = /<artifactId>\s*([^<\s]+)\s*<\/artifactId>/.exec(body);
+        if (g && a) names.push(`${g[1]}:${a[1]}`);
+      }
       return names;
     }
     case 'build.gradle':
@@ -67,9 +77,36 @@ function namesIn(file: string, text: string): string[] {
         .flatMap((line) => [...line.matchAll(/['"]([\w.-]+):([\w.-]+)(?::[^'"]*)?['"]/g)].map((m) => `${m[1]}:${m[2]}`));
     case 'go.mod':
       return [...text.matchAll(/^\s*(?:require\s+)?([\w.-]+\.[\w.-]+\/[\w./-]+)\s+v[\w.+-]+/gm)].map((m) => m[1]);
-    case 'pyproject.toml':
     case 'requirements.txt':
-      return [...text.matchAll(/^\s*"?([A-Za-z0-9][A-Za-z0-9._-]*)\s*(?:\[[^\]]*\])?\s*(?:[<>=!~;"]|$)/gm)].map((m) => m[1]);
+      return [...text.matchAll(/^\s*([A-Za-z0-9][A-Za-z0-9._-]*)/gm)].map((m) => m[1]);
+    case 'pyproject.toml': {
+      const names: string[] = [];
+      let section = '';
+      let inArray = false;
+      for (const line of text.split('\n')) {
+        const header = /^\s*\[([^\]]+)\]/.exec(line);
+        if (header) {
+          section = header[1].trim();
+          inArray = false;
+          continue;
+        }
+        const isDev = /(^|\.)(dev|test)/.test(section) || /group\.(dev|test)/.test(section);
+        if (isDev) continue;
+        // PEP 621: dependencies = ["pkg>=1", ...] on one or many lines
+        if ((section === 'project' || section === '') && /^\s*dependencies\s*=\s*\[/.test(line)) inArray = true;
+        if (inArray) {
+          for (const m of line.matchAll(/"([A-Za-z0-9][A-Za-z0-9._-]*)/g)) names.push(m[1]);
+          if (line.includes(']')) inArray = false;
+          continue;
+        }
+        // Poetry: [tool.poetry.dependencies] pkg = "^1"
+        if (/tool\.poetry\.dependencies$/.test(section)) {
+          const m = /^\s*([A-Za-z0-9][A-Za-z0-9._-]*)\s*=/.exec(line);
+          if (m && m[1] !== 'python') names.push(m[1]);
+        }
+      }
+      return names;
+    }
     default:
       return [];
   }

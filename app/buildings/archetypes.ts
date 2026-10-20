@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Building } from '../../pipeline/schema';
-import { at, box, cone, cylinder, gableRoof, group, mat, PALETTE as P, sphere } from './kit';
+import { at, box, cone, cylinder, gableRoof, group, lit, mat, PALETTE as P, sphere } from './kit';
 
 export type Tier = 1 | 2 | 3 | 4;
 
@@ -37,8 +37,7 @@ const relayTower: Generator = (o, s) => {
   const g = group(at(house(0.9 * s, 0.6 * s, 0.7 * s, P.stone, P.roofSlate), -0.55 * s, 0, 0.35 * s));
   g.add(at(cylinder(0.06, 0.32 * s, h, P.metal, 4), 0.35 * s, 0, -0.2 * s));
   for (let i = 1; i <= 3; i++) g.add(at(box(0.5 * s * (1 - i / 4), 0.05, 0.05, P.metal), 0.35 * s, (h * i) / 4, -0.2 * s, Math.PI / 4));
-  const light = sphere(0.12 + 0.03 * o.tier, P.glow);
-  (light.material as THREE.MeshLambertMaterial).emissive.set('#ff7a3d');
+  const light = lit(sphere(0.12 + 0.03 * o.tier, P.glow), '#ff7a3d');
   g.add(at(light, 0.35 * s, h + 0.05, -0.2 * s));
   if (o.tier >= 3) g.add(at(cylinder(0.22 * s, 0.02, 0.12, P.plaster, 10), 0.35 * s, h * 0.7, 0.05 * s));
   return {
@@ -85,13 +84,13 @@ const forge: Generator = (o, s) => {
   g.add(at(gableRoof(1.2 * s, 0.5 * s, 1.0 * s, P.roofSlate), 0, 0.8 * s, 0));
   const chimneyH = 1.5 * s + o.tier * 0.15;
   g.add(at(box(0.32 * s, chimneyH, 0.32 * s, P.stone), 0.38 * s, 0, -0.25 * s));
-  const fire = box(0.36 * s, 0.42 * s, 0.05, '#ff9a3c');
-  (fire.material as THREE.MeshLambertMaterial).emissive.set('#ff6a1a');
+  const fire = lit(box(0.36 * s, 0.42 * s, 0.05, '#ff9a3c'), '#ff6a1a');
   g.add(at(fire, -0.15 * s, 0.02, 0.51 * s));
   g.add(at(box(0.3, 0.18, 0.14, P.metal), 0.25 * s, 0, 0.75 * s));
   const puffs = [0, 1, 2].map((i) => {
     const p = sphere(0.12 + i * 0.04, '#d8d3c8');
     (p.material as THREE.MeshLambertMaterial).transparent = true;
+    p.userData.noAppearance = true; // smoke keeps its own fading opacity
     g.add(p);
     return p;
   });
@@ -130,8 +129,7 @@ const lighthouse: Generator = (o, s) => {
     const r1 = 0.45 * s - (0.18 * s * (i + 1)) / bands;
     g.add(at(cylinder(r1, r0, h / bands, i % 2 ? '#c23b2a' : P.plaster, 10), 0, 0.25 + (h * i) / bands, 0));
   }
-  const lamp = cylinder(0.24 * s, 0.24 * s, 0.3 * s, P.glow, 8);
-  (lamp.material as THREE.MeshLambertMaterial).emissive.set('#ffb93d');
+  const lamp = lit(cylinder(0.24 * s, 0.24 * s, 0.3 * s, P.glow, 8), '#ffb93d');
   g.add(at(lamp, 0, 0.25 + h, 0));
   g.add(at(cone(0.32 * s, 0.3 * s, '#3c4a57', 8), 0, 0.25 + h + 0.3 * s, 0));
   const beam = new THREE.Mesh(

@@ -19,7 +19,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Validate data (schema, references, up-to-date layout lock)
+      - name: Validate data (schema and references; a stale layout lock only warns)
         run: npm run check:data
       - run: npm run typecheck
       - run: npm test

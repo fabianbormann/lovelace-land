@@ -12,6 +12,14 @@ function cached(key: string, make: () => THREE.BufferGeometry): THREE.BufferGeom
   return g;
 }
 
+/** Make a mesh glow; recorded as its base look so lens changes restore it. */
+export function lit<T extends THREE.Mesh>(mesh: T, color: THREE.ColorRepresentation): T {
+  const m = mesh.material as THREE.MeshLambertMaterial;
+  m.emissive.set(color);
+  m.userData.baseEmissive = m.emissive.clone();
+  return mesh;
+}
+
 export function mat(color: THREE.ColorRepresentation, opts: { emissive?: THREE.ColorRepresentation; opacity?: number } = {}) {
   const m = new THREE.MeshLambertMaterial({ color, flatShading: true });
   if (opts.emissive !== undefined) m.emissive = new THREE.Color(opts.emissive);

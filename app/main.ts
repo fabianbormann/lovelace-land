@@ -50,13 +50,34 @@ async function boot() {
   start(world);
 }
 
+/** Keep overlays clear of the header, whose height changes when it wraps on narrow screens. */
+function trackHeaderHeight() {
+  const bar = $('.bar');
+  const update = () => document.documentElement.style.setProperty('--bar-bottom', `${bar.offsetTop + bar.offsetHeight}px`);
+  new ResizeObserver(update).observe(bar);
+  update();
+}
+
 function start(world: World) {
   const idx = indexWorld(world);
   const state: ViewState = defaultViewState();
   let selected: Target | null = null;
   const panel = $('#panel');
-  const hasGL = webglAvailable();
+  const listRoot = $('#listview');
+  trackHeaderHeight();
+
+  // The 3D island, or the list view when the browser cannot draw it.
   let island: IslandMap | null = null;
+  if (webglAvailable()) {
+    try {
+      island = createIsland($('#map'), world, idx);
+    } catch (e) {
+      console.error('Could not start the 3D island', e);
+      $('#map').replaceChildren();
+    }
+  }
+  const hasGL = island !== null;
+  $('#app').classList.toggle('no-gl', !hasGL);
 
   $('#stats').textContent = [
     `${world.nodes.length} buildings`,
@@ -66,12 +87,14 @@ function start(world: World) {
     `${world.nodes.filter((n) => n.hiddenHighway).length} hidden highways`,
   ].join(' · ');
 
+  let panelRumors = state.showRumors;
   const refresh = () => {
     island?.apply(computeAppearance(idx, state));
     document.querySelectorAll<HTMLButtonElement>('.lens').forEach((b) => {
       const on = b.dataset.lens === state.lens;
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-checked', String(on));
+      b.tabIndex = on ? 0 : -1;
     });
     const hint = $('#lens-hint');
     const followed = state.follow ? idx.customer.get(state.follow)?.name : null;
@@ -87,13 +110,15 @@ function start(world: World) {
             : '';
     hint.textContent = text;
     hint.hidden = !text;
-    if (selected) showPanel(selected, false);
+    // Only the rumor setting changes what the panel lists; re-rendering otherwise would steal focus.
+    if (selected && panelRumors !== state.showRumors) showPanel(selected, { fly: false });
   };
 
-  const showPanel = (target: Target, fly = true) => {
+  const showPanel = (target: Target, opts: { fly?: boolean; focus?: boolean } = {}) => {
     selected = target;
+    panelRumors = state.showRumors;
     renderPanel(panel, idx, target, state.showRumors, {
-      select: (t) => select(t),
+      select: (t) => select(t, { focus: true }),
       follow: (id) => {
         state.lens = 'follow';
         state.follow = id;
@@ -103,11 +128,13 @@ function start(world: World) {
     });
     panel.hidden = false;
     island?.setSelected(target);
-    if (fly) island?.focus(target);
+    if (opts.fly ?? true) island?.focus(target, { liftForBottomPanel: matchMedia('(max-width: 720px)').matches });
+    if (opts.focus) panel.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
   };
 
-  const select = (target: Target | null, fly = true) => {
-    if (!target) {
+  const exists = (t: Target) => idx.node.has(t.id) || idx.customer.has(t.id) || idx.edge.has(t.id);
+  const select = (target: Target | null, opts: { fly?: boolean; focus?: boolean } = {}) => {
+    if (!target || !exists(target)) {
       selected = null;
       panel.hidden = true;
       island?.setSelected(null);
@@ -119,17 +146,22 @@ function start(world: World) {
       refresh();
     }
     setHash(formatHash(target));
-    showPanel(target, fly);
+    showPanel(target, opts);
   };
 
-  // List view (also the fallback without WebGL)
-  const listRoot = $('#listview');
+  // List view (also the whole experience without WebGL)
   createListView(listRoot, idx, (t) => {
     if (hasGL) listRoot.hidden = true;
-    select(t);
+    select(t, { focus: true });
   });
-  $('#list-btn').addEventListener('click', () => (listRoot.hidden = false));
-  $('#list-close').addEventListener('click', () => (listRoot.hidden = true));
+  $('#list-btn').addEventListener('click', () => {
+    listRoot.hidden = false;
+    listRoot.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]')?.focus();
+  });
+  $('#list-close').addEventListener('click', () => {
+    listRoot.hidden = true;
+    $('#list-btn').focus();
+  });
   if (!hasGL) {
     listRoot.hidden = false;
     $('#list-close').hidden = true;
@@ -137,16 +169,26 @@ function start(world: World) {
     note.textContent = 'Your browser cannot draw the 3D island (WebGL is unavailable), so here is the same data as tables.';
     note.hidden = false;
   }
+  if (innerWidth < 1100) $<HTMLDetailsElement>('.legend').open = false;
 
-  // Lenses
-  document.querySelectorAll<HTMLButtonElement>('.lens').forEach((b) =>
-    b.addEventListener('click', () => {
-      state.lens = b.dataset.lens as Lens;
-      if (state.lens === 'follow' && !state.follow && selected?.kind === 'customer') state.follow = selected.id;
-      if (state.lens !== 'follow') state.follow = null;
-      refresh();
-    }),
-  );
+  // Lenses: a radio group, so arrow keys move between them
+  const lensButtons = [...document.querySelectorAll<HTMLButtonElement>('.lens')];
+  const chooseLens = (lens: Lens) => {
+    state.lens = lens;
+    if (state.lens === 'follow' && !state.follow && selected?.kind === 'customer') state.follow = selected.id;
+    if (state.lens !== 'follow') state.follow = null;
+    refresh();
+  };
+  lensButtons.forEach((b, i) => {
+    b.addEventListener('click', () => chooseLens(b.dataset.lens as Lens));
+    b.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const next = lensButtons[(i + (e.key === 'ArrowRight' ? 1 : -1) + lensButtons.length) % lensButtons.length];
+      next.focus();
+      chooseLens(next.dataset.lens as Lens);
+    });
+  });
 
   // Filters
   const filtersBtn = $('#filters-btn');
@@ -172,16 +214,29 @@ function start(world: World) {
     state.showRumors = (e.target as HTMLInputElement).checked;
     refresh();
   });
+  $<HTMLInputElement>('#toggle-reported').addEventListener('change', (e) => {
+    state.hideReported = !(e.target as HTMLInputElement).checked;
+    refresh();
+  });
 
-  if (innerWidth < 1100) $<HTMLDetailsElement>('.legend').open = false;
+  setupSearch(idx, (t) => select(t, { focus: true }));
 
-  // Search
-  setupSearch(idx, (t) => select(t));
+  addEventListener('keydown', (e) => {
+    if ((e.target as HTMLElement).closest('input, textarea')) return;
+    if (e.key === 'Escape') {
+      if (!panel.hidden) select(null);
+      else if (hasGL && !listRoot.hidden) listRoot.hidden = true;
+      else if (!filters.hidden) filtersBtn.click();
+    }
+    if (!island) return;
+    if (e.key === 'q' || e.key === 'Q') island.stage.rotate(-1);
+    if (e.key === 'e' || e.key === 'E') island.stage.rotate(1);
+  });
 
-  if (hasGL) {
-    island = createIsland($('#map'), world, idx);
+  if (island) {
+    const map = island;
     const tooltip = $('#tooltip');
-    island.onHover((p) => {
+    map.onHover((p) => {
       if (!p) {
         tooltip.hidden = true;
         return;
@@ -201,42 +256,39 @@ function start(world: World) {
               ? `${idx.customer.get(t.id)?.stage} · click to see what it uses`
               : 'Harbor';
       tooltip.replaceChildren(t.kind === 'edge' ? 'Road' : (name ?? ''), h('small', {}, sub));
-      tooltip.style.left = `${p.clientX + 14}px`;
-      tooltip.style.top = `${p.clientY + 14}px`;
       tooltip.hidden = false;
+      tooltip.style.left = `${Math.min(p.clientX + 14, innerWidth - tooltip.offsetWidth - 8)}px`;
+      tooltip.style.top = `${Math.min(p.clientY + 14, innerHeight - tooltip.offsetHeight - 8)}px`;
     });
-    island.onSelect((p) => {
-      if (!p) return select(null, false);
+    map.onSelect((p) => {
+      if (!p) return select(null);
       if (p.target.kind === 'sector') return;
-      select(p.target as Target, false);
+      select(p.target as Target, { fly: false });
     });
     const settlersToggle = $<HTMLInputElement>('#toggle-settlers');
-    settlersToggle.checked = !island.stage.reducedMotion;
-    settlersToggle.addEventListener('change', () => island!.setSettlers(settlersToggle.checked));
-    $('#rotate-left').addEventListener('click', () => island!.stage.rotate(-1));
-    $('#rotate-right').addEventListener('click', () => island!.stage.rotate(1));
-    addEventListener('keydown', (e) => {
-      if ((e.target as HTMLElement).closest('input, textarea')) return;
-      if (e.key === 'q' || e.key === 'Q') island!.stage.rotate(-1);
-      if (e.key === 'e' || e.key === 'E') island!.stage.rotate(1);
-      if (e.key === 'Escape') select(null);
-    });
+    settlersToggle.checked = !map.stage.reducedMotion;
+    settlersToggle.addEventListener('change', () => map.setSettlers(settlersToggle.checked));
+    $('#rotate-left').addEventListener('click', () => map.stage.rotate(-1));
+    $('#rotate-right').addEventListener('click', () => map.stage.rotate(1));
     const dark = matchMedia('(prefers-color-scheme: dark)');
     const applyTheme = () => {
       const forced = document.documentElement.dataset.theme;
-      island!.setNight(forced ? forced === 'dark' : dark.matches);
+      map.setNight(forced ? forced === 'dark' : dark.matches);
     };
     dark.addEventListener('change', applyTheme);
     new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     applyTheme();
+  } else {
+    $('.controls').hidden = true;
+    $('.legend').hidden = true;
   }
 
   refresh();
   const initial = parseHash(location.hash);
-  if (initial && (idx.node.has(initial.id) || idx.customer.has(initial.id) || idx.edge.has(initial.id))) select(initial);
+  if (initial && exists(initial)) select(initial);
   addEventListener('hashchange', () => {
     const t = parseHash(location.hash);
-    if (t) select(t);
+    if (t && exists(t)) select(t);
   });
 }
 
@@ -248,14 +300,15 @@ function setupSearch(idx: WorldIndex, onPick: (t: Target) => void) {
   const close = () => {
     list.hidden = true;
     input.setAttribute('aria-expanded', 'false');
+    input.removeAttribute('aria-activedescendant');
   };
   const choose = (i: number) => {
     const r = results[i];
     if (!r) return;
-    onPick({ kind: r.kind, id: r.id });
     input.value = '';
+    results = [];
     close();
-    input.blur();
+    onPick({ kind: r.kind, id: r.id });
   };
   const render = () => {
     results = search(idx, input.value);
@@ -273,13 +326,16 @@ function setupSearch(idx: WorldIndex, onPick: (t: Target) => void) {
     if (!results.length && input.value.trim()) list.replaceChildren(h('li', { role: 'option', 'aria-disabled': 'true' }, 'Nothing on the island by that name'));
     list.hidden = !input.value.trim();
     input.setAttribute('aria-expanded', String(!list.hidden));
+    if (results.length) input.setAttribute('aria-activedescendant', 'sr-0');
+    else input.removeAttribute('aria-activedescendant');
   };
   input.addEventListener('input', render);
   input.addEventListener('blur', close);
   input.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % Math.max(results.length, 1);
+      if (!results.length) return;
+      active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length;
       list.querySelectorAll('li').forEach((li, i) => li.setAttribute('aria-selected', String(i === active)));
       input.setAttribute('aria-activedescendant', `sr-${active}`);
     } else if (e.key === 'Enter') choose(active);

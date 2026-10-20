@@ -22,13 +22,20 @@ jobs:
       - run: npm ci
       - name: Check every source link
         id: links
-        run: npm run --silent check:links > links.md
+        run: npm run --silent check:links > "$RUNNER_TEMP/links.md" 2>&1
         continue-on-error: true
-      - name: Open an issue for broken links
+      - name: Open or update the broken-links issue
         if: steps.links.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh issue create --title "Broken source links ($(date +%Y-%m-%d))" --body-file links.md
+        run: |
+          existing=$(gh issue list --state open --search 'in:title "Broken source links"' --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file "$RUNNER_TEMP/links.md"
+            gh issue comment "$existing" --body "Still broken as of $(date +%Y-%m-%d)."
+          else
+            gh issue create --title "Broken source links" --body-file "$RUNNER_TEMP/links.md"
+          fi
 
   manifests:
     runs-on: ubuntu-latest
@@ -41,11 +48,15 @@ jobs:
       - run: npm ci
       - name: Scan project manifests for new dependencies
         run: |
-          npm run --silent scan:manifests -- --write > scan.md
+          npm run --silent scan:manifests -- --write > "$RUNNER_TEMP/scan.md"
           npm run build:world
       - uses: peter-evans/create-pull-request@v7
         with:
+          # A personal access token (secret BOT_TOKEN) lets the PR trigger the normal checks;
+          # PRs opened with the default token skip workflows.
+          token: ${{ secrets.BOT_TOKEN || github.token }}
           branch: bot/manifest-scan
+          add-paths: data/**
           title: New roads found in project manifests
-          body-path: scan.md
+          body-path: ${{ runner.temp }}/scan.md
           commit-message: 'data: add dependencies found by the weekly manifest scan'

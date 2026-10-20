@@ -7,6 +7,8 @@ export interface ViewState {
   /** customer id for the follow lens */
   follow: string | null;
   showRumors: boolean;
+  /** hide roads backed only by third-party reports */
+  hideReported: boolean;
   hiddenDistricts: Set<string>;
   hiddenSectors: Set<string>;
 }
@@ -28,6 +30,7 @@ export const defaultViewState = (): ViewState => ({
   lens: 'none',
   follow: null,
   showRumors: false,
+  hideReported: false,
   hiddenDistricts: new Set(),
   hiddenSectors: new Set(),
 });
@@ -68,7 +71,7 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
 
   const edges = new Map<string, Look>();
   for (const e of world.edges) {
-    const hidden = e.confidence === 'inferred' && !state.showRumors;
+    const hidden = (e.confidence === 'inferred' && !state.showRumors) || (e.confidence === 'reported' && state.hideReported);
     let dim = false;
     let glow = false;
     if (state.lens === 'stranded') dim = true;

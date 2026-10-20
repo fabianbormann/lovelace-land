@@ -6,7 +6,7 @@ import type { Appearance } from '../logic/lenses';
 import { buildTerrain, MOUNTAIN_PEAK } from '../logic/terrain';
 import { applyLook } from './appearance';
 import { buildHarbors } from './harbors';
-import { buildCardanoMark, buildSignposts, buildTerrainMesh, buildWater, makeSurface } from './landscape';
+import { buildCardanoMark, buildRafts, buildSignposts, buildTerrainMesh, buildWater, makeSurface } from './landscape';
 import { buildRoads } from './roads';
 import { buildSettlers } from './settlers';
 import { DAY, NIGHT, Stage } from './stage';
@@ -21,7 +21,7 @@ export interface Pick {
 export interface IslandMap {
   stage: Stage;
   apply(appearance: Appearance): void;
-  focus(target: Target): void;
+  focus(target: Target, opts?: { liftForBottomPanel?: boolean }): void;
   setSettlers(on: boolean): void;
   setNight(night: boolean): void;
   onHover(cb: (pick: Pick | null) => void): void;
@@ -40,6 +40,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   stage.scene.add(buildWater(terrain, stage));
   stage.scene.add(buildCardanoMark(stage, surfaceY));
   stage.scene.add(buildSignposts(world, surfaceY));
+  stage.scene.add(buildRafts(terrain, stage));
   const roads = buildRoads(world, surfaceY);
   stage.scene.add(roads.group);
   const town = buildTown(world, stage, surfaceY);
@@ -118,7 +119,8 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   canvas.addEventListener('pointermove', (e) => {
     if (e.pointerType === 'touch') return;
     if (!pending) requestAnimationFrame(() => {
-      const ev = pending!;
+      const ev = pending;
+      if (!ev) return; // the pointer left the canvas meanwhile
       pending = null;
       const p = pickAt(ev.clientX, ev.clientY);
       const key = p && (p.target.kind === 'node' || p.target.kind === 'customer') ? `${p.target.kind}:${p.target.id}` : null;
@@ -133,7 +135,14 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
     });
     pending = e;
   });
-  canvas.addEventListener('pointerleave', () => hoverCb(null));
+  canvas.addEventListener('pointerleave', () => {
+    pending = null;
+    const prev = hovered;
+    hovered = null;
+    if (prev) refreshObject(prev.split(':')[0] as 'node', prev.slice(prev.indexOf(':') + 1));
+    canvas.style.cursor = '';
+    hoverCb(null);
+  });
   let down: { x: number; y: number } | null = null;
   canvas.addEventListener('pointerdown', (e) => (down = { x: e.clientX, y: e.clientY }));
   canvas.addEventListener('pointerup', (e) => {
@@ -174,9 +183,9 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
       for (const s of harbors.ships) refreshObject('customer', s.customer.id);
       settlers.setVisibleEdges(new Set([...appearance.edges].filter(([, l]) => !l.hidden && !l.dim).map(([id]) => id)));
     },
-    focus(target) {
+    focus(target, opts = {}) {
       const p = positionOf(target);
-      if (p) stage.flyTo(p, target.kind === 'edge' ? 1.6 : 2.4);
+      if (p) stage.flyTo(p, target.kind === 'edge' ? 1.6 : 2.4, opts.liftForBottomPanel ? 0.5 : 0);
     },
     setSettlers: (on) => settlers.setEnabled(on),
     setNight: (night) => stage.setColors(night ? NIGHT : DAY),

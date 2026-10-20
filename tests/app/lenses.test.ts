@@ -58,3 +58,11 @@ describe('computeAppearance', () => {
     }
   });
 });
+
+describe('confidence filter', () => {
+  it('hides reported roads when asked', () => {
+    const a = computeAppearance(idx, { ...defaultViewState(), hideReported: true });
+    expect(a.edges.get('swap-town->mill-indexer')!.hidden).toBe(true);
+    expect(a.edges.get('swap-town->anvil-lib')!.hidden).toBe(false);
+  });
+});

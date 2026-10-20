@@ -15,6 +15,7 @@
   --font-body: 'Alegreya Sans', 'Gill Sans', 'Segoe UI', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --radius: 10px;
+  --bar-bottom: 72px;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -116,7 +117,7 @@ a { color: var(--brass); }
 .chip-btn:hover, .chip-btn[aria-expanded='true'] { border-color: var(--brass); }
 
 .filters {
-  position: absolute; z-index: 6; top: calc(76px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  position: absolute; z-index: 6; top: calc(var(--bar-bottom) + 8px); right: max(16px, env(safe-area-inset-right, 0px));
   width: min(420px, calc(100% - 32px)); max-height: 60vh; overflow: auto; padding: 12px 14px;
   display: grid; gap: 12px; background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow);
 }
@@ -126,17 +127,21 @@ a { color: var(--brass); }
 .filter-list .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 
 .lens-hint {
-  position: absolute; z-index: 4; left: 50%; transform: translateX(-50%); top: calc(84px + env(safe-area-inset-top, 0px));
+  position: absolute; z-index: 4; left: 50%; transform: translateX(-50%); top: calc(var(--bar-bottom) + 12px);
   margin: 0; padding: 6px 14px; border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 0.95rem; max-width: calc(100% - 32px); text-align: center;
 }
 
+/* Without WebGL the list view is the page, and details open above it. */
+.no-gl .panel { z-index: 12; }
+
 /* Detail panel */
 .panel {
-  position: absolute; z-index: 5; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(84px + env(safe-area-inset-top, 0px));
+  position: absolute; z-index: 5; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(var(--bar-bottom) + 12px);
   bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: min(400px, calc(100% - 32px)); overflow: auto;
   background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px 20px;
 }
 .panel .close { position: sticky; top: 0; float: right; border: 0; background: var(--paper-2); border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
+.panel h2:focus { outline: none; }
 .panel h2 { margin: 2px 0 4px; font: 400 1.7rem/1.1 var(--font-display); text-wrap: balance; }
 .panel h3 { margin: 18px 0 6px; font: 600 0.78rem/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
 .panel p { margin: 6px 0; }
@@ -252,7 +257,6 @@ tbody tr:hover { background: var(--brass-soft); }
   .panel { top: auto; left: max(16px, env(safe-area-inset-left, 0px)); width: auto; height: 58%; }
   .legend:not([open]) { width: auto; }
   .stats { display: none; }
-  .lens-hint, .filters { top: calc(150px + env(safe-area-inset-top, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }

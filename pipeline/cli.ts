@@ -9,6 +9,7 @@ const { values } = parseArgs({
     data: { type: 'string', default: 'data' },
     out: { type: 'string', default: 'public/world.json' },
     check: { type: 'boolean', default: false },
+    strict: { type: 'boolean', default: false },
   },
 });
 const dataDir = values.data!;
@@ -26,9 +27,13 @@ if (result.errors.length > 0 || !result.world) {
 }
 
 const world = result.world;
-if (values.check && lockText !== null && lockText !== result.lockText) {
-  console.error('error    layout.lock.json is out of date; run npm run build:world and commit the updated lock file.');
-  process.exit(1);
+// Contributors editing one YAML file can't always rebuild the lock, so a stale lock only warns;
+// main regenerates and commits it. --strict (used on main) makes it an error.
+const lockStale = lockText !== result.lockText && (lockText !== null || world.nodes.length > 0);
+if (values.check && lockStale) {
+  const message = 'layout.lock.json is out of date; run npm run build:world and commit the updated lock file.';
+  console.error(`${values.strict ? 'error  ' : 'warning'}  ${message}`);
+  if (values.strict) process.exit(1);
 }
 if (!values.check) {
   mkdirSync(dirname(outFile), { recursive: true });

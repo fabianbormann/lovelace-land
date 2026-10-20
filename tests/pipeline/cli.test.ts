@@ -34,18 +34,26 @@ describe('cli', () => {
     expect(existsSync(join(data, 'layout.lock.json'))).toBe(false);
   }, 30_000);
 
-  it('--check fails when the committed lock is out of date', () => {
+  it('--check warns about an out-of-date lock, --strict fails on it', () => {
     const data = copyFixture();
     const out = join(mkdtempSync(join(tmpdir(), 'island-out-')), 'w.json');
     expect(cli('--data', data, '--out', out).status).toBe(0);
     const lock = join(data, 'layout.lock.json');
     writeFileSync(lock, readFileSync(lock, 'utf8').replace(/"swap-town": \[[^\]]*\]/, '"swap-town": [999, 999]'));
-    const r = cli('--data', data, '--check');
+    const warn = cli('--data', data, '--check');
+    expect(warn.status).toBe(0);
+    expect(warn.stderr).toContain('layout.lock.json is out of date');
+    const r = cli('--data', data, '--check', '--strict');
+    expect(r.status).toBe(1);
+    expect(cli('--data', data, '--out', out).status).toBe(0);
+    expect(cli('--data', data, '--check', '--strict').status).toBe(0);
+  }, 60_000);
+
+  it('--strict treats a missing lock as out of date when there are buildings', () => {
+    const r = cli('--data', copyFixture(), '--check', '--strict');
     expect(r.status).toBe(1);
     expect(r.stderr).toContain('layout.lock.json is out of date');
-    expect(cli('--data', data, '--out', out).status).toBe(0);
-    expect(cli('--data', data, '--check').status).toBe(0);
-  }, 60_000);
+  }, 30_000);
 
   it('exits 1 and prints file-scoped errors', () => {
     const data = copyFixture();

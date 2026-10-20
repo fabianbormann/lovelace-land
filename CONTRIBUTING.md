@@ -77,7 +77,7 @@ npm run build:world    # updates data/layout.lock.json and public/world.json
 npm run dev            # look at the island at http://localhost:5173
 ```
 
-Commit `data/layout.lock.json` together with your change. It keeps every existing building on its plot, so adding a project never reshuffles the map.
+If you can, commit `data/layout.lock.json` together with your change. It keeps every existing building on its plot, so adding a project never reshuffles the map. If you edit on github.com and can't run the build, that's fine: the check only warns, and after merging a bot places your building and commits the lock.
 
 **Merge conflicts in `layout.lock.json`:** keep the entries from both sides, then run `npm run build:world` again. If two buildings claimed the same plot, one of them moves automatically. Don't delete the lock file, because that rebuilds the whole map from scratch.
 
@@ -88,6 +88,13 @@ Each pull request gets a comment describing how it changes the island: buildings
 - **Traffic:** every customer walks from its harbor through everything it depends on, down to the Cardano mountain. A production customer counts 1, a pilot 0.5, an announcement 0.25 and an ended customer 0. A road's surface wears from footprints to mud, gravel and finally cobblestone as traffic grows.
 - **Stranded:** no route from any active customer reaches the building.
 - **Hidden highway:** among the busiest 15% of buildings, yet named directly by three or fewer projects.
+
+## For maintainers: one-time repository setup
+
+- **Pages:** Settings → Pages → Source: "GitHub Actions" (used by `deploy.yml`).
+- **Bot pull requests:** Settings → Actions → General → allow GitHub Actions to create and approve pull requests (used by the weekly manifest scan).
+- **Optional `BOT_TOKEN` secret:** a fine-grained personal access token with contents and pull-request write access. With it, the weekly scan's pull request runs the normal checks. Pull requests opened with the default token skip workflows.
+- **Branch protection on `main`** must let the lock bot push (`lock.yml`), or give that workflow the same `BOT_TOKEN`.
 
 ## Licenses
 

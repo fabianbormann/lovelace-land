@@ -51,3 +51,22 @@ describe('dependenciesIn', () => {
     expect(dependenciesIn('package.json', '{ nope', index)).toEqual([]);
   });
 });
+
+describe('dependenciesIn — more manifest shapes', () => {
+  it('reads single-line PEP 621 dependency arrays but not poetry dev groups', () => {
+    expect(dependenciesIn('pyproject.toml', '[project]\ndependencies = ["pycardano>=0.9", "requests"]\n', index)).toEqual(['pycardano']);
+    expect(dependenciesIn('pyproject.toml', '[tool.poetry.group.dev.dependencies]\npycardano = "^0.9"\n', index)).toEqual([]);
+    expect(dependenciesIn('pyproject.toml', '[tool.poetry.dependencies]\npycardano = "^0.9"\n', index)).toEqual(['pycardano']);
+  });
+
+  it('reads cargo workspace inheritance and table-form dependencies', () => {
+    expect(dependenciesIn('Cargo.toml', '[dependencies]\npallas.workspace = true\n', index)).toEqual(['pallas']);
+    expect(dependenciesIn('Cargo.toml', '[dependencies.pallas]\nversion = "0.34"\n', index)).toEqual(['pallas']);
+    expect(dependenciesIn('Cargo.toml', '[dev-dependencies.pallas]\nversion = "0.34"\n', index)).toEqual([]);
+  });
+
+  it('skips maven test-scoped dependencies', () => {
+    const pom = '<dependency><groupId>com.bloxbean.cardano</groupId><artifactId>cardano-client-lib</artifactId><scope>test</scope></dependency>';
+    expect(dependenciesIn('pom.xml', pom, index)).toEqual([]);
+  });
+});

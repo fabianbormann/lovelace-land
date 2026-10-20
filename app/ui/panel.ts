@@ -77,7 +77,7 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
     const links = Object.entries(n.links).filter(([, url]) => url) as [string, string][];
     root.append(
       h('p', { class: 'eyebrow' }, district?.name ?? n.district, n.maintainer ? ` · ${n.maintainer}` : ''),
-      h('h2', {}, n.name),
+      h('h2', { tabindex: -1 }, n.name),
       pills,
       h('p', {}, n.description),
       h(
@@ -104,7 +104,7 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
     follow.addEventListener('click', () => actions.follow(c.id));
     root.append(
       h('p', { class: 'eyebrow' }, `${SHIP_LABEL[c.stage]} in the ${sector?.name ?? c.harbor} harbor`),
-      h('h2', {}, c.name),
+      h('h2', { tabindex: -1 }, c.name),
       h(
         'div',
         { class: 'pills' },
@@ -133,7 +133,7 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
   toBtn.addEventListener('click', () => actions.select({ kind: 'node', id: e.to }));
   root.append(
     h('p', { class: 'eyebrow' }, 'Road'),
-    h('h2', {}, `${from?.name ?? e.from} → ${to?.name ?? e.to}`),
+    h('h2', { tabindex: -1 }, `${from?.name ?? e.from} → ${to?.name ?? e.to}`),
     h('div', { class: 'pills' }, e.relation ? h('span', { class: 'pill' }, RELATION_LABEL[e.relation]) : '', h('span', { class: `pill conf ${e.confidence}` }, e.confidence)),
     h(
       'div',

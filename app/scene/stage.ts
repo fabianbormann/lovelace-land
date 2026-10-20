@@ -82,7 +82,8 @@ export class Stage {
 
     this.scene.add(this.hemi);
     this.sun.castShadow = true;
-    this.sun.shadow.mapSize.set(4096, 4096);
+    const shadowSize = Math.min(screen.width, screen.height) < 800 ? 2048 : 4096;
+    this.sun.shadow.mapSize.set(shadowSize, shadowSize);
     this.sun.shadow.bias = -0.0008;
     this.sun.shadow.normalBias = 0.04;
     this.scene.add(this.sun);
@@ -140,8 +141,18 @@ export class Stage {
     if (this.reducedMotion) this.azimuth = this.azimuthTarget;
   }
 
-  flyTo(target: THREE.Vector3, zoom = 2.2) {
+  /**
+   * Fly to a point. `lift` (0..1 of the half view height) shifts the view so the point sits above
+   * the centre, e.g. when a bottom sheet covers the lower half of the screen.
+   */
+  flyTo(target: THREE.Vector3, zoom = 2.2, lift = 0) {
     const to = target.clone();
+    if (lift) {
+      const finalZoom = Math.max(this.camera.zoom, zoom);
+      const toCamera = new THREE.Vector3().subVectors(this.camera.position, this.controls.target).setY(0).normalize();
+      const halfHeight = this.camera.top / finalZoom;
+      to.addScaledVector(toCamera, (lift * halfHeight) / Math.sin(ELEVATION));
+    }
     if (this.reducedMotion) {
       this.controls.target.copy(to);
       this.camera.zoom = zoom;

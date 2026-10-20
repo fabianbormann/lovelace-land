@@ -105,7 +105,6 @@ export function buildWater(terrain: Terrain, stage: Stage) {
         pos.setY(i, Math.sin(x * 0.35 + t * 0.9) * 0.07 + Math.cos(z * 0.3 + t * 0.7) * 0.07);
       }
       pos.needsUpdate = true;
-      geometry.computeVertexNormals();
     });
   return water;
 }
@@ -169,5 +168,38 @@ export function buildSignposts(world: World, surfaceY: (x: number, y: number) =>
     label.position.set(x, surfaceY(x, y) + 1.6, y);
     group.add(label);
   }
+  return group;
+}
+
+/** Block "rafts" drifting down the chain river, a nod to blocks flowing from the mountain. */
+export function buildRafts(terrain: Terrain, stage: Stage) {
+  const group = new THREE.Group();
+  const path = terrain.riverPath;
+  if (path.length < 2) return group;
+  const material = new THREE.MeshLambertMaterial({ color: '#7a5634', flatShading: true });
+  const cargo = new THREE.MeshLambertMaterial({ color: '#2f5fe0', flatShading: true });
+  const rafts = Array.from({ length: Math.max(2, Math.floor(path.length / 8)) }, (_, i) => {
+    const raft = new THREE.Group();
+    raft.add(new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.08, 0.5), material));
+    const block = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.28, 0.28), cargo);
+    block.position.y = 0.18;
+    raft.add(block);
+    group.add(raft);
+    return { raft, offset: (i / Math.max(2, Math.floor(path.length / 8))) * (path.length - 1) };
+  });
+  const place = (t: number) => {
+    const len = path.length - 1;
+    for (const r of rafts) {
+      const d = (r.offset + t * 0.9) % len;
+      const k = Math.floor(d);
+      const f = d - k;
+      const [ax, ay] = path[k];
+      const [bx, by] = path[Math.min(k + 1, len)];
+      r.raft.position.set(ax + (bx - ax) * f, 0.05, ay + (by - ay) * f);
+      r.raft.rotation.y = Math.atan2(bx - ax, by - ay);
+    }
+  };
+  place(0);
+  if (!stage.reducedMotion) stage.addTick((t) => place(t));
   return group;
 }

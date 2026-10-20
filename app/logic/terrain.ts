@@ -19,6 +19,8 @@ export interface Terrain {
   land: Uint8Array;
   heights: Float32Array;
   river: Uint8Array;
+  /** river tiles from the mountain to the sea, in flow order */
+  riverPath: [number, number][];
   isLand(x: number, y: number): boolean;
   isRiver(x: number, y: number): boolean;
   heightAt(x: number, y: number): number;
@@ -90,6 +92,7 @@ export function buildTerrain(world: World): Terrain {
 
   // The chain river: from the mountain foot east to the first district gap, then south to the sea.
   const river = new Uint8Array(size);
+  const riverPath: [number, number][] = [];
   const ordered = [...world.districts].sort((a, b) => a.order - b.order);
   const flat = new Set<number>();
   for (const t of world.tiles) if (inside(t.pos[0], t.pos[1])) flat.add(at(t.pos[0], t.pos[1]));
@@ -97,8 +100,15 @@ export function buildTerrain(world: World): Terrain {
   if (ordered.length >= 2) {
     const riverX = ordered[0].region.x1 + 1;
     const startX = MOUNTAIN_PEAK[0] + 4;
-    for (let x = startX; x <= riverX; x++) if (inside(x, 2)) river[at(x, 2)] = 1;
-    for (let y = 2; inside(riverX, y) && land[at(riverX, y)]; y++) river[at(riverX, y)] = 1;
+    for (let x = startX; x <= riverX; x++)
+      if (inside(x, 2)) {
+        river[at(x, 2)] = 1;
+        riverPath.push([x, 2]);
+      }
+    for (let y = 3; inside(riverX, y) && land[at(riverX, y)]; y++) {
+      river[at(riverX, y)] = 1;
+      riverPath.push([riverX, y]);
+    }
   }
 
   const heights = new Float32Array(size);
@@ -125,6 +135,7 @@ export function buildTerrain(world: World): Terrain {
     land,
     heights,
     river,
+    riverPath,
     isLand: (x, y) => inside(x, y) && land[at(x, y)] === 1,
     isRiver: (x, y) => inside(x, y) && river[at(x, y)] === 1,
     heightAt: (x, y) => (inside(x, y) ? heights[at(x, y)] : WATER_HEIGHT),

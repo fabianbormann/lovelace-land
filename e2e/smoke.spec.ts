@@ -85,3 +85,45 @@ test('works at phone width', async ({ page }) => {
   await page.locator('#search-results li').first().dispatchEvent('mousedown');
   await expect(page.locator('#panel')).toBeVisible();
 });
+
+test('without WebGL the list view is the map and its details panel sits on top', async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, type: string, ...rest: unknown[]) {
+      return type.startsWith('webgl') ? null : (original as Function).call(this, type, ...rest);
+    } as typeof original;
+  });
+  await open(page);
+  await expect(page.locator('#listview')).toBeVisible();
+  await expect(page.locator('#list-note')).toContainText('WebGL');
+  await page.locator('#list-table tbody tr', { hasText: 'Anvil Lib' }).click();
+  const panel = page.locator('#panel');
+  await expect(panel.locator('h2')).toHaveText('Anvil Lib');
+  const onTop = await panel.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return el.contains(document.elementFromPoint(r.left + r.width / 2, r.top + 40));
+  });
+  expect(onTop).toBe(true);
+});
+
+test('keyboard users keep focus when following a ship and opening results', async ({ page }) => {
+  await open(page, '#customer=harbor-traders');
+  const follow = page.getByRole('button', { name: /Follow this ship/ });
+  await follow.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#lens-hint')).toContainText('Following Harbor Traders');
+  await expect(follow).toBeFocused();
+  await page.fill('#search-input', 'mill');
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#panel h2')).toBeFocused();
+  await page.locator('#search-input').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#panel h2')).toHaveText('Mill Indexer');
+});
+
+test('an unknown deep link is ignored', async ({ page }) => {
+  await open(page);
+  await page.evaluate(() => (location.hash = '#node=does-not-exist'));
+  await page.waitForTimeout(300);
+  await expect(page.locator('#panel')).toBeHidden();
+});
