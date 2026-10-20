@@ -285,6 +285,7 @@ tbody tr:hover { background: var(--brass-soft); }
   .bar-actions { margin-left: auto; }
   .panel { top: auto; left: max(16px, env(safe-area-inset-left, 0px)); width: auto; height: 58%; }
   .legend:not([open]) { width: auto; }
+  .legend { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
   .timeline { left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); transform: none; width: auto; min-width: 0; bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
   .stats { display: none; }
 }
