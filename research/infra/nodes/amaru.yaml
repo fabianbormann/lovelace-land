@@ -1,0 +1,31 @@
+id: amaru
+name: "Amaru"
+district: core
+description: "A fully open-source Cardano node client written in Rust, developed under the PRAGMA association. It is still in an exploratory phase."
+maintainer: "PRAGMA"
+links:
+  website: https://amaru.global
+  repo: https://github.com/pragma-org/amaru
+packages:
+  - ecosystem: cargo
+    name: "amaru"
+status: active
+primarySector: null
+uses:
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/pragma-org/amaru/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "pallas-network = \"0.34.0\""
+  - target: mithril
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/pragma-org/amaru/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "mithril-client = { version = \"0.14.17\", ... }"
+lastVerified: 2026-10-20

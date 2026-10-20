@@ -1,0 +1,28 @@
+id: nbx
+name: Norwegian Block Exchange (NBX)
+type: organization
+sectors: [ payments ]
+stage: production
+description: Oslo-based, MiCA-authorized exchange and e-money institution that
+  co-issues USDM in the EEA and offers its clients OTC minting, burning and
+  redemption of USDM.
+uses:
+  - target: usdm
+    confidence: verified
+    evidence:
+      - url: https://www.inderes.dk/releases/nbx-otc-minting-and-burning-of-usdm-now-available-at-nbx
+        kind: announcement
+        retrieved: 2026-10-20
+        note: 'Oslo, 28 March 2025: NBX "now offers OTC minting and burning of the USDM
+          stablecoin for its clients"'
+      - url: https://nbx.com/en/whatisusdm
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"Issued in the EEA by NBX (Norwegian Block Exchange) and in USA by
+          Moneta"'
+      - url: https://moneta.global/ecosystem/partners/nbx/
+        kind: docs
+        retrieved: 2026-10-20
+active:
+  from: 2025-03
+lastVerified: 2026-10-20

@@ -1,0 +1,10 @@
+{
+  "id": "cardano-academy",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/UVerify-io/uverify-additional-templates/blob/main/cardano-academy-certificate/README.md",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM address_utxo WHERE date in <year window> AND owner_addr IN ('addr1q9dgm5dx75sg7haxd7xrgkdyqkzln36j739epx4h0aur4c6tqj46m7mmw95tehhrvqz59x83n7tsnyqcxarfraxvk4kqevsym9')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2026-09": 70,
+    "2026-10": 3
+  }
+}

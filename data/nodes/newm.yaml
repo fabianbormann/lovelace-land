@@ -1,0 +1,51 @@
+id: newm
+name: NEWM
+district: products
+description: Music platform where artists distribute releases and sell "stream
+  tokens" (fractional streaming-royalty rights) to fans on Cardano through the
+  NEWM marketplace.
+maintainer: Project NEWM
+links:
+  website: https://newm.io
+  repo: https://github.com/projectNEWM/newm-server
+status: active
+primarySector: nfts-gaming-media
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/projectNEWM/newm-market/blob/master/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"The NEWM Marketplace contracts allow the selling of stream tokens for
+          NEWM or USD paid in NEWM."'
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/projectNEWM/newm-server/blob/master/newm-chain/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: implementation(Dependencies.Newm.KOGMIOS) - NEWM's Kotlin Ogmios client
+          (github.com/projectNEWM/kogmios)
+onchain:
+  scripts:
+    - 1cfcfe58e3462df9a3ab474a66536ef48f5acc2c1e7ad2abb294446a
+    - 26c0f8e2d3be37de297fa57c48820fcb24c7b09aebe280430cef9d87
+    - 3333c8022c24d2014f02236c082105ebceb73c46c45f94eb99136f92
+    - 46e607b3046a34c95e7c29e47047618dbf5e10de777ba56c590cfd5c
+    - 7c7487bca5af9814f10b9e8239b9efa46f20f87edd075f78d62abbb7
+    - b8193d5acd8a0a6aa1f06ed1835648bc76e458c6c4621c543b769a3e
+    - be670fd506fe343c238b8c3357511b863c8c2173f49a0b56aba1ab24
+    - bf5ba087d428e870a809c3e88fa8de019e01f5f31582c0e4abcb42bd
+    - db7245ff4fe23633e2c10ef62374ca6b64efd80d31fc3f7c431386e0
+    - fd4572b20a1d76e7dc0aaa548579bacc2b318a4862a7e12f94b7e76d
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/projectNEWM.json
+  note: NEWM marketplace contracts (sale, queue, vault, pointer, batcher cert,
+    band lock-up, data ref, staking) from StricaHQ/Eternl/CRFA, plus 2
+    stream-token policies from newm-server static/stream-token-policy-ids.json.
+    No activity since 2026-04 (marketplace last used Feb 2026); current
+    stream-token minting policies are in NEWM's DB config and not published, so
+    0 in Sept may undercount.
+lastVerified: 2026-10-20

@@ -1,0 +1,25 @@
+{
+  "id": "masumi",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/masumi-network/masumi-payment-service/blob/main/packages/payment-core/src/config.ts",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_scripts WHERE date in <year window> AND script_hash IN ('67ab0c92c4ac1610895a1c965ee50aba41a8f1513b15240723b3bd0b', 'a15ce9d82d2f67645fc624e2edac03c6f1c106d0ad1af5815a3b14ad', 'ad6424e3ce9e47bbd8364984bd731b41de591f1d11f6d7d43d0da9b9', 'bd2adb685621e224aae7571cb6bd8f0beb0fdd31875eb3a27feee6c0')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2025-06": 475,
+    "2025-07": 2332,
+    "2025-08": 1384,
+    "2025-09": 2055,
+    "2025-10": 3005,
+    "2025-11": 3490,
+    "2025-12": 966,
+    "2026-01": 859,
+    "2026-02": 1964,
+    "2026-03": 2299,
+    "2026-04": 1886,
+    "2026-05": 1899,
+    "2026-06": 1450,
+    "2026-07": 3335,
+    "2026-08": 1553,
+    "2026-09": 1135,
+    "2026-10": 897
+  }
+}

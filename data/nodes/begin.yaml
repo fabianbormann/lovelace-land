@@ -1,0 +1,31 @@
+id: begin
+name: Begin
+district: wallets
+description: Cardano light wallet with an open-source crypto core SDK (begin-core); the team also ships a headless CLI wallet for AI agents covering Cardano, Bitcoin and Solana.
+maintainer: Begin Wallet
+links:
+  website: https://begin.is
+  repo: https://github.com/beginwallet/begin-core
+packages:
+  - ecosystem: npm
+    name: "@beginwallet/core"
+status: active
+primarySector: null
+uses:
+  - target: cardano-multiplatform-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/beginwallet/begin-core/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@dcspark/cardano-multiplatform-lib-browser / -nodejs 6.0.0; README: 'Our SDK is based on dcSpark - CML'"
+  - target: mesh
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/beginwallet/begin-cli/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "Begin's headless CLI wallet (@beginwallet/cli) depends on @meshsdk/core"
+lastVerified: 2026-10-20

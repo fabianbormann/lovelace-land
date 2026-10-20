@@ -1,0 +1,19 @@
+id: wayup-nft-traders
+name: NFT buyers and sellers on Wayup
+type: segment
+sectors: [nfts-gaming-media]
+stage: production
+description: Collectors listing, buying and bidding on Cardano NFTs on Wayup, including listings carried over from JPG Store's contracts.
+metric:
+  label: On-chain transactions, last 30 days (snapshot 2026-10-16)
+  value: "6,741"
+  source: https://cardano.org/apps/wayup/
+  retrieved: 2026-10-20
+uses:
+  - target: wayup
+    confidence: verified
+    evidence:
+      - url: https://cardano.org/apps/wayup/
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

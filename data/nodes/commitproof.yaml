@@ -1,0 +1,20 @@
+id: commitproof
+name: CommitProof
+district: products
+description: Web notary that hashes a file or text in the browser and commits
+  only the salted hash to Cardano mainnet transaction metadata, returning a
+  PDF/JSON proof for later verification. Listed in the Notary category on
+  cardano.org; no public source code or tech stack disclosed.
+links:
+  website: https://commitproof.com
+status: active
+primarySector: proof-verification
+onchain:
+  metadataLabels:
+    - 8413
+  source: https://commitproof.com/_astro/cardano.B_cTHFFk.js
+  note: The site's wallet flow calls attachMetadata({label:8413n}) with {hash,
+    algo, version, app, ts}. All 33 label-8413 tx on chain (2026-03-01 to
+    2026-09-20) carry app="commitproof.com". The card-payment path is
+    server-side and its label is unconfirmed, but no other 8413 traffic exists.
+lastVerified: 2026-10-20

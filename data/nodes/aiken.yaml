@@ -1,0 +1,27 @@
+id: aiken
+name: "Aiken"
+district: onchain-languages
+description: "Aiken is a functional smart-contract language and toolchain for Cardano that compiles to Untyped Plutus Core. Its Rust 'uplc' crate (parser, evaluator, cost model) is reused by many off-chain SDKs for local script evaluation."
+maintainer: "Aiken team (aiken-lang)"
+links:
+  website: https://aiken-lang.org
+  repo: https://github.com/aiken-lang/aiken
+packages:
+  - ecosystem: cargo
+    name: "aiken"
+  - ecosystem: cargo
+    name: "uplc"
+  - ecosystem: npm
+    name: "@aiken-lang/aiken"
+status: active
+primarySector: null
+uses:
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/aiken-lang/aiken/blob/main/crates/uplc/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "uplc crate depends on pallas-addresses, pallas-codec, pallas-crypto, pallas-primitives, pallas-traverse (0.35.0 in workspace Cargo.toml)"
+lastVerified: 2026-10-20

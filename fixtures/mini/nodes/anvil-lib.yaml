@@ -1,0 +1,17 @@
+id: anvil-lib
+name: Anvil Lib
+district: sdks
+description: Fictional transaction-building library.
+packages:
+  - ecosystem: npm
+    name: "@fixture/anvil"
+status: active
+uses:
+  - target: hearth-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://example.org/anvil/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

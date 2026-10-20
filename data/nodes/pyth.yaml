@@ -1,0 +1,50 @@
+id: pyth
+name: Pyth Pro (Pyth Network)
+district: oracles
+description: Pull-based price oracle; Pyth Pro (Lazer) delivers signed
+  low-latency price updates that a Cardano transaction carries and an on-chain
+  Aiken library verifies. Announced live on Cardano in 2026 and described by the
+  Cardano Developer Portal as the recommended production price oracle.
+maintainer: Pyth Network
+links:
+  website: https://www.pyth.network
+  repo: https://github.com/pyth-network/pyth-crosschain/tree/main/lazer/contracts/cardano
+  docs: https://docs.pyth.network/price-feeds/pro/integrate-as-consumer/cardano
+packages:
+  - ecosystem: npm
+    name: "@pythnetwork/pyth-lazer-cardano-js"
+status: active
+primarySector: null
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/pyth-network/pyth-crosschain/blob/main/lazer/contracts/cardano/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "pyth-network/pyth-lazer-cardano-contracts, compiler v1.1.21, plutus v3"
+  - target: evolution-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/pyth-network/pyth-crosschain/blob/main/lazer/contracts/cardano/sdk/js/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@pythnetwork/pyth-lazer-cardano-js depends on @evolution-sdk/evolution"
+      - url: https://docs.pyth.network/price-feeds/pro/integrate-as-consumer/cardano
+        kind: docs
+        retrieved: 2026-10-20
+        note: Integration example builds the transaction with Evolution SDK
+onchain:
+  scripts:
+    - 4949403eece2eea554df601a883c50d0ef005fa66e7a7300bad5ebc2
+    - 6d0b0ce6fc4336c208377ca85a99a7e18ad283a3b191b109befb9ab1
+    - c935c937d0deda8975142c7b77aeef8f8cd48791e89a8ca7a0edc154
+  source: https://docs.pyth.network/price-feeds/pro/contract-addresses
+  note: Pyth Pro mainnet deployment policy c935c937 (docs), state home script
+    6d0b0ce6 (address holding the Pyth State NFT) and withdraw/verify script
+    4949403e (withdraw_script field of the on-chain Pyth State datum, per
+    pyth_state.ak). The withdraw script runs inside consumer dApps'
+    transactions, so these tx overlap with consumers.
+lastVerified: 2026-10-20

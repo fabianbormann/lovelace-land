@@ -1,0 +1,15 @@
+id: indigo-dao
+name: Indigo Protocol DAO
+type: dao
+sectors: [governance, defi]
+stage: production
+description: DAO governing the Indigo synthetic-assets protocol; listed by Clarity as a community using its governance platform.
+uses:
+  - target: clarity
+    confidence: verified
+    evidence:
+      - url: https://www.clarity.community/
+        kind: case-study
+        retrieved: 2026-10-20
+        note: Indigo Protocol listed among communities using Clarity.
+lastVerified: 2026-10-20

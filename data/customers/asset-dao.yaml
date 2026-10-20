@@ -1,0 +1,15 @@
+id: asset-dao
+name: Asset DAO
+type: dao
+sectors: [rwa, nfts-gaming-media]
+stage: production
+description: Uses NMKR Studio to tokenize real-world assets such as hotels in Japan.
+uses:
+  - target: nmkr
+    confidence: verified
+    evidence:
+      - url: https://www.nmkr.io/blog/nmkr-powering-a-monumental-2024-for-cardano-web3
+        kind: announcement
+        retrieved: 2026-10-20
+        note: Asset DAO "has been actively using NMKR Studio for tokenizing real-world assets like hotels in Japan".
+lastVerified: 2026-10-20

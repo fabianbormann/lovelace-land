@@ -1,0 +1,21 @@
+id: mill-indexer
+name: Mill Indexer
+district: indexers
+description: Fictional chain indexer.
+status: active
+uses:
+  - target: hearth-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://example.org/mill/docs
+        kind: docs
+        retrieved: 2026-10-20
+  - target: anvil-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://example.org/mill/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

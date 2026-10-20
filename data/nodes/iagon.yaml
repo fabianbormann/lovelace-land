@@ -1,0 +1,43 @@
+id: iagon
+name: Iagon
+district: products
+description: DePIN marketplace for decentralised storage and compute where node
+  operators stake IAG and rent out capacity; offers private distributed cloud
+  storage to enterprises. Tagged DePIN. Iagon also runs Cardano node and API services for enterprises.
+maintainer: Iagon
+links:
+  website: https://iagon.com
+  repo: https://github.com/Iagonorg/staking-and-rewards-contract
+status: active
+primarySector: enterprise-government
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/Iagonorg/staking-and-rewards-contract/blob/main/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: Aiken project iagon/staking with plutus.json (staking and rewards
+          contract)
+  - target: lucid
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Iagonorg/staking-and-rewards-contract/blob/main/offchain/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"lucid-cardano": "^0.10.7"'
+onchain:
+  scripts:
+    - 1fa8c9199601924c312fb4f206ff632ca575b27f4f97dd02d9a9ae56
+    - 3ec3f628639c989da3302724c61c90ced45571d611563d98cd528616
+    - 5d16cc1a177b5d9ba9cfa9793b07e60f1fb70fea1f8aef064415d114
+    - 6caa3ba78ac89b51aad2d06ab8a5cd097334faba23127fc6f665e272
+    - a3959153cfd23daa1271b520bdf27dc7cbeab6ef24770fc72e458bd8
+    - ac35ee89c26b1e582771ed05af54b67fd7717bbaebd7f722fbf430d6
+    - faecb80eee6cadf9dac5184263ed4d164b38fe71d4f6f55e8f6b0da0
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/iagon.json
+  note: Iagon staking/storage-payment scripts from StricaHQ, Yaci Store dApp
+    registry, CRFA and Eternl registries.
+lastVerified: 2026-10-20

@@ -1,0 +1,43 @@
+name: Check pull request
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate data (schema and references; a stale layout lock only warns)
+        run: npm run check:data
+      - run: npm run typecheck
+      - run: npm test
+      - name: Browser smoke tests
+        run: |
+          npx playwright install --with-deps chromium
+          npm run e2e
+
+      - name: Describe how the island changes
+        run: |
+          npx tsx pipeline/cli.ts --out "$RUNNER_TEMP/head.json"
+          git worktree add "$RUNNER_TEMP/base" "${{ github.event.pull_request.base.sha }}"
+          (cd "$RUNNER_TEMP/base" && npm ci --silent && npx tsx pipeline/cli.ts --out "$RUNNER_TEMP/base.json") || echo "Base has no world yet."
+          npx tsx scripts/world-diff.ts "$RUNNER_TEMP/base.json" "$RUNNER_TEMP/head.json" > "$RUNNER_TEMP/diff.md"
+          cat "$RUNNER_TEMP/diff.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Comment on the pull request
+        # Pull requests from forks get a read-only token; the job summary above still shows the change.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/diff.md" --edit-last || gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/diff.md"

@@ -1,0 +1,45 @@
+id: translucent
+name: "Translucent"
+district: sdks
+description: "Translucent was a TxPipe-hosted fork of Lucid with breaking changes; its README states it is deprecated in favour of Blaze."
+maintainer: "TxPipe"
+links:
+  repo: https://github.com/txpipe/translucent
+packages:
+  - ecosystem: npm
+    name: "translucent-cardano"
+status: deprecated
+primarySector: null
+uses:
+  - target: cardano-multiplatform-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/txpipe/translucent/blob/main/packages/translucent/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@dcspark/cardano-multiplatform-lib-nodejs / -browser ^3.1.2"
+  - target: maestro
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/txpipe/translucent/blob/main/packages/translucent/src/provider/maestro.ts
+        kind: docs
+        retrieved: 2026-10-20
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/txpipe/translucent/blob/main/packages/translucent/src/provider/kupmios.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Kupmios (Kupo + Ogmios) provider"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/txpipe/translucent/blob/main/packages/translucent/src/provider/kupmios.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Kupmios (Kupo + Ogmios) provider"
+lastVerified: 2026-10-20

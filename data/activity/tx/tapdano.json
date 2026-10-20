@@ -1,0 +1,11 @@
+{
+  "id": "tapdano",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/cardano-foundation/cardano-org/blob/main/src/data/apps.js",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <year window> AND CAST(label AS VARCHAR) IN ('544')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2026-04": 708,
+    "2026-05": 889,
+    "2026-06": 401
+  }
+}

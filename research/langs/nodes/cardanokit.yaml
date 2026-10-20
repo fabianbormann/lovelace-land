@@ -1,0 +1,20 @@
+id: cardanokit
+name: "CardanoKit"
+district: sdks
+description: "CardanoKit is a Swift library for iOS and macOS apps (HD wallets, signing, UTxO management) built on a Swift bridge to cardano-serialization-lib."
+maintainer: "TokeoPay"
+links:
+  repo: https://github.com/TokeoPay/CardanoKit
+  docs: https://developers.cardano.org/docs/get-started/client-sdks/swift/cardanokit
+status: active
+primarySector: null
+uses:
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/TokeoPay/CardanoKit/blob/main/Package.swift
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "depends on CSLKit from https://github.com/TokeoPay/csl-mobile-bridge.git"
+lastVerified: 2026-10-20

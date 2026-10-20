@@ -1,0 +1,15 @@
+id: snekkies
+name: Snekkies
+type: organization
+sectors: [nfts-gaming-media]
+stage: production
+description: Cardano PFP NFT collection launched through NMKR in 2024 that sold out for over 1.2 million ADA.
+uses:
+  - target: nmkr
+    confidence: verified
+    evidence:
+      - url: https://www.nmkr.io/blog/nmkr-powering-a-monumental-2024-for-cardano-web3
+        kind: announcement
+        retrieved: 2026-10-20
+        note: '"Snekkies, which generated over 1.2 million ADA by selling out its collection."'
+lastVerified: 2026-10-20

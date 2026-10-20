@@ -1,0 +1,20 @@
+id: nmkr-creators
+name: NFT creators minting with NMKR
+type: segment
+sectors: [nfts-gaming-media]
+stage: production
+description: Artists, projects and brands minting and selling Cardano NFTs and tokens through NMKR Studio, its API and pay-in links.
+metric:
+  label: NFTs minted through NMKR's API by Jan 2022 (about 18% of all Cardano NFTs at the time)
+  value: "500,000+"
+  source: https://www.nmkr.io/blog/nmkr-enabled-more-than-500-000-nfts-on-cardano-cardanonft-cnft
+  retrieved: 2026-10-20
+uses:
+  - target: nmkr
+    confidence: verified
+    evidence:
+      - url: https://www.nmkr.io/blog/nmkr-enabled-more-than-500-000-nfts-on-cardano-cardanonft-cnft
+        kind: announcement
+        retrieved: 2026-10-20
+        note: Roughly 2,000 NFTs per day; about 16 million ADA creator revenue (Jan 2022, self-reported).
+lastVerified: 2026-10-20

@@ -1,0 +1,6 @@
+id: hearth-node
+name: Hearth Node
+district: core
+description: The fictional block-producing node.
+status: active
+lastVerified: 2026-10-20

@@ -1,0 +1,11 @@
+node_modules/
+public/world.json
+dist/
+.superpowers/
+.shot.mjs
+test-results/
+playwright-report/
+.scrub.mjs
+.merge-onchain.ts
+.trace.mjs
+.coast.mjs

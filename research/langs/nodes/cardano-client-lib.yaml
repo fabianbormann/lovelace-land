@@ -1,0 +1,49 @@
+id: cardano-client-lib
+name: "Cardano Client Lib"
+district: sdks
+description: "Java library for building and signing Cardano transactions, with QuickTx builder, CIP support and pluggable backends for chain data."
+maintainer: "BloxBean"
+links:
+  website: https://cardano-client.dev
+  repo: https://github.com/bloxbean/cardano-client-lib
+packages:
+  - ecosystem: maven
+    name: "com.bloxbean.cardano:cardano-client-lib"
+  - ecosystem: maven
+    name: "com.bloxbean.cardano:cardano-client-backend-blockfrost"
+status: active
+primarySector: null
+uses:
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/cardano-client-lib/blob/master/backend-modules/blockfrost/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "'Cardano Client Lib - Blockfrost Backend' module"
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/cardano-client-lib/blob/master/backend-modules/koios/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "Koios backend module, api(libs.koios.java)"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/cardano-client-lib/blob/master/backend-modules/ogmios/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "Ogmios backend module, depends on ogmios-supplier and kupo-supplier"
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/cardano-client-lib/blob/master/supplier/kupo-supplier/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "'Cardano Client Lib - Kupo Supplier Module'"
+lastVerified: 2026-10-20

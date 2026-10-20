@@ -1,0 +1,20 @@
+id: surf-lending-users
+name: Surf Lending depositors and borrowers
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users depositing into Surf lending pools or borrowing against collateral.
+metric:
+  label: Total value locked
+  value: "$3.48M"
+  source: https://api.llama.fi/tvl/surf-lending
+  retrieved: 2026-10-20
+uses:
+  - target: surf-lending
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/tvl/surf-lending
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to surf-lending'
+lastVerified: 2026-10-20

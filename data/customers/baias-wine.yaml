@@ -1,0 +1,24 @@
+id: baias-wine
+name: Baia's Wine
+type: organization
+sectors: [ supply-chain ]
+stage: pilot
+description: Family-owned Georgian winery (Imereti region) that put Scantrust
+  secured QR codes linked to Cardano transaction metadata on export bottles in
+  2020-2021, which the Cardano Foundation described as the first commercial use
+  of Cardano metadata.
+uses:
+  - target: scantrust
+    confidence: verified
+    evidence:
+      - url: https://cardanofoundation.org/blog/cardano-reveals-its-first-supply-chain-solution-in-association-with-scantrust
+        kind: announcement
+        retrieved: 2026-10-20
+        note: "already being successfully used in a proof-of-concept implementation with
+          Georgian artisan wine producer, Baia's Wine (6 April 2021)"
+      - url: https://forum.cardano.org/t/cardano-foundation-develops-metadata-connector-for-scantrust-supply-chain-tracking/42741
+        kind: announcement
+        retrieved: 2026-10-20
+active:
+  from: 2021-04
+lastVerified: 2026-10-20

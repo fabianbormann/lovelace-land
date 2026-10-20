@@ -1,0 +1,15 @@
+id: world-mobile
+name: World Mobile
+type: organization
+sectors: [payments]
+stage: production
+description: Decentralized mobile network built on Cardano that, according to the USDM issuer, accepts USDM as a payment method for its mobile connectivity services.
+uses:
+  - target: usdm
+    confidence: verified
+    evidence:
+      - url: https://moneta.global/ecosystem/partners/world-mobile/
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"World Mobile accepts USDM as a payment method for mobile services" (issuer page; no World Mobile announcement found)'
+lastVerified: 2026-10-20

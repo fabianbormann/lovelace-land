@@ -1,0 +1,87 @@
+id: surf-lending
+name: Surf Lending
+district: products
+description: Pooled lending protocol on Cardano where depositors earn interest
+  and borrowers take instant over-collateralized loans; batched order
+  processing.
+maintainer: Surf (Flow Lending)
+links:
+  website: https://surflending.org
+  repo: https://github.com/surf-lending
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/surf-lending/surf-lending-v1-audit/blob/main/surf-lending.pdf
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'Anastasia Labs audit (5 Nov 2025) quotes contract code such as "use
+          aiken/collection/list"'
+onchain:
+  scripts:
+    - 01e7e0ba139a364f9729c28ed7c789ea1513fcc023355020d76acd60
+    - 07f9840cc1855457af29510a4a05d0424d75bc0a4e67cb02b8b55269
+    - 0ce22b44f9a5ad6d79e9aadaf0983ef986879e569d94d09a4d2f5b85
+    - 14ee89d6332209bffb1ff71ad2edb791a9c1e1f15968caa1a0ba0aa4
+    - 179e39bbd4450cbdc49192dc05c3dade6f35767717b238a85cc3b1ce
+    - 1acb7cfc4ddf4be4f18374f88a2b3e8d60d74dced34a07ad03e81f97
+    - 1cd85a4b9a2c6bc837aabbc8ff24d9d7e777ba8c72211feaf24b7e8b
+    - 1cf51a54448953d94591dca4132652874cb41ffd0087c633ec3640b3
+    - 276b8c795bb0e70d5bd8a0ff921180d7bea100323f712b05eb374450
+    - 287b41d4db273979b03a5e997a92d2f959d6a8a7cc5db7cbf3a92efa
+    - 32cbdf02404c1b4f36c7c106f77624d92a16c0ad6db66e5eba7b9a88
+    - 386bb2d205dbc755924b32851ee6ab46726366ecb6804a6f250b68f1
+    - 3a4b282e47c2e172960362c0dff397b189c9a4ca28f64cfac80015d9
+    - 3dc1225cd0f74467caa6336d1b2807a2a4ae72fbe6affa5bdc3f903b
+    - 3f4d67a32e0b34acf7b03ba12bf792d1ead5607bb81076acf583b9c4
+    - 40b3caf60be9e341e27002b3267ed8603b3ccb2b529075528f53aa5e
+    - 42b679e0128125f244c9b7da79ccfa5b40d337453e61285f018368b9
+    - 47c42dd4ba46831dc41efe39887036a86c4788473c86ce96df71c2e2
+    - 4a688ab65f839782067d1280c545476c981738311fa9b7954fb03bfa
+    - 4b51cd366f2f79a68a24b963dd4f3d9cc65dcd904cc020179f8fd84d
+    - 4bf69f8e42e2f7ee9e801534edc38b9ee4075cc6b3593a6fec8e5b2e
+    - 4f6715aeac68c0b4bec580dc275ffd93da093296a426b373cecc542a
+    - 505759098f5b622f9be627d45080eeda69c57db07fa5ca9e85329531
+    - 57ce06413a9b38148c17054b6fe5590b4e11a4083b1a325e8f121127
+    - 59eb673306ab88236d5fc4773d92057ac4a7bf3391ab2a270adbbf25
+    - 6bf6754a78757e77cc99d6d0202262d26b555591be79310f0346dcb6
+    - 7170253e1c04774230113893b246223d482f7782b562037c4b69c192
+    - 7172766800a3a55ab46fc97a7e826979c2cc4e3fdd84655e63ef6b74
+    - 7fc1bc177400310e7d889faaec7daa2fcd05d3c10d03e27a79646ef1
+    - 824a34de1826432a291b007d99d86e77355de4273c47b79b0d12e94d
+    - 86359ee8e309fb960cc4d92ac02a9133d883c2323bfb123a304d4e91
+    - 87b7ddd3e4629484519d2506190d4b5459d893e15edcef78c36f93fd
+    - 87d1b3d959b70f83700de7d9c44d1ff28d600c27e23acd4d725ec49b
+    - 8b3dba5fec4ccb7f7995702a29f57d9efae5b0761b59472a1530c90c
+    - 94a9b38b790e51540b48b462ed994c5dc658fc415b5a15dec29397f6
+    - 970181bb7e3efcce74e3a85116250e49b242cd04149eed890eaf4fb7
+    - 995420d14e9f72b6dcb60cce4c473ad5d5d68f047759ff8cf07aaf04
+    - ab5fba3021ed9d8d2453481334b46d8eaf837cf3183db70b05566b62
+    - ac9ea997441021e53ae8a2cdf78372087c180b5f511b2a40b6a9dbd2
+    - b361710bb67ba19c3ff800ccd78f7a424dc68c87a066b7bba552ab3f
+    - c5438f297713fe7cbbe4e78b6a6f3ae6380cffd560e747b076eb8e5a
+    - c873f25462c275382f8f10f6ce3fa30ba697102d051744dc3518bff7
+    - cbd1362aba2c786b2198a54a36ebd3d042c10fe65d3b5e5d55e48cd4
+    - cc113c7ebbf90a1a1da5dca60cb5b8c7d369e2101cb74deae92ae5c0
+    - ce64420361832606b0f907412d4a832e7572afa06dbed60576239468
+    - d23dc369c97885a001ab6915bcff8530a06bbccf237dc8379eb551d0
+    - d3eb03a9d8a323c3aed63102fbabb19ded46e74a71d3a2b46db29719
+    - dd5568c889f41ba1509f31fc20c8745f3c7c8a179040c8eb2191cf09
+    - e268cf94eccdac4d3a8c02fe40d23addfa146f60b7898bf91233a073
+    - e87efb09c22d24915202b3ce6bab50ced3fc86a9c8ea13ff09e1e1c6
+    - f5b1db92b1a01bfa0d413c18825c169544e56d1c3856a666ff3c8d0b
+    - f6ff44a3d3969690dfbdc723909099bdb65930b81bfd45981fbc52dc
+    - f855b0cba9121c90cb580c9719d55cb95e5be9b981696f29137e01a0
+    - f8f84dfd4f1fde2f9e21aacfb22752d76bbeb5e5dcacdcca542a060a
+    - fcd91be7689d90e1e0e3e32b4951434e71478df7cf331dce55b8dcde
+  source: https://surflending.org/api/getAllPoolInfos
+  note: 37 per-pool cToken minting policies from the official Surf API
+    getAllPoolInfos, plus 18 per-pool position/vault scripts = payment
+    credentials of the position outRefs returned by the official API
+    getAllPositions (one script per pool). Pool-creation and other spends of
+    untracked per-pool scripts are not covered, so this is a lower bound; all
+    hashes first seen Sept 2026.
+lastVerified: 2026-10-20

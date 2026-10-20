@@ -1,0 +1,22 @@
+id: trivolve-fms
+name: Trivolve Forensic Management System
+district: products
+description: Closed-source forensic evidence management system by Trivolve Tech
+  and Quixy that records chain-of-custody steps on Cardano mainnet. Launched in
+  October 2025 with Uttar Pradesh as the pilot state.
+maintainer: Trivolve Tech
+status: active
+primarySector: proof-verification
+onchain:
+  scripts:
+    - 26370b459e5eafe6e179c94a39bb1c278657de5c1875fb9c5d1fa0ba
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/fmsbytrivolve.json
+  note: "'FMS Contract' (Plutus V2), 'UP Police Forensics Management Smart
+    Contract by TrivolveTech', from the StricaHQ contracts registry (used by
+    cardano.org tx leaderboard). 147,562 tx 2025-09-15 to 2026-10-19, matching
+    the Oct 2025 mainnet launch (announced 18 Oct 2025,
+    https://techfinancials.co.za/2025/10/18/trivolve-tech-and-quixy-launch-bloc\
+    kchain-powered-fms-on-the-cardano-mainnet/). The separate Indianchain
+    contract 4b0caac5 (Telangana agriculture) is a different Trivolve product
+    and is excluded."
+lastVerified: 2026-10-20

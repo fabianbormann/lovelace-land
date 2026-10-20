@@ -1,0 +1,34 @@
+id: partner-chains
+name: Partner Chains Toolkit
+district: bridges
+description: IOG's Substrate-based toolkit for building "partner chains" whose block-producer committees mix registered Cardano SPOs and permissioned validators, follow Cardano state via db-sync, and use Cardano-side smart contracts (including a native token reserve). The repository is now archived; the README says development continues in the Midnight node.
+maintainer: Input Output Global (IOG)
+links:
+  repo: https://github.com/input-output-hk/partner-chains
+status: deprecated
+primarySector: null
+uses:
+  - target: cardano-db-sync
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/partner-chains/blob/master/docs/intro.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "In order to observe and respond to events on the main-chain the substrate node components query the persisted ledger state in the database"
+  - target: ogmios
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/partner-chains/blob/master/docs/intro.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "The offchain code connects to an ogmios instance ... used by the offchain components of the toolkit to install and interact with the necessary smart contracts"
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/partner-chains/blob/master/docs/intro.md
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

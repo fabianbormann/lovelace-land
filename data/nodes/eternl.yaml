@@ -1,0 +1,19 @@
+id: eternl
+name: Eternl
+district: wallets
+description: Closed-source, non-custodial multi-platform Cardano light wallet (browser extension, web, mobile) by Tastenkunst GmbH, Leipzig; runs its own backend infrastructure.
+maintainer: Tastenkunst GmbH
+links:
+  website: https://eternl.io
+status: active
+primarySector: null
+uses:
+  - target: koios
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://koios.rest/faq.html
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Eternl/NMKR/VESPR/TosiDrop use their own instances with their own nodes"
+lastVerified: 2026-10-20

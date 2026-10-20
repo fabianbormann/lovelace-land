@@ -1,0 +1,61 @@
+id: sundae-treasury-contracts
+name: Sundae Treasury Contracts
+district: products
+description: Audited Aiken contracts (treasury + vendor) that hold ada withdrawn
+  from the Cardano treasury and release it to vendors by milestone, with
+  pause/resume/sweep permissions; ships a TypeScript SDK/CLI and the
+  treasury.sundae.fi dashboard. Used by Intersect for 2025 treasury withdrawals
+  and reused by PRAGMA for Amaru.
+maintainer: Sundae Labs
+links:
+  website: https://treasury.sundae.fi/
+  repo: https://github.com/SundaeSwap-finance/treasury-contracts
+packages:
+  - ecosystem: npm
+    name: "@sundaeswap/treasury-funds"
+status: active
+primarySector: governance
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/treasury-contracts/blob/main/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: validators/treasury.ak and validators/vendor.ak, compiled plutus.json in
+          repo
+  - target: blaze
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/treasury-contracts/blob/main/offchain/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@blaze-cardano/sdk, @blaze-cardano/data, @blaze-cardano/query,
+          @blaze-cardano/uplc'
+onchain:
+  scripts:
+    - 8583857e4a12ffe1e6f641a1785a0f2f036c565cfbe6ff9db8e5a469
+    - 860ee0f6bd8235842a908afd86dc949c4c9dabd74b0965c364b8d315
+    - 877f57e0bdcc8167e984dee052d8dd7346effc08ff80a29b045e1a10
+    - 882cbb37779b7f1f3dd2b7643662de1bfc180baf225ef820c3d8feae
+    - 9beae6fc7feada6ccf824554b5e3a498eab15205ac9248c3fb993b5f
+    - a7966878550ce11ec8a83b93fc1a6e105d544f78494401066c4fe0cf
+    - cf66174865747ac06068ea24b99798a3262e53f69479afcfca64cc7f
+    - e425984e24fb2c06ad676882178ddee6e47b994a589ae3d70c817c79
+  source: https://intersectmbo.org/news/smart-contracts-in-action-the-first-vendor-contract-goes-on-chain
+  note: "8583857e = Intersect 2025 Treasury Reserve Contract (TRC address
+    addr1xxzc8pt7... in the Intersect post; also listed in StricaHQ
+    cardano-contracts-registry intersectbudget.json, CRFA and Eternl). 882cbb37
+    = Intersect vendor contract (script spent in the post's milestone-withdrawal
+    tx 2c012024..., and listed in the StricaHQ registry).
+    9beae6fc/a7966878/877f57e0/860ee0f6/e425984e = PRAGMA Amaru 2025 treasury
+    instances (consensus/ledger/mercenaries/marketing/contingency scopes), taken
+    from the leftover-return txs listed at
+    https://hackmd.io/@Amaru/2026BudgetDraft. cf661748 = mainnet test instance
+    linked from the treasury-contracts README. 1694 (CIP-100) metadata is used
+    but is a shared label, so it is excluded. Caveat: the contracts are
+    parameterised per instance, so any newer instances (e.g. 2026 budgets) are
+    not covered."
+lastVerified: 2026-10-20

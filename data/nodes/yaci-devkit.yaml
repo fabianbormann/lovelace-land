@@ -1,0 +1,56 @@
+id: yaci-devkit
+name: Yaci DevKit
+district: dev-tooling
+description: Local Cardano devnet toolkit that spins up a real cardano-node with configurable (sub-second) block times, plus Yaci Store with a Blockfrost-compatible API, Ogmios, optional Kupo, a browser viewer and a CLI; supports rollback testing with multi-node clusters.
+maintainer: BloxBean
+links:
+  website: https://devkit.yaci.xyz
+  repo: https://github.com/bloxbean/yaci-devkit
+  docs: https://devkit.yaci.xyz
+packages:
+  - ecosystem: npm
+    name: "@bloxbean/yaci-devkit"
+status: active
+primarySector: null
+uses:
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-devkit/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Components: Cardano Node - Official Cardano node (supports both amd64/arm64)"
+  - target: yaci-store
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-devkit/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Built-in Indexer - Integrated Yaci Store with Blockfrost-compatible APIs"
+  - target: ogmios
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-devkit/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Ogmios v7.0.0 (enabled by default; used as Yaci Store's tx evaluator)"
+  - target: kupo
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-devkit/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Kupo v2.12.0 - Chain indexer (optional)"
+  - target: cardano-client-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-devkit/blob/main/applications/cli/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "com.bloxbean.cardano:cardano-client-lib:0.7.2"
+lastVerified: 2026-10-20

@@ -1,0 +1,28 @@
+id: lace
+name: Lace
+district: wallets
+description: Open-source light wallet (browser extension and mobile) built by Input Output; absorbed the Nami wallet via a "Nami Mode" and also bundles Midnight wallet SDKs.
+maintainer: Input Output Global (IOG)
+links:
+  website: https://www.lace.io
+  repo: https://github.com/input-output-hk/lace
+status: active
+primarySector: null
+uses:
+  - target: cardano-js-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/lace/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@cardano-sdk/wallet 0.56.0, @cardano-sdk/core 0.47.1, @cardano-sdk/tx-construction, hardware-ledger/trezor"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/lace/blob/main/packages/module/cardano-provider-blockfrost/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@lace-module/cardano-provider-blockfrost depends on @blockfrost/blockfrost-js"
+lastVerified: 2026-10-20

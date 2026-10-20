@@ -1,0 +1,36 @@
+id: optim-finance
+name: Optim Finance
+district: products
+description: Cardano yield protocols including OADA (liquid staking-style ADA yield token) and liquidity bonds; bond tokens trade on Danogo.
+maintainer: Optim Finance
+links:
+  website: https://www.optim.finance
+  repo: https://github.com/OptimFinance
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/OptimFinance/leviathan/blob/main/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'preamble "optim/account", compiler "Aiken" v1.1.21'
+  - target: lucid
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/OptimFinance/oada-ui/blob/master/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'OADA UI depends on lucid-cardano ^0.10.9'
+  - target: cardano-multiplatform-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/OptimFinance/oada-ui/blob/master/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'depends on @dcspark/cardano-multiplatform-lib-browser'
+lastVerified: 2026-10-20

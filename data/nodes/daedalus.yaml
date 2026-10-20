@@ -1,0 +1,46 @@
+id: daedalus
+name: Daedalus
+district: wallets
+description: Open-source full-node desktop wallet for ada that bundles a local
+  cardano-node and the cardano-wallet backend; Mithril is also one of its build
+  inputs.
+maintainer: Se7en Labs (under contract with IOG since January 2026)
+links:
+  website: https://daedaluswallet.io
+  repo: https://github.com/input-output-hk/daedalus
+status: active
+primarySector: null
+uses:
+  - target: cardano-wallet
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/daedalus/blob/master/flake.nix
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'cardano-wallet.url =
+          "github:cardano-foundation/cardano-wallet/v2026-09-16"'
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/daedalus/blob/master/flake.nix
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'cardano-node.url = "github:IntersectMBO/cardano-node/11.1.3"'
+  - target: mithril
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/daedalus/blob/master/flake.nix
+        kind: manifest
+        retrieved: 2026-10-20
+        note: mithril is a flake input
+  - target: cardano-js-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/daedalus/blob/HEAD/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

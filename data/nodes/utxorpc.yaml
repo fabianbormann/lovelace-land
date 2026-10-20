@@ -1,0 +1,25 @@
+id: utxorpc
+name: "UTxO RPC"
+district: api-providers
+description: "An open gRPC interface specification for UTxO-based blockchains, with SDKs in Rust, Go, Python, Node.js and .NET. Dolos, Dingo and Demeter expose it."
+maintainer: "UTxO RPC"
+links:
+  website: https://utxorpc.org
+  repo: https://github.com/utxorpc/spec
+packages:
+  - ecosystem: cargo
+    name: "utxorpc-spec"
+  - ecosystem: cargo
+    name: "utxorpc"
+  - ecosystem: npm
+    name: "@utxorpc/sdk"
+  - ecosystem: go
+    name: "github.com/utxorpc/go-sdk"
+  - ecosystem: nuget
+    name: "Utxorpc.Sdk"
+  - ecosystem: pypi
+    name: "utxorpc"
+status: active
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

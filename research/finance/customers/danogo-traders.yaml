@@ -1,0 +1,23 @@
+id: danogo-traders
+name: Danogo (Dano Finance) users
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users trading bond tokens and providing liquidity on Danogo.
+metric:
+  label: 30-day DEX volume
+  value: "$19.7M (TVL $6.3M)"
+  source: https://api.llama.fi/summary/dexs/dano-finance
+  retrieved: 2026-10-20
+uses:
+  - target: danogo
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/summary/dexs/dano-finance
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to danogo'
+      - url: https://api.llama.fi/tvl/dano-finance
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

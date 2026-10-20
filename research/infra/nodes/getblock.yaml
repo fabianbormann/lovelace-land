@@ -1,0 +1,19 @@
+id: getblock
+name: "GetBlock"
+district: api-providers
+description: "A multi-chain hosted node provider whose Cardano offering includes Ogmios (JSON-RPC and WebSocket) and Rosetta endpoints."
+maintainer: "GetBlock"
+links:
+  website: https://getblock.io
+status: active
+primarySector: null
+uses:
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://getblock.io/nodes/ada/
+        kind: docs
+        retrieved: 2026-10-20
+        note: "APIs & Addons: Ogmios (JSON-RPC), Ogmios (WebSocket), Rosetta"
+lastVerified: 2026-10-20

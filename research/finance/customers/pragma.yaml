@@ -1,0 +1,26 @@
+id: pragma
+name: PRAGMA (Amaru treasury)
+type: organization
+sectors: [payments, defi]
+stage: production
+description: The PRAGMA open-source association manages the Amaru node project's on-chain treasury and swaps ADA into USDM through the SundaeSwap order book to hold and disburse dollar-denominated funds.
+uses:
+  - target: usdm
+    confidence: verified
+    evidence:
+      - url: https://github.com/pragma-org/amaru-treasury/blob/main/journal/2026/defaults.sh
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'USDM_POLICY=c48cbb3d...a47ad and a SUNDAE_USDM_POOL configured for the 2026 treasury journal'
+  - target: sundaeswap
+    confidence: verified
+    evidence:
+      - url: https://github.com/pragma-org/amaru-treasury/blob/main/journal/2026/bin/swap.sh
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"Swap ADA for USDM using SundaeSwap order book."'
+      - url: https://github.com/pragma-org/amaru-treasury/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'treasury validators re-use Sundae''s treasury-contracts setup'
+lastVerified: 2026-10-20

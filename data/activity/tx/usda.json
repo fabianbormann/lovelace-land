@@ -1,0 +1,30 @@
+{
+  "id": "usda",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/cardano-foundation/cardano-token-registry/blob/master/mappings/fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae45655534441.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_scripts WHERE date in <year window> AND script_hash IN ('fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae456')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2025-01": 41,
+    "2025-02": 11,
+    "2025-03": 14,
+    "2025-04": 6,
+    "2025-05": 20,
+    "2025-06": 16,
+    "2025-07": 12,
+    "2025-08": 24,
+    "2025-09": 17,
+    "2025-10": 6,
+    "2025-11": 13,
+    "2025-12": 22,
+    "2026-01": 18,
+    "2026-02": 10,
+    "2026-03": 9,
+    "2026-04": 12,
+    "2026-05": 21,
+    "2026-06": 15,
+    "2026-07": 14,
+    "2026-08": 1,
+    "2026-09": 17,
+    "2026-10": 6
+  }
+}

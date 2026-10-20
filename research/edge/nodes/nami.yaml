@@ -1,0 +1,35 @@
+id: nami
+name: Nami
+district: wallets
+description: Early, popular Cardano browser-extension wallet (originally by Berry Pool, later maintained by IOG). Folded into Lace as "Nami Mode" from late 2024; the GitHub repository is archived.
+maintainer: Input Output Global (IOG)
+links:
+  repo: https://github.com/input-output-hk/nami
+status: deprecated
+primarySector: null
+uses:
+  - target: cardano-js-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/nami/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@cardano-sdk/core ^0.39.2 (final version of the archived repo)"
+  - target: blaze
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/nami/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@blaze-cardano/sdk ^0.1.32"
+  - target: cardano-multiplatform-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/nami/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@dcspark/cardano-multiplatform-lib-browser ^6.0.0"
+lastVerified: 2026-10-20

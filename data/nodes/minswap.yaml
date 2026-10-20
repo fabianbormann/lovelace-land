@@ -1,0 +1,116 @@
+id: minswap
+name: Minswap
+district: products
+description: Community-run decentralized exchange (AMM and stableswap pools) on
+  Cardano, the largest Cardano DEX by TVL. Also runs a DEX aggregator.
+maintainer: Minswap Labs
+links:
+  website: https://minswap.org
+  repo: https://github.com/minswap/minswap-dex-v2
+  docs: https://docs.minswap.org
+packages:
+  - ecosystem: npm
+    name: "@minswap/sdk"
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/minswap/minswap-dex-v2/blob/main/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'DEX v2 preamble compiler "Aiken" v1.0.24-alpha'
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://registry.npmjs.org/@minswap/internal-sdk/latest
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"Cardano transaction-building toolkit used internally at Minswap";
+          depends on @emurgo/cardano-serialization-lib-nodejs and a Minswap fork
+          of CSL'
+  - target: lucid
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/minswap/sdk/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@minswap/sdk depends on "@spacebudz/lucid"; the older minswap-dex-v2 repo
+          depends on lucid-cardano'
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/minswap/sdk/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@minswap/sdk depends on @blockfrost/blockfrost-js (data adapter)'
+  - target: maestro
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/minswap/sdk/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@minswap/sdk depends on @maestro-org/typescript-sdk (data adapter)'
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/minswap/sdk/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@minswap/sdk depends on @cardano-ogmios/client; @minswap/internal-sdk
+          depends on @cardano-ogmios/schema'
+onchain:
+  scripts:
+    - 0be55d262b29f564998ff81efe21bdc0022621c12f15af08d0f2ddb1
+    - 0ca50950adbb06c5c5f6833924a66ac873e43202588b6d338602d78d
+    - 13aa2accf2e1561723aa26871e071fdf32c867cff7e7d50ad470d62f
+    - 1cd639e0731532fb27252504801100c9cd0f31419c0c63c914301771
+    - 1eae96baf29e27682ea3f815aba361a0c6059d45e4bfbe95bbd2f44a
+    - 229863ae8694da16da002e889a1d19bcc82c581225b6dcca95fd69da
+    - 2aa1ae236856def55f77e6bb1aa5b43801ec0097f9e0a69fa24fc0ed
+    - 3d6b603c4c4abe4273223b45a858e7f546b8c520048f43218e250c66
+    - 3f6092645942a54a75186b25e0975b79e1f50895ad958b42015eb6d2
+    - 41fc4cf0d7e68914348c580329acdaa63591919782ab809aa09849bf
+    - 4c4d65a0616f60adc2cba70f533705233b1d7e8cb3e9868cdca39d86
+    - 5178cc70a14405d3248e415d1a120c61d2aa74b4cee716d475b1495e
+    - 57c8e718c201fba10a9da1748d675b54281d3b1b983c5d1687fc7317
+    - 62d3e3975c6ec02d4002640413368a2d46ea10548b1cd217a3e9b7cd
+    - 6563d77a4da81a91831c68d192a3eeefb0340f1341518aae7ce2d48e
+    - 68a7a481d2221939af26d24ab146b7695cdb5cfb2b73b319a5449227
+    - 73c3f85a23b2b81d7df84a9616b666b1e1c8c5fcfff6783d9c4a1a45
+    - 7bc5fbd41a95f561be84369631e0e35895efb0b73e0a7480bb9ed730
+    - 865085a4d810ed21f7677bdf3b1a93e1b75fd17f246d7f0243493cde
+    - 8cd62e5a2553c5d57be78ba0058451b925b4f1d111a2f6fd5c73a94b
+    - 8edad0df48fe66f9785b327321abb50b23d4b37bc4250504632be59e
+    - 96a6d04ac183d349f277f00d93ac79fe170dce37713ea9a493f79f81
+    - 96c2d95fc73740ef18abb95af68be279f80bb711eb69a527f3b1d713
+    - 98df3b00a1500fcb77daa0520550fb088fc923399788b89637b9de59
+    - 9b85d5e8611945505f078aeededcbed1d6ca11053f61e3f9d999fe44
+    - 9df55104326a3264d803d44ed87139581d1c912e26ba8e73bc385e2f
+    - a65ca58a4e9c755fa830173d2a5caed458ac0c73f97db7faae2e7e3b
+    - a813c75283bac225b19f1d0c0a914d89cac6db9a9ce967d105d353ec
+    - aae7c6c0a2d37ef5aa4ed1fca519949fd9f6588318839dc5d7c7b27f
+    - b15a1a010843e8afb6f963b03d452be815b533dad0cd23d819c2d201
+    - c3e28c36c3447315ba5a56f33da6a6ddc1770a876a8d9f0cb3a97c4c
+    - c8b0cc61374d409ff9c8512317003e7196a3e4d48553398c656cc124
+    - e0baa1f0887a766daf5196f92c88728e356e71255c5ad00866607484
+    - e1317b152faac13426e6a83e06ff88a4d62cce3c1634ab0a5ec13309
+    - e4214b7cce62ac6fbba385d164df48e157eae5863521b4b67ca71d86
+    - ea07b733d932129c378af627436e7cbc2ef0bf96e0036bb51b3bde6b
+    - f1d4865bce47591d67ec320e92eeb26b917389e65f8fb12bb9b38877
+    - f5808c2c990d86da54bfc97d89cee6efa20cd8461616359478d96b4c
+  source: https://github.com/minswap/minswap-dex-v2/blob/main/deployed/mainnet/script.json
+  note: DEX v2 order/pool/factory/authen(LP)/pool-batching/expired-order-cancel
+    hashes from the official v2 mainnet deployment file; v1 order/pool,
+    stableswap state, LP/factory policies from Yaci Store dApp registry,
+    StricaHQ cardano-contracts-registry and Eternl registry (all three agree, no
+    overlaps with other products). DexHunter-routed swaps also hit these
+    contracts.
+lastVerified: 2026-10-20

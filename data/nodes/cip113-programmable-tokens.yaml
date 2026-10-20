@@ -1,0 +1,44 @@
+id: cip113-programmable-tokens
+name: CIP-113 Programmable Tokens
+district: products
+description: Cardano Foundation's on-chain framework for programmable
+  (compliance-enforcing) tokens per CIP-113, letting issuers of stablecoins and
+  securities attach KYC, freeze and transfer rules; reported live on mainnet
+  since 7 Oct 2026.
+maintainer: Cardano Foundation
+links:
+  repo: https://github.com/cardano-foundation/cip113-programmable-tokens
+status: active
+primarySector: rwa
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cip113-programmable-tokens/blob/main/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'preamble compiler "Aiken" v1.1.23; README: validators "migrated from
+          their Plutarch implementation" (IOG CIP-143 reference)'
+onchain:
+  scripts:
+    - 2ab871806b01d07fe7d93bf45ff4ce97bd156d168d7a08078ac8a517
+    - 3a511ec25af655c1aef31d0d9c0c6154eae7321045b1fa46fac55ecd
+    - 46b61f0584f21481b22ea18f945e48ac4148f50fc3ade494a7762440
+    - 484e733d122af44e6101988bcc47ed261a7af5c43c797e89d60e3075
+    - 8151b7a3d4c17bfd1d3779c2726e76a06db47e36ba6c160d9a2d60f6
+    - 92e307862c5374ee78f3cfdaaa45447f7f0db6776d54fa5f8df1a85c
+    - cb418959c00d6779e176fcf6227824a6ac3b5bea7a672ef66a216dae
+    - d431d4cba00d664acb127bb391c211086ca72fe570fd85f139af578e
+    - d91d08e381f8ef95ffbb3f8048f020d7361ded8f3abfdf66c25fa838
+    - ed3fb7e046b4f3387e0749fb46847dbc15e85e61aaa76558f968136d
+  source: https://github.com/cardano-foundation/cip113-programmable-tokens-platform/blob/main/src/programmable-tokens-offchain-java/src/main/resources/protocol-bootstraps-mainnet.json
+  note: "Mainnet protocol bootstrap (tx bfefbd22..., 2026-10-02):
+    programmable_logic_base, programmable_logic_global, transfer, third_party,
+    unfracking, issuance_logic, registry, protocol-params NFT policy, registry
+    issuance policy and upgrade_multisig. Per-token issuance_mint policies are
+    per-token and not included. Deployed 2026-10-02 (10 tx through 2026-10-19),
+    so 0 in Sept 2026 is expected."
+active:
+  from: 2026-10
+lastVerified: 2026-10-20

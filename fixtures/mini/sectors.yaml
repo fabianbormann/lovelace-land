@@ -1,0 +1,10 @@
+- id: defi
+  name: DeFi
+  description: Trading, lending and stable value.
+  inclusion: The customer moves or earns value through financial protocols.
+  coast: east
+- id: proof-verification
+  name: Proof & Verification
+  description: Notarisation and credential checks.
+  inclusion: The customer proves that a document or claim existed or is authentic.
+  coast: north

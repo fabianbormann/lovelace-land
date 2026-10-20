@@ -1,0 +1,14 @@
+id: cardanosharp
+name: "CardanoSharp"
+district: sdks
+description: "CardanoSharp.Wallet is a .NET cryptographic and serialization library for Cardano. The repository has had no commits since April 2024."
+maintainer: "CardanoSharp"
+links:
+  repo: https://github.com/CardanoSharp/cardanosharp-wallet
+packages:
+  - ecosystem: nuget
+    name: "CardanoSharp.Wallet"
+status: maintenance
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

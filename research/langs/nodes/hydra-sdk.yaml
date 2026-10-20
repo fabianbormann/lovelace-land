@@ -1,0 +1,41 @@
+id: hydra-sdk
+name: "Hydra SDK"
+district: sdks
+description: "Hydra SDK is a TypeScript monorepo for Cardano wallet apps that manage Hydra heads (head lifecycle, L2 transactions) on top of cardano-serialization-lib WASM bindings."
+maintainer: "Vtechcom"
+links:
+  website: https://hydrasdk.com
+  repo: https://github.com/Vtechcom/hydra-sdk
+packages:
+  - ecosystem: npm
+    name: "@hydra-sdk/core"
+  - ecosystem: npm
+    name: "@hydra-sdk/bridge"
+status: active
+primarySector: null
+uses:
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Vtechcom/hydra-sdk/blob/master/packages/cardano-wasm/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@hydra-sdk/cardano-wasm depends on @emurgo/cardano-serialization-lib-nodejs/-browser/-asmjs 14.1.2"
+  - target: plu-ts
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Vtechcom/hydra-sdk/blob/master/packages/core/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@hydra-sdk/core depends on @harmoniclabs/uplc 1.4.1 and @harmoniclabs/plutus-data 1.2.6 (plu-ts component libraries)"
+  - target: hydra
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Vtechcom/hydra-sdk/blob/master/packages/hydra-bridge/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@hydra-sdk/bridge: 'Bridge library for integrating with Hydra Layer 2 on Cardano (hydra-node v2.x)'"
+lastVerified: 2026-10-20

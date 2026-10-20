@@ -1,0 +1,22 @@
+id: swap-town
+name: Swap Town
+district: products
+description: Fictional DEX.
+status: active
+primarySector: defi
+uses:
+  - target: anvil-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://example.org/swap/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+  - target: mill-indexer
+    relation: service
+    confidence: reported
+    evidence:
+      - url: https://example.org/news/swap-town-indexer
+        kind: article
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

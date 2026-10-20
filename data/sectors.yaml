@@ -1,0 +1,50 @@
+- id: defi
+  name: DeFi
+  description: Trading, lending, stablecoins and yield.
+  inclusion: The customer moves, lends, borrows or holds value through financial protocols.
+  coast: east
+- id: payments
+  name: Payments & Remittance
+  description: Paying for goods and services and sending money across borders.
+  inclusion: The customer uses Cardano to pay or get paid.
+  coast: east
+- id: rwa
+  name: Real-World Assets
+  description: Tokenized real-world assets such as commodities, real estate or securities.
+  inclusion: The customer issues or holds a token that represents an off-chain asset.
+  coast: east
+- id: proof-verification
+  name: Proof & Verification
+  description: Notarisation, document certification and credential checks.
+  inclusion: The customer proves that a document, file or claim existed or is authentic.
+  coast: north
+- id: supply-chain
+  name: Supply Chain & Product Passports
+  description: Traceability of goods from origin to consumer.
+  inclusion: The customer records the origin or journey of physical products.
+  coast: north
+- id: identity
+  name: Identity
+  description: Decentralised identifiers, KERI and verifiable credentials for people and organisations.
+  inclusion: The customer issues, holds or verifies identities.
+  coast: north
+- id: governance
+  name: Governance & Treasury
+  description: On-chain governance, DAOs and treasury management.
+  inclusion: The customer votes, delegates or manages a shared treasury on-chain.
+  coast: south
+- id: nfts-gaming-media
+  name: NFTs, Gaming & Media
+  description: Collectibles, games, music and creator economies.
+  inclusion: The customer creates, trades or plays with digital collectibles or media.
+  coast: south
+- id: enterprise-government
+  name: Enterprise & Government
+  description: Enterprise systems and public-sector deployments not covered by a more specific sector.
+  inclusion: The customer is a company or public body whose use case fits no more specific sector.
+  coast: south
+- id: exchanges
+  name: Exchanges & Custody
+  description: Centralized exchanges and institutional custodians that list ADA or hold it for their own users.
+  inclusion: The customer lets its own users buy, sell, hold or stake ADA through its platform.
+  coast: east

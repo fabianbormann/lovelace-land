@@ -1,0 +1,20 @@
+id: dexhunter-traders
+name: DexHunter aggregator users
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous traders routing swaps across Cardano DEXes through the DexHunter aggregator.
+metric:
+  label: 30-day aggregated volume
+  value: "$6.7M"
+  source: https://api.llama.fi/summary/aggregators/dexhunter
+  retrieved: 2026-10-20
+uses:
+  - target: dexhunter
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/summary/aggregators/dexhunter
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to dexhunter'
+lastVerified: 2026-10-20

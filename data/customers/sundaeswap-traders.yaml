@@ -1,0 +1,23 @@
+id: sundaeswap-traders
+name: SundaeSwap traders and liquidity providers
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users swapping tokens and providing liquidity on SundaeSwap V2/V3/V4 pools.
+metric:
+  label: 30-day DEX volume
+  value: "$3.4M (TVL $6.1M across V2-V4)"
+  source: https://api.llama.fi/summary/dexs/sundaeswap
+  retrieved: 2026-10-20
+uses:
+  - target: sundaeswap
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/summary/dexs/sundaeswap
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to sundaeswap'
+      - url: https://api.llama.fi/tvl/sundaeswap
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

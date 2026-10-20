@@ -1,0 +1,23 @@
+id: eternl-users
+name: Eternl users
+type: segment
+sectors: [defi, payments]
+stage: production
+description: People using the Eternl light wallet to send and receive ada and native assets, delegate to stake pools, swap tokens and connect to Cardano DEXes, lending platforms and NFT marketplaces.
+metric:
+  label: Chrome Web Store users
+  value: "100,000"
+  source: https://chromewebstore.google.com/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka
+  retrieved: 2026-10-20
+uses:
+  - target: eternl
+    confidence: verified
+    evidence:
+      - url: https://chromewebstore.google.com/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Offered by Tastenkunst GmbH; 'Your all-in-one gateway to Cardano DeFi, DApps and NFTs'; 100,000 users; 4.3/5 from 95 ratings"
+      - url: https://eternl.io
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

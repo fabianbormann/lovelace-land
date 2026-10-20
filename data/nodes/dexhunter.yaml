@@ -1,0 +1,48 @@
+id: dexhunter
+name: DexHunter
+district: products
+description: DEX aggregator for Cardano that routes swaps across Minswap,
+  SundaeSwap, WingRiders, Splash and other DEXes; also offers limit/stop-loss
+  orders and a leverage module.
+maintainer: DexHunter
+links:
+  website: https://www.dexhunter.io
+  repo: https://github.com/DexHunterIO
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://storage.googleapis.com/dexhunter-papers/dexhunter_stop_loss_audit.pdf
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'TxPipe audit (Oct 2023) of the Stop Loss validator, file
+          validators/stoploss.ak'
+  - target: apollo
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/DexHunterIO/DH-Leverage/blob/main/go.mod
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'DH-Leverage requires github.com/Salvionied/apollo'
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/DexHunterIO/DH-Leverage/blob/main/architecture.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'leverage module: "Wallet balances — public Koios endpoints"'
+onchain:
+  scripts:
+    - 6ec4acc3fbbd570ada625f24902777cec5d7a349fa0f3c7ba87b0cff
+    - 97f1732964905b3c71d12163968814ac5f3be77abc94830a84d32cf9
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/dexhunter.json
+  note: Stop Loss validator (StricaHQ, TxPipe audit; inactive since 2024-08) and
+    DCA Execute validator (CRFA + Eternl registries, address-verified).
+    Aggregated swaps run through the routed DEXes' own contracts and are not
+    counted here.
+lastVerified: 2026-10-20

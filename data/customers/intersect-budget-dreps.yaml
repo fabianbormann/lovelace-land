@@ -1,0 +1,26 @@
+id: intersect-budget-dreps
+name: DReps voting on the Cardano budget via Ekklesia
+type: segment
+sectors: [ governance ]
+stage: production
+description: DReps who cast stake-weighted votes on treasury budget proposals
+  (and Constitutional Committee candidates) on the Ekklesia-powered Intersect
+  Hydra Voting Platform before the results go on-chain.
+metric:
+  label: DReps casting valid votes in the 2026 budget Hydra vote (5.07B ada, 84.4%
+    of DRep stake)
+  value: "112"
+  source: https://docs.intersectmbo.org/intersect-knowledge-base/cardano-facilitation-services/cardano-budget-2026/2026-budget-process-final-audited-results
+  retrieved: 2026-10-20
+uses:
+  - target: ekklesia
+    confidence: verified
+    evidence:
+      - url: https://docs.intersectmbo.org/intersect-knowledge-base/cardano-facilitation-services/cardano-budget-2026/2026-budget-process-final-audited-results
+        kind: docs
+        retrieved: 2026-10-20
+        note: 113 participating voters (112 valid); ~5,070,798,415 ada valid voting
+          power; 11 proposals reached 67%.
+active:
+  from: 2025-04
+lastVerified: 2026-10-20

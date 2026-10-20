@@ -1,0 +1,31 @@
+id: sundae-treasury-contracts
+name: Sundae Treasury Contracts
+district: products
+description: Audited Aiken contracts (treasury + vendor) that hold ada withdrawn from the Cardano treasury and release it to vendors by milestone, with pause/resume/sweep permissions; ships a TypeScript SDK/CLI and the treasury.sundae.fi dashboard. Used by Intersect for 2025 treasury withdrawals and reused by PRAGMA for Amaru.
+maintainer: Sundae Labs
+links:
+  website: https://treasury.sundae.fi/
+  repo: https://github.com/SundaeSwap-finance/treasury-contracts
+packages:
+  - ecosystem: npm
+    name: "@sundaeswap/treasury-funds"
+status: active
+primarySector: governance
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/treasury-contracts/blob/main/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: validators/treasury.ak and validators/vendor.ak, compiled plutus.json in repo
+  - target: blaze
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/treasury-contracts/blob/main/offchain/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@blaze-cardano/sdk, @blaze-cardano/data, @blaze-cardano/query, @blaze-cardano/uplc'
+lastVerified: 2026-10-20

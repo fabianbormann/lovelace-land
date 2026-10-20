@@ -1,0 +1,23 @@
+id: wanchain-bridge
+name: Wanchain Bridge (Cardano)
+district: bridges
+description: Decentralized cross-chain bridge whose MPC "Storeman" nodes connect Cardano mainnet (since August 2023) to Bitcoin, Ethereum, EVM chains and others, bringing assets such as USDT/USDC to Cardano. Its Cardano-to-BNB Chain route was exploited on 2026-07-20 via a non-injective signed-message encoding in the TreasuryCheck validator (about 515M NIGHT drained).
+maintainer: Wanchain
+links:
+  website: https://www.wanchain.org
+status: active
+primarySector: null
+uses:
+  - target: plinth
+    relation: language
+    confidence: reported
+    evidence:
+      - url: https://www.newsfilecorp.com/release/176894/Wanchain-Announces-Successful-Deployment-of-New-Cardano-Bridge-Solution
+        kind: announcement
+        retrieved: 2026-10-20
+        note: Wanchain "needed to fully develop Haskell smart contracts which support cross-chain transactions"
+      - url: https://github.com/DarkNavySecurity/web3-exploit-analysis/blob/main/artifacts/analysis_0a4861be5dd1cd0a5ccd7d38855ef8fe233563274c22c27adb4f5980535d2ea1/report.md
+        kind: article
+        retrieved: 2026-10-20
+        note: Third-party exploit analysis correlates the deployed Plutus V2 scripts with Wanchain's PlutusTx source (TreasuryCheck.hs, now-removed wanchain/cardanoCatalyst repo)
+lastVerified: 2026-10-20

@@ -1,0 +1,31 @@
+name: Keep the layout lock current
+
+# Contributors may add a YAML file without rebuilding the layout lock (the PR check only warns).
+# This places their buildings once, on main, and commits the positions so they never move again.
+on:
+  push:
+    branches: [main]
+    paths: ['data/**']
+
+permissions:
+  contents: write
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:world
+      - name: Commit the updated lock
+        run: |
+          if git diff --quiet data/layout.lock.json; then exit 0; fi
+          git config user.name "cardano-settlers-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/layout.lock.json
+          git commit -m "chore: place new buildings in the layout lock"
+          git push

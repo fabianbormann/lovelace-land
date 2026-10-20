@@ -1,0 +1,20 @@
+id: liqwid-lenders
+name: Liqwid lenders and borrowers
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users supplying ADA, stablecoins and tokens to Liqwid markets for interest, or borrowing against collateral.
+metric:
+  label: Total value locked
+  value: "$10.5M"
+  source: https://api.llama.fi/tvl/liqwid
+  retrieved: 2026-10-20
+uses:
+  - target: liqwid
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/tvl/liqwid
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to liqwid'
+lastVerified: 2026-10-20

@@ -1,0 +1,46 @@
+name: Wrong data
+description: A road, building, ship or source on the island is wrong or outdated.
+title: "Wrong data: "
+labels: [data, correction]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping keep the island accurate. Every change needs a public source, so please add one if you can.
+  - type: input
+    id: what
+    attributes:
+      label: Which building, ship or road?
+      description: Its name as shown on the map, or the page link after clicking it (e.g. …#node=yaci-store).
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong?
+      options:
+        - A road (dependency) that does not exist or is outdated
+        - A status (active / maintenance / deprecated) or stage (pilot / production / ended)
+        - A customer that no longer uses the product
+        - The description or links
+        - On-chain identifiers or timeline activity
+        - A broken source link
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What should it say instead?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Public source
+      description: A link that shows the correct information (repository file, docs, announcement, case study).
+  - type: checkboxes
+    id: maintainer
+    attributes:
+      label: About you
+      options:
+        - label: I maintain or work on this project.

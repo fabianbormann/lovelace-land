@@ -1,0 +1,22 @@
+{
+  "id": "trivolve-fms",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/fmsbytrivolve.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_scripts WHERE date in <year window> AND script_hash IN ('26370b459e5eafe6e179c94a39bb1c278657de5c1875fb9c5d1fa0ba')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2025-09": 5329,
+    "2025-10": 9947,
+    "2025-11": 8764,
+    "2025-12": 17167,
+    "2026-01": 14708,
+    "2026-02": 10375,
+    "2026-03": 8532,
+    "2026-04": 5973,
+    "2026-05": 10243,
+    "2026-06": 8177,
+    "2026-07": 8873,
+    "2026-08": 15785,
+    "2026-09": 13718,
+    "2026-10": 9971
+  }
+}

@@ -1,0 +1,19 @@
+id: book-io-readers
+name: Readers buying encrypted books on Book.io
+type: segment
+sectors: [nfts-gaming-media]
+stage: production
+description: Readers who buy, read, resell or gift e-books and audiobooks issued as encrypted on-chain assets, for example a Gutenberg Bible replica and Marcus Aurelius' Meditations.
+metric:
+  label: Titles minted by Oct 2022, all sold out (Gutenberg Bible replica sold 1,600 copies)
+  value: "12"
+  source: https://publishersweekly.com/pw/print/20221017/90625-ingram-backs-book-io-a-nft-book-marketplace.html
+  retrieved: 2026-10-20
+uses:
+  - target: book-io
+    confidence: reported
+    evidence:
+      - url: https://publishersweekly.com/pw/print/20221017/90625-ingram-backs-book-io-a-nft-book-marketplace.html
+        kind: article
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

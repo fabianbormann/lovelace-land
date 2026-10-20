@@ -1,0 +1,52 @@
+id: hyperledger-identus
+name: Hyperledger Identus (formerly Atala PRISM)
+district: products
+description: Self-sovereign identity framework (cloud agent, mediator, edge SDKs, PRISM node) for issuing and verifying W3C verifiable credentials, using Cardano as the verifiable data registry for did:prism identifiers. Originally IOG's Atala PRISM, contributed to Hyperledger / LF Decentralized Trust in 2023-2024.
+maintainer: LF Decentralized Trust (contributors incl. Input Output)
+links:
+  website: https://identus.io/
+  repo: https://github.com/hyperledger-identus
+status: active
+primarySector: identity
+uses:
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/hyperledger-identus/neoprism/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: NeoPRISM (PRISM node and VDR indexer) depends on pallas-codec / pallas-primitives 0.30
+  - target: oura
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/hyperledger-identus/neoprism/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: oura (git fork patextreme/oura) as a chain-sync source
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/hyperledger-identus/neoprism/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Ingests DID operations from ... Oura, DBSync, and Blockfrost (blockfrost crate in Cargo.toml)"
+  - target: cardano-db-sync
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/hyperledger-identus/neoprism/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "just run indexer --dbsync-url <URL>"
+  - target: cardano-wallet
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/hyperledger-identus/neoprism/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Submitter publishes DID operations to Cardano; 'Integrates with Cardano-wallet'"
+lastVerified: 2026-10-20

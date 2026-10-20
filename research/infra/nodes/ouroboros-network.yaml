@@ -1,0 +1,12 @@
+id: ouroboros-network
+name: "Ouroboros Network"
+district: core
+description: "Haskell specifications and implementations of the Ouroboros node-to-node and node-to-client mini-protocols and the networking layer used by the Cardano node."
+maintainer: "Intersect (IntersectMBO)"
+links:
+  repo: https://github.com/IntersectMBO/ouroboros-network
+  docs: https://ouroboros-network.cardano.intersectmbo.org
+status: active
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

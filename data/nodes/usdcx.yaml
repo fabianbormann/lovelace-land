@@ -1,0 +1,24 @@
+id: usdcx
+name: USDCx
+district: products
+description: Circle's USDC-backed stablecoin on Cardano, minted 1:1 against USDC
+  held in Circle xReserve; live on mainnet since 27 Feb 2026 and integrated by
+  IOG and Midgard Labs under the Pentad critical-integrations program.
+maintainer: Circle
+links:
+  website: https://www.circle.com/blog/usdcx-on-cardano-now-available-via-circle-xreserve
+status: active
+primarySector: payments
+uses: []
+onchain:
+  scripts:
+    - 1f3aec8bfe7ea4fe14c5f121e2a92e301afe414147860d557cac7e34
+    - a3d5052864638828bc3fbc0d5b9a4223e233620d7911a5376ed4b658
+    - d2c3f66c2c7154d9f0b913ee3cd9b0a25bbb7d1537953d7c36c07e86
+    - d74de93a7e4940462c4509f59c712889422506f8b63dcfd0c266dc7b
+  source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/usdcx.json
+  note: "Eternl registry USDCx bridge set: mint policy 1f3aec8b (fingerprint
+    asset1e7eewpjw8ua3f2gpfx7y34ww9vjl63hayn80kl matches IOG/press), bridge
+    processor, operator withdraw-zero, config. Counts bridge mint/burn activity
+    only, not transfers."
+lastVerified: 2026-10-20

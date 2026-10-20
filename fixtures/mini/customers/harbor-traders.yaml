@@ -1,0 +1,19 @@
+id: harbor-traders
+name: Harbor Traders
+type: segment
+sectors: [defi]
+stage: production
+description: Fictional retail traders.
+metric:
+  label: Monthly active traders
+  value: 1200
+  source: https://example.org/stats
+  retrieved: 2026-10-20
+uses:
+  - target: swap-town
+    confidence: verified
+    evidence:
+      - url: https://example.org/swap/stats
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

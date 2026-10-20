@@ -1,0 +1,32 @@
+id: usdm
+name: USDM (Moneta)
+district: products
+description: Fiat-backed USD stablecoin native to Cardano, launched March 2024 (originally by Mehen); issued by Moneta Digital in the US and co-issued by NBX in the EEA, with reserves attested on-chain by an oracle.
+maintainer: Moneta Digital
+links:
+  website: https://moneta.global
+  docs: https://moneta.global/developers/
+status: active
+primarySector: payments
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://cdn.sundaeswap.finance/audits/mehen.pdf
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'Sundae Labs audit of the Mehen/USDM protocol lists "Aiken Compiler aiken v1.0.24-alpha"; contracts are not open source'
+  - target: charli3
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://cdn.sundaeswap.finance/audits/mehen.pdf
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'minting is disallowed if it would bring circulating supply above the value reported by the Charli3 oracle'
+      - url: https://www.inderes.dk/releases/nbx-otc-minting-and-burning-of-usdm-now-available-at-nbx
+        kind: announcement
+        retrieved: 2026-10-20
+        note: 'NBX (co-issuer), 28 Mar 2025: "reserve values continuously verified by the decentralized oracle Charli3"'
+lastVerified: 2026-10-20

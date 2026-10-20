@@ -1,0 +1,19 @@
+id: sorbet
+name: Sorbet
+district: dev-tooling
+description: Developer browser-extension wallet for testing dApp CIP-30 integrations "as if" you were a user, including impersonating any address and overriding the connected wallet.
+maintainer: Sundae Labs (SundaeSwap)
+links:
+  repo: https://github.com/SundaeSwap-finance/Sorbet
+status: active
+primarySector: null
+uses:
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/Sorbet/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: Setup requires a Blockfrost API key (Mainnet and/or Preview)
+lastVerified: 2026-10-20

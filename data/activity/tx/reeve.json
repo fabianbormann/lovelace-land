@@ -1,0 +1,18 @@
+{
+  "id": "reeve",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/cardano-foundation/cf-reeve-platform/blob/main/docs/onChainFormat.md",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <year window> AND CAST(label AS VARCHAR) IN ('1447')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2025-06": 1,
+    "2025-07": 519,
+    "2025-10": 258,
+    "2026-01": 2,
+    "2026-02": 50,
+    "2026-03": 316,
+    "2026-06": 133,
+    "2026-07": 1,
+    "2026-08": 8,
+    "2026-09": 141
+  }
+}

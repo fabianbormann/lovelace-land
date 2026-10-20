@@ -1,0 +1,38 @@
+id: adder
+name: "Adder"
+district: indexers
+description: "A Go tool from Blink Labs that tails the Cardano chain (via a node or UTxO RPC) and emits filtered block, transaction and mempool events to pluggable outputs."
+maintainer: "Blink Labs"
+links:
+  repo: https://github.com/blinklabs-io/adder
+packages:
+  - ecosystem: go
+    name: "github.com/blinklabs-io/adder"
+status: active
+primarySector: null
+uses:
+  - target: gouroboros
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/blinklabs-io/adder/blob/main/go.mod
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "github.com/blinklabs-io/gouroboros v0.209.0"
+  - target: plutigo
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/blinklabs-io/adder/blob/main/go.mod
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "github.com/blinklabs-io/plutigo v0.9.1"
+  - target: utxorpc
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/blinklabs-io/adder/blob/main/go.mod
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "github.com/utxorpc/go-sdk v0.1.0"
+lastVerified: 2026-10-20

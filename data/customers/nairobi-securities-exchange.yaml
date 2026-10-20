@@ -1,0 +1,22 @@
+id: nairobi-securities-exchange
+name: Nairobi Securities Exchange (Ibuka Program)
+type: organization
+sectors: [ rwa ]
+stage: pilot
+description: Kenya's stock exchange collaborated with Empowa through its Ibuka
+  Program on a Cardano-based platform for tokenizing affordable-housing finance
+  (Catalyst Fund 12 project, reported completed), positioned for future
+  inclusion in the NSE Innovation Lab.
+uses:
+  - target: empowa
+    confidence: verified
+    evidence:
+      - url: https://www.empowa.io/projects
+        kind: case-study
+        retrieved: 2026-10-20
+        note: '"Tokenization of Real-World Assets — NSE x Empowa ... delivered in
+          collaboration with the Nairobi Securities Exchange through its Ibuka
+          Program under Catalyst Fund 12"'
+active:
+  from: 2024-08
+lastVerified: 2026-10-20

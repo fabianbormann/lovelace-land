@@ -1,0 +1,25 @@
+{
+  "id": "book-io",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/Book.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_scripts WHERE date in <year window> AND script_hash IN ('46afcc024d90db382187d637b0749f1dab783e9d113ff494637dd2ed', '4a84b71b33b2aedf259e259b4d73526f80f212a50feaa2bbf26b8f58', '54a8ac62c311ea39dfee423fc0a2761279f0ffa10aa596d6577ff548')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2023-06": 128,
+    "2023-07": 261,
+    "2023-08": 11,
+    "2023-09": 19,
+    "2023-10": 2518,
+    "2023-11": 120,
+    "2023-12": 16,
+    "2024-01": 12,
+    "2024-02": 10,
+    "2024-03": 3,
+    "2024-04": 5,
+    "2024-05": 2,
+    "2024-08": 2,
+    "2024-10": 1,
+    "2024-12": 4,
+    "2025-01": 6,
+    "2025-02": 2
+  }
+}

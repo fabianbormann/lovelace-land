@@ -1,0 +1,85 @@
+name: Weekly upkeep
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check every source link
+        id: links
+        run: npm run --silent check:links > "$RUNNER_TEMP/links.md" 2>&1
+        continue-on-error: true
+      - name: Open or update the broken-links issue
+        if: steps.links.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          existing=$(gh issue list --state open --search 'in:title "Broken source links"' --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file "$RUNNER_TEMP/links.md"
+            gh issue comment "$existing" --body "Still broken as of $(date +%Y-%m-%d)."
+          else
+            gh issue create --title "Broken source links" --body-file "$RUNNER_TEMP/links.md"
+          fi
+
+  manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Scan project manifests for new dependencies
+        run: |
+          npm run --silent scan:manifests -- --write > "$RUNNER_TEMP/scan.md"
+          npm run build:world
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          # A personal access token (secret BOT_TOKEN) lets the PR trigger the normal checks;
+          # PRs opened with the default token skip workflows.
+          token: ${{ secrets.BOT_TOKEN || github.token }}
+          branch: bot/manifest-scan
+          add-paths: data/**
+          title: New roads found in project manifests
+          body-path: ${{ runner.temp }}/scan.md
+          commit-message: 'data: add dependencies found by the weekly manifest scan'
+
+  activity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Collect monthly transactions and commits
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN || github.token }}
+        run: npm run --silent collect:activity | tee "$RUNNER_TEMP/activity.md"
+      - run: npm run build:world
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.BOT_TOKEN || github.token }}
+          branch: bot/activity
+          add-paths: data/**
+          title: Refresh monthly activity for the time axis
+          body-path: ${{ runner.temp }}/activity.md
+          commit-message: 'data: refresh monthly activity'

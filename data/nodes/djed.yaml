@@ -1,0 +1,47 @@
+id: djed
+name: Djed
+district: products
+description: Over-collateralized algorithmic stablecoin on Cardano (DJED, with
+  reserve coin SHEN), developed by COTI with Input Output and launched in
+  January 2023.
+maintainer: COTI
+links:
+  website: https://djed.xyz
+status: active
+primarySector: defi
+uses:
+  - target: plinth
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/tweag/tweag-audit-reports/blob/main/Djed-2023-01.pdf
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'Tweag audit of input-output-hk/stablecoin-plutus lists Haskell PlutusTx
+          modules such as onchain/Cardano/Djed/Contracts/StableCoin.hs; Djed
+          runs its own oracle contract'
+onchain:
+  scripts:
+    - 021a32ee5621d4e94df1d9bef6baa284a7cc75ba51bb5fb804c6c471
+    - 0ccb659135a7098d40b5eaf97680c4d672ace8b13b750e95362f59ff
+    - 26642ebb66bc7475a48d7e6939861b9f8a61af39f8a807bd9b38e03b
+    - 5d8efd9c3cdb083697b682ab06f4f2659e8f1716329e77b27f22e044
+    - 61161584261621d4dd4307d238fe23043ce8180780e5718048a692a8
+    - 78bf460e558b50ffb1a56c5f0a523111831bc5a5d166b23771035b9c
+    - 8952dc463eb173e8f71c78229fe071c3eca694968c71f61ee3491ebd
+    - 8db269c3ec630e06ae29f74bc39edd1f87c819f1056206e879a1cd61
+    - 8ec464861107b2839a970a9bd790ce708e9e72fb97b07551a7bfc947
+    - b3b8c8a67790404c647ed2dbdb9e40c62e3fcff37054c34713adf9d2
+    - b7bf238c97a8f1b292b4e86416ae8496ecc2aac9b67c47360a0ef05e
+    - c7c55ab902dc34968966d06e3ea1e2322178c83fe3218c05ddd17a75
+    - d45f74956ff0d9a37d59f4f3bfad99d2797d8ccf77bcdc7c984da7f4
+    - f780e15a96aa9ddeedd419404a9bb14c09a4c8deac716edeba87fe54
+  source: https://github.com/artifi-labs/open-djed/blob/main/packages/registry/src/index.ts
+  note: Current Djed contracts (order, pool, treasury validators; live since
+    2024-12-16) from the Open DJED mainnet registry, plus the original 2023-01
+    to 2024-08 Djed contracts from Yaci Store dApp registry, CRFA and Eternl.
+    Djed oracle validators (old 8c6a7307..., new 89829415...) and oracle-NFT
+    policy are deliberately excluded because their transactions are price-feed
+    updates, not usage (the new oracle alone has ~3.5k tx/month). No Djed
+    activity between 2024-08-08 and 2024-12-16 (contract migration).
+lastVerified: 2026-10-20

@@ -1,0 +1,72 @@
+id: cardano-ballot
+name: Cardano Ballot
+district: products
+description: Hybrid on-chain/off-chain voting system from the Cardano
+  Foundation, used for community polls such as the Cardano Summit Awards. Votes
+  are signed with CIP-30 wallets, committed on-chain via Merkle roots, and a
+  Hydra-based tally app was used for the 2023 awards.
+maintainer: Cardano Foundation
+links:
+  repo: https://github.com/cardano-foundation/cf-cardano-ballot
+status: active
+primarySector: governance
+uses:
+  - target: cardano-client-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-cardano-ballot/blob/main/backend-services/vote-commitment-app/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: com.bloxbean.cardano:cardano-client-quicktx / -backend-blockfrost / -cip30
+  - target: yaci-store
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-cardano-ballot/blob/main/backend-services/voting-ledger-follower-app/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: com.bloxbean.cardano:yaci-store-spring-boot-starter (+ blocks,
+          transaction, metadata starters)
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-cardano-ballot/blob/main/backend-services/voting-admin-app/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: io.blockfrost:blockfrost-java and cardano-client-backend-blockfrost
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-cardano-ballot/blob/main/backend-services/hydra-tally-app/smart-contract/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"CF Summit 2023 Hydra Tally App" Aiken project with compiled plutus.json'
+  - target: hydra
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-cardano-ballot/blob/main/backend-services/hydra-tally-app/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: org.cardanofoundation:hydra-java-client used by the Hydra tally app
+  - target: cardano-connect-with-wallet
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-cardano-ballot/blob/main/ui/summit-2025/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"@cardano-foundation/cardano-connect-with-wallet": "^0.2.15"'
+onchain:
+  metadataLabels:
+    - 11113
+  source: https://github.com/cardano-foundation/cf-cardano-ballot/blob/main/backend-services/vote-commitment-app/src/main/resources/application.properties
+  note: "Vote-commitment (Merkle root) metadata label:
+    l1.transaction.metadata.label=${VOTING_METADATA_LABEL:11113}, also Helm
+    default 11113. On-chain bodies confirmed (e.g. type COMMITMENTS,
+    CARDANO_SUMMIT_AWARDS_2025). Activity is event-driven (Sep-Dec 2023, Sep-Oct
+    2024, Jun-Jul 2025, Sep-Oct 2025); none since Nov 2025, so 0 in Sept 2026."
+lastVerified: 2026-10-20

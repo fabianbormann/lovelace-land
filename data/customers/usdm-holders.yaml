@@ -1,0 +1,23 @@
+id: usdm-holders
+name: USDM holders
+type: segment
+sectors: [payments]
+stage: production
+description: Individuals and businesses holding and transferring USDM as a regulated dollar on Cardano.
+metric:
+  label: USDM circulating supply
+  value: "$9.61M per Moneta proof-of-reserves ($13.4M per DefiLlama)"
+  source: https://moneta.global/transparency/
+  retrieved: 2026-10-20
+uses:
+  - target: usdm
+    confidence: verified
+    evidence:
+      - url: https://moneta.global/transparency/
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'issuer proof-of-reserves page'
+      - url: https://stablecoins.llama.fi/stablecoins?includePrices=true
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

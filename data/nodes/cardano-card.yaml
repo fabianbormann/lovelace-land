@@ -1,0 +1,16 @@
+id: cardano-card
+name: Cardano Card
+district: products
+description: Visa-linked crypto debit card offered by EMURGO with Wirex and run
+  inside the Wirex app; announced to shut down on 31 October 2026 as Wirex drops
+  its custodial infrastructure.
+maintainer: EMURGO
+links:
+  website: https://cardanocard.io
+status: deprecated
+primarySector: payments
+uses: []
+active:
+  from: 2025-11
+  until: 2026-10
+lastVerified: 2026-10-20

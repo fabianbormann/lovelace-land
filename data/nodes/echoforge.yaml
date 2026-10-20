@@ -1,0 +1,33 @@
+id: echoforge
+name: EchoForge (EchoCert)
+district: products
+description: Identity and proof layer whose EchoCert product mints a native
+  token per credential, with the token name a SHA-256 commitment to the
+  certificate content; also offers file proofs and wallet identity. Listed in
+  the Notary category on cardano.org.
+maintainer: EchoForge LLC
+links:
+  website: https://echoforgellc.tech
+  repo: https://github.com/EchoForge-Dev/Aiken_Smart-Contract
+status: active
+primarySector: proof-verification
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/EchoForge-Dev/Aiken_Smart-Contract/blob/main/credential/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: "credential/ is an Aiken project (aiken.toml, plutus.json); deployed
+          EchoCert policy runs documint.ak (Plutus v3)"
+onchain:
+  scripts:
+    - 32fd4d6013971be1074d83dc9b4ae3f9512184f10bfad9d1b8e7a158
+  source: https://github.com/EchoForge-Dev/Aiken_Smart-Contract/blob/main/credential/legacy/evidence/policy-derivation.md
+  note: EchoCert mainnet minting policy (documint validator parameterized with
+    EchoForge's treasury and issuer key 2fbe7f57...), documented with on-chain
+    assets in mainnet-assets.json. The validator is per-issuer-parameterized, so
+    certificates from other issuer keys use other policy IDs and are not
+    covered. 3 mint tx 2026-04-11 to 2026-06-07.
+lastVerified: 2026-10-20

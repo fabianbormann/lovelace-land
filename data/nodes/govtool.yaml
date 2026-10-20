@@ -1,0 +1,45 @@
+id: govtool
+name: Cardano GovTool
+district: products
+description: Web app (gov.tools) that lets ada holders register as DReps, delegate voting power, submit governance actions and vote on them under CIP-1694. Built by Byron Network, DQuadrant, Bloxico and WeDeliver for Intersect.
+maintainer: Intersect
+links:
+  website: https://gov.tools/
+  repo: https://github.com/IntersectMBO/govtool
+  docs: https://docs.gov.tools/cardano-govtool/using-govtool
+status: active
+primarySector: governance
+uses:
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/govtool/blob/main/govtool/frontend/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"@emurgo/cardano-serialization-lib-asmjs": "^14.1.1"'
+  - target: cardano-db-sync
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/govtool/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'Backend "reads chain data through a provider: DB-Sync following a Cardano Node, Koios, Blockfrost, or a frozen mainnet capture"'
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/govtool/tree/main/govtool/govtool-provider-koios
+        kind: manifest
+        retrieved: 2026-10-20
+        note: Pluggable Koios data provider package in the monorepo; README lists Koios as a supported chain-data provider.
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/govtool/tree/main/govtool/govtool-provider-blockfrost
+        kind: manifest
+        retrieved: 2026-10-20
+        note: Pluggable Blockfrost data provider package in the monorepo; README lists Blockfrost as a supported chain-data provider.
+lastVerified: 2026-10-20

@@ -170,13 +170,17 @@ Only `verified` and `reported` edges participate in default traffic; a second tr
 {
   version: 1,
   generatedAt: string,
-  districts: District[], sectors: Sector[],
-  nodes: (Node & { pos:[x,y], traffic, trafficWithRumors, tier, stranded, hiddenHighway, dependents:number })[],
-  customers: (Customer & { harbor: sectorId, slot:number })[],
+  bounds: { minX, minY, maxX, maxY },
+  districts: (District & { region: { x0, x1, y0, y1 } })[],
+  sectors: (Sector & { harbor: { pos:[x,y] } })[],
+  nodes: (Omit<Node,'uses'> & { pos:[x,y], traffic, trafficWithRumors, tier, stranded, hiddenHighway, dependents })[],
+  customers: (Omit<Customer,'uses'> & { harbor: sectorId, slot, weight })[],
   edges: { id, from, to, relation?, confidence, evidence, traffic, trafficWithRumors, path:[x,y][] }[],
-  tiles: { pos:[x,y], traffic, surface:0|1|2|3, dashed:boolean }[]
+  tiles: { pos:[x,y], traffic, surface:0|1|2|3, dashed, rumor }[]
 }
 ```
+
+Harbor positions are recomputed on every build from the island bounds; node positions and district columns are locked in `layout.lock.json`. Districts added later are appended east of existing ones. `rumor` tiles are crossed only by `inferred` edges.
 
 ## 4. Gathering sources
 

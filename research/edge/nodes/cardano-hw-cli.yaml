@@ -1,0 +1,19 @@
+id: cardano-hw-cli
+name: Cardano HW CLI
+district: dev-tooling
+description: Command-line tool for deriving keys and signing Cardano transactions with Ledger, Trezor and Keystone hardware wallets.
+maintainer: Vacuumlabs
+links:
+  repo: https://github.com/vacuumlabs/cardano-hw-cli
+status: active
+primarySector: null
+uses:
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/vacuumlabs/cardano-hw-cli/blob/develop/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@emurgo/cardano-serialization-lib-nodejs ^13.1.0"
+lastVerified: 2026-10-20

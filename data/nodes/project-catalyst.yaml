@@ -1,0 +1,52 @@
+id: project-catalyst
+name: Project Catalyst (Catalyst Voices)
+district: products
+description: Cardano's community innovation fund where ada holders register and
+  vote on funding proposals; Catalyst Voices is the open-source app and Catalyst
+  Gateway backend. Stewardship moved from IOG to the Cardano Foundation in 2026,
+  and Funds 15 and 16 will not run in their proposed form while the process is
+  redesigned.
+maintainer: Cardano Foundation (formerly Input Output)
+links:
+  website: https://projectcatalyst.io
+  repo: https://github.com/cardano-foundation/catalyst-voices
+status: maintenance
+primarySector: governance
+uses:
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/catalyst-voices/blob/main/catalyst-gateway/bin/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: Catalyst Gateway depends on cardano-chain-follower from catalyst-libs.
+      - url: https://github.com/cardano-foundation/catalyst-libs/blob/main/rust/cardano-blockchain-types/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: pallas-traverse/-network/-primitives etc. pinned to IOG's catalyst-pallas
+          fork (transitive via catalyst-libs).
+  - target: mithril
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/catalyst-libs/blob/main/rust/cardano-chain-follower/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: cardano-chain-follower depends on mithril-client (used to bootstrap chain
+          data).
+onchain:
+  metadataLabels:
+    - 61284
+    - 61285
+    - 509
+  source: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0036/README.md
+  note: "CIP-15/36 Catalyst voter registration (61284 = registration payload,
+    61285 = signature witness) plus CIP-509 RBAC registration label 509 used by
+    Catalyst Voices (MetadatumLabel::CIP509_RBAC = 509 in
+    cardano-foundation/catalyst-libs
+    rust/cardano-blockchain-types/src/auxdata/metadatum_label.rs). Caveat:
+    CIP-36 is formally a generic voting-registration format, but in practice
+    Catalyst is the consumer. 509 active 2025-07..2026-03 only. Low Sept 2026
+    activity is consistent with Funds 15/16 being paused."
+lastVerified: 2026-10-20

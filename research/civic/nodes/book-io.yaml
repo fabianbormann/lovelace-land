@@ -1,0 +1,27 @@
+id: book-io
+name: Book.io
+district: products
+description: Marketplace for e-books and audiobooks sold as Decentralized Encrypted Assets (DEAs) on Cardano that readers can own, resell or gift; backed by Ingram Content Group, whose Mint & Print service fulfils print copies.
+maintainer: Book.io
+links:
+  website: https://book.io
+status: active
+primarySector: nfts-gaming-media
+uses:
+  - target: nmkr
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://www.nmkr.io/
+        kind: case-study
+        retrieved: 2026-10-20
+        note: 'NMKR use-case card: "The \"Meditations\" NFT collection by Book.io" (encrypted DEA on Cardano).'
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: inferred
+    evidence:
+      - url: https://github.com/book-io/cardano-serialization-lib
+        kind: manifest
+        retrieved: 2026-10-20
+        note: Book.io's GitHub org maintains a fork of CSL (last push Aug 2025); product source is closed.
+lastVerified: 2026-10-20

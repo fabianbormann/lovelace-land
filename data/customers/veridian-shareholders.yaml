@@ -1,0 +1,21 @@
+id: veridian-shareholders
+name: Veridian (tokenized company shares)
+type: organization
+sectors: [ rwa, identity ]
+stage: production
+description: Digital-identity company spun out of the Cardano Foundation whose
+  shares were issued as ledger-based securities under Switzerland's DLT Act
+  using the CIP-0113 programmable-token standard, reported as the first asset
+  deployed on it.
+uses:
+  - target: cip113-programmable-tokens
+    confidence: reported
+    evidence:
+      - url: https://crypto.news/cardano-foundation-spin-digital-identity-firm-veridian/
+        kind: article
+        retrieved: 2026-10-20
+        note: '"Veridian''s shares have been tokenized under Switzerland''s DLT Act
+          using Cardano''s CIP-0113 programmable token standard" (8 Oct 2026)'
+active:
+  from: 2026-10
+lastVerified: 2026-10-20

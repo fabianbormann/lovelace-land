@@ -1,0 +1,35 @@
+id: cardano-wallet
+name: cardano-wallet (backend)
+district: wallets
+description: HTTP API server and CLI for managing HD wallets and UTxOs on Cardano, used as the backend of Daedalus. A full-node wallet that depends on a local cardano-node; in maintenance-only mode under the Cardano Foundation since 1 April 2025.
+maintainer: Cardano Foundation
+links:
+  repo: https://github.com/cardano-foundation/cardano-wallet
+  docs: https://cardano-foundation.github.io/cardano-wallet/
+status: maintenance
+primarySector: null
+uses:
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://cardano-foundation.github.io/cardano-wallet/print.html
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Cardano-wallet is a full-node wallet, which means that it depends on a cardano-node to provide blockchain data."
+  - target: ouroboros-network
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cardano-wallet/blob/master/lib/network-layer/cardano-wallet-network-layer.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+  - target: cardano-ledger
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cardano-wallet/blob/master/lib/primitive/cardano-wallet-primitive.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: depends on cardano-ledger-core and other ledger packages
+lastVerified: 2026-10-20

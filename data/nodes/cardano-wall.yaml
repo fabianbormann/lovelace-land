@@ -1,0 +1,49 @@
+id: cardano-wall
+name: Cardano Wall
+district: products
+description: Proof-of-existence service (launched 2021) that anchors file
+  fingerprints on Cardano as "Label 309" transaction metadata (CIP-0190), with
+  optional encrypted copies on Arweave. Ships open-source SDKs in TypeScript,
+  Python and Rust, a CLI, a self-hostable gateway and a GitHub Action.
+maintainer: CardanoWall
+links:
+  website: https://cardanowall.com
+  repo: https://github.com/cardanowall
+status: active
+primarySector: proof-verification
+uses:
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardanowall/label-309-gateway/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: pallas-txbuilder / primitives / codec / crypto / addresses =1.0.0
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardanowall/label-309-gateway/blob/main/docs/operators.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "The gateway talks to Cardano through HTTP providers. The primary is
+          Koios"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardanowall/label-309-gateway/blob/main/docs/operators.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "the optional secondary is Blockfrost"
+onchain:
+  metadataLabels:
+    - 309
+  source: https://github.com/cardanowall/label-309
+  note: "Label 309 = CIP-0190 Proof-of-Existence record (CIP-10 registry), the
+    standard Cardano Wall publishes with its SDKs and gateway. Caveat: 23 older
+    label-309 tx (2021-2023, e.g. groux.art claims, a pool message) are
+    unrelated. CIP-0190-format records start 2026-06-18 (10 tx to 2026-10-14).
+    Label 309 is an open standard, so third-party gateways may also write it."
+lastVerified: 2026-10-20

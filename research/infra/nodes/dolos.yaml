@@ -1,0 +1,36 @@
+id: dolos
+name: "Dolos"
+district: indexers
+description: "A lightweight Cardano 'data node' in Rust that follows the chain from upstream peers, keeps an updated ledger, and serves queries over UTxO RPC, a Blockfrost-compatible REST API, a Kupo-compatible API and Ouroboros node-to-client."
+maintainer: "TxPipe"
+links:
+  repo: https://github.com/txpipe/dolos
+  docs: https://docs.txpipe.io/dolos
+status: active
+primarySector: null
+uses:
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/txpipe/dolos/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "pallas = { version = \"1.3.0\", features = [\"hardano\", \"phase2\", \"unstable\"] }"
+  - target: mithril
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/txpipe/dolos/blob/main/crates/mithril/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "dolos-mithril: Acquiring immutable chain data from a mithril aggregator; mithril-client = 0.14.5"
+  - target: utxorpc
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/txpipe/dolos/blob/main/Cargo.lock
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "lockfile includes utxorpc-spec 0.19.0 and pallas-utxorpc 1.3.0"
+lastVerified: 2026-10-20

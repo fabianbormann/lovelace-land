@@ -1,0 +1,23 @@
+id: indigo-cdp-users
+name: Indigo CDP users and iAsset holders
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users locking ADA in collateralized debt positions to mint synthetic iAssets such as iUSD.
+metric:
+  label: Total value locked
+  value: "$3.65M (iUSD supply $1.35M)"
+  source: https://api.llama.fi/tvl/indigo
+  retrieved: 2026-10-20
+uses:
+  - target: indigo
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/tvl/indigo
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to indigo'
+      - url: https://stablecoins.llama.fi/stablecoins?includePrices=true
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

@@ -1,0 +1,47 @@
+id: ogmios
+name: "Ogmios"
+district: api-providers
+description: "A lightweight bridge that lets clients use the cardano-node's Ouroboros mini-protocols (chain sync, state queries, tx submission, mempool) via JSON-RPC over WebSocket and HTTP."
+maintainer: "Cardano Solutions"
+links:
+  website: https://ogmios.dev
+  repo: https://github.com/CardanoSolutions/ogmios
+packages:
+  - ecosystem: npm
+    name: "@cardano-ogmios/client"
+status: active
+primarySector: null
+uses:
+  - target: cardano-node
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://ogmios.dev/
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Ogmios is a lightweight bridge interface for cardano-node"
+  - target: cardano-ledger
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/ogmios/blob/master/server/ogmios.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: cardano-ledger-core, cardano-ledger-conway, ..."
+  - target: ouroboros-consensus
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/ogmios/blob/master/server/ogmios.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: ouroboros-consensus"
+  - target: ouroboros-network
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/ogmios/blob/master/server/ogmios.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: ouroboros-network"
+lastVerified: 2026-10-20

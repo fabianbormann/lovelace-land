@@ -1,0 +1,27 @@
+id: cardano-forest-donors
+name: Cardano Forest donors
+type: segment
+sectors: [ proof-verification ]
+stage: ended
+description: Community members who donated ada in veritree's 2021 Initial Tree
+  Offering with the Cardano Foundation; each donation became a tree token
+  redeemable for an NFT recording the planted tree's coordinates.
+metric:
+  label: Trees funded
+  value: "1 million in three months"
+  source: https://cardanofoundation.org/case-studies/veritree
+  retrieved: 2026-10-20
+uses:
+  - target: veritree
+    confidence: verified
+    evidence:
+      - url: https://cardanofoundation.org/case-studies/veritree
+        kind: case-study
+        retrieved: 2026-10-20
+        note: "veritree distributed fungible tokens to participants in the Cardano
+          Forest initiative ... exchangeable for an NFT commemorating each
+          specific tree donation"
+active:
+  from: 2021-09
+  until: 2022-01
+lastVerified: 2026-10-20

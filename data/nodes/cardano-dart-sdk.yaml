@@ -1,0 +1,12 @@
+id: cardano-dart-sdk
+name: "Cardano Dart SDK"
+district: sdks
+description: "A high-level Dart/Flutter SDK (published on pub.dev as cardano_flutter_sdk with cardano_dart_types) for parsing, signing and serialising Cardano transactions on Android, iOS and web."
+maintainer: "VESPR"
+links:
+  repo: https://github.com/vespr-wallet/cardano_dart_sdk
+  docs: https://pub.dev/packages/cardano_flutter_sdk
+status: active
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

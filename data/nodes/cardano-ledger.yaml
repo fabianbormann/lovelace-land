@@ -1,0 +1,20 @@
+id: cardano-ledger
+name: "Cardano Ledger"
+district: core
+description: "The Haskell implementation and formal specifications of the Cardano ledger rules for every era from Byron to Conway and beyond."
+maintainer: "Intersect (IntersectMBO)"
+links:
+  repo: https://github.com/IntersectMBO/cardano-ledger
+  docs: https://cardano-ledger.cardano.intersectmbo.org/
+status: active
+primarySector: null
+uses:
+  - target: plutus-core
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/cardano-ledger/blob/master/eras/alonzo/impl/cardano-ledger-alonzo.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: plutus-ledger-api >=1.67"
+lastVerified: 2026-10-20

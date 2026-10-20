@@ -1,0 +1,19 @@
+id: palmyra
+name: Palmyra (zenGate)
+district: products
+description: Tokenized-commodity B2B marketplace by zenGate Global, starting with Sri Lankan tea and expanding to spices and other commodities; runs on Cardano (and Ergo/BSC for parts) and settles in USDM.
+maintainer: zenGate Global
+links:
+  website: https://palmyra.app
+status: active
+primarySector: rwa
+uses:
+  - target: usdm
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://moneta.global/ecosystem/partners/zengate/
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"USDM serves as the stable settlement currency inside Palmyra"'
+lastVerified: 2026-10-20
