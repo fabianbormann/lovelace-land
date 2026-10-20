@@ -21,12 +21,15 @@ export function cursorAt(months: string[], T: number): Cursor {
   return { index, frac, month: months[index] };
 }
 
-const lerp = (series: number[], T: number) => {
-  const { index, frac } = cursorAt(series.map(String), T);
-  const a = series[index];
-  const b = series[Math.min(index + 1, series.length - 1)];
-  return a + (b - a) * frac;
-};
+/** Value of a monthly series at continuous time T (no allocations: runs every frame during playback). */
+export function seriesAt(series: number[], T: number) {
+  const last = series.length - 1;
+  const t = Math.min(Math.max(T, 0), last);
+  const index = Math.min(Math.floor(t), last);
+  const frac = index === last ? 0 : t - index;
+  return series[index] + (series[Math.min(index + 1, last)] - series[index]) * frac;
+}
+const lerp = seriesAt;
 
 export const isStanding = (state: string) => state !== 'e' && state !== 'g';
 

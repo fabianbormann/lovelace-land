@@ -88,15 +88,18 @@ export function computeTimeline(graph: Graph, activity: Activity, months: string
       tx = months.map(() => DATED_FLOW);
       source = 'assumed';
     }
+    // The running month is still being collected: carry last month's flow so ships don't leave early.
+    if (last > 0 && source !== 'announced') tx[last] = Math.max(tx[last], tx[last - 1]);
     const w = tx.map((v) => round(Math.log10(1 + v)));
-    let seen = false;
+    const lastActive = w.reduce((found, v, i) => (v > 0 ? i : found), -1);
     const state = w
-      .map((v) => {
-        if (v > 0) {
-          seen = true;
-          return 'd';
+      .map((v, i) => {
+        if (c.stage === 'ended') {
+          // a wreck only after its last activity; without any data, only in today's snapshot
+          if (lastActive === -1) return i === last ? 'w' : 'a';
+          if (i > lastActive) return 'w';
         }
-        return c.stage === 'ended' && (seen || source === 'none') ? 'w' : 'a';
+        return v > 0 ? 'd' : 'a';
       })
       .join('');
     customerTl[c.id] = { tx, w, state, source };

@@ -175,7 +175,7 @@ export function buildSignposts(world: World, surfaceY: (x: number, y: number) =>
 export function buildRafts(terrain: Terrain, stage: Stage) {
   const group = new THREE.Group();
   const path = terrain.riverPath;
-  if (path.length < 2) return group;
+  if (path.length < 3) return group;
   const material = new THREE.MeshLambertMaterial({ color: '#7a5634', flatShading: true });
   const cargo = new THREE.MeshLambertMaterial({ color: '#2f5fe0', flatShading: true });
   const rafts = Array.from({ length: Math.max(2, Math.floor(path.length / 8)) }, (_, i) => {
@@ -193,6 +193,7 @@ export function buildRafts(terrain: Terrain, stage: Stage) {
       const d = (r.offset + t * 0.9) % len;
       const k = Math.floor(d);
       const f = d - k;
+      if (!path[k]) continue;
       const [ax, ay] = path[k];
       const [bx, by] = path[Math.min(k + 1, len)];
       r.raft.position.set(ax + (bx - ax) * f, 0.05, ay + (by - ay) * f);

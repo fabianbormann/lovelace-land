@@ -54,6 +54,6 @@ describe('describeShipAt', () => {
     const i = w.timeline.months.indexOf('2026-07');
     expect(describeShipAt(w, 'harbor-traders', i)).toBe('Docked in Jul 2026 with 999 transactions through the products it uses.');
     expect(describeShipAt(w, 'harbor-traders', i + 2)).toBe('Away in Sep 2026: no transactions that month.');
-    expect(describeShipAt(w, 'old-pilot', i)).toBe('A wreck: this customer stopped using the product.');
+    expect(describeShipAt(w, 'old-pilot', w.timeline.months.length - 1)).toBe('A wreck: this customer stopped using the product.');
   });
 });

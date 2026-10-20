@@ -137,7 +137,7 @@ a { color: var(--brass); }
 /* Detail panel */
 .panel {
   position: absolute; z-index: 5; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(var(--bar-bottom) + 12px);
-  bottom: calc(96px + env(safe-area-inset-bottom, 0px)); width: min(400px, calc(100% - 32px)); overflow: auto;
+  bottom: var(--timeline-space, 96px); width: min(400px, calc(100% - 32px)); overflow: auto;
   background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px 20px;
 }
 .panel .close { position: sticky; top: 0; float: right; border: 0; background: var(--paper-2); border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
@@ -283,7 +283,7 @@ tbody tr:hover { background: var(--brass-soft); }
   .search { max-width: none; flex-basis: 100%; order: 3; }
   .lenses { order: 4; flex-basis: 100%; }
   .bar-actions { margin-left: auto; }
-  .panel { top: auto; left: max(16px, env(safe-area-inset-left, 0px)); width: auto; height: 58%; }
+  .panel { top: auto; left: max(16px, env(safe-area-inset-left, 0px)); width: auto; height: min(58%, calc(100% - var(--bar-bottom) - var(--timeline-space, 96px) - 12px)); }
   .legend:not([open]) { width: auto; }
   .legend { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
   .timeline { left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); transform: none; width: auto; min-width: 0; bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }

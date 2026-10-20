@@ -144,3 +144,26 @@ test('the time axis moves the island to an earlier month', async ({ page }) => {
   await page.click('#tl-now');
   await expect(page.locator('#tl-month')).toHaveText('Oct 2026');
 });
+
+test('playback keeps focus inside the details panel', async ({ page }) => {
+  await open(page, '#node=anvil-lib');
+  await page.click('#tl-speed');
+  const link = page.locator('#panel .evidence a').first();
+  await link.focus();
+  await page.evaluate(() => (document.querySelector('#tl-play') as HTMLButtonElement).click());
+  await page.waitForTimeout(1500);
+  expect(await page.evaluate(() => document.activeElement?.closest('#panel') !== null)).toBe(true);
+  await page.evaluate(() => (document.querySelector('#tl-play') as HTMLButtonElement).click());
+});
+
+test('on a phone the open panel leaves the timeline usable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await open(page, '#node=anvil-lib');
+  await expect(page.locator('#panel')).toBeVisible();
+  const free = await page.evaluate(() => {
+    const r = document.querySelector('#tl-slider')!.getBoundingClientRect();
+    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    return hit?.id === 'tl-slider';
+  });
+  expect(free).toBe(true);
+});

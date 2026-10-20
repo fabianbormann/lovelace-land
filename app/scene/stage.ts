@@ -203,7 +203,14 @@ export class Stage {
         if (f.t >= 1) this.flight = null;
       }
       this.controls.update();
-      for (const tick of this.ticks) tick(t, dt);
+      for (const tick of this.ticks)
+        try {
+          tick(t, dt);
+        } catch (e) {
+          // one broken animation must not freeze the whole island
+          this.ticks = this.ticks.filter((x) => x !== tick);
+          console.error('animation stopped', e);
+        }
       this.renderer.render(this.scene, this.camera);
       this.labels.render(this.scene, this.camera);
       requestAnimationFrame(loop);

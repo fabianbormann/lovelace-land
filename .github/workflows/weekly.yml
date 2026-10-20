@@ -73,7 +73,7 @@ jobs:
       - name: Collect monthly transactions and commits
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN || github.token }}
-        run: npm run collect:activity
+        run: npm run --silent collect:activity | tee "$RUNNER_TEMP/activity.md"
       - run: npm run build:world
       - uses: peter-evans/create-pull-request@v7
         with:
@@ -81,5 +81,5 @@ jobs:
           branch: bot/activity
           add-paths: data/**
           title: Refresh monthly activity for the time axis
-          body: Monthly transactions (Yaci Store analytics) and commits (GitHub) collected by `npm run collect:activity`.
+          body-path: ${{ runner.temp }}/activity.md
           commit-message: 'data: refresh monthly activity'

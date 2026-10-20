@@ -5,12 +5,12 @@ import { indexWorld, type WorldIndex } from './logic/index';
 import { computeAppearance, defaultViewState, type Lens, type ViewState } from './logic/lenses';
 import { formatMonth } from './logic/describe';
 import { search } from './logic/search';
-import { cursorAt, flagsAt, statsAt } from './logic/time';
+import { cursorAt, flagsAt, seriesAt, statsAt } from './logic/time';
 import { createIsland, type IslandMap } from './scene/island';
 import { SECTOR_COLORS } from './scene/town';
 import { h } from './ui/dom';
 import { createListView } from './ui/listview';
-import { renderPanel } from './ui/panel';
+import { renderPanel, updatePanelTime } from './ui/panel';
 
 const $ = <T extends HTMLElement = HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
 
@@ -55,8 +55,15 @@ async function boot() {
 /** Keep overlays clear of the header, whose height changes when it wraps on narrow screens. */
 function trackHeaderHeight() {
   const bar = $('.bar');
-  const update = () => document.documentElement.style.setProperty('--bar-bottom', `${bar.offsetTop + bar.offsetHeight}px`);
+  const timeline = $('.timeline');
+  const app = $('#app');
+  const update = () => {
+    document.documentElement.style.setProperty('--bar-bottom', `${bar.offsetTop + bar.offsetHeight}px`);
+    document.documentElement.style.setProperty('--timeline-space', `${app.clientHeight - timeline.offsetTop + 8}px`);
+  };
   new ResizeObserver(update).observe(bar);
+  new ResizeObserver(update).observe(timeline);
+  new ResizeObserver(update).observe(app);
   update();
 }
 
@@ -230,6 +237,7 @@ function start(world: World) {
   slider.max = String(lastMonth);
   let playing = false;
   let speed = 1;
+  let generation = 0;
   const setTime = (next: number) => {
     T = Math.min(Math.max(next, 0), lastMonth);
     const { index, month } = cursorAt(tl.months, T);
@@ -242,7 +250,7 @@ function start(world: World) {
       const s = statsAt(world, index);
       $('#stats').textContent = `${s.buildings} buildings · ${s.ships} ships docked · ${s.stranded} stranded · ${Math.round(s.tx).toLocaleString('en')} tx`;
       refresh();
-      if (selected) showPanel(selected, { fly: false });
+      if (selected && !panel.hidden) updatePanelTime(panel, idx, selected, T);
     }
   };
   const setPlaying = (on: boolean) => {
@@ -250,9 +258,10 @@ function start(world: World) {
     playBtn.textContent = on ? '❚❚' : '▶';
     playBtn.setAttribute('aria-label', on ? 'Pause history' : 'Play history');
     if (on && T >= lastMonth) setTime(0);
+    const mine = ++generation;
     let prev = performance.now();
     const step = (now: number) => {
-      if (!playing) return;
+      if (!playing || mine !== generation) return;
       const dt = Math.min((now - prev) / 1000, 0.1);
       prev = now;
       setTime(T + dt * speed);
@@ -265,6 +274,7 @@ function start(world: World) {
   speedBtn.addEventListener('click', () => {
     speed = speed === 1 ? 4 : 1;
     speedBtn.textContent = `${speed}×`;
+    speedBtn.setAttribute('aria-label', `Playback speed ${speed} times`);
   });
   $('#tl-now').addEventListener('click', () => {
     setPlaying(false);
@@ -279,9 +289,12 @@ function start(world: World) {
     if (e.key in steps) {
       e.preventDefault();
       setPlaying(false);
-      setTime(Math.round(T) + steps[e.key]);
+      const { index, frac } = cursorAt(tl.months, T);
+      // step to the neighbouring month start; from mid-month, back goes to the start of this month
+      setTime(steps[e.key] < 0 && frac > 0 ? index + steps[e.key] + 1 : index + steps[e.key]);
     } else if (e.key === 'Home' || e.key === 'End') {
       e.preventDefault();
+      setPlaying(false);
       setTime(e.key === 'Home' ? 0 : lastMonth);
     }
   });
@@ -338,7 +351,8 @@ function start(world: World) {
         t.kind === 'edge'
           ? (() => {
               const e = idx.edge.get(t.id)!;
-              return `${idx.node.get(e.from)?.name ?? idx.customer.get(e.from)?.name} → ${idx.node.get(e.to)?.name} · traffic ${e.traffic}`;
+              const traffic = seriesAt(tl.edges[world.edges.indexOf(e)], T);
+              return `${idx.node.get(e.from)?.name ?? idx.customer.get(e.from)?.name} → ${idx.node.get(e.to)?.name} · traffic ${Math.round(traffic * 10) / 10}`;
             })()
           : t.kind === 'node'
             ? `${world.districts.find((d) => d.id === idx.node.get(t.id)?.district)?.name}`

@@ -4,7 +4,7 @@ import type { Target } from '../logic/hash';
 import { tileKey, type WorldIndex } from '../logic/index';
 import type { Appearance } from '../logic/lenses';
 import { buildTerrain, MOUNTAIN_PEAK } from '../logic/terrain';
-import { cursorAt, edgeTrafficAt, flagsAt, shipPresence, surfaceAt } from '../logic/time';
+import { cursorAt, flagsAt, seriesAt, shipPresence, surfaceAt } from '../logic/time';
 import { applyLook } from './appearance';
 import { buildHarbors } from './harbors';
 import { buildCardanoMark, buildRafts, buildSignposts, buildTerrainMesh, buildWater, makeSurface } from './landscape';
@@ -102,7 +102,8 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
     pointer.set(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
     raycaster.setFromCamera(pointer, stage.camera);
     for (const hit of raycaster.intersectObjects(pickables, true)) {
-      if (!hit.object.visible) continue;
+      // the raycaster also hits children of hidden groups (empty plots, ships at sea)
+      if (!shownInScene(hit.object)) continue;
       const data = hit.object.userData.pick as { kind: string; id: string } | undefined;
       if (data && (data.kind === 'node' || data.kind === 'customer' || data.kind === 'sector'))
         return { target: data as Pick['target'], clientX, clientY };
@@ -165,11 +166,23 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   const tl = world.timeline;
   let T = tl.months.length - 1;
   let surfaces: Map<string, number> | null = null;
-  const tileEdges = [...idx.edgesAtTile].map(([key, edges]) => [key, edges.map((e) => world.edges.indexOf(e))] as const);
-  const computeSurfaces = () => {
+  // Monthly traffic per road tile, summed once so playback only interpolates.
+  const edgeIndex = new Map(world.edges.map((e, i) => [e.id, i] as const));
+  const tileSeries = [...idx.edgesAtTile].map(([key, edges]) => {
+    const series = tl.months.map(() => 0);
+    for (const e of edges) tl.edges[edgeIndex.get(e.id)!].forEach((v, m) => (series[m] += v));
+    return [key, series] as const;
+  });
+  /** surfaces for time T, or null when nothing changed since last time */
+  const computeSurfaces = (previous: Map<string, number> | null) => {
     const map = new Map<string, number>();
-    for (const [key, edgeIdx] of tileEdges) map.set(key, surfaceAt(edgeIdx.reduce((sum, e) => sum + edgeTrafficAt(tl, e, T), 0)));
-    return map;
+    let changed = previous === null;
+    for (const [key, series] of tileSeries) {
+      const surface = surfaceAt(seriesAt(series, T));
+      map.set(key, surface);
+      if (!changed && previous!.get(key) !== surface) changed = true;
+    }
+    return changed ? map : null;
   };
   let shownMonth = -1;
   const applyTime = () => {
@@ -184,8 +197,11 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
       s.setPresence(p.docked, p.wreck);
     }
     settlers.setTime(T);
-    surfaces = computeSurfaces();
-    if (current) roads.apply(current, surfaces);
+    const next = computeSurfaces(surfaces);
+    if (next) {
+      surfaces = next;
+      if (current) roads.apply(current, surfaces);
+    }
   };
   applyTime();
 
@@ -239,6 +255,11 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
       for (const key of [prev, selected]) if (key) refreshObject(key.split(':')[0] as 'node', key.slice(key.indexOf(':') + 1));
     },
   };
+}
+
+function shownInScene(obj: THREE.Object3D | null): boolean {
+  for (let o = obj; o; o = o.parent) if (!o.visible) return false;
+  return true;
 }
 
 function applyShipLook(root: THREE.Object3D, look: Appearance['customers'] extends Map<string, infer L> ? L : never, hovered: boolean) {

@@ -44,14 +44,25 @@ describe('customer flow', () => {
     expect(t.customers.o.state.slice(0, 6)).toBe('aadada');
   });
 
-  it('keeps a customer without any data docked throughout, and an ended one wrecked', () => {
+  it('keeps a customer without any data docked throughout; an ended one appears as a wreck only today', () => {
     const t = timeline(
       makeData({ nodes, customers: [customer('x', ['defi'], ['app']), customer('y', ['defi'], ['app'], { stage: 'ended' })] }),
       act(),
     );
     expect(t.customers.x.state).toBe('d'.repeat(MONTHS.length));
     expect(t.customers.x.source).toBe('assumed');
-    expect(t.customers.y.state).toBe('w'.repeat(MONTHS.length));
+    expect(t.customers.y.state).toBe('a'.repeat(MONTHS.length - 1) + 'w');
+  });
+
+  it('keeps an ended customer docked through quiet months until its last activity, then wrecked', () => {
+    const t = timeline(makeData({ nodes, customers: [customer('e', ['defi'], ['app'], { stage: 'ended' })] }), act({ e: series({ 1: 5, 3: 5 }) }));
+    expect(t.customers.e.state.slice(0, 6)).toBe('adadww');
+  });
+
+  it('carries last month’s flow into the running month so ships do not leave on a partial month', () => {
+    const t = timeline(makeData({ nodes, customers: [customer('c', ['defi'], ['app'])] }), act({ c: series({ 13: 40 }) }));
+    expect(t.customers.c.state.slice(13)).toBe('dd');
+    expect(t.customers.c.tx[14]).toBe(40);
   });
 
   it('turns an ended customer into a wreck once its transactions stop', () => {

@@ -81,6 +81,24 @@ export function txPlan(onchain: Onchain, windows: [string, string][], excluded: 
   throw new Error(`${scripts.length} scripts are too many to query, even by prefix`);
 }
 
+/**
+ * Build a plan and, when scripts are matched by prefix, exclude every foreign script the prefixes
+ * match. Exclusions lengthen the statement and may force a shorter prefix, so check again until the
+ * prefix length is stable.
+ */
+export async function resolvePlan(onchain: Onchain, windows: [string, string][], runCheck: (sql: string) => Promise<string[]>): Promise<TxPlan> {
+  const ours = new Set(onchain.scripts ?? []);
+  const excluded = new Set<string>();
+  let plan = txPlan(onchain, windows);
+  const checkedLengths = new Set<number>();
+  for (let round = 0; plan.prefix && !checkedLengths.has(plan.prefix.length) && round < 8; round++) {
+    checkedLengths.add(plan.prefix.length);
+    for (const h of await runCheck(plan.prefix.checkQuery)) if (!ours.has(h)) excluded.add(h);
+    plan = txPlan(onchain, windows, [...excluded].sort());
+  }
+  return plan;
+}
+
 /** Back-compatible: the statements of a plan without prefix exclusions. */
 export function txQueries(onchain: Onchain, ...windows: [string, string][]): string[] {
   return txPlan(onchain, windows).queries;
@@ -119,6 +137,9 @@ export function commitsQuery(owner: string, repo: string, months: string[]): str
 }
 
 export function parseCommits(json: unknown, months: string[]): MonthCounts | null {
+  const errors = (json as { errors?: { message: string; type?: string }[] })?.errors;
+  // a missing repository is reported as NOT_FOUND; anything else (bad token, rate limit) is a failure
+  if (errors?.length && !errors.every((e) => e.type === 'NOT_FOUND')) throw new Error(errors.map((e) => e.message).join('; '));
   const target = (json as { data?: { repository?: { defaultBranchRef?: { target?: Record<string, { totalCount: number }> } } | null } })?.data?.repository
     ?.defaultBranchRef?.target;
   if (!target) return null;

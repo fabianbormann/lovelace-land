@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { commitsQuery, MAX_SQL_LENGTH, parseCommits, parseSqlRows, repoOf, txPlan, txQueries, yearChunks } from '../../scripts/lib/activity-sources';
+import { commitsQuery, MAX_SQL_LENGTH, parseCommits, parseSqlRows, repoOf, resolvePlan, txPlan, txQueries, yearChunks } from '../../scripts/lib/activity-sources';
 
 const HASH = 'e1317b152faac13426e6a83e06ff88a4d62cce3c1634ab0a5ec13309';
 
@@ -82,5 +82,38 @@ describe('GitHub commits', () => {
     const ok = { data: { repository: { defaultBranchRef: { target: { m0: { totalCount: 3 }, m1: { totalCount: 0 } } } } } };
     expect(parseCommits(ok, ['2026-01', '2026-02'])).toEqual({ '2026-01': 3 });
     expect(parseCommits({ data: { repository: null } }, ['2026-01'])).toBeNull();
+  });
+});
+
+describe('resolvePlan', () => {
+  const many = Array.from({ length: 700 }, (_, i) => (i * 7919).toString(16).padStart(8, '0') + 'a'.repeat(48));
+
+  it('re-checks foreign matches whenever exclusions change the prefix length', async () => {
+    const checked: number[] = [];
+    // each check reports a new foreign hash for the prefix length it was asked about
+    const runCheck = async (q: string) => {
+      const len = Number(/substr\(script_hash, 1, (\d+)\)/.exec(q)![1]);
+      checked.push(len);
+      // the chain holds 20 foreign scripts sharing our first 12 characters; excluding them forces a shorter prefix
+      return Array.from({ length: 20 }, (_, k) => many[k].slice(0, 12) + 'f'.repeat(44)).filter((h) => many.some((m) => m.startsWith(h.slice(0, len))));
+    };
+    const plan = await resolvePlan({ scripts: many }, [['2026-01-01', '2026-02-01']], runCheck);
+    const foreignInQuery = [...plan.queries[0].matchAll(/'([0-9a-f]{56})'/g)].map((m) => m[1]).filter((h) => h.endsWith('ffff'));
+    expect(checked.length).toBeGreaterThan(1);
+    expect(foreignInQuery.length).toBe(20);
+    expect(plan.prefix!.length).toBe(checked[checked.length - 1]);
+  });
+
+  it('skips the check for short lists', async () => {
+    const plan = await resolvePlan({ scripts: [HASH] }, [['2026-01-01', '2026-02-01']], async () => {
+      throw new Error('should not be called');
+    });
+    expect(plan.queries).toHaveLength(1);
+  });
+});
+
+describe('parseCommits errors', () => {
+  it('throws on GraphQL errors instead of treating them as a missing repository', () => {
+    expect(() => parseCommits({ errors: [{ message: 'Bad credentials' }] }, ['2026-01'])).toThrow(/Bad credentials/);
   });
 });

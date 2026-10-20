@@ -69,6 +69,52 @@ function history(series: number[], i: number, what: string, meta: (string | null
   );
 }
 
+const lastUpTo = (series: number[], months: string[], i: number) => {
+  for (let k = i; k >= 0; k--) if (series[k] > 0) return months[k];
+  return null;
+};
+
+function sizeAt(idx: WorldIndex, id: string, i: number) {
+  const tier = Number(idx.world.timeline.nodes[id].tier[i]);
+  return tier ? tierName(tier) : '—';
+}
+
+function nodeHistory(idx: WorldIndex, id: string, i: number) {
+  const tl = idx.world.timeline;
+  const t = tl.nodes[id];
+  const hasTx = t.tx.some((v) => v > 0);
+  const lastCommit = lastUpTo(t.commits, tl.months, i) ?? (t.lastCommit && t.lastCommit < tl.months[0] ? t.lastCommit : null);
+  const lastUse = lastUpTo(t.traffic.map((v, k) => v + t.tx[k]), tl.months, i);
+  return history(
+    hasTx ? t.tx : t.commits,
+    i,
+    hasTx ? 'on-chain transactions' : 'commits',
+    [lastCommit && `Last commit ${formatMonth(lastCommit)}`, lastUse && `Last used ${formatMonth(lastUse)}`],
+    describeNodeAt(idx.world, id, i),
+    t.state[i],
+  );
+}
+
+function customerHistory(idx: WorldIndex, id: string, i: number) {
+  const tl = idx.world.timeline;
+  return history(tl.customers[id].tx, i, 'transactions', [], describeShipAt(idx.world, id, i), tl.customers[id].state[i]);
+}
+
+/** Refresh only the month-dependent parts, so playback keeps focus and scroll position in the panel. */
+export function updatePanelTime(root: HTMLElement, idx: WorldIndex, target: Target, time: number) {
+  const tl = idx.world.timeline;
+  const i = Math.min(Math.max(Math.floor(time), 0), tl.months.length - 1);
+  const old = root.querySelector('.history');
+  if (target.kind === 'node' && idx.node.has(target.id)) {
+    old?.replaceWith(nodeHistory(idx, target.id, i));
+    const traffic = root.querySelector('[data-role="traffic"]');
+    traffic?.replaceChildren(h('b', {}, fmt(tl.nodes[target.id].traffic[i])), h('span', {}, `traffic in ${formatMonth(tl.months[i])}`));
+    root.querySelector('[data-role="size"] b')?.replaceChildren(sizeAt(idx, target.id, i));
+  } else if (target.kind === 'customer' && idx.customer.has(target.id)) {
+    old?.replaceWith(customerHistory(idx, target.id, i));
+  }
+}
+
 export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, showRumors: boolean, actions: PanelActions, time: number) {
   const tl = idx.world.timeline;
   const i = Math.min(Math.max(Math.floor(time), 0), tl.months.length - 1);
@@ -96,24 +142,13 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
       h('h2', { tabindex: -1 }, n.name),
       pills,
       h('p', {}, n.description),
-      (() => {
-        const t = tl.nodes[n.id];
-        const hasTx = t.tx.some((v) => v > 0);
-        return history(
-          hasTx ? t.tx : t.commits,
-          i,
-          hasTx ? 'on-chain transactions' : 'commits',
-          [t.lastCommit && `Last commit ${formatMonth(t.lastCommit)}`, t.lastUse && `Last used ${formatMonth(t.lastUse)}`],
-          describeNodeAt(idx.world, n.id, i),
-          t.state[i],
-        );
-      })(),
+      nodeHistory(idx, n.id, i),
       h(
         'div',
         { class: 'facts' },
-        h('div', { class: 'fact' }, h('b', {}, fmt(tl.nodes[n.id].traffic[i])), h('span', {}, `traffic in ${formatMonth(tl.months[i])}`)),
+        h('div', { class: 'fact', 'data-role': 'traffic' }, h('b', {}, fmt(tl.nodes[n.id].traffic[i])), h('span', {}, `traffic in ${formatMonth(tl.months[i])}`)),
         h('div', { class: 'fact' }, h('b', {}, String(n.dependents)), h('span', {}, 'direct dependents')),
-        h('div', { class: 'fact' }, h('b', {}, tierName(Number(tl.nodes[n.id].tier[i]) || n.tier)), h('span', {}, 'building size')),
+        h('div', { class: 'fact', 'data-role': 'size' }, h('b', {}, sizeAt(idx, n.id, i)), h('span', {}, 'building size')),
       ),
       links.length ? h('div', { class: 'links' }, ...links.map(([k, url]) => extLink(url, k === 'repo' ? 'Source code' : k === 'docs' ? 'Documentation' : 'Website'))) : '',
       n.packages.length ? h('p', { class: 'eyebrow' }, 'Packages: ', ...n.packages.map((p, i) => h('span', { class: 'mono' }, `${i ? ', ' : ''}${p.ecosystem}:${p.name}`))) : '',
@@ -141,7 +176,7 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
         ...c.sectors.slice(1).map((s) => h('span', { class: 'pill' }, idx.world.sectors.find((x) => x.id === s)?.name ?? s)),
       ),
       h('p', {}, c.description),
-      history(tl.customers[c.id].tx, i, 'transactions', [], describeShipAt(idx.world, c.id, i), tl.customers[c.id].state[i]),
+      customerHistory(idx, c.id, i),
       c.metric
         ? h('p', {}, h('b', { class: 'mono' }, String(c.metric.value)), ` ${c.metric.label} · `, extLink(c.metric.source, hostOf(c.metric.source)), h('span', { class: 'rel-meta' }, ` · ${c.metric.retrieved}`))
         : '',
