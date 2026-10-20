@@ -13,3 +13,6 @@ playwright-report/
 .og.mjs
 .export-icons.mjs
 .render-icon.mjs
+
+# internal design specs and implementation plans
+docs/superpowers/

@@ -5,7 +5,7 @@ Drafts are reconciled into `data/` after review. Nothing in this folder is publi
 
 ## File format
 
-Exactly the format of the design spec §2.3 / §2.4 (`docs/superpowers/specs/2026-10-20-cardano-island-design.md`).
+Exactly the formats described in CONTRIBUTING.md ("Add a project" and "Add a customer").
 
 Node (`nodes/<id>.yaml`, filename == id):
 
