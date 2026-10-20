@@ -5,3 +5,5 @@ dist/
 .shot.mjs
 test-results/
 playwright-report/
+.scrub.mjs
+.merge-onchain.ts
