@@ -1,0 +1,51 @@
+name: Weekly upkeep
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check every source link
+        id: links
+        run: npm run --silent check:links > links.md
+        continue-on-error: true
+      - name: Open an issue for broken links
+        if: steps.links.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue create --title "Broken source links ($(date +%Y-%m-%d))" --body-file links.md
+
+  manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Scan project manifests for new dependencies
+        run: |
+          npm run --silent scan:manifests -- --write > scan.md
+          npm run build:world
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: bot/manifest-scan
+          title: New roads found in project manifests
+          body-path: scan.md
+          commit-message: 'data: add dependencies found by the weekly manifest scan'

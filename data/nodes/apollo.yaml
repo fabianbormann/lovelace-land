@@ -1,7 +1,9 @@
 id: apollo
 name: "Apollo (Go)"
 district: sdks
-description: "Apollo is a pure Go library for constructing Cardano transactions. Version 2 builds on Blink Labs' gouroboros ledger packages and offers Blockfrost, Ogmios/Kupo and UTxO RPC backends."
+description: "Apollo is a pure Go library for constructing Cardano transactions.
+  Version 2 builds on Blink Labs' gouroboros ledger packages and offers
+  Blockfrost, Ogmios/Kupo and UTxO RPC backends."
 maintainer: "Salvionied"
 links:
   repo: https://github.com/Salvionied/apollo
@@ -48,5 +50,12 @@ uses:
     evidence:
       - url: https://github.com/Salvionied/apollo/blob/master/backend/blockfrost/blockfrost.go
         kind: docs
+        retrieved: 2026-10-20
+  - target: utxorpc
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Salvionied/apollo/blob/HEAD/go.mod
+        kind: manifest
         retrieved: 2026-10-20
 lastVerified: 2026-10-20

@@ -26,6 +26,10 @@ if (result.errors.length > 0 || !result.world) {
 }
 
 const world = result.world;
+if (values.check && lockText !== null && lockText !== result.lockText) {
+  console.error('error    layout.lock.json is out of date; run npm run build:world and commit the updated lock file.');
+  process.exit(1);
+}
 if (!values.check) {
   mkdirSync(dirname(outFile), { recursive: true });
   writeFileSync(outFile, serializeWorld(world));

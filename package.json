@@ -9,7 +9,9 @@
     "dev": "vite",
     "build": "npm run build:world && vite build",
     "preview": "vite preview",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "scan:manifests": "tsx scripts/scan-manifests.ts",
+    "check:links": "tsx scripts/check-links.ts"
   },
   "license": "MIT",
   "private": true,

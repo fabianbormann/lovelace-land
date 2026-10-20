@@ -34,6 +34,19 @@ describe('cli', () => {
     expect(existsSync(join(data, 'layout.lock.json'))).toBe(false);
   }, 30_000);
 
+  it('--check fails when the committed lock is out of date', () => {
+    const data = copyFixture();
+    const out = join(mkdtempSync(join(tmpdir(), 'island-out-')), 'w.json');
+    expect(cli('--data', data, '--out', out).status).toBe(0);
+    const lock = join(data, 'layout.lock.json');
+    writeFileSync(lock, readFileSync(lock, 'utf8').replace(/"swap-town": \[[^\]]*\]/, '"swap-town": [999, 999]'));
+    const r = cli('--data', data, '--check');
+    expect(r.status).toBe(1);
+    expect(r.stderr).toContain('layout.lock.json is out of date');
+    expect(cli('--data', data, '--out', out).status).toBe(0);
+    expect(cli('--data', data, '--check').status).toBe(0);
+  }, 60_000);
+
   it('exits 1 and prints file-scoped errors', () => {
     const data = copyFixture();
     const file = join(data, 'nodes', 'swap-town.yaml');

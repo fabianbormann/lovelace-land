@@ -7,6 +7,9 @@ A Settlers-style isometric map of the Cardano technology landscape: tools are bu
 - Data: `data/` (CC-BY-4.0) — one YAML file per project or customer
 - Build the world: `npm run build:world` → `public/world.json`
 - Validate only: `npm run check:data`
-- Tests: `npm test`
+- Tests: `npm test` (unit) and `npm run e2e` (browser)
+- Run the map locally: `npm run build:world && npm run dev`
+- Weekly upkeep: `npm run check:links`, `npm run scan:manifests`
+- How to add projects and customers: `CONTRIBUTING.md`
 
 Code is MIT licensed; data in `data/` is CC-BY-4.0.

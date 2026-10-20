@@ -1,12 +1,12 @@
 id: yoroi
-name: Yoroi
+name: Yoroi (SecondFi)
 district: wallets
-description: Light wallet for Cardano by EMURGO, available as a browser extension and a mobile app.
+description: Light wallet for Cardano by EMURGO, renamed SecondFi in April 2026. After wallets were drained in June 2026, EMURGO announced in July 2026 that it would cease operating SecondFi and Yoroi.
 maintainer: EMURGO
 links:
   website: https://yoroi-wallet.com
   repo: https://github.com/Emurgo/yoroi-frontend
-status: active
+status: deprecated
 primarySector: null
 uses:
   - target: cardano-serialization-lib

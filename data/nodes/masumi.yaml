@@ -1,7 +1,9 @@
 id: masumi
 name: Masumi
 district: products
-description: Payment and identity network on Cardano that lets AI agents discover and pay each other for services through escrow smart contracts; built by NMKR and Serviceplan and powering the Sokosumi agent marketplace.
+description: Payment and identity network on Cardano that lets AI agents
+  discover and pay each other for services through escrow smart contracts; built
+  by NMKR and Serviceplan and powering the Sokosumi agent marketplace.
 maintainer: Masumi Network (NMKR, Serviceplan)
 links:
   website: https://masumi.network
@@ -48,7 +50,8 @@ uses:
       - url: https://github.com/masumi-network/masumi-payment-service/blob/main/docs/hydra-operations.md
         kind: docs
         retrieved: 2026-10-20
-        note: '"Running Hydra in production": two-party Hydra heads as payment channels for agent payments'
+        note: '"Running Hydra in production": two-party Hydra heads as payment channels
+          for agent payments'
   - target: usdm
     relation: service
     confidence: verified
@@ -56,5 +59,20 @@ uses:
       - url: https://moneta.global/ecosystem/partners/masumi/
         kind: docs
         retrieved: 2026-10-20
-        note: '"USDM is used to pay for AI-agent services across Masumi and the Sokosumi marketplace"'
+        note: '"USDM is used to pay for AI-agent services across Masumi and the Sokosumi
+          marketplace"'
+  - target: lucid
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/masumi-network/masumi-payment-service/blob/HEAD/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+  - target: sundaeswap
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/masumi-network/masumi-payment-service/blob/HEAD/package.json
+        kind: manifest
+        retrieved: 2026-10-20
 lastVerified: 2026-10-20
