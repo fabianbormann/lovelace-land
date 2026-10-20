@@ -150,9 +150,11 @@ export function buildCardanoMark(stage: Stage, surfaceY: (x: number, y: number) 
   const object = new THREE.Group();
   object.add(holder);
   if (typeof document !== 'undefined') {
+    // The name hangs below the mark, outside its clear space of six small dots, and scales with it.
+    const smallestDot = Math.min(...dots.map((d) => d.r)) * 2 * scale;
     const label = new CSS2DObject(Object.assign(document.createElement('div'), { className: 'label label-landmark', textContent: 'Cardano' }));
-    label.position.set(MOUNTAIN_PEAK[0], peakY - 3.2, MOUNTAIN_PEAK[1] + 3);
-    object.add(label);
+    label.position.set(0, -(height * scale) / 2 - 6 * smallestDot - 0.6, 0);
+    holder.add(label);
   }
   return {
     object,
