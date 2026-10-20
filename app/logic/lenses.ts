@@ -1,4 +1,5 @@
-import { customerClosure, highwayEdges, type WorldIndex } from './index';
+import { customerClosure, type WorldIndex } from './index';
+import { flagsAt, isStanding } from './time';
 
 export type Lens = 'none' | 'stranded' | 'highways' | 'follow';
 
@@ -11,6 +12,8 @@ export interface ViewState {
   hideReported: boolean;
   hiddenDistricts: Set<string>;
   hiddenSectors: Set<string>;
+  /** month index on the time axis; null shows the latest snapshot */
+  time: number | null;
 }
 
 export interface Look {
@@ -33,6 +36,7 @@ export const defaultViewState = (): ViewState => ({
   hideReported: false,
   hiddenDistricts: new Set(),
   hiddenSectors: new Set(),
+  time: null,
 });
 
 const look = (dim: boolean, glow: boolean, hidden = false): Look => ({ dim, glow: glow && !dim, hidden });
@@ -51,16 +55,27 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
   const filtered = (id: string) => filteredNode(id) || filteredCustomer(id);
 
   const closure = state.lens === 'follow' && state.follow ? customerClosure(idx, state.follow, state.showRumors) : null;
-  const highways = state.lens === 'highways' ? highwayEdges(idx) : null;
+  const tl = world.timeline;
+  const month = state.time === null ? null : Math.floor(state.time);
+  const monthFlags = month === null ? null : flagsAt(world, month);
+  const isStranded = (id: string) => (monthFlags ? monthFlags.stranded.has(id) : idx.node.get(id)!.stranded);
+  const isHighway = (id: string) => (monthFlags ? monthFlags.highways.has(id) : idx.node.get(id)!.hiddenHighway);
+  const standing = (id: string) => month === null || !tl.nodes[id] || isStanding(tl.nodes[id].state[month]);
+  const docked = (id: string) => month === null || tl.customers[id]?.state[month] === 'd';
+  const present = (id: string) => (idx.node.has(id) ? standing(id) : docked(id));
+  const highways =
+    state.lens === 'highways'
+      ? new Set(world.edges.filter((e) => e.confidence !== 'inferred' && idx.node.has(e.to) && isHighway(e.to)).map((e) => e.id))
+      : null;
 
   const nodes = new Map<string, Look>();
   for (const n of world.nodes) {
     let dim = false;
     let glow = false;
-    if (state.lens === 'stranded') [dim, glow] = [!n.stranded, n.stranded];
-    else if (state.lens === 'highways') [dim, glow] = [!n.hiddenHighway, n.hiddenHighway];
+    if (state.lens === 'stranded') [dim, glow] = [!isStranded(n.id), isStranded(n.id)];
+    else if (state.lens === 'highways') [dim, glow] = [!isHighway(n.id), isHighway(n.id)];
     else if (closure) [dim, glow] = [!closure.nodes.has(n.id), closure.nodes.has(n.id)];
-    nodes.set(n.id, look(dim || filteredNode(n.id), glow));
+    nodes.set(n.id, look(dim || filteredNode(n.id), glow, !standing(n.id)));
   }
 
   const customers = new Map<string, Look>();
@@ -71,7 +86,8 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
 
   const edges = new Map<string, Look>();
   for (const e of world.edges) {
-    const hidden = (e.confidence === 'inferred' && !state.showRumors) || (e.confidence === 'reported' && state.hideReported);
+    const hidden =
+      (e.confidence === 'inferred' && !state.showRumors) || (e.confidence === 'reported' && state.hideReported) || !present(e.from) || !present(e.to);
     let dim = false;
     let glow = false;
     if (state.lens === 'stranded') dim = true;

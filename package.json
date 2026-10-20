@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "e2e": "playwright test",
     "scan:manifests": "tsx scripts/scan-manifests.ts",
-    "check:links": "tsx scripts/check-links.ts"
+    "check:links": "tsx scripts/check-links.ts",
+    "collect:activity": "tsx scripts/collect-activity.ts"
   },
   "license": "MIT",
   "private": true,
