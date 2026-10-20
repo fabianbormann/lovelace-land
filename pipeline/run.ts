@@ -1,9 +1,12 @@
+import { loadActivity, validateActivity } from './activity';
 import { buildWorld, type World } from './emit';
 import { computeFlags } from './flags';
 import { buildGraph, findCycles } from './graph';
 import { computeLayout, emptyLock, parseLock, serializeLock, type LayoutLock } from './layout';
 import { loadDataDir, nodeFile } from './load';
+import { monthOf, monthRange } from './months';
 import { routeRoads } from './roads';
+import { computeTimeline, TIMELINE_START } from './timeline';
 import { computeTraffic } from './traffic';
 import { validateReferences } from './validate';
 
@@ -18,10 +21,12 @@ export function runPipeline(dataDir: string, lockText: string | null, generatedA
   const failed = (errors: string[], warnings: string[] = []): PipelineResult => ({ world: null, lockText: null, errors, warnings });
 
   const { data, errors } = loadDataDir(dataDir);
-  if (errors.length) return failed(errors);
+  const { activity, errors: activityErrors } = loadActivity(dataDir);
+  if (errors.length || activityErrors.length) return failed([...errors, ...activityErrors]);
   const refs = validateReferences(data);
   const warnings = [...refs.warnings];
-  if (refs.errors.length) return failed(refs.errors, warnings);
+  const unknownActivity = validateActivity(activity, data);
+  if (refs.errors.length || unknownActivity.length) return failed([...refs.errors, ...unknownActivity], warnings);
 
   let lock: LayoutLock;
   try {
@@ -41,6 +46,7 @@ export function runPipeline(dataDir: string, lockText: string | null, generatedA
   const roads = routeRoads(graph, layout, traffic, rumorTraffic);
   warnings.push(...roads.warnings);
 
-  const world = buildWorld({ graph, traffic, rumorTraffic, flags, layout, roads, generatedAt });
+  const timeline = computeTimeline(graph, activity, monthRange(TIMELINE_START, monthOf(generatedAt)));
+  const world = buildWorld({ graph, traffic, rumorTraffic, flags, layout, roads, timeline, generatedAt });
   return { world, lockText: serializeLock(layout.lock), errors: [], warnings };
 }

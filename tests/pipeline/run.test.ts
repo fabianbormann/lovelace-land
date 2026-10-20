@@ -106,3 +106,29 @@ describe('runPipeline failure and edge cases', () => {
     expect(r.world!.nodes).toHaveLength(2);
   });
 });
+
+describe('runPipeline timeline', () => {
+  const world = runPipeline('fixtures/mini', null, AT).world!;
+
+  it('spans 2021-09 to the month of generatedAt', () => {
+    expect(world.timeline.months[0]).toBe('2021-09');
+    expect(world.timeline.months.at(-1)).toBe('2026-10');
+    expect(world.timeline.edges).toHaveLength(world.edges.length);
+  });
+
+  it('drives the fixture segment from its product’s transactions', () => {
+    const traders = world.timeline.customers['harbor-traders'];
+    const i = world.timeline.months.indexOf('2026-07');
+    expect(traders.source).toBe('products');
+    expect(traders.tx[i]).toBe(999);
+    expect(traders.w[i]).toBe(3);
+    expect(traders.state[i]).toBe('d');
+    expect(traders.state[i + 2]).toBe('a');
+  });
+
+  it('reports activity errors with their file', () => {
+    const r = runPipeline('fixtures/mini', null, AT);
+    expect(r.errors).toEqual([]);
+    expect(world.timeline.nodes['anvil-lib'].lastCommit).toBe('2026-02');
+  });
+});

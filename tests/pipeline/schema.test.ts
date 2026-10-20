@@ -104,3 +104,24 @@ describe('DistrictSchema', () => {
     expect(DistrictSchema.safeParse({ ...d, color: 'red' }).success).toBe(false);
   });
 });
+
+describe('time axis fields', () => {
+  const hash = 'e1317b152faac13426e6a83e06ff88a4d62cce3c1634ab0a5ec13309';
+  it('accepts onchain identifiers and an active window on nodes and customers', () => {
+    const n = NodeSchema.parse({ ...baseNode, onchain: { scripts: [hash], metadataLabels: [674], source: 'https://example.org/x' }, active: { from: '2023-05', until: '2025-01' } });
+    expect(n.onchain?.scripts).toEqual([hash]);
+    expect(n.active).toEqual({ from: '2023-05', until: '2025-01' });
+    const c = CustomerSchema.parse({
+      id: 'x', name: 'X', type: 'organization', sectors: ['defi'], stage: 'pilot', description: 'd', lastVerified: '2026-10-20',
+      uses: [{ target: 'p', confidence: 'verified', evidence }],
+      onchain: { addresses: ['addr1qxyz0123'] }, active: { from: '2024-02' },
+    });
+    expect(c.active?.from).toBe('2024-02');
+  });
+
+  it('rejects malformed hashes and months', () => {
+    expect(NodeSchema.safeParse({ ...baseNode, onchain: { scripts: ['ABC'] } }).success).toBe(false);
+    expect(NodeSchema.safeParse({ ...baseNode, active: { from: '2024-13' } }).success).toBe(false);
+    expect(NodeSchema.safeParse({ ...baseNode, active: { from: 'May 2024' } }).success).toBe(false);
+  });
+});

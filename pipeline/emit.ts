@@ -2,6 +2,7 @@ import type { NodeFlags, Tier } from './flags';
 import type { Graph } from './graph';
 import type { Bounds, Layout, Pos, Region } from './layout';
 import type { RoadTile, Roads } from './roads';
+import type { Timeline } from './timeline';
 import type { Confidence, Customer, District, Evidence, Node, Relation, Sector } from './schema';
 import { STAGE_WEIGHT, type Traffic } from './traffic';
 import { cmp } from './util';
@@ -43,6 +44,8 @@ export interface World {
   customers: WorldCustomer[];
   edges: WorldEdge[];
   tiles: RoadTile[];
+  /** monthly history; the fields above describe the latest month */
+  timeline: Timeline;
 }
 
 export function buildWorld(input: {
@@ -52,9 +55,10 @@ export function buildWorld(input: {
   flags: Map<string, NodeFlags>;
   layout: Layout;
   roads: Roads;
+  timeline: Timeline;
   generatedAt: string;
 }): World {
-  const { graph, traffic, rumorTraffic, flags, layout, roads, generatedAt } = input;
+  const { graph, traffic, rumorTraffic, flags, layout, roads, timeline, generatedAt } = input;
 
   const districts = [...graph.data.districts]
     .sort((a, b) => a.order - b.order || cmp(a.id, b.id))
@@ -88,7 +92,7 @@ export function buildWorld(input: {
     path: roads.paths.get(e.id)!,
   }));
 
-  return { version: 1, generatedAt, bounds: layout.bounds, districts, sectors, nodes, customers, edges, tiles: roads.tiles };
+  return { version: 1, generatedAt, bounds: layout.bounds, districts, sectors, nodes, customers, edges, tiles: roads.tiles, timeline };
 }
 
 export function serializeWorld(world: World): string {

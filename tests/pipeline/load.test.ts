@@ -116,3 +116,10 @@ describe('loadDataDir', () => {
     expect(loadDataDir(dir).errors).toEqual(['districts.yaml: [0].color must be a hex color like #6b8e23']);
   });
 });
+
+describe('activity folder', () => {
+  it('is an allowed entry in the data folder', () => {
+    const dir = writeTree({ 'districts.yaml': DISTRICTS, 'sectors.yaml': SECTORS, 'activity/tx/.gitkeep': '' });
+    expect(loadDataDir(dir).errors).toEqual([]);
+  });
+});

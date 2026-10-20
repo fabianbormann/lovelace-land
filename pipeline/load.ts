@@ -69,7 +69,7 @@ function listEntryFiles(dir: string, sub: string, errors: string[]): string[] {
   return files;
 }
 
-const DATA_ROOT_ENTRIES = new Set(['districts.yaml', 'sectors.yaml', 'nodes', 'customers', 'layout.lock.json', 'LICENSE', 'README.md']);
+const DATA_ROOT_ENTRIES = new Set(['districts.yaml', 'sectors.yaml', 'nodes', 'customers', 'activity', 'layout.lock.json', 'LICENSE', 'README.md']);
 
 function checkDataRoot(dir: string, errors: string[]) {
   if (!existsSync(dir)) return;

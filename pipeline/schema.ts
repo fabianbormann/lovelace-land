@@ -5,6 +5,22 @@ const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must be a date like 202
 // The public site renders these as links, so only http(s) is allowed.
 const httpUrl = z.string().regex(/^https?:\/\/\S+$/, 'must be a full URL starting with http:// or https://');
 const text = z.string().min(1, 'must not be empty');
+export const YearMonthSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'must be a month like 2024-05');
+export const SlugSchema = slug;
+export const IsoDateSchema = isoDate;
+
+/** On-chain identifiers whose transactions count as this entity's usage (time axis). */
+const OnchainSchema = z
+  .object({
+    scripts: z.array(z.string().regex(/^[0-9a-f]{56}$/, 'must be a 56-character lowercase hex script hash')).optional(),
+    metadataLabels: z.array(z.number().int().nonnegative()).optional(),
+    addresses: z.array(z.string().regex(/^addr1[0-9a-z]+$/, 'must be a mainnet bech32 address')).optional(),
+    source: httpUrl.optional(),
+    note: z.string().optional(),
+  })
+  .strict();
+/** Announced activity window for entities without on-chain data. */
+const ActiveSchema = z.object({ from: YearMonthSchema, until: YearMonthSchema.optional() }).strict();
 
 export const BUILDINGS = [
   'relay-tower',
@@ -88,6 +104,8 @@ export const NodeSchema = z
     status: z.enum(['active', 'maintenance', 'deprecated']),
     primarySector: slug.nullable().default(null),
     uses: z.array(NodeUsesSchema).default([]),
+    onchain: OnchainSchema.optional(),
+    active: ActiveSchema.optional(),
     lastVerified: isoDate,
   })
   .strict();
@@ -110,6 +128,8 @@ export const CustomerSchema = z
       .strict()
       .optional(),
     uses: z.array(CustomerUsesSchema).min(1, 'a customer must use at least one product'),
+    onchain: OnchainSchema.optional(),
+    active: ActiveSchema.optional(),
     lastVerified: isoDate,
   })
   .strict();
