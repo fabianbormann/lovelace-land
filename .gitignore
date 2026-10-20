@@ -11,3 +11,5 @@ playwright-report/
 .coast.mjs
 .dbg.mjs
 .og.mjs
+.export-icons.mjs
+.render-icon.mjs

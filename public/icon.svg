@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b4766"/>
+      <stop offset="1" stop-color="#112a3e"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#sea)"/>
+  <!-- gentle waves -->
+  <g fill="none" stroke="#3f8fb3" stroke-width="10" stroke-linecap="round" opacity="0.55">
+    <path d="M70 448 q22 -14 44 0 t44 0"/>
+    <path d="M356 456 q22 -14 44 0 t44 0"/>
+  </g>
+  <!-- island block (isometric) -->
+  <polygon points="66,300 256,410 256,462 66,352" fill="#c9a96b"/>
+  <polygon points="256,410 446,300 446,352 256,462" fill="#a8864e"/>
+  <polygon points="66,300 256,190 446,300 256,410" fill="#86b25a"/>
+  <!-- sandy rim on the front edges -->
+  <polygon points="66,300 256,410 256,394 92,300" fill="#dcc890"/>
+  <polygon points="256,410 446,300 420,300 256,394" fill="#d1bb80"/>
+  <!-- district tint -->
+  <polygon points="256,236 362,298 300,334 194,272" fill="#6e9a49"/>
+  <!-- road -->
+  <path d="M168 318 L262 264 L344 312" fill="none" stroke="#b8a888" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- mountain -->
+  <polygon points="118,302 186,150 214,290" fill="#8e8b7d"/>
+  <polygon points="186,150 254,288 214,290" fill="#6f6c61"/>
+  <polygon points="118,302 214,290 172,322" fill="#7c786d"/>
+  <polygon points="214,290 254,288 172,322" fill="#625f55"/>
+  <polygon points="186,150 168,192 184,186 196,198 208,176" fill="#f3f5f2"/>
+  <!-- house -->
+  <polygon points="300,322 336,302 336,272 300,292" fill="#efe4cc"/>
+  <polygon points="336,302 362,316 362,286 336,272" fill="#d6c7a6"/>
+  <polygon points="296,294 318,252 340,270 336,276" fill="#b24a32"/>
+  <polygon points="318,252 366,280 364,290 340,270" fill="#8f3826"/>
+  <!-- lighthouse beam spark / tiny ships -->
+  <polygon points="398,372 428,356 434,364 404,380" fill="#5e3c27"/>
+  <polygon points="414,362 414,334 428,354" fill="#f2ead5"/>
+  <!-- the lovelace ring -->
+  <g fill="#ffd27a">
+    <circle cx="326" cy="126" r="20"/>
+    <circle cx="326" cy="80" r="11"/>
+    <circle cx="366" cy="103" r="11"/>
+    <circle cx="366" cy="149" r="11"/>
+    <circle cx="326" cy="172" r="11"/>
+    <circle cx="286" cy="149" r="11"/>
+    <circle cx="286" cy="103" r="11"/>
+  </g>
+  <g fill="#ffd27a" opacity="0.7">
+    <circle cx="346" cy="58" r="5"/><circle cx="388" cy="80" r="5"/><circle cx="398" cy="126" r="5"/>
+    <circle cx="388" cy="172" r="5"/><circle cx="306" cy="194" r="5"/><circle cx="264" cy="172" r="5"/>
+    <circle cx="254" cy="126" r="5"/><circle cx="264" cy="80" r="5"/><circle cx="306" cy="58" r="5"/>
+  </g>
+</svg>
