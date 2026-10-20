@@ -1,0 +1,40 @@
+name: Missing data
+description: A project, customer or dependency is not on the island yet.
+title: "Missing: "
+labels: [data, addition]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is missing?
+      options:
+        - A project (building)
+        - A customer or user group (ship)
+        - A dependency between two projects (road)
+        - On-chain identifiers for the timeline (script hashes, metadata labels)
+        - A new harbor (sector) for a kind of customer
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Name
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: |
+        Project: what it does, its repository and website.
+        Customer: who uses which product, since when, and whether in production or a pilot.
+        Road: which project uses which, and how (library, API, contract language, runs on).
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Public sources
+      description: One link per line. Manifests (package.json, build.gradle, Cargo.toml, plutus.json), docs, announcements, case studies.
+    validations:
+      required: true
