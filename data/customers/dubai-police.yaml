@@ -1,9 +1,12 @@
 id: dubai-police
 name: Dubai Police
 type: government
-sectors: [proof-verification]
+sectors: [ proof-verification ]
 stage: pilot
-description: Presented a Cardano-based pilot at the World Police Summit in March 2024 for sharing bullet-scan evidence with other agencies such as Interpol. The link to the Cardano Foundation's d'ABIS ballistic-identification proof of concept is inferred, not stated by an official source.
+description: Presented a Cardano-based pilot at the World Police Summit in March
+  2024 for sharing bullet-scan evidence with other agencies such as Interpol.
+  The link to the Cardano Foundation's d'ABIS ballistic-identification proof of
+  concept is inferred, not stated by an official source.
 uses:
   - target: d-abis
     confidence: inferred
@@ -11,9 +14,14 @@ uses:
       - url: https://bitcoinist.com/dubai-police-cardano-criminal-investigations/amp/
         kind: article
         retrieved: 2026-10-20
-        note: "Dubai Police presented ... a blockchain-based pilot project; 'bullet scans done by a highly sophisticated scanner are shared among international stakeholders' on Cardano"
+        note: "Dubai Police presented ... a blockchain-based pilot project; 'bullet
+          scans done by a highly sophisticated scanner are shared among
+          international stakeholders' on Cardano"
       - url: https://cardanofoundation.org/blog/activity-report-2024-press-release
         kind: announcement
         retrieved: 2026-10-20
-        note: "Working with SAT on a Decentralized Automated Ballistic Identification System (D-ABIS) - customer not named"
+        note: "Working with SAT on a Decentralized Automated Ballistic Identification
+          System (D-ABIS) - customer not named"
+active:
+  from: 2024-03
 lastVerified: 2026-10-20

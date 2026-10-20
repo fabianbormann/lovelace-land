@@ -47,7 +47,7 @@ describe('shipPresence', () => {
 
 describe('flagsAt', () => {
   it('marks standing buildings without traffic in that month as stranded', () => {
-    const i = tl.months.indexOf('2026-07');
+    const i = tl.months.indexOf('2026-05');
     const { stranded } = flagsAt(world, i);
     expect(stranded.has('swap-town')).toBe(false);
     expect(stranded.has('lonely-tool')).toBe(true);
@@ -68,7 +68,7 @@ describe('time-aware appearance', () => {
   });
 
   it('uses that month’s stranded set for the stranded lens', () => {
-    const i = tl.months.indexOf('2026-07');
+    const i = tl.months.indexOf('2026-05');
     const a = computeAppearance(indexWorld(world), { ...defaultViewState(), lens: 'stranded', time: i });
     expect(a.nodes.get('swap-town')!.glow).toBe(false);
   });

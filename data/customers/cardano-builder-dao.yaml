@@ -1,9 +1,10 @@
 id: cardano-builder-dao
 name: Cardano Builder DAO
 type: dao
-sectors: [governance]
+sectors: [ governance ]
 stage: production
-description: Builder-community DAO that runs its DAO functions (proposals, voting) on Clarity.
+description: Builder-community DAO that runs its DAO functions (proposals,
+  voting) on Clarity.
 uses:
   - target: clarity
     confidence: verified
@@ -11,5 +12,8 @@ uses:
       - url: https://www.clarity.community/
         kind: case-study
         retrieved: 2026-10-20
-        note: Named community with a board-member testimonial that Clarity helped run DAO functions.
+        note: Named community with a board-member testimonial that Clarity helped run
+          DAO functions.
+active:
+  from: 2025-03
 lastVerified: 2026-10-20

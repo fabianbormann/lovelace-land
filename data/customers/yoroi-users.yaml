@@ -1,9 +1,12 @@
 id: yoroi-users
 name: Yoroi (SecondFi) users
 type: segment
-sectors: [payments, defi]
+sectors: [ payments, defi ]
 stage: ended
-description: People using EMURGO's Yoroi light wallet, rebranded SecondFi in April 2026, to hold, send, stake and swap ada. After a wallet-draining exploit in June 2026 EMURGO announced in July 2026 that SecondFi and the Yoroi wallet would cease operations; the app runs in a recovery-only mode.
+description: People using EMURGO's Yoroi light wallet, rebranded SecondFi in
+  April 2026, to hold, send, stake and swap ada. After a wallet-draining exploit
+  in June 2026 EMURGO announced in July 2026 that SecondFi and the Yoroi wallet
+  would cease operations; the app runs in a recovery-only mode.
 metric:
   label: Chrome Web Store users (SecondFi (Yoroi) extension)
   value: "200,000"
@@ -16,11 +19,13 @@ uses:
       - url: https://chromewebstore.google.com/detail/secondfi-yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb
         kind: docs
         retrieved: 2026-10-20
-        note: "'Join 1M+ users on SecondFi (formerly Yoroi)'; 200,000 users; 2.4/5 from 315 ratings"
+        note: "'Join 1M+ users on SecondFi (formerly Yoroi)'; 200,000 users; 2.4/5 from
+          315 ratings"
       - url: https://play.google.com/store/apps/details?id=com.emurgo
         kind: docs
         retrieved: 2026-10-20
-        note: "SecondFi Android app (formerly Yoroi mobile): 500K+ downloads, 4.86K reviews"
+        note: "SecondFi Android app (formerly Yoroi mobile): 500K+ downloads, 4.86K
+          reviews"
       - url: https://cardano.org/news/2026-04-22-yoroi-wallet-is-evolving-into-secondfi/
         kind: announcement
         retrieved: 2026-10-20
@@ -28,5 +33,9 @@ uses:
       - url: https://forklog.com/en/news/secondfi-to-shut-down-after-2-6-million-ada-theft
         kind: article
         retrieved: 2026-10-20
-        note: "EMURGO: 'the difficult decision to cease operations of SecondFi and Yoroi wallet' (announced July 22, 2026)"
+        note: "EMURGO: 'the difficult decision to cease operations of SecondFi and Yoroi
+          wallet' (announced July 22, 2026)"
+active:
+  from: 2018-10
+  until: 2026-07
 lastVerified: 2026-10-20

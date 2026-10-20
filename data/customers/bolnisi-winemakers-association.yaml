@@ -1,9 +1,11 @@
 id: bolnisi-winemakers-association
 name: Bolnisi Winemakers Association
 type: organization
-sectors: [supply-chain]
+sectors: [ supply-chain ]
 stage: production
-description: Association of wineries in Georgia's Bolnisi region whose bottles carry QR codes linking to on-chain certification and supply-chain records, as part of the Georgian Wine Traceability Program.
+description: Association of wineries in Georgia's Bolnisi region whose bottles
+  carry QR codes linking to on-chain certification and supply-chain records, as
+  part of the Georgian Wine Traceability Program.
 metric:
   label: Wineries onboarded
   value: "30+"
@@ -23,4 +25,6 @@ uses:
       - url: https://www.cardanofoundation.org/case-studies/bolnisi
         kind: case-study
         retrieved: 2026-10-20
+active:
+  from: 2023-10
 lastVerified: 2026-10-20

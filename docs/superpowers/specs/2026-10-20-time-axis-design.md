@@ -93,7 +93,7 @@ Nodes **without any activity data at all** (no repo and no transactions) stay `a
 **Tier per month:** quartiles of that month's node traffic, computed as in `flags.ts`.
 
 **Ship state per month:**
-- `docked` when `w_c(m) > 0`.
+- `docked` when `w_c` is above zero in `m` or either of the two months before it. A ship only sails away after three quiet months, so sparse actors such as a treasury don't shuttle back and forth.
 - `wreck` when `stage: ended` and the flow is 0 after a period of activity.
 - `away` otherwise.
 

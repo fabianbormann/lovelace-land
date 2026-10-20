@@ -1,9 +1,12 @@
 id: barca-vision
 name: Barça Vision (FC Barcelona)
 type: organization
-sectors: [identity]
+sectors: [ identity ]
 stage: pilot
-description: FC Barcelona's Barça Vision team was onboarded to Andamio for a Catalyst-funded fan-engagement project that runs a learn-to-work programme with on-chain modules, work opportunities and a treasury; milestone 2 was signed off in May 2026.
+description: FC Barcelona's Barça Vision team was onboarded to Andamio for a
+  Catalyst-funded fan-engagement project that runs a learn-to-work programme
+  with on-chain modules, work opportunities and a treasury; milestone 2 was
+  signed off in May 2026.
 uses:
   - target: andamio
     confidence: verified
@@ -11,5 +14,17 @@ uses:
       - url: https://github.com/Andamio-Platform/fcb-fan-engagement-public-reporting/blob/main/README.md
         kind: docs
         retrieved: 2026-10-20
-        note: "FC Barcelona - Fan engagement infrastructure Cardano; Onboarding Barça Vision's Team; Barça Vision sign-off 2026-05-14"
+        note: "FC Barcelona - Fan engagement infrastructure Cardano; Onboarding Barça
+          Vision's Team; Barça Vision sign-off 2026-05-14"
+onchain:
+  addresses:
+    - addr1xxjn7xww4ujjkxwm5wml88ktfsmxcenfec4kde0tltauhaqmry78c25qz570etul7tfu325e968wlq9023kp67kmagxqrumn37
+  source: https://github.com/Andamio-Platform/fcb-fan-engagement-public-reporting/blob/main/M2-report.md
+  note: The Andamio onboarding sessions for the Barça Vision team are evidenced by
+    screenshots dated 28 Apr to 6 May 2026, and Barça Vision signed off
+    milestone 2 on 14 May 2026 (Catalyst project 1300101). The project treasury
+    script address is documented in evidence/D-treasury/treasury.md; its first
+    on-chain output is on 12 May 2026.
+active:
+  from: 2026-04
 lastVerified: 2026-10-20

@@ -118,12 +118,12 @@ describe('runPipeline timeline', () => {
 
   it('drives the fixture segment from its product’s transactions', () => {
     const traders = world.timeline.customers['harbor-traders'];
-    const i = world.timeline.months.indexOf('2026-07');
+    const i = world.timeline.months.indexOf('2026-05');
     expect(traders.source).toBe('products');
     expect(traders.tx[i]).toBe(999);
     expect(traders.w[i]).toBe(3);
     expect(traders.state[i]).toBe('d');
-    expect(traders.state[i + 2]).toBe('a');
+    expect(traders.state[world.timeline.months.indexOf('2026-09')]).toBe('a');
   });
 
   it('reports activity errors with their file', () => {

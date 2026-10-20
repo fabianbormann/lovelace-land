@@ -1,9 +1,10 @@
 id: govtool-voters
 name: DReps and ada holders using GovTool
 type: segment
-sectors: [governance]
+sectors: [ governance ]
 stage: production
-description: Ada holders who register as DReps, delegate their voting power and vote on governance actions through gov.tools instead of the command line.
+description: Ada holders who register as DReps, delegate their voting power and
+  vote on governance actions through gov.tools instead of the command line.
 metric:
   label: DRep registrations added in GovTool's first 96 hours (244 to 359)
   value: "+115"
@@ -16,5 +17,8 @@ uses:
       - url: https://www.intersectmbo.org/news/announcing-the-release-of-cardano-govtool
         kind: announcement
         retrieved: 2026-10-20
-        note: '"Total number of DRep registrations increased by 115 (244 -> 359)"; "Total DRep votes increased by 49 (9 -> 55)".'
+        note: '"Total number of DRep registrations increased by 115 (244 -> 359)";
+          "Total DRep votes increased by 49 (9 -> 55)".'
+active:
+  from: 2024-09
 lastVerified: 2026-10-20

@@ -137,9 +137,9 @@ test('the time axis moves the island to an earlier month', async ({ page }) => {
   await expect(page.locator('#panel .state-line')).toContainText('Away in Oct 2026');
   const slider = page.locator('#tl-slider');
   await slider.focus();
-  for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowLeft');
-  await expect(page.locator('#tl-month')).toHaveText('Jul 2026');
-  await expect(page.locator('#panel .state-line')).toHaveText('Docked in Jul 2026 with 999 transactions through the products it uses.');
+  for (let i = 0; i < 5; i++) await page.keyboard.press('ArrowLeft');
+  await expect(page.locator('#tl-month')).toHaveText('May 2026');
+  await expect(page.locator('#panel .state-line')).toHaveText('Docked in May 2026 with 999 transactions through the products it uses.');
   await expect(page.locator('#stats')).toContainText('ships docked');
   await page.click('#tl-now');
   await expect(page.locator('#tl-month')).toHaveText('Oct 2026');

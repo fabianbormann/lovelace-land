@@ -1,9 +1,12 @@
 id: cardano-foundation
 name: Cardano Foundation
 type: organization
-sectors: [governance, enterprise-government, nfts-gaming-media]
+sectors: [ governance, enterprise-government, nfts-gaming-media ]
 stage: production
-description: Runs the annual Cardano Summit Awards community vote on Cardano Ballot (2023-2025), publishes its audited financial statements on-chain with Reeve, and piloted Book.io's encrypted-book format by distributing 2,000 copies of "I Can Aiken".
+description: Runs the annual Cardano Summit Awards community vote on Cardano
+  Ballot (2023-2025), publishes its audited financial statements on-chain with
+  Reeve, and piloted Book.io's encrypted-book format by distributing 2,000
+  copies of "I Can Aiken".
 uses:
   - target: cardano-ballot
     confidence: verified
@@ -11,7 +14,8 @@ uses:
       - url: https://github.com/cardano-foundation/cf-cardano-ballot
         kind: docs
         retrieved: 2026-10-20
-        note: Repo contains summit-2023, summit-2024 and summit-2025 voting UIs and the "CF Summit 2023 Hydra Tally App".
+        note: Repo contains summit-2023, summit-2024 and summit-2025 voting UIs and the
+          "CF Summit 2023 Hydra Tally App".
       - url: https://cardanofoundation.org/blog/cardano-ballot-2023-the-voice-of-the-cardano-community
         kind: announcement
         retrieved: 2026-10-20
@@ -22,15 +26,19 @@ uses:
       - url: https://cardanofoundation.org/blog/2025-activity-financial-report
         kind: announcement
         retrieved: 2026-10-20
-        note: Second year publishing the Foundation's financials on-chain with Reeve; statements attested on-chain by Grant Thornton Switzerland.
+        note: Second year publishing the Foundation's financials on-chain with Reeve;
+          statements attested on-chain by Grant Thornton Switzerland.
   - target: book-io
     confidence: verified
     evidence:
       - url: https://cardanofoundation.org/case-studies/book.io
         kind: case-study
         retrieved: 2026-10-20
-        note: '"I Can Aiken" was the Foundation''s first on-chain book with Book.io, 2,000 copies distributed as a Cardano Academy content pilot.'
+        note: '"I Can Aiken" was the Foundation''s first on-chain book with Book.io,
+          2,000 copies distributed as a Cardano Academy content pilot.'
       - url: https://cryptopotato.com/cardano-ada-news-today-september-4th/
         kind: article
         retrieved: 2026-10-20
+active:
+  from: 2022-10
 lastVerified: 2026-10-20

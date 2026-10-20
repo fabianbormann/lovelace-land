@@ -11,6 +11,8 @@ export const BURNING_AFTER = 4;
 export const RUIN_AFTER = 6;
 export const GRASS_AFTER = 12;
 export const AT_RISK_AFTER = 6;
+/** A ship stays docked through this many quiet months before it sails away. */
+export const DOCKED_GRACE = 2;
 
 /** e empty plot · c construction · a active · r at risk · b burning · u ruin · g grass */
 export type NodeState = 'e' | 'c' | 'a' | 'r' | 'b' | 'u' | 'g';
@@ -93,13 +95,15 @@ export function computeTimeline(graph: Graph, activity: Activity, months: string
     const w = tx.map((v) => round(Math.log10(1 + v)));
     const lastActive = w.reduce((found, v, i) => (v > 0 ? i : found), -1);
     const state = w
-      .map((v, i) => {
+      .map((_, i) => {
         if (c.stage === 'ended') {
           // a wreck only after its last activity; without any data, only in today's snapshot
           if (lastActive === -1) return i === last ? 'w' : 'a';
           if (i > lastActive) return 'w';
         }
-        return v > 0 ? 'd' : 'a';
+        // sparse activity (a treasury paying out every few months) should not send the ship back and forth
+        for (let k = Math.max(0, i - DOCKED_GRACE); k <= i; k++) if (w[k] > 0) return 'd';
+        return 'a';
       })
       .join('');
     customerTl[c.id] = { tx, w, state, source };

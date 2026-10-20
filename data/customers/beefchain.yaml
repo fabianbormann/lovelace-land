@@ -1,9 +1,11 @@
 id: beefchain
 name: BeefChain
 type: organization
-sectors: [supply-chain]
+sectors: [ supply-chain ]
 stage: pilot
-description: Wyoming cattle-traceability company that trialled recording RFID data for almost 1,600 calves from six family ranches on Cardano in 2020, using IOHK's Atala TRACE. Current status unknown.
+description: Wyoming cattle-traceability company that trialled recording RFID
+  data for almost 1,600 calves from six family ranches on Cardano in 2020, using
+  IOHK's Atala TRACE. Current status unknown.
 uses:
   - target: atala-trace
     confidence: verified
@@ -11,5 +13,9 @@ uses:
       - url: https://forum.cardano.org/t/proof-of-steak-how-beefchain-uses-cardano-to-empower-ranchers/41998
         kind: announcement
         retrieved: 2026-10-20
-        note: "BeefChain chose to work within the Cardano ecosystem ... to leverage the Atala TRACE supply-chain traceability solution (Cardano Foundation, 11 November 2020)"
+        note: "BeefChain chose to work within the Cardano ecosystem ... to leverage the
+          Atala TRACE supply-chain traceability solution (Cardano Foundation, 11
+          November 2020)"
+active:
+  from: 2020-11
 lastVerified: 2026-10-20

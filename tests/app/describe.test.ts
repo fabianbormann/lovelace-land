@@ -51,9 +51,9 @@ describe('describeNodeAt', () => {
 describe('describeShipAt', () => {
   it('explains where a ship is and why', () => {
     const w = miniWorld();
-    const i = w.timeline.months.indexOf('2026-07');
-    expect(describeShipAt(w, 'harbor-traders', i)).toBe('Docked in Jul 2026 with 999 transactions through the products it uses.');
-    expect(describeShipAt(w, 'harbor-traders', i + 2)).toBe('Away in Sep 2026: no transactions that month.');
+    const i = w.timeline.months.indexOf('2026-05');
+    expect(describeShipAt(w, 'harbor-traders', i)).toBe('Docked in May 2026 with 999 transactions through the products it uses.');
+    expect(describeShipAt(w, 'harbor-traders', w.timeline.months.indexOf('2026-09'))).toBe('Away in Sep 2026: no transactions that month.');
     expect(describeShipAt(w, 'old-pilot', w.timeline.months.length - 1)).toBe('A wreck: this customer stopped using the product.');
   });
 });

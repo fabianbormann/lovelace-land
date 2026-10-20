@@ -1,9 +1,11 @@
 id: sri-lanka-tea-factory-owners-association
 name: Sri Lanka Tea Factory Owners Association
 type: organization
-sectors: [rwa, supply-chain]
+sectors: [ rwa, supply-chain ]
 stage: announced
-description: Industry association of Sri Lankan tea factories that signed a memorandum of understanding with zenGate to trade tea through the Palmyra tokenized-commodity marketplace.
+description: Industry association of Sri Lankan tea factories that signed a
+  memorandum of understanding with zenGate to trade tea through the Palmyra
+  tokenized-commodity marketplace.
 uses:
   - target: palmyra
     confidence: reported
@@ -11,5 +13,8 @@ uses:
       - url: https://www.worldteanews.com/origins/new-commodity-marketplace-supports-tea-industry-gains-traction-sri-lanka-ahead-world-tea
         kind: article
         retrieved: 2026-10-20
-        note: 'World Tea News, 8 Mar 2023: zenGate signed an MOU with the Sri Lanka Tea Factory Owners Association for Palmyra ComDEX'
+        note: 'World Tea News, 8 Mar 2023: zenGate signed an MOU with the Sri Lanka Tea
+          Factory Owners Association for Palmyra ComDEX'
+active:
+  from: 2023-03
 lastVerified: 2026-10-20

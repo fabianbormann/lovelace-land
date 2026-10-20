@@ -1,9 +1,12 @@
 id: samsung-electronics-america
 name: Samsung Electronics America
 type: organization
-sectors: [proof-verification]
+sectors: [ proof-verification ]
 stage: production
-description: Funded the planting of 2 million mangrove trees in Madagascar with veritree, announced at CES 2022, with veritree tracking each tree on a blockchain-based system for its first five years. Completion of the planting target was not independently confirmed.
+description: Funded the planting of 2 million mangrove trees in Madagascar with
+  veritree, announced at CES 2022, with veritree tracking each tree on a
+  blockchain-based system for its first five years. Completion of the planting
+  target was not independently confirmed.
 uses:
   - target: veritree
     confidence: verified
@@ -11,9 +14,13 @@ uses:
       - url: https://www.samsung.com/us/explore/brand/planting-trees-for-a-healthier-planet/
         kind: announcement
         retrieved: 2026-10-20
-        note: "partnered with veritree ... Using a Blockchain-based system, veritree tracks each tree for the first five years of growth"
+        note: "partnered with veritree ... Using a Blockchain-based system, veritree
+          tracks each tree for the first five years of growth"
       - url: https://www.fxstreet.com/cryptocurrencies/news/samsung-partners-with-cardano-based-project-veritree-for-its-new-initiative-202201061335
         kind: article
         retrieved: 2026-10-20
-        note: "veritree described as 'a fully integrated platform powered by the Cardano network' (6 January 2022)"
+        note: "veritree described as 'a fully integrated platform powered by the Cardano
+          network' (6 January 2022)"
+active:
+  from: 2022-01
 lastVerified: 2026-10-20

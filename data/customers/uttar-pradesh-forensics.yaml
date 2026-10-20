@@ -1,9 +1,12 @@
 id: uttar-pradesh-forensics
 name: Uttar Pradesh state government (forensic evidence management)
 type: government
-sectors: [proof-verification]
+sectors: [ proof-verification ]
 stage: pilot
-description: Pilot state for Trivolve Tech's Forensic Management System, which records each chain-of-custody step for forensic evidence on Cardano mainnet. The state handles over one million forensic cases a year; the vendor reported 1,000+ transactions in the first three days after the October 2025 launch.
+description: Pilot state for Trivolve Tech's Forensic Management System, which
+  records each chain-of-custody step for forensic evidence on Cardano mainnet.
+  The state handles over one million forensic cases a year; the vendor reported
+  1,000+ transactions in the first three days after the October 2025 launch.
 uses:
   - target: trivolve-fms
     confidence: verified
@@ -11,9 +14,13 @@ uses:
       - url: https://techfinancials.co.za/2025/10/18/trivolve-tech-and-quixy-launch-blockchain-powered-fms-on-the-cardano-mainnet/
         kind: announcement
         retrieved: 2026-10-20
-        note: "forensic evidence management for state governments in India, with Uttar Pradesh as the pilot state (vendor press release, 18 October 2025)"
+        note: "forensic evidence management for state governments in India, with Uttar
+          Pradesh as the pilot state (vendor press release, 18 October 2025)"
       - url: https://business.sherbrookerecord.com/sherbrookerecord/article/marketersmedia-2024-10-23-trivolve-tech-and-quixy-joins-hands-to-revolutionize-forensic-systems-in-india-on-cardano
         kind: announcement
         retrieved: 2026-10-20
-        note: "will initially focus on the Uttar Pradesh state government, which handles over one million forensic cases annually (23 October 2024)"
+        note: "will initially focus on the Uttar Pradesh state government, which handles
+          over one million forensic cases annually (23 October 2024)"
+active:
+  from: 2025-09
 lastVerified: 2026-10-20

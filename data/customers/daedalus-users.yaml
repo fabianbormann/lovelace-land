@@ -1,11 +1,14 @@
 id: daedalus-users
 name: Daedalus users
 type: segment
-sectors: [payments]
+sectors: [ payments ]
 stage: production
-description: People running the Daedalus full-node desktop wallet to hold, send and stake ada while validating the chain locally. Se7en Labs has maintained it under an IOG contract since January 2026.
+description: People running the Daedalus full-node desktop wallet to hold, send
+  and stake ada while validating the chain locally. Se7en Labs has maintained it
+  under an IOG contract since January 2026.
 metric:
-  label: Monthly active users (opt-in telemetry, per Se7en Labs treasury proposal; true count stated to be higher)
+  label: Monthly active users (opt-in telemetry, per Se7en Labs treasury proposal;
+    true count stated to be higher)
   value: "~4,000"
   source: https://www.cardanocube.com/governance/gov_actions/gov_action1mr0qdz2jmagvsch6r08fhqvq6vu8jakt4c8m9s7ea7z0p740vntqq4yjd6j
   retrieved: 2026-10-20
@@ -16,8 +19,12 @@ uses:
       - url: https://www.cardanocube.com/governance/gov_actions/gov_action1mr0qdz2jmagvsch6r08fhqvq6vu8jakt4c8m9s7ea7z0p740vntqq4yjd6j
         kind: announcement
         retrieved: 2026-10-20
-        note: "Enacted treasury withdrawal 'Se7en Labs: Daedalus Wallet Maintenance and Improvements 2026-2027': 'According to opt-in telemetry, Daedalus has approximately 4,000 monthly active users'"
+        note: "Enacted treasury withdrawal 'Se7en Labs: Daedalus Wallet Maintenance and
+          Improvements 2026-2027': 'According to opt-in telemetry, Daedalus has
+          approximately 4,000 monthly active users'"
       - url: https://daedaluswallet.io
         kind: docs
         retrieved: 2026-10-20
+active:
+  from: 2017-09
 lastVerified: 2026-10-20
