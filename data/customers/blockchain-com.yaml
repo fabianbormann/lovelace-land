@@ -25,4 +25,5 @@ uses:
         note: "GitHub issue (2025-04) by kkaddal-bc, also a blockchain/coin-definitions committer, on cardano-rosetta-java 1.2.5 mainnet /search/transactions"
 active:
   from: "2021-05"
+  confirmed: "2025-04"
 lastVerified: 2026-10-20

@@ -27,6 +27,11 @@ uses:
       - url: https://www.lace.io
         kind: docs
         retrieved: 2026-10-20
+      - url: https://github.com/input-output-hk/lace/releases/tag/lace-extension%402.4.3
+        kind: announcement
+        retrieved: 2026-10-20
+        note: "lace-extension@2.4.3, released 2026-10-19; lace-mobile@2.4.0 followed on 2026-09-29"
 active:
   from: 2023-04
+  confirmed: "2026-10"
 lastVerified: 2026-10-20

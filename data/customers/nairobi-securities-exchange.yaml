@@ -17,6 +17,11 @@ uses:
         note: '"Tokenization of Real-World Assets — NSE x Empowa ... delivered in
           collaboration with the Nairobi Securities Exchange through its Ibuka
           Program under Catalyst Fund 12"'
+      - url: https://empowa.io/nse-catalyst-project/
+        kind: case-study
+        retrieved: 2026-10-20
+        note: "Catalyst project with the NSE: Completed June 2026, all milestones delivered including the pilot MVP; controlled live testing has not started"
 active:
   from: 2024-08
+  until: "2026-06"
 lastVerified: 2026-10-20

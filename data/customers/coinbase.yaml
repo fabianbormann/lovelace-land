@@ -22,4 +22,5 @@ uses:
         note: "GitHub PR (merged 2025-04-01) adding DRep vote delegation to cardano-rosetta, by a contributor whose GitHub bio reads '@ Coinbase'."
 active:
   from: "2021-03"
+  confirmed: "2025-04"
 lastVerified: 2026-10-20

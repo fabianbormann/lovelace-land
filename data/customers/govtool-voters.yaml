@@ -19,6 +19,11 @@ uses:
         retrieved: 2026-10-20
         note: '"Total number of DRep registrations increased by 115 (244 -> 359)";
           "Total DRep votes increased by 49 (9 -> 55)".'
+      - url: https://intersectmbo.org/news/intersect-weekly-update-128-sep-11-2026
+        kind: announcement
+        retrieved: 2026-10-20
+        note: "Intersect weekly update #128, Sep 11, 2026: GovTool is now being actively maintained by Sireto ... Existing GovTool functionality will continue"
 active:
   from: 2024-09
+  confirmed: "2026-09"
 lastVerified: 2026-10-20

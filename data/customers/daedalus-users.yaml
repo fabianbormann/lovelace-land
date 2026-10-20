@@ -25,6 +25,11 @@ uses:
       - url: https://daedaluswallet.io
         kind: docs
         retrieved: 2026-10-20
+      - url: https://github.com/input-output-hk/daedalus/releases/tag/11.5.0
+        kind: announcement
+        retrieved: 2026-10-20
+        note: "Daedalus 11.5.0, released 2026-10-14, the latest of monthly releases since July 2026"
 active:
   from: 2017-09
+  confirmed: "2026-10"
 lastVerified: 2026-10-20

@@ -28,6 +28,10 @@ uses:
         retrieved: 2026-10-20
         note: Second year publishing the Foundation's financials on-chain with Reeve;
           statements attested on-chain by Grant Thornton Switzerland.
+      - url: https://en.cryptonomist.ch/2026/04/02/cardano-foundation-transparency-and-innovation-for-the-future-of-blockchain/
+        kind: article
+        retrieved: 2026-10-20
+        note: "For the second consecutive year, the Cardano Foundation has used the Reeve reporting platform to publicly disclose its financial data directly on the blockchain. (2 April 2026)"
   - target: book-io
     confidence: verified
     evidence:
@@ -41,4 +45,5 @@ uses:
         retrieved: 2026-10-20
 active:
   from: 2022-10
+  confirmed: "2026-04"
 lastVerified: 2026-10-20

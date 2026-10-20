@@ -14,6 +14,11 @@ uses:
         retrieved: 2026-10-20
         note: 'Testimonial: "NMKR was an indispensable partner in our nonprofit''s
           journey to harness the power of NFTs for fundraising."'
+      - url: https://themekongclub.org/the-mekong-clubs-annual-fundraising-activities-to-raise-global-awareness-on-modern-slavery-through-nfts-and-sweatshop-challenge-for-its-10-year-anniversary/
+        kind: announcement
+        retrieved: 2026-10-20
+        note: "a one-off NFT auction for its 10-year anniversary, available for auction on 29 November (2022) for #CryptoGivingTuesday; no later drop found"
 active:
   from: 2022-11
+  until: "2022-11"
 lastVerified: 2026-10-20

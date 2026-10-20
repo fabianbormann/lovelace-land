@@ -12,6 +12,10 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: "pycardano==0.13.2 in Fireblocks' Cardano staking SDK (fireblocks/ada_staking)"
+      - url: https://github.com/fireblocks/ada_staking/commits/main
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "latest commit to the PyCardano/Blockfrost staking tool on 2025-04-22"
   - target: blockfrost
     confidence: verified
     evidence:
@@ -28,4 +32,5 @@ uses:
         note: "Fireblocks has connected its RAW signing system with Iagon's enterprise Cardano nodes (2026-05-13)"
 active:
   from: "2021-08"
+  confirmed: "2025-04"
 lastVerified: 2026-10-20

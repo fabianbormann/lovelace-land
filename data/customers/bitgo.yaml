@@ -12,6 +12,11 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: '"@emurgo/cardano-serialization-lib-nodejs": "^12.0.1" (and -browser) in @bitgo/sdk-coin-ada'
+      - url: https://github.com/BitGo/BitGoJS/commit/fe13176924cfb659744276485ea8cf6ad298569c
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "fix(sdk-coin-ada): pass through native-script txs such as RealFi claim (2026-09-25); the change imports '@emurgo/cardano-serialization-lib-nodejs'"
 active:
   from: "2023-02"
+  confirmed: "2026-09"
 lastVerified: 2026-10-20
