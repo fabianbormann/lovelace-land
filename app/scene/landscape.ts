@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import type { World } from '../../pipeline/emit';
 import { MOUNTAIN_PEAK, PEAK_HEIGHT, noise, type Terrain } from '../logic/terrain';
+import { CARDANO_BLUE, CARDANO_STARBURST, CARDANO_WHITE } from './cardano-starburst';
 import type { Stage } from './stage';
 
 const COLORS = {
@@ -109,45 +110,56 @@ export function buildWater(terrain: Terrain, stage: Stage) {
   return water;
 }
 
-/** The Cardano mark: rings of dots that shrink outward, floating above the mountain. */
+/** World width of the Cardano mark at normal zoom, in tiles. */
+const MARK_WIDTH = 9.5;
+/** Brand rule: the logo is never shown narrower than this on the web. */
+const MARK_MIN_PX = 64;
+
+/**
+ * The official Cardano starburst floating above the mountain, built dot by dot from the brand asset.
+ * It always faces the viewer, upright and undistorted, in brand blue by day and white by night,
+ * and it never rotates.
+ */
 export function buildCardanoMark(stage: Stage, surfaceY: (x: number, y: number) => number) {
+  const { width, height, dots } = CARDANO_STARBURST;
+  const scale = MARK_WIDTH / width;
+  const material = new THREE.MeshBasicMaterial({ color: CARDANO_BLUE, side: THREE.DoubleSide });
   const mark = new THREE.Group();
-  const material = new THREE.MeshLambertMaterial({ color: '#2f5fe0', emissive: '#16348f', emissiveIntensity: 0.9, flatShading: true });
-  const ball = new THREE.IcosahedronGeometry(1, 1);
-  const rings: [number, number, number, number][] = [
-    // radius, count, dot size, angular offset
-    [1.05, 6, 0.36, 0],
-    [1.95, 6, 0.3, Math.PI / 6],
-    [2.35, 12, 0.2, 0],
-    [3.25, 12, 0.15, Math.PI / 12],
-    [4.15, 6, 0.11, 0],
-    [4.6, 6, 0.09, Math.PI / 6],
-  ];
-  for (const [r, count, size, offset] of rings)
-    for (let i = 0; i < count; i++) {
-      const a = offset + (i / count) * Math.PI * 2;
-      const dot = new THREE.Mesh(ball, material);
-      dot.scale.setScalar(size);
-      dot.position.set(Math.cos(a) * r, Math.sin(a) * r, 0);
-      mark.add(dot);
-    }
+  for (const d of dots) {
+    const disc = new THREE.Mesh(new THREE.CircleGeometry(d.r * scale, 40), material);
+    disc.position.set((d.x - width / 2) * scale, -(d.y - height / 2) * scale, 0);
+    mark.add(disc);
+  }
   const holder = new THREE.Group();
   holder.add(mark);
-  holder.position.set(MOUNTAIN_PEAK[0], surfaceY(MOUNTAIN_PEAK[0], MOUNTAIN_PEAK[1]) + 4.2, MOUNTAIN_PEAK[1]);
-  holder.scale.setScalar(0.95);
+  const peakY = surfaceY(MOUNTAIN_PEAK[0], MOUNTAIN_PEAK[1]);
+  holder.position.set(MOUNTAIN_PEAK[0], peakY + 4.4, MOUNTAIN_PEAK[1]);
   const glow = new THREE.PointLight('#6f95ff', 30, 18, 1.6);
+  glow.position.y = -2;
   holder.add(glow);
   stage.addTick((t) => {
+    // face the viewer without turning the mark itself
     holder.quaternion.copy(stage.camera.quaternion);
-    if (!stage.reducedMotion) {
-      mark.rotation.z = t * 0.12;
-      holder.position.y = surfaceY(MOUNTAIN_PEAK[0], MOUNTAIN_PEAK[1]) + 4.2 + Math.sin(t * 0.8) * 0.25;
-    }
+    // keep it at least 64 px wide on screen when zoomed out
+    const cam = stage.camera;
+    const pxPerUnit = (stage.renderer.domElement.clientHeight || 1) / ((cam.top - cam.bottom) / cam.zoom);
+    holder.scale.setScalar(Math.max(1, MARK_MIN_PX / (MARK_WIDTH * pxPerUnit)));
+    if (!stage.reducedMotion) holder.position.y = peakY + 4.4 + Math.sin(t * 0.8) * 0.25;
   });
-  const label = new CSS2DObject(Object.assign(document.createElement('div'), { className: 'label label-landmark', textContent: 'Cardano' }));
-  label.position.set(0, -5.6, 0);
-  holder.add(label);
-  return holder;
+  // the name sits below the mountain top, well outside the logo's clear space
+  const object = new THREE.Group();
+  object.add(holder);
+  if (typeof document !== 'undefined') {
+    const label = new CSS2DObject(Object.assign(document.createElement('div'), { className: 'label label-landmark', textContent: 'Cardano' }));
+    label.position.set(MOUNTAIN_PEAK[0], peakY - 3.2, MOUNTAIN_PEAK[1] + 3);
+    object.add(label);
+  }
+  return {
+    object,
+    setNight(night: boolean) {
+      material.color.set(night ? CARDANO_WHITE : CARDANO_BLUE);
+    },
+  };
 }
 
 export function buildSignposts(world: World, surfaceY: (x: number, y: number) => number) {

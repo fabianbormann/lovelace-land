@@ -16,3 +16,6 @@ playwright-report/
 
 # internal design specs and implementation plans
 docs/superpowers/
+.starburst.mjs
+.mark.mjs
+.mark2.mjs

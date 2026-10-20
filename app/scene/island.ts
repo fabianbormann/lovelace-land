@@ -43,7 +43,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   stage.scene.add(ground);
   stage.scene.add(buildWater(terrain, stage));
   const mark = buildCardanoMark(stage, surfaceY);
-  stage.scene.add(mark);
+  stage.scene.add(mark.object);
   stage.scene.add(buildSignposts(world, surfaceY));
   stage.scene.add(buildRafts(terrain, stage));
   const roads = buildRoads(world, surfaceY);
@@ -158,7 +158,8 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   });
 
   // The Cardano mark glows brighter the more activity reaches it.
-  const markLight = mark.children.find((c): c is THREE.PointLight => c instanceof THREE.PointLight);
+  let markLight: THREE.PointLight | undefined;
+  mark.object.traverse((c) => c instanceof THREE.PointLight && (markLight = c));
   stage.addTick((t) => {
     if (markLight) markLight.intensity = 18 + 60 * settlers.arriving * (0.85 + 0.15 * Math.sin(t * 3));
   });
@@ -243,7 +244,10 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
       if (p) stage.flyTo(p, target.kind === 'edge' ? 1.6 : 2.4, opts.liftForBottomPanel ? 0.5 : 0);
     },
     setSettlers: (on) => settlers.setEnabled(on),
-    setNight: (night) => stage.setColors(night ? NIGHT : DAY),
+    setNight: (night) => {
+      stage.setColors(night ? NIGHT : DAY);
+      mark.setNight(night);
+    },
     onHover: (cb) => (hoverCb = cb),
     onSelect: (cb) => (selectCb = cb),
     setTime(next) {
