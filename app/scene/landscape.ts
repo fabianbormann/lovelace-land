@@ -8,8 +8,8 @@ const COLORS = {
   grass: new THREE.Color('#86b25a'),
   grassDark: new THREE.Color('#6e9a49'),
   sand: new THREE.Color('#dcc890'),
-  seabedShallow: new THREE.Color('#c9b27c'),
-  seabedDeep: new THREE.Color('#3d6f7f'),
+  seabedShallow: new THREE.Color('#a8a27c'),
+  seabedDeep: new THREE.Color('#2c5d6d'),
   rock: new THREE.Color('#8e8b7d'),
   rockDark: new THREE.Color('#6f6c61'),
   snow: new THREE.Color('#f3f5f2'),
@@ -88,6 +88,13 @@ export function buildWater(terrain: Terrain, stage: Stage) {
   const material = new THREE.MeshPhongMaterial({ color: '#2f86b0', transparent: true, opacity: 0.86, flatShading: true, shininess: 60, specular: '#cfefff' });
   const water = new THREE.Mesh(geometry, material);
   water.name = 'water';
+  // An endless seabed under the water so the edge of the terrain grid never shows.
+  const seabed = new THREE.Mesh(
+    new THREE.PlaneGeometry(w * 3, h * 3).rotateX(-Math.PI / 2),
+    new THREE.MeshLambertMaterial({ color: COLORS.seabedDeep }),
+  );
+  seabed.position.set(terrain.minX + terrain.width / 2, -0.95, terrain.minY + terrain.height / 2);
+  water.add(seabed);
   const pos = geometry.attributes.position as THREE.BufferAttribute;
   const base = Float32Array.from(pos.array as Float32Array);
   if (!stage.reducedMotion)

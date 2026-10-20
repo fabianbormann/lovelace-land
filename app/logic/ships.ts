@@ -6,11 +6,11 @@ export type Coast = 'east' | 'north' | 'south';
 const KIND: Record<Stage, ShipKind> = { production: 'galleon', pilot: 'rowboat', announced: 'horizon', ended: 'wreck' };
 export const shipKind = (stage: Stage): ShipKind => KIND[stage];
 
-const PER_ROW = 5;
-const ALONG = 2.4;
-const ROW_GAP = 2.6;
-const BASE = 5;
-const HORIZON_EXTRA = 6;
+const PER_ROW = 6;
+const ALONG = 3.2;
+const ROW_GAP = 4.4;
+const BASE = 6;
+const HORIZON_EXTRA = 7;
 
 const OUTWARD: Record<Coast, [number, number]> = { east: [1, 0], north: [0, -1], south: [0, 1] };
 const ALONG_DIR: Record<Coast, [number, number]> = { east: [0, 1], north: [1, 0], south: [1, 0] };

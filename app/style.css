@@ -63,7 +63,7 @@ a { color: var(--brass); }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .app { position: relative; height: 100%; }
-.map { position: absolute; inset: 0; }
+.map { position: absolute; inset: 0; isolation: isolate; z-index: 0; }
 .map canvas { display: block; touch-action: none; }
 
 /* Header bar */
@@ -201,7 +201,7 @@ mono, .mono { font-family: var(--font-mono); font-size: 0.85em; }
 }
 
 /* Labels in the scene */
-.label-layer { position: absolute; inset: 0; pointer-events: none; }
+.label-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
 .label { font-family: var(--font-body); white-space: nowrap; pointer-events: none; transition: opacity 0.2s; }
 .label-landmark { font: 400 1.4rem var(--font-display); color: #1c3fa8; text-shadow: 0 0 6px #fff, 0 0 2px #fff; }
 .label-district {
@@ -214,8 +214,10 @@ mono, .mono { font-family: var(--font-mono); font-size: 0.85em; }
 .label-node.is-stranded { background: #f7d9d1; }
 .label.is-dim { opacity: 0.25; }
 .label.is-glow { outline: 2px solid #e09a1f; }
-.label-layer[data-zoom='far'] .label-node, .label-layer[data-zoom='far'] .label-ship { display: none; }
-.label-layer[data-zoom='mid'] .label-node.tier-1, .label-layer[data-zoom='mid'] .label-node.tier-2, .label-layer[data-zoom='mid'] .label-ship { display: none; }
+.label-ship { display: none; }
+.label-ship.is-shown { display: block; }
+.label-layer[data-zoom='far'] .label-node { display: none; }
+.label-layer[data-zoom='mid'] .label-node.tier-1, .label-layer[data-zoom='mid'] .label-node.tier-2 { display: none; }
 .label-layer[data-zoom='far'] .label-district { font-size: 0.8rem; }
 
 /* List view */

@@ -50,7 +50,13 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   addDistantIslands(world, stage);
 
   const productsRegion = world.districts.find((d) => d.building === 'town')?.region;
-  const focusX = productsRegion ? (MOUNTAIN_PEAK[0] + productsRegion.x1) / 2 : (world.bounds.minX + world.bounds.maxX) / 2;
+  const portrait = host.clientWidth < host.clientHeight;
+  // Landscape screens see the whole island; portrait phones start at the mountain end and pan east.
+  const focusX = portrait
+    ? MOUNTAIN_PEAK[0] + 30
+    : productsRegion
+      ? (MOUNTAIN_PEAK[0] + productsRegion.x1) / 2
+      : (world.bounds.minX + world.bounds.maxX) / 2;
   stage.frame(world.bounds, new THREE.Vector3(focusX, 0, 0));
   stage.camera.zoom = initialZoom(world, host);
   stage.camera.updateProjectionMatrix();
@@ -74,7 +80,10 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
       if (b) applyLook(b.root, current.nodes.get(id)!, key === hovered || key === selected);
     } else {
       const s = shipById.get(id);
-      if (s) applyLook(s.root, current.customers.get(id)!, key === hovered || key === selected);
+      if (!s) return;
+      const look = current.customers.get(id)!;
+      applyLook(s.root, look, key === hovered || key === selected);
+      s.label.classList.toggle('is-shown', key === hovered || key === selected || look.glow);
     }
   };
 
@@ -182,6 +191,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
 }
 
 function initialZoom(world: World, host: HTMLElement) {
+  if (host.clientWidth < host.clientHeight) return 1.5;
   const w = world.bounds.maxX - world.bounds.minX + 10;
   const aspect = (host.clientWidth || 1) / (host.clientHeight || 1);
   // frustum width at zoom 1 is 2 * 26 * aspect; fit most of the island in view

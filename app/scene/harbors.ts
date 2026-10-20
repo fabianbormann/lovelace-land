@@ -9,6 +9,7 @@ import { SECTOR_COLORS } from './town';
 export interface PlacedShip {
   customer: WorldCustomer;
   root: THREE.Group;
+  label: HTMLElement;
 }
 
 const SEAWARD = { east: [1, 0], north: [0, -1], south: [0, 1] } as const;
@@ -100,6 +101,7 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     const ship = buildShip(kind, colorBySector.get(customer.harbor)!);
     const root = new THREE.Group();
     root.add(ship);
+    ship.scale.setScalar(kind === 'rowboat' ? 1.5 : 1.6);
     root.position.set(spot.x, 0, spot.y);
     root.rotation.y = spot.rotation;
     if (kind === 'wreck') {
@@ -121,10 +123,10 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     el.className = `label label-ship stage-${customer.stage}`;
     el.textContent = customer.name;
     const label = new CSS2DObject(el);
-    label.position.set(0, 2.4, 0);
+    label.position.set(0, 3.6, 0);
     root.add(label);
     group.add(root);
-    ships.push({ customer, root });
+    ships.push({ customer, root, label: el });
     bobbers.push({ obj: ship, phase: customer.slot * 1.3, base: ship.position.y, wreck: kind === 'wreck' });
   }
   if (!stage.reducedMotion)

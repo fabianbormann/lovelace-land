@@ -23,13 +23,13 @@ export const DAY: SceneColors = {
 };
 
 export const NIGHT: SceneColors = {
-  sky: '#0e1a24',
-  fog: '#13222d',
-  hemiSky: '#5c7897',
-  hemiGround: '#1d2a1f',
-  sun: '#a9c3ff',
-  sunIntensity: 0.9,
-  hemiIntensity: 0.75,
+  sky: '#122433',
+  fog: '#16293a',
+  hemiSky: '#8fa9cc',
+  hemiGround: '#2f4232',
+  sun: '#c4d5ff',
+  sunIntensity: 1.5,
+  hemiIntensity: 1.25,
 };
 
 const ELEVATION = Math.atan(1 / Math.SQRT2); // classic isometric angle (~35.26°)
