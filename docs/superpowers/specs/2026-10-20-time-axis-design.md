@@ -85,7 +85,7 @@ A customer with `stage: ended` and no data at all has flow 0 throughout.
    - When the node has never been used or committed to since founding, inactivity counts from the founding month.
 3. `inactive ≥ 12` → `grass`; `≥ 6` → `ruin`; `≥ 4` → `burning`.
 4. The founding month itself → `construction`.
-5. Used this month, has a repo, and `m − lastCommit ≥ 6` → `at-risk`.
+5. Used this month through traffic but without own transactions, has a repo, and `m − lastCommit ≥ 6` → `at-risk`. A product busy with its own transactions is evidently operated, even when its public repository is quiet.
 6. Otherwise → `active`.
 
 Nodes **without any activity data at all** (no repo and no transactions) stay `active` throughout and are marked "no activity data". Without evidence, the timeline must not ruin them.

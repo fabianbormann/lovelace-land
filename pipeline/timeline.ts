@@ -154,7 +154,8 @@ export function computeTimeline(graph: Graph, activity: Activity, months: string
       if (inactive >= RUIN_AFTER) return state.push('u');
       if (inactive >= BURNING_AFTER) return state.push('b');
       if (i === founded && founded > 0) return state.push('c');
-      if (used[i] && hasRepo && eff - (lastCommit ?? founded) >= AT_RISK_AFTER) return state.push('r');
+      // at risk: still depended on, but nobody commits; a product busy with its own transactions is evidently operated
+      if (used[i] && !tx[i] && hasRepo && eff - (lastCommit ?? founded) >= AT_RISK_AFTER) return state.push('r');
       state.push('a');
     });
     const lastOf = (offsets: number[]) => {

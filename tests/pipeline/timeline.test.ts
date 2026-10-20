@@ -97,6 +97,11 @@ describe('building lifecycle', () => {
     expect(t.nodes.lib.state.slice(0, 8)).toBe('aaaaaarr');
   });
 
+  it('does not mark a product with its own transactions as at risk, however quiet its repository', () => {
+    const t = timeline(makeData({ nodes: [node('dex', 'products')] }), act({ dex: every(500) }, { dex: series({ 0: 1 }) }));
+    expect(t.nodes.dex.state.slice(0, 10)).toBe('aaaaaaaaaa');
+  });
+
   it('decays a closed-source product on usage alone', () => {
     const t = timeline(makeData({ nodes: [node('app', 'products')] }), act({ app: series({ 0: 5, 1: 5, 2: 5 }) }));
     expect(t.nodes.app.state.slice(2, 9)).toBe('aaaabbu');
