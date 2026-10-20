@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import type { World, WorldCustomer } from '../../pipeline/emit';
 import { at, box, cylinder, mat, PALETTE as P } from '../buildings/kit';
-import { shipKind, shipPlacement, type ShipKind } from '../logic/ships';
+import { placeShips, shipKind, type ShipKind } from '../logic/ships';
 import type { Stage } from './stage';
 import { SECTOR_COLORS } from './town';
 
@@ -95,13 +95,17 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
 
   const colorBySector = new Map(world.sectors.map((s, i) => [s.id, SECTOR_COLORS[i % SECTOR_COLORS.length]] as const));
   const sectorById = new Map(world.sectors.map((s) => [s.id, s] as const));
+  const berths = placeShips(
+    world.sectors,
+    world.customers.map((c) => ({ id: c.id, harbor: c.harbor, slot: c.slot, stage: c.stage === 'ended' ? 'production' : c.stage })),
+  );
   for (const customer of world.customers) {
     const sector = sectorById.get(customer.harbor);
     if (!sector) continue;
     const staticKind = shipKind(customer.stage);
     // ended customers sailed before they sank, so they carry both looks
     const sailingKind: ShipKind = staticKind === 'wreck' ? 'galleon' : staticKind;
-    const spot = shipPlacement(sector.coast, sector.harbor.pos, customer.slot, customer.stage === 'ended' ? 'production' : customer.stage);
+    const spot = berths.get(customer.id)!;
     const flag = colorBySector.get(customer.harbor)!;
     const sailing = buildShip(sailingKind, flag);
     sailing.scale.setScalar(sailingKind === 'rowboat' ? 1.5 : 1.6);

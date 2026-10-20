@@ -8,3 +8,4 @@ playwright-report/
 .scrub.mjs
 .merge-onchain.ts
 .trace.mjs
+.coast.mjs
