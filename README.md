@@ -2,7 +2,7 @@
 
 **Who builds on whom in the Cardano ecosystem: an open, sourced map you can explore and replay month by month.**
 
-→ **[Open the map](https://fabianbormann.github.io/lovelace-land/)**
+→ **[Open the map](https://lovelace.land/)**
 
 ![Lovelace Land: an isometric island with the Cardano mountain, districts of buildings connected by roads, and ships in harbors along the coast](public/og.png)
 
