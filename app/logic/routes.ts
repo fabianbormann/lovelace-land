@@ -78,13 +78,15 @@ export function settlerRoutes(world: World, idx: WorldIndex, customerId: string,
 /** Tiles walked along the route by settler i of n after `seconds` (wraps back to the harbor). */
 export function settlerDistance(route: Pos[], i: number, n: number, seconds: number): number {
   const len = route.length - 1;
-  return len <= 0 ? 0 : ((i / n) * len + seconds * SETTLER_SPEED) % len;
+  if (len <= 0) return 0;
+  // positive modulo: the first animation frame can report a slightly negative clock
+  return ((((i / n) * len + seconds * SETTLER_SPEED) % len) + len) % len;
 }
 
 export function pointAt(route: Pos[], d: number): Pos {
   const len = route.length - 1;
   if (len <= 0) return [route[0][0], route[0][1]];
-  const k = Math.min(Math.floor(d), len - 1);
+  const k = Math.min(Math.max(Math.floor(d), 0), len - 1);
   const f = d - k;
   const [ax, ay] = route[k];
   const [bx, by] = route[k + 1];

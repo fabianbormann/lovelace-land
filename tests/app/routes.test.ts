@@ -56,3 +56,12 @@ describe('trail to the Cardano mark', () => {
     for (const r of routes) expect(r[r.length - 1]).toEqual(marker);
   });
 });
+
+describe('settler clock edge cases', () => {
+  const route: [number, number][] = [[0, 0], [1, 0], [2, 0], [3, 0]];
+  it('stays on the route for a slightly negative clock (first animation frame)', () => {
+    const p = settlerPosition(route, 0, 3, -0.004);
+    expect(p[0]).toBeGreaterThanOrEqual(0);
+    expect(p[0]).toBeLessThanOrEqual(3);
+  });
+});

@@ -185,8 +185,9 @@ export class Stage {
   start() {
     const loop = (now: number) => {
       this.timer.update(now);
-      const dt = Math.min(this.timer.getDelta(), 0.1);
-      const t = this.timer.getElapsed();
+      // the first frame's timestamp can predate the timer, giving a negative delta
+      const dt = Math.min(Math.max(this.timer.getDelta(), 0), 0.1);
+      const t = Math.max(this.timer.getElapsed(), 0);
       if (Math.abs(this.azimuthTarget - this.azimuth) > 1e-4) {
         this.azimuth += (this.azimuthTarget - this.azimuth) * Math.min(1, dt * 7);
         this.placeCamera();

@@ -9,3 +9,4 @@ playwright-report/
 .merge-onchain.ts
 .trace.mjs
 .coast.mjs
+.dbg.mjs

@@ -14,8 +14,8 @@ jobs:
   links:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -40,8 +40,8 @@ jobs:
   manifests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -50,7 +50,7 @@ jobs:
         run: |
           npm run --silent scan:manifests -- --write > "$RUNNER_TEMP/scan.md"
           npm run build:world
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           # A personal access token (secret BOT_TOKEN) lets the PR trigger the normal checks;
           # PRs opened with the default token skip workflows.
@@ -64,8 +64,8 @@ jobs:
   activity:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -75,7 +75,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN || github.token }}
         run: npm run --silent collect:activity | tee "$RUNNER_TEMP/activity.md"
       - run: npm run build:world
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.BOT_TOKEN || github.token }}
           branch: bot/activity
