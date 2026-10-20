@@ -20,14 +20,14 @@ links:
   repo: https://github.com/bloxbean/yaci-store
 packages:
   - ecosystem: maven            # npm | maven | cargo | hackage | go | pypi | nuget
-    name: com.bloxbean.cardano:yaci-store-starter
+    name: com.bloxbean.cardano:yaci-store-spring-boot-starter
 status: active                  # active | maintenance | deprecated
 uses:
   - target: cardano-client-lib  # the id of another project
     relation: library           # library | service | language | infrastructure
     confidence: verified        # verified | reported | inferred
     evidence:
-      - url: https://github.com/bloxbean/yaci-store/blob/main/build.gradle
+      - url: https://github.com/bloxbean/yaci-store/blob/main/components/core/build.gradle
         kind: manifest          # manifest | plutus-json | docs | announcement | case-study | talk | article
         retrieved: 2026-10-20
 lastVerified: 2026-10-20
@@ -52,7 +52,7 @@ uses:
   - target: originatenavio
     confidence: verified
     evidence:
-      - url: https://cardanofoundation.org/case-studies/bolnisi
+      - url: https://www.cardanofoundation.org/case-studies/bolnisi
         kind: case-study
         retrieved: 2026-10-20
 lastVerified: 2026-10-20
