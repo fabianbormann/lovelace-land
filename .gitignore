@@ -1,0 +1,4 @@
+node_modules/
+public/world.json
+dist/
+.superpowers/

@@ -1,0 +1,23 @@
+{
+  "name": "cardano-island",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build:world": "tsx pipeline/cli.ts",
+    "check:data": "tsx pipeline/cli.ts --check"
+  },
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "yaml": "^2.9.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.5"
+  }
+}
