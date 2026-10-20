@@ -78,3 +78,22 @@ describe('follow lens from a building', () => {
     expect(a.edges.get('anvil-lib->hearth-node')!.dim).toBe(true);
   });
 });
+
+describe('ships that are away', () => {
+  const at = (m: string) => idx.world.timeline.months.indexOf(m);
+
+  it('keep their roads, dimmed, so the island still shows who relied on what', () => {
+    const away = computeAppearance(idx, { ...defaultViewState(), time: at('2026-09') });
+    expect(away.edges.get('harbor-traders->swap-town')).toMatchObject({ hidden: false, dim: true });
+    const docked = computeAppearance(idx, { ...defaultViewState(), time: at('2026-05') });
+    expect(docked.edges.get('harbor-traders->swap-town')).toMatchObject({ hidden: false, dim: false });
+    const wreck = computeAppearance(idx, { ...defaultViewState(), time: idx.world.timeline.months.length - 1 });
+    expect(wreck.edges.get('old-pilot->seal-notary')).toMatchObject({ hidden: false, dim: true });
+  });
+
+  it('are still reached when a building is traced back to its ships', () => {
+    const a = computeAppearance(idx, { ...defaultViewState(), lens: 'follow', follow: 'anvil-lib', time: at('2026-09') });
+    expect(a.customers.get('harbor-traders')!.glow).toBe(true);
+    expect(a.edges.get('harbor-traders->swap-town')).toMatchObject({ hidden: false, glow: true });
+  });
+});

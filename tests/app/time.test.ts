@@ -55,7 +55,7 @@ describe('flagsAt', () => {
 });
 
 describe('time-aware appearance', () => {
-  it('hides buildings that are not standing and roads to ships that are away', () => {
+  it('hides buildings that are not standing, but only dims roads to ships that are away', () => {
     const idx = indexWorld(world);
     const w: World = JSON.parse(JSON.stringify(world));
     const i = w.timeline.months.indexOf('2026-09');
@@ -63,7 +63,7 @@ describe('time-aware appearance', () => {
     const a = computeAppearance(indexWorld(w), { ...defaultViewState(), time: i });
     expect(a.nodes.get('lonely-tool')!.hidden).toBe(true);
     expect(a.edges.get('lonely-tool->hearth-node')!.hidden).toBe(true);
-    expect(a.edges.get('harbor-traders->swap-town')!.hidden).toBe(true);
+    expect(a.edges.get('harbor-traders->swap-town')).toMatchObject({ hidden: false, dim: true });
     void idx;
   });
 

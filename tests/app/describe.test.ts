@@ -53,8 +53,25 @@ describe('describeShipAt', () => {
     const w = miniWorld();
     const i = w.timeline.months.indexOf('2026-05');
     expect(describeShipAt(w, 'harbor-traders', i)).toBe('Docked in May 2026 with 999 transactions through the products it uses.');
-    expect(describeShipAt(w, 'harbor-traders', w.timeline.months.indexOf('2026-09'))).toBe('Away in Sep 2026: no transactions that month.');
-    expect(describeShipAt(w, 'old-pilot', w.timeline.months.length - 1)).toBe('A wreck: this customer stopped using the product.');
+    expect(describeShipAt(w, 'harbor-traders', w.timeline.months.indexOf('2026-09'))).toBe(
+      'Away in Sep 2026: no transactions through the products it uses since Jun 2026.',
+    );
+    expect(describeShipAt(w, 'harbor-traders', w.timeline.months.indexOf('2026-01'))).toBe(
+      'Away in Jan 2026: no transactions through the products it uses yet.',
+    );
+    expect(describeShipAt(w, 'old-pilot', w.timeline.months.length - 1)).toBe(
+      'A wreck: it is recorded as no longer using the product, and there is no activity data to date when it stopped.',
+    );
+  });
+
+  it('dates a wreck by its last activity', () => {
+    const w = miniWorld();
+    const c = w.timeline.customers['harbor-traders'];
+    c.state = c.state.replace(/a+$/, (rest) => 'w'.repeat(rest.length));
+    expect(describeShipAt(w, 'harbor-traders', w.timeline.months.indexOf('2026-10'))).toBe('A wreck: it stopped using the product after Jun 2026.');
+    c.source = 'announced';
+    c.announced = { from: '2026-04', confirmed: '2026-06', until: '2026-06', ended: true };
+    expect(describeShipAt(w, 'harbor-traders', w.timeline.months.indexOf('2026-10'))).toBe('A wreck: its announced use ended in Jun 2026.');
   });
 
   it('says when announced use was last confirmed, and why the ship left', () => {

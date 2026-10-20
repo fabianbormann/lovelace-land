@@ -22,8 +22,9 @@ export function applyLook(obj: THREE.Object3D, look: Look, hovered = false, cond
     if (look.dim) m.color.lerp(DIM, 0.72);
     if (look.glow) m.emissive.copy(GLOW).multiplyScalar(0.35);
     if (hovered) m.emissive.add(new THREE.Color('#3a3220'));
+    m.userData.dim = look.dim;
     m.transparent = look.dim || m.userData.baseOpacity !== undefined;
-    m.opacity = look.dim ? 0.55 : (m.userData.baseOpacity ?? 1);
+    m.opacity = look.dim ? Math.min(0.55, m.userData.baseOpacity ?? 1) : (m.userData.baseOpacity ?? 1);
   });
 }
 

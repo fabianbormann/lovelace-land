@@ -12,7 +12,7 @@ export interface PlacedShip {
   label: HTMLElement;
   /** where the ship docks, even while it is away */
   berth: THREE.Vector3;
-  /** docked 1 = at the berth, 0 = beyond the horizon; wreck shows the wrecked hull */
+  /** docked 1 = at the berth, 0 = away: a ghost at its berth; wreck shows the wrecked hull */
   setPresence(docked: number, wreck: boolean): void;
 }
 
@@ -62,6 +62,10 @@ function buildShip(kind: ShipKind, flag: string): THREE.Group {
   }
   return g;
 }
+
+/** How solid a ship looks while it has no activity. */
+const GHOST_OPACITY = 0.3;
+const DIM_OPACITY = 0.55;
 
 export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y: number) => number) {
   const group = new THREE.Group();
@@ -137,15 +141,30 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     label.position.set(0, 3.6, 0);
     root.add(label);
     group.add(root);
-    const [ox, oy] = SEAWARD[sector.coast];
     const berth = new THREE.Vector3(spot.x, 0, spot.y);
+    const materials: THREE.MeshLambertMaterial[] = [];
+    sailing.traverse((c) => {
+      if (!(c instanceof THREE.Mesh)) return;
+      const m = c.material as THREE.MeshLambertMaterial;
+      m.userData.shipOpacity = m.userData.baseOpacity ?? 1;
+      materials.push(m);
+    });
+    let shown = -1;
+    // A ship that has no activity stays at its berth as a ghost, so it can still be found, clicked and traced to.
     const setPresence = (docked: number, isWreck: boolean) => {
       wreck.visible = isWreck;
-      sailing.visible = !isWreck && docked > 0.02;
-      root.visible = isWreck || docked > 0.02;
-      const away = (1 - docked) * 34;
-      root.position.set(berth.x + ox * away, -(1 - docked) * 0.5, berth.z + oy * away);
-      el.hidden = !root.visible;
+      sailing.visible = !isWreck;
+      el.classList.toggle('is-away', !isWreck && docked < 0.5);
+      const presence = isWreck ? 1 : GHOST_OPACITY + (1 - GHOST_OPACITY) * docked;
+      if (presence === shown) return;
+      shown = presence;
+      root.position.y = -(1 - presence) * 0.3;
+      for (const m of materials) {
+        const o = m.userData.shipOpacity * presence;
+        m.userData.baseOpacity = o < 1 ? o : undefined;
+        m.transparent = o < 1 || !!m.userData.dim;
+        m.opacity = m.userData.dim ? Math.min(DIM_OPACITY, o) : o;
+      }
     };
     setPresence(1, staticKind === 'wreck');
     ships.push({ customer, root, label: el, berth, setPresence });

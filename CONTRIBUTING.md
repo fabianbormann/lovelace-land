@@ -154,7 +154,7 @@ lastVerified: 2026-10-20
 ## Add on-chain activity for the timeline
 
 The timeline replays the ecosystem month by month from September 2021:
-- ships sail away when their transactions stop and return when they resume;
+- ships fade into ghosts at their berth when their transactions stop, and come back when they resume;
 - buildings burn after 4 inactive months, become ruins after 6 and turn back to grass after 12;
 - busy roads wear into cobblestone.
 
@@ -191,7 +191,7 @@ active:
   confirmed: 2026-02   # customers only: the latest month a public source shows it is still in use
 ```
 
-An announcement is not proof of use forever. Without `until`, a customer's announced use counts for **24 months after `confirmed`** (or after `from` if nothing has confirmed it since). After that, the ship sails away, just as an on-chain ship does when its transactions stop.
+An announcement is not proof of use forever. Without `until`, a customer's announced use counts for **24 months after `confirmed`** (or after `from` if nothing has confirmed it since). After that, the ship fades into a ghost, just as an on-chain ship does when its transactions stop.
 
 To keep a ship docked, find a newer dated source that shows the customer still uses the product, for example:
 - a dated support page or changelog;

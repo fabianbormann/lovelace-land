@@ -43,11 +43,21 @@ export function describeShipAt(world: World, id: string, i: number): string {
   const c = tl.customers[id];
   const month = formatMonth(tl.months[i]);
   const state = c.state[i];
-  if (state === 'w') return 'A wreck: this customer stopped using the product.';
-  const tx = c.tx[i].toLocaleString('en');
   const a = c.announced;
+  const last = lastBefore(c.tx, tl.months, i);
+  if (state === 'w') {
+    if (a?.ended) return `A wreck: its announced use ended in ${formatMonth(a.until)}.`;
+    return last
+      ? `A wreck: it stopped using the product after ${formatMonth(last)}.`
+      : 'A wreck: it is recorded as no longer using the product, and there is no activity data to date when it stopped.';
+  }
+  const tx = c.tx[i].toLocaleString('en');
   if (state === 'a') {
-    if (c.source !== 'announced') return `Away in ${month}: no transactions that month.`;
+    const since = last ? `since ${formatMonth(last)}` : 'yet';
+    if (c.source === 'onchain') return `Away in ${month}: no on-chain transactions ${since}.`;
+    if (c.source === 'products') return `Away in ${month}: no transactions through the products it uses ${since}.`;
+    if (c.source === 'product-activity') return `Away in ${month}: the products it uses have had no activity ${since}.`;
+    if (c.source !== 'announced') return `Away in ${month}: no activity ${since}.`;
     if (a && tl.months[i] > a.until)
       return a.ended
         ? `Away in ${month}: its announced period of use ended in ${formatMonth(a.until)}.`

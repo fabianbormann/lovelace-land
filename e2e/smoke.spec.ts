@@ -174,3 +174,14 @@ test('a building can be traced back to the ships that rely on it', async ({ page
   await expect(page.locator('.lens[data-lens="follow"]')).toHaveAttribute('aria-checked', 'true');
   await expect(page.locator('#lens-hint')).toHaveText('Tracing Anvil Lib back to the 3 ships that rely on it.');
 });
+
+test('people who cannot find their project, or find it wrong, are pointed to the issue forms', async ({ page }) => {
+  await open(page, '#node=anvil-lib');
+  const report = page.locator('#panel .report-line a');
+  await expect(report).toHaveAttribute('href', /template=wrong-data\.yml.*what=Anvil/);
+  await expect(page.locator('#report-btn')).toHaveAttribute('href', /issues\/new\/choose$/);
+  await page.fill('#search-input', 'Pavia');
+  const suggest = page.locator('#search-results .search-missing a');
+  await expect(suggest).toHaveText('Suggest “Pavia” on GitHub');
+  await expect(suggest).toHaveAttribute('href', /template=missing-data\.yml.*name=Pavia/);
+});

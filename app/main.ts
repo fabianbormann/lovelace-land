@@ -4,6 +4,7 @@ import { formatHash, parseHash, type Target } from './logic/hash';
 import { indexWorld, nodeUpstream, type WorldIndex } from './logic/index';
 import { computeAppearance, defaultViewState, type Lens, type ViewState } from './logic/lenses';
 import { formatMonth } from './logic/describe';
+import { missingDataUrl, reportChooserUrl } from './logic/report';
 import { search } from './logic/search';
 import { cursorAt, flagsAt, seriesAt, statsAt } from './logic/time';
 import { createIsland, type IslandMap } from './scene/island';
@@ -407,6 +408,7 @@ function start(world: World) {
 }
 
 function setupSearch(idx: WorldIndex, onPick: (t: Target) => void) {
+  $<HTMLAnchorElement>('#report-btn').href = reportChooserUrl();
   const input = $<HTMLInputElement>('#search-input');
   const list = $('#search-results');
   let results: ReturnType<typeof search> = [];
@@ -437,7 +439,18 @@ function setupSearch(idx: WorldIndex, onPick: (t: Target) => void) {
         return li;
       }),
     );
-    if (!results.length && input.value.trim()) list.replaceChildren(h('li', { role: 'option', 'aria-disabled': 'true' }, 'Nothing on the island by that name'));
+    const query = input.value.trim();
+    if (!results.length && query) {
+      const missing = h(
+        'li',
+        { role: 'option', 'aria-disabled': 'true', class: 'search-missing' },
+        'Nothing on the island by that name. ',
+        h('a', { href: missingDataUrl(query), target: '_blank', rel: 'noopener noreferrer' }, `Suggest “${query}” on GitHub`),
+      );
+      // keep focus in the input so the list stays open long enough for the link to be clicked
+      missing.addEventListener('mousedown', (e) => e.preventDefault());
+      list.replaceChildren(missing);
+    }
     list.hidden = !input.value.trim();
     input.setAttribute('aria-expanded', String(!list.hidden));
     if (results.length) input.setAttribute('aria-activedescendant', 'sr-0');
@@ -452,7 +465,10 @@ function setupSearch(idx: WorldIndex, onPick: (t: Target) => void) {
       active = (active + (e.key === 'ArrowDown' ? 1 : -1) + results.length) % results.length;
       list.querySelectorAll('li').forEach((li, i) => li.setAttribute('aria-selected', String(i === active)));
       input.setAttribute('aria-activedescendant', `sr-${active}`);
-    } else if (e.key === 'Enter') choose(active);
+    } else if (e.key === 'Enter') {
+      if (results.length) choose(active);
+      else if (input.value.trim()) window.open(missingDataUrl(input.value), '_blank', 'noopener');
+    }
     else if (e.key === 'Escape') close();
   });
 }

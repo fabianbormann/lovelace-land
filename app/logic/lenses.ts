@@ -71,7 +71,8 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
   const isHighway = (id: string) => (monthFlags ? monthFlags.highways.has(id) : idx.node.get(id)!.hiddenHighway);
   const standing = (id: string) => month === null || !tl.nodes[id] || isStanding(tl.nodes[id].state[month]);
   const docked = (id: string) => month === null || tl.customers[id]?.state[month] === 'd';
-  const present = (id: string) => (idx.node.has(id) ? standing(id) : docked(id));
+  // a ship that left or sank stays on the map as a ghost or wreck, so its roads stay too, dimmed
+  const present = (id: string) => !idx.node.has(id) || standing(id);
   const highways =
     state.lens === 'highways'
       ? new Set(world.edges.filter((e) => e.confidence !== 'inferred' && idx.node.has(e.to) && isHighway(e.to)).map((e) => e.id))
@@ -102,6 +103,7 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
     if (state.lens === 'stranded') dim = true;
     else if (highways) [dim, glow] = [!highways.has(e.id), highways.has(e.id)];
     else if (closure) [dim, glow] = [!closure.edges.has(e.id), closure.edges.has(e.id)];
+    if (!glow && idx.customer.has(e.from) && !docked(e.from)) dim = true;
     edges.set(e.id, look(dim || filtered(e.from) || filtered(e.to), glow, hidden));
   }
 

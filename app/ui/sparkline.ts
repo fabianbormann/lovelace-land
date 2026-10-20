@@ -1,6 +1,6 @@
 const NS = 'http://www.w3.org/2000/svg';
 
-/** A small log-scaled area sparkline with a marker for the shown month. */
+/** A small log-scaled area sparkline; a marker shows the shown month unless it is the latest, where it would read as a spike. */
 export function sparkline(values: number[], current: number, label: string): SVGSVGElement {
   const w = 300;
   const h = 44;
@@ -20,12 +20,15 @@ export function sparkline(values: number[], current: number, label: string): SVG
   const line = document.createElementNS(NS, 'polyline');
   line.setAttribute('points', points);
   line.setAttribute('class', 'spark-line');
-  const now = document.createElementNS(NS, 'line');
-  now.setAttribute('x1', String(x(current)));
-  now.setAttribute('x2', String(x(current)));
-  now.setAttribute('y1', '0');
-  now.setAttribute('y2', String(h));
-  now.setAttribute('class', 'spark-now');
-  svg.append(area, line, now);
+  svg.append(area, line);
+  if (current < values.length - 1) {
+    const now = document.createElementNS(NS, 'line');
+    now.setAttribute('x1', String(x(current)));
+    now.setAttribute('x2', String(x(current)));
+    now.setAttribute('y1', '0');
+    now.setAttribute('y2', String(h));
+    now.setAttribute('class', 'spark-now');
+    svg.append(now);
+  }
   return svg;
 }

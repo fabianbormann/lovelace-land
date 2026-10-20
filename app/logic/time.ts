@@ -47,7 +47,7 @@ export function nodeStateAt(tl: Timeline, nodeId: string, T: number) {
 
 const DOCKED: Record<string, number> = { d: 1, a: 0, w: 1 };
 
-/** 1 = at its berth, 0 = beyond the horizon; ships sail during the month their activity changes. */
+/** 1 = docked, 0 = away (a ghost at its berth); ships fade during the month their activity changes. */
 export function shipPresence(tl: Timeline, customerId: string, T: number): { docked: number; wreck: boolean } {
   const { index, frac } = cursorAt(tl.months, T);
   const state = tl.customers[customerId].state;

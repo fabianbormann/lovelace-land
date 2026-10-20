@@ -3,6 +3,7 @@ import type { FlowSource } from '../../pipeline/timeline';
 import type { Target } from '../logic/hash';
 import { nodeUpstream, type WorldIndex } from '../logic/index';
 import { describeAnnouncedPeriod, describeNodeAt, describeShipAt, formatMonth } from '../logic/describe';
+import { wrongDataUrl } from '../logic/report';
 import { tierName } from '../scene/town';
 import { sparkline } from './sparkline';
 import { extLink, fmt, h, hostOf } from './dom';
@@ -56,6 +57,10 @@ function relationSection(title: string, idx: WorldIndex, edges: WorldEdge[], sid
   const list = h('ul', { class: 'rel-list' }, ...items.map((it) => relationItem(idx, it.edge, it.otherId, actions)));
   wireRelations(list, items, actions);
   return [h('h3', {}, `${title} (${edges.length})`), edges.length ? list : h('p', { class: 'eyebrow' }, empty)];
+}
+
+function reportLine(t: Target & { name: string }) {
+  return h('p', { class: 'report-line' }, 'Something wrong or missing here? ', extLink(wrongDataUrl(t), 'Report it on GitHub'), ' (free account needed).');
 }
 
 function history(series: number[], i: number, what: string, meta: (string | null)[], sentence: string, state: string) {
@@ -179,6 +184,7 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
       ...relationSection('Uses', idx, (idx.out.get(n.id) ?? []).filter(visible), 'to', actions, 'Uses nothing else on the island.'),
       ...relationSection('Used by', idx, (idx.incoming.get(n.id) ?? []).filter(visible), 'from', actions, 'Nothing on the island uses it yet.'),
       h('p', { class: 'eyebrow' }, `Last verified ${n.lastVerified}`),
+      reportLine({ kind: 'node', id: n.id, name: n.name }),
     );
     return;
   }
@@ -207,6 +213,7 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
       follow,
       ...relationSection('Uses', idx, (idx.out.get(c.id) ?? []).filter(visible), 'to', actions, 'No products recorded.'),
       h('p', { class: 'eyebrow' }, `Last verified ${c.lastVerified}`),
+      reportLine({ kind: 'customer', id: c.id, name: c.name }),
     );
     return;
   }
@@ -233,5 +240,6 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
     h('div', { class: 'rel-head' }, fromBtn, h('span', { class: 'rel-meta' }, 'uses'), toBtn),
     h('h3', {}, 'Sources'),
     evidenceList(e),
+    reportLine({ kind: 'edge', id: e.id, name: `${from?.name ?? e.from} → ${to?.name ?? e.to}` }),
   );
 }
