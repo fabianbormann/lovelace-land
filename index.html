@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="claude:viewport-fit-sides" content="cover" />
+    <title>Cardano Island</title>
+    <meta name="description" content="A Settlers-style map of the Cardano technology landscape: tools are buildings, dependencies are roads worn by end-user traffic, customers are ships in harbors." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  </head>
+  <body>
+    <div id="app" class="app">
+      <header class="bar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <h1>Cardano Island</h1>
+        </div>
+        <div class="search">
+          <label class="visually-hidden" for="search-input">Find a project or customer</label>
+          <input id="search-input" type="search" placeholder="Find a project or customer…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="search-results" />
+          <ul id="search-results" class="search-results" role="listbox" hidden></ul>
+        </div>
+        <div class="lenses" role="radiogroup" aria-label="Lens">
+          <button type="button" class="lens is-active" data-lens="none" role="radio" aria-checked="true">Whole island</button>
+          <button type="button" class="lens" data-lens="stranded" role="radio" aria-checked="false">Stranded</button>
+          <button type="button" class="lens" data-lens="highways" role="radio" aria-checked="false">Hidden highways</button>
+          <button type="button" class="lens" data-lens="follow" role="radio" aria-checked="false">Follow a ship</button>
+        </div>
+        <div class="bar-actions">
+          <button type="button" id="filters-btn" class="chip-btn" aria-expanded="false" aria-controls="filters">Filters</button>
+          <button type="button" id="list-btn" class="chip-btn">List view</button>
+        </div>
+      </header>
+
+      <section id="filters" class="filters" hidden aria-label="Filters">
+        <div class="filter-group">
+          <h2>Districts</h2>
+          <div id="filter-districts" class="filter-list"></div>
+        </div>
+        <div class="filter-group">
+          <h2>Harbors</h2>
+          <div id="filter-sectors" class="filter-list"></div>
+        </div>
+        <div class="filter-group">
+          <h2>Map</h2>
+          <label class="toggle"><input id="toggle-settlers" type="checkbox" checked /> Settlers walking</label>
+          <label class="toggle"><input id="toggle-rumors" type="checkbox" /> Show rumors (unconfirmed roads)</label>
+        </div>
+      </section>
+
+      <main id="map" class="map"></main>
+      <p id="lens-hint" class="lens-hint" hidden></p>
+
+      <aside id="panel" class="panel" hidden aria-live="polite"></aside>
+      <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+
+      <details class="legend" open>
+        <summary>Legend</summary>
+        <div class="legend-body">
+          <h3>Roads, worn by customer traffic</h3>
+          <ul class="legend-roads">
+            <li><span class="swatch road-0"></span>Footprints</li>
+            <li><span class="swatch road-1"></span>Mud track</li>
+            <li><span class="swatch road-2"></span>Gravel road</li>
+            <li><span class="swatch road-3"></span>Cobblestone</li>
+            <li><span class="swatch road-dashed"></span>Reported, not confirmed</li>
+          </ul>
+          <h3>Ships in harbor</h3>
+          <ul class="legend-ships">
+            <li><b>Galleon</b> in production</li>
+            <li><b>Rowboat</b> pilot</li>
+            <li><b>Ghost ship</b> announced</li>
+            <li><b>Wreck</b> ended</li>
+          </ul>
+          <h3>Buildings</h3>
+          <p>Size grows hut → house → hall → keep with traffic. A <b>?</b> flag means no route reaches a customer. Overgrown ruins are deprecated.</p>
+        </div>
+      </details>
+
+      <div class="controls" aria-label="Camera">
+        <button type="button" id="rotate-left" class="round-btn" aria-label="Rotate left (Q)">⟲</button>
+        <button type="button" id="rotate-right" class="round-btn" aria-label="Rotate right (E)">⟳</button>
+      </div>
+
+      <p id="stats" class="stats"></p>
+
+      <section id="listview" class="listview" hidden aria-label="List view">
+        <div class="listview-head">
+          <h2>The island as a table</h2>
+          <div class="tabs" role="tablist">
+            <button type="button" role="tab" data-tab="nodes" aria-selected="true">Buildings</button>
+            <button type="button" role="tab" data-tab="customers" aria-selected="false">Ships</button>
+            <button type="button" role="tab" data-tab="edges" aria-selected="false">Roads</button>
+          </div>
+          <button type="button" id="list-close" class="chip-btn">Back to the map</button>
+        </div>
+        <p id="list-note" class="list-note" hidden></p>
+        <div class="table-wrap"><table id="list-table"></table></div>
+      </section>
+
+      <div id="fog" class="fog" hidden>
+        <div class="fog-card">
+          <h2>The fog hasn't lifted</h2>
+          <p id="fog-detail">The island data could not be loaded.</p>
+          <button type="button" id="fog-retry" class="chip-btn">Try again</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/app/main.ts"></script>
+  </body>
+</html>

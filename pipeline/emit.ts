@@ -92,5 +92,6 @@ export function buildWorld(input: {
 }
 
 export function serializeWorld(world: World): string {
-  return `${JSON.stringify(world, null, 2)}\n`;
+  // compact: the file is fetched by every visitor
+  return `${JSON.stringify(world)}\n`;
 }

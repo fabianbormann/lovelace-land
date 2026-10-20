@@ -5,7 +5,10 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "build:world": "tsx pipeline/cli.ts",
-    "check:data": "tsx pipeline/cli.ts --check"
+    "check:data": "tsx pipeline/cli.ts --check",
+    "dev": "vite",
+    "build": "npm run build:world && vite build",
+    "preview": "vite preview"
   },
   "license": "MIT",
   "private": true,

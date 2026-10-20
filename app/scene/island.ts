@@ -1,0 +1,204 @@
+import * as THREE from 'three';
+import type { World } from '../../pipeline/emit';
+import type { Target } from '../logic/hash';
+import { tileKey, type WorldIndex } from '../logic/index';
+import type { Appearance } from '../logic/lenses';
+import { buildTerrain, MOUNTAIN_PEAK } from '../logic/terrain';
+import { applyLook } from './appearance';
+import { buildHarbors } from './harbors';
+import { buildCardanoMark, buildSignposts, buildTerrainMesh, buildWater, makeSurface } from './landscape';
+import { buildRoads } from './roads';
+import { buildSettlers } from './settlers';
+import { DAY, NIGHT, Stage } from './stage';
+import { buildTown } from './town';
+
+export interface Pick {
+  target: Target | { kind: 'sector'; id: string };
+  clientX: number;
+  clientY: number;
+}
+
+export interface IslandMap {
+  stage: Stage;
+  apply(appearance: Appearance): void;
+  focus(target: Target): void;
+  setSettlers(on: boolean): void;
+  setNight(night: boolean): void;
+  onHover(cb: (pick: Pick | null) => void): void;
+  onSelect(cb: (pick: Pick | null) => void): void;
+  setSelected(target: Target | null): void;
+}
+
+/** Assemble the whole island scene from world.json and wire pointer picking. */
+export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): IslandMap {
+  const stage = new Stage(host);
+  const terrain = buildTerrain(world);
+  const { surfaceY } = makeSurface(terrain);
+
+  const ground = buildTerrainMesh(world, terrain);
+  stage.scene.add(ground);
+  stage.scene.add(buildWater(terrain, stage));
+  stage.scene.add(buildCardanoMark(stage, surfaceY));
+  stage.scene.add(buildSignposts(world, surfaceY));
+  const roads = buildRoads(world, surfaceY);
+  stage.scene.add(roads.group);
+  const town = buildTown(world, stage, surfaceY);
+  const harbors = buildHarbors(world, stage, surfaceY);
+  stage.scene.add(harbors.group);
+  const settlers = buildSettlers(world, stage, surfaceY);
+  stage.scene.add(settlers.mesh);
+  addDistantIslands(world, stage);
+
+  const productsRegion = world.districts.find((d) => d.building === 'town')?.region;
+  const focusX = productsRegion ? (MOUNTAIN_PEAK[0] + productsRegion.x1) / 2 : (world.bounds.minX + world.bounds.maxX) / 2;
+  stage.frame(world.bounds, new THREE.Vector3(focusX, 0, 0));
+  stage.camera.zoom = initialZoom(world, host);
+  stage.camera.updateProjectionMatrix();
+
+  const labelLayer = stage.labels.domElement;
+  const zoomBand = (z: number) => (z < 0.9 ? 'far' : z < 1.9 ? 'mid' : 'near');
+  stage.onZoom = (z) => (labelLayer.dataset.zoom = zoomBand(z));
+  labelLayer.dataset.zoom = zoomBand(stage.camera.zoom);
+
+  const buildingById = new Map(town.map((b) => [b.node.id, b] as const));
+  const shipById = new Map(harbors.ships.map((s) => [s.customer.id, s] as const));
+  let current: Appearance | null = null;
+  let hovered: string | null = null;
+  let selected: string | null = null;
+
+  const refreshObject = (kind: 'node' | 'customer', id: string) => {
+    if (!current) return;
+    const key = `${kind}:${id}`;
+    if (kind === 'node') {
+      const b = buildingById.get(id);
+      if (b) applyLook(b.root, current.nodes.get(id)!, key === hovered || key === selected);
+    } else {
+      const s = shipById.get(id);
+      if (s) applyLook(s.root, current.customers.get(id)!, key === hovered || key === selected);
+    }
+  };
+
+  // Picking
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  const pickables: THREE.Object3D[] = [...town.map((b) => b.root), ...harbors.ships.map((s) => s.root), harbors.group, ground];
+  const canvas = stage.renderer.domElement;
+  const pickAt = (clientX: number, clientY: number): Pick | null => {
+    const rect = canvas.getBoundingClientRect();
+    pointer.set(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+    raycaster.setFromCamera(pointer, stage.camera);
+    for (const hit of raycaster.intersectObjects(pickables, true)) {
+      if (!hit.object.visible) continue;
+      const data = hit.object.userData.pick as { kind: string; id: string } | undefined;
+      if (data && (data.kind === 'node' || data.kind === 'customer' || data.kind === 'sector'))
+        return { target: data as Pick['target'], clientX, clientY };
+      if (hit.object === ground) {
+        const key = tileKey(Math.round(hit.point.x), Math.round(hit.point.z));
+        const edges = (idx.edgesAtTile.get(key) ?? []).filter((e) => !current?.edges.get(e.id)?.hidden);
+        if (!edges.length) return null;
+        const best = [...edges].sort((a, b) => b.traffic - a.traffic)[0];
+        return { target: { kind: 'edge', id: best.id }, clientX, clientY };
+      }
+    }
+    return null;
+  };
+
+  let hoverCb: (p: Pick | null) => void = () => {};
+  let selectCb: (p: Pick | null) => void = () => {};
+  let pending: PointerEvent | null = null;
+  canvas.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    if (!pending) requestAnimationFrame(() => {
+      const ev = pending!;
+      pending = null;
+      const p = pickAt(ev.clientX, ev.clientY);
+      const key = p && (p.target.kind === 'node' || p.target.kind === 'customer') ? `${p.target.kind}:${p.target.id}` : null;
+      if (key !== hovered) {
+        const prev = hovered;
+        hovered = key;
+        if (prev) refreshObject(prev.split(':')[0] as 'node', prev.slice(prev.indexOf(':') + 1));
+        if (key) refreshObject(key.split(':')[0] as 'node', key.slice(key.indexOf(':') + 1));
+      }
+      canvas.style.cursor = p ? 'pointer' : '';
+      hoverCb(p);
+    });
+    pending = e;
+  });
+  canvas.addEventListener('pointerleave', () => hoverCb(null));
+  let down: { x: number; y: number } | null = null;
+  canvas.addEventListener('pointerdown', (e) => (down = { x: e.clientX, y: e.clientY }));
+  canvas.addEventListener('pointerup', (e) => {
+    if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6) return;
+    down = null;
+    selectCb(pickAt(e.clientX, e.clientY));
+  });
+
+  stage.setColors(DAY);
+  stage.start();
+
+  const positionOf = (target: Target): THREE.Vector3 | null => {
+    if (target.kind === 'node') {
+      const b = buildingById.get(target.id);
+      return b ? b.root.position.clone() : null;
+    }
+    if (target.kind === 'customer') {
+      const s = shipById.get(target.id);
+      return s ? new THREE.Vector3(s.root.position.x, 0, s.root.position.z) : null;
+    }
+    const e = idx.edge.get(target.id);
+    if (!e) return null;
+    const [x, y] = e.path[Math.floor(e.path.length / 2)];
+    return new THREE.Vector3(x, surfaceY(x, y), y);
+  };
+
+  return {
+    stage,
+    apply(appearance) {
+      current = appearance;
+      roads.apply(appearance);
+      for (const b of town) {
+        const look = appearance.nodes.get(b.node.id)!;
+        refreshObject('node', b.node.id);
+        b.label.classList.toggle('is-dim', look.dim);
+        b.label.classList.toggle('is-glow', look.glow);
+      }
+      for (const s of harbors.ships) refreshObject('customer', s.customer.id);
+      settlers.setVisibleEdges(new Set([...appearance.edges].filter(([, l]) => !l.hidden && !l.dim).map(([id]) => id)));
+    },
+    focus(target) {
+      const p = positionOf(target);
+      if (p) stage.flyTo(p, target.kind === 'edge' ? 1.6 : 2.4);
+    },
+    setSettlers: (on) => settlers.setEnabled(on),
+    setNight: (night) => stage.setColors(night ? NIGHT : DAY),
+    onHover: (cb) => (hoverCb = cb),
+    onSelect: (cb) => (selectCb = cb),
+    setSelected(target) {
+      const prev = selected;
+      selected = target && (target.kind === 'node' || target.kind === 'customer') ? `${target.kind}:${target.id}` : null;
+      for (const key of [prev, selected]) if (key) refreshObject(key.split(':')[0] as 'node', key.slice(key.indexOf(':') + 1));
+    },
+  };
+}
+
+function initialZoom(world: World, host: HTMLElement) {
+  const w = world.bounds.maxX - world.bounds.minX + 10;
+  const aspect = (host.clientWidth || 1) / (host.clientHeight || 1);
+  // frustum width at zoom 1 is 2 * 26 * aspect; fit most of the island in view
+  return Math.min(1.4, Math.max(0.4, (2 * 26 * aspect * 1.25) / w));
+}
+
+/** Faint neighbouring islands in the fog beyond the bridges. */
+function addDistantIslands(world: World, stage: Stage) {
+  if (!world.nodes.some((n) => n.district === 'bridges')) return;
+  const material = new THREE.MeshLambertMaterial({ color: '#7d9a7a', flatShading: true });
+  const spots: [number, number, number][] = [
+    [world.bounds.maxX + 55, world.bounds.minY - 10, 9],
+    [world.bounds.maxX + 70, world.bounds.maxY + 12, 12],
+  ];
+  for (const [x, z, r] of spots) {
+    const island = new THREE.Mesh(new THREE.ConeGeometry(r, 4, 7), material);
+    island.position.set(x, 0.6, z);
+    stage.scene.add(island);
+  }
+}
