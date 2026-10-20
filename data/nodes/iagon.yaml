@@ -3,7 +3,7 @@ name: Iagon
 district: products
 description: DePIN marketplace for decentralised storage and compute where node
   operators stake IAG and rent out capacity; offers private distributed cloud
-  storage to enterprises. Tagged DePIN.
+  storage to enterprises. Tagged DePIN. Iagon also runs Cardano node and API services for enterprises.
 maintainer: Iagon
 links:
   website: https://iagon.com

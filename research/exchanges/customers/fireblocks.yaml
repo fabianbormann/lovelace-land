@@ -1,0 +1,31 @@
+id: fireblocks
+name: Fireblocks
+type: organization
+sectors: [exchanges]
+stage: production
+description: Institutional MPC custody and transfer platform that has supported ADA since August 2021. Its open-source ADA staking SDK uses PyCardano and Blockfrost, and since May 2026 staking and governance run on Iagon's enterprise Cardano nodes.
+uses:
+  - target: pycardano
+    confidence: verified
+    evidence:
+      - url: https://github.com/fireblocks/ada_staking/blob/main/requirements.txt
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "pycardano==0.13.2 in Fireblocks' Cardano staking SDK (fireblocks/ada_staking)"
+  - target: blockfrost
+    confidence: verified
+    evidence:
+      - url: https://github.com/fireblocks/ada_staking
+        kind: docs
+        retrieved: 2026-10-20
+        note: "README requirements: 'BlockFrost API Key'; staking.py imports BlockFrostApi"
+  - target: iagon
+    confidence: reported
+    evidence:
+      - url: https://blockonomi.com/fireblocks-connects-raw-signing-to-cardano-via-iagon/
+        kind: article
+        retrieved: 2026-10-20
+        note: "Fireblocks has connected its RAW signing system with Iagon's enterprise Cardano nodes (2026-05-13)"
+active:
+  from: "2021-08"
+lastVerified: 2026-10-20

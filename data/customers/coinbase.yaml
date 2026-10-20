@@ -1,0 +1,25 @@
+id: coinbase
+name: Coinbase
+type: organization
+sectors: [exchanges]
+stage: production
+description: US exchange and custodian that lists ADA. Input Output built the Cardano Rosetta implementation with Coinbase for custody integration, and the March 2021 Coinbase listing was carried out using the Rosetta standard.
+uses:
+  - target: cardano-rosetta
+    confidence: reported
+    evidence:
+      - url: https://roadmap.cardano.org/en/status-updates/update/2020-08-28/
+        kind: docs
+        retrieved: 2026-10-20
+        note: "cardano-rosetta is still undergoing rigorous testing to prepare it for custody integration ... the next step will be to move the cardano-rosetta repo to public for testing on the Coinbase side."
+      - url: https://iog.io/en/blog/posts/2021/03/17/momentum-continues-as-coinbase-lists-ada-and-bloomberg-adds-cardano/
+        kind: announcement
+        retrieved: 2026-10-20
+        note: "the listing on Coinbase has been an important technical collaboration, carried out using the open-source Rosetta standard."
+      - url: https://github.com/cardano-foundation/cardano-rosetta/pull/592
+        kind: article
+        retrieved: 2026-10-20
+        note: "GitHub PR (merged 2025-04-01) adding DRep vote delegation to cardano-rosetta, by a contributor whose GitHub bio reads '@ Coinbase'."
+active:
+  from: "2021-03"
+lastVerified: 2026-10-20

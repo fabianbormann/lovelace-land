@@ -43,3 +43,8 @@
   description: Enterprise systems and public-sector deployments not covered by a more specific sector.
   inclusion: The customer is a company or public body whose use case fits no more specific sector.
   coast: south
+- id: exchanges
+  name: Exchanges & Custody
+  description: Centralized exchanges and institutional custodians that list ADA or hold it for their own users.
+  inclusion: The customer lets its own users buy, sell, hold or stake ADA through its platform.
+  coast: east
