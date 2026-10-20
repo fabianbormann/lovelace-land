@@ -10,6 +10,8 @@ export interface PlacedShip {
   customer: WorldCustomer;
   root: THREE.Group;
   label: HTMLElement;
+  /** where the ship docks, even while it is away */
+  berth: THREE.Vector3;
   /** docked 1 = at the berth, 0 = beyond the horizon; wreck shows the wrecked hull */
   setPresence(docked: number, wreck: boolean): void;
 }
@@ -146,7 +148,7 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
       el.hidden = !root.visible;
     };
     setPresence(1, staticKind === 'wreck');
-    ships.push({ customer, root, label: el, setPresence });
+    ships.push({ customer, root, label: el, berth, setPresence });
     bobbers.push({ obj: sailing, phase: customer.slot * 1.3, base: 0, wreck: false });
   }
   if (!stage.reducedMotion)

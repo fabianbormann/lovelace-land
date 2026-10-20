@@ -216,8 +216,9 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
       return b ? b.root.position.clone() : null;
     }
     if (target.kind === 'customer') {
+      // the berth, not the ship: a ship that sailed away would leave the camera on open sea
       const s = shipById.get(target.id);
-      return s ? new THREE.Vector3(s.root.position.x, 0, s.root.position.z) : null;
+      return s ? s.berth.clone() : null;
     }
     const e = idx.edge.get(target.id);
     if (!e) return null;

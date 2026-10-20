@@ -119,6 +119,16 @@ describe('time axis fields', () => {
     expect(c.active?.from).toBe('2024-02');
   });
 
+  it('accepts a confirmation month on a customer’s announced window, but not on a node’s', () => {
+    const c = CustomerSchema.parse({
+      id: 'x', name: 'X', type: 'organization', sectors: ['defi'], stage: 'pilot', description: 'd', lastVerified: '2026-10-20',
+      uses: [{ target: 'p', confidence: 'verified', evidence }],
+      active: { from: '2022-01', confirmed: '2025-06' },
+    });
+    expect(c.active).toEqual({ from: '2022-01', confirmed: '2025-06' });
+    expect(NodeSchema.safeParse({ ...baseNode, active: { from: '2022-01', confirmed: '2025-06' } }).success).toBe(false);
+  });
+
   it('rejects malformed hashes and months', () => {
     expect(NodeSchema.safeParse({ ...baseNode, onchain: { scripts: ['ABC'] } }).success).toBe(false);
     expect(NodeSchema.safeParse({ ...baseNode, active: { from: '2024-13' } }).success).toBe(false);

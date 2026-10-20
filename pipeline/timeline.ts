@@ -1,6 +1,6 @@
 import type { Activity, MonthCounts } from './activity';
 import type { Graph } from './graph';
-import { monthDiff } from './months';
+import { addMonths, monthDiff } from './months';
 import { customerClosures, trafficFromWeights } from './traffic';
 
 /** First month of the time axis: Alonzo, when smart contracts arrived. */
@@ -13,6 +13,8 @@ export const GRASS_AFTER = 12;
 export const AT_RISK_AFTER = 6;
 /** A ship stays docked through this many quiet months before it sails away. */
 export const DOCKED_GRACE = 2;
+/** Announced use without an end date counts for this many months after it was last confirmed. */
+export const ANNOUNCED_FOR = 24;
 
 /** e empty plot · c construction · a active · r at risk · b burning · u ruin · g grass */
 export type NodeState = 'e' | 'c' | 'a' | 'r' | 'b' | 'u' | 'g';
@@ -25,6 +27,16 @@ export interface CustomerTimeline {
   w: number[];
   state: string;
   source: FlowSource;
+  /** for announced use: the window that counts, with until as its last counted month */
+  announced?: AnnouncedWindow;
+}
+
+export interface AnnouncedWindow {
+  from: string;
+  confirmed: string;
+  until: string;
+  /** true when the data gives an end date, false when the window only faded */
+  ended: boolean;
 }
 
 export interface NodeTimeline {
@@ -69,13 +81,17 @@ export function computeTimeline(graph: Graph, activity: Activity, months: string
   for (const c of customers) {
     let tx: number[];
     let source: FlowSource;
+    let announced: AnnouncedWindow | undefined;
     const products = c.uses.map((u) => ownTx(u.target)).filter((s): s is MonthCounts => s !== undefined);
     if (activity.tx.has(c.id)) {
       tx = at(activity.tx.get(c.id), months);
       source = 'onchain';
     } else if (c.active) {
-      const until = c.active.until ?? months[last];
-      tx = months.map((m) => (monthDiff(c.active!.from, m) >= 0 && monthDiff(m, until) >= 0 ? DATED_FLOW : 0));
+      const { from } = c.active;
+      const confirmed = c.active.confirmed ?? c.active.until ?? from;
+      const until = c.active.until ?? addMonths(confirmed, ANNOUNCED_FOR - 1);
+      announced = { from, confirmed, until, ended: c.active.until !== undefined };
+      tx = months.map((m) => (monthDiff(from, m) >= 0 && monthDiff(m, until) >= 0 ? DATED_FLOW : 0));
       source = 'announced';
     } else if (products.length && c.type === 'segment') {
       tx = months.map((m) => products.reduce((s, p) => s + (p[m] ?? 0), 0));
@@ -106,7 +122,7 @@ export function computeTimeline(graph: Graph, activity: Activity, months: string
         return 'a';
       })
       .join('');
-    customerTl[c.id] = { tx, w, state, source };
+    customerTl[c.id] = { tx, w, state, source, ...(announced && { announced }) };
   }
 
   // 2. Monthly traffic over each customer's (non-rumor) closure

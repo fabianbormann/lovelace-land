@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { World } from '../../pipeline/emit';
-import { describeNodeAt, describeShipAt, formatMonth } from '../../app/logic/describe';
+import { describeAnnouncedPeriod, describeNodeAt, describeShipAt, formatMonth } from '../../app/logic/describe';
 import { miniWorld } from './world';
 
 function withNode(state: string, extra: Partial<World['timeline']['nodes'][string]> = {}) {
@@ -55,5 +55,37 @@ describe('describeShipAt', () => {
     expect(describeShipAt(w, 'harbor-traders', i)).toBe('Docked in May 2026 with 999 transactions through the products it uses.');
     expect(describeShipAt(w, 'harbor-traders', w.timeline.months.indexOf('2026-09'))).toBe('Away in Sep 2026: no transactions that month.');
     expect(describeShipAt(w, 'old-pilot', w.timeline.months.length - 1)).toBe('A wreck: this customer stopped using the product.');
+  });
+
+  it('says when announced use was last confirmed, and why the ship left', () => {
+    const w = miniWorld();
+    const months = w.timeline.months;
+    const at = (m: string) => months.indexOf(m);
+    const docked = months.map((m) => (m >= '2026-01' && m <= '2026-03' ? 'd' : 'a')).join('');
+    w.timeline.customers['harbor-traders'] = {
+      ...w.timeline.customers['harbor-traders'],
+      source: 'announced',
+      state: docked,
+      announced: { from: '2026-01', confirmed: '2026-01', until: '2026-02', ended: false },
+    };
+    expect(describeShipAt(w, 'harbor-traders', at('2026-02'))).toBe('Docked in Feb 2026, based on announced use last confirmed in Jan 2026 (no on-chain data).');
+    expect(describeShipAt(w, 'harbor-traders', at('2026-06'))).toBe(
+      'Away in Jun 2026: its announced use was last confirmed in Jan 2026, and nothing newer is on record.',
+    );
+    w.timeline.customers['harbor-traders'].announced = { from: '2026-01', confirmed: '2026-02', until: '2026-02', ended: true };
+    expect(describeShipAt(w, 'harbor-traders', at('2026-06'))).toBe('Away in Jun 2026: its announced period of use ended in Feb 2026.');
+  });
+});
+
+describe('describeAnnouncedPeriod', () => {
+  it('summarises the window without pretending to show transactions', () => {
+    const p = (announced: World['timeline']['customers'][string]['announced']) => describeAnnouncedPeriod(announced);
+    expect(p({ from: '2022-01', confirmed: '2022-01', until: '2023-12', ended: false })).toBe(
+      'No on-chain data. Use announced from Jan 2022 and not confirmed since, so it counts until Dec 2023.',
+    );
+    expect(p({ from: '2022-01', confirmed: '2025-06', until: '2027-05', ended: false })).toBe(
+      'No on-chain data. Use announced from Jan 2022, last confirmed Jun 2025, so it counts until May 2027.',
+    );
+    expect(p({ from: '2022-01', confirmed: '2022-03', until: '2022-03', ended: true })).toBe('No on-chain data. Use announced from Jan 2022 until Mar 2022.');
   });
 });

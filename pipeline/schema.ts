@@ -21,6 +21,8 @@ const OnchainSchema = z
   .strict();
 /** Announced activity window for entities without on-chain data. */
 const ActiveSchema = z.object({ from: YearMonthSchema, until: YearMonthSchema.optional() }).strict();
+/** A customer's window may also say when its use was last publicly confirmed; without an end date it fades after that. */
+const CustomerActiveSchema = ActiveSchema.extend({ confirmed: YearMonthSchema.optional() }).strict();
 
 export const BUILDINGS = [
   'relay-tower',
@@ -129,7 +131,7 @@ export const CustomerSchema = z
       .optional(),
     uses: z.array(CustomerUsesSchema).min(1, 'a customer must use at least one product'),
     onchain: OnchainSchema.optional(),
-    active: ActiveSchema.optional(),
+    active: CustomerActiveSchema.optional(),
     lastVerified: isoDate,
   })
   .strict();

@@ -80,4 +80,20 @@ describe('validateReferences', () => {
       warnings: ['customers/traders.yaml: segment has no metric; add a sourced metric so its harbor shows how big it is'],
     });
   });
+
+  it('checks that an announced window is in order', () => {
+    const data = makeData({
+      nodes: [node('p', 'products', [], { active: { from: '2024-05', until: '2024-01' } })],
+      customers: [
+        customer('early', ['defi'], ['p'], { active: { from: '2024-05', confirmed: '2024-01' } }),
+        customer('late', ['defi'], ['p'], { active: { from: '2024-01', until: '2024-06', confirmed: '2024-09' } }),
+        customer('ok', ['defi'], ['p'], { active: { from: '2024-01', confirmed: '2025-02' } }),
+      ],
+    });
+    expect(validateReferences(data).errors).toEqual([
+      'nodes/p.yaml: active.until 2024-01 is before active.from 2024-05',
+      'customers/early.yaml: active.confirmed 2024-01 is before active.from 2024-05',
+      'customers/late.yaml: active.confirmed 2024-09 is after active.until 2024-06',
+    ]);
+  });
 });

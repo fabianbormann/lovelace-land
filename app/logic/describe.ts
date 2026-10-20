@@ -1,4 +1,5 @@
 import type { World } from '../../pipeline/emit';
+import type { AnnouncedWindow } from '../../pipeline/timeline';
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 export const formatMonth = (m: string) => `${MONTH_NAMES[Number(m.slice(5, 7)) - 1]} ${m.slice(0, 4)}`;
@@ -44,18 +45,36 @@ export function describeShipAt(world: World, id: string, i: number): string {
   const state = c.state[i];
   if (state === 'w') return 'A wreck: this customer stopped using the product.';
   const tx = c.tx[i].toLocaleString('en');
-  if (state === 'a')
-    return c.source === 'announced' ? `Away in ${month}: outside its announced period of activity.` : `Away in ${month}: no transactions that month.`;
+  const a = c.announced;
+  if (state === 'a') {
+    if (c.source !== 'announced') return `Away in ${month}: no transactions that month.`;
+    if (a && tl.months[i] > a.until)
+      return a.ended
+        ? `Away in ${month}: its announced period of use ended in ${formatMonth(a.until)}.`
+        : `Away in ${month}: its announced use was last confirmed in ${formatMonth(a.confirmed)}, and nothing newer is on record.`;
+    return `Away in ${month}: outside its announced period of activity.`;
+  }
   switch (c.source) {
     case 'onchain':
       return `Docked in ${month} with ${tx} on-chain transactions.`;
     case 'products':
       return `Docked in ${month} with ${tx} transactions through the products it uses.`;
     case 'announced':
-      return `Docked in ${month}, based on announced activity (no on-chain data).`;
+      return a
+        ? `Docked in ${month}, based on announced use last confirmed in ${formatMonth(a.confirmed)} (no on-chain data).`
+        : `Docked in ${month}, based on announced activity (no on-chain data).`;
     case 'product-activity':
       return `Docked in ${month} while the products it uses are active.`;
     default:
       return `Docked in ${month}; there is no activity data, so it is assumed active.`;
   }
+}
+
+/** The announced window of a ship without on-chain data, shown instead of a transaction chart. */
+export function describeAnnouncedPeriod(a: AnnouncedWindow | undefined): string {
+  if (!a) return 'No on-chain data.';
+  const from = formatMonth(a.from);
+  if (a.ended) return `No on-chain data. Use announced from ${from} until ${formatMonth(a.until)}.`;
+  const confirmed = a.confirmed === a.from ? ' and not confirmed since' : `, last confirmed ${formatMonth(a.confirmed)}`;
+  return `No on-chain data. Use announced from ${from}${confirmed}, so it counts until ${formatMonth(a.until)}.`;
 }

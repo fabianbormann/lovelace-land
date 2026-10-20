@@ -32,6 +32,33 @@ describe('customer flow', () => {
     expect(t.customers.c.source).toBe('announced');
   });
 
+  describe('announced presence without on-chain data', () => {
+    const LONG = monthRange('2021-09', '2026-10');
+    const long = (active: Record<string, string>) =>
+      computeTimeline(buildGraph(makeData({ nodes, customers: [customer('c', ['defi'], ['app'], { active })] })), act(), LONG).customers.c;
+    const counted = (tx: number[]) => LONG.filter((_, i) => tx[i] > 0);
+
+    it('fades 24 months after it starts when nothing confirms it', () => {
+      const c = long({ from: '2022-01' });
+      expect(counted(c.tx)).toEqual(monthRange('2022-01', '2023-12'));
+      expect(c.announced).toEqual({ from: '2022-01', confirmed: '2022-01', until: '2023-12', ended: false });
+      expect(c.state.at(-1)).toBe('a');
+    });
+
+    it('lasts 24 months after its latest confirmation', () => {
+      const c = long({ from: '2022-01', confirmed: '2025-06' });
+      expect(counted(c.tx)).toEqual(monthRange('2022-01', '2027-05').filter((m) => m <= '2026-10'));
+      expect(c.announced?.until).toBe('2027-05');
+      expect(c.state.at(-1)).toBe('d');
+    });
+
+    it('keeps an explicit end date as given', () => {
+      const c = long({ from: '2022-01', until: '2022-03' });
+      expect(counted(c.tx)).toEqual(['2022-01', '2022-02', '2022-03']);
+      expect(c.announced).toEqual({ from: '2022-01', confirmed: '2022-03', until: '2022-03', ended: true });
+    });
+  });
+
   it('gives a segment the transactions of the products it uses', () => {
     const t = timeline(makeData({ nodes, customers: [customer('s', ['defi'], ['app'], { type: 'segment' })] }), act({ app: series({ 1: 50 }) }));
     expect(t.customers.s.tx.slice(0, 3)).toEqual([0, 50, 0]);

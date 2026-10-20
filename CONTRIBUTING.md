@@ -188,7 +188,17 @@ Give the announced period of use instead:
 active:
   from: 2024-03        # first month of real use (go-live, not the press release about a future plan)
   until: 2025-01       # only if it ended
+  confirmed: 2026-02   # customers only: the latest month a public source shows it is still in use
 ```
+
+An announcement is not proof of use forever. Without `until`, a customer's announced use counts for **24 months after `confirmed`** (or after `from` if nothing has confirmed it since). After that, the ship sails away, just as an on-chain ship does when its transactions stop.
+
+To keep a ship docked, find a newer dated source that shows the customer still uses the product, for example:
+- a dated support page or changelog;
+- a news article;
+- a new release, for a wallet's user group.
+
+Add it as evidence on the matching `uses` entry, with a note quoting the date. Then set `confirmed` to that month. A source that only repeats the original announcement doesn't count.
 
 ### Collecting the numbers
 

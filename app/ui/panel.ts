@@ -1,7 +1,8 @@
 import type { WorldEdge } from '../../pipeline/emit';
+import type { FlowSource } from '../../pipeline/timeline';
 import type { Target } from '../logic/hash';
 import { nodeUpstream, type WorldIndex } from '../logic/index';
-import { describeNodeAt, describeShipAt, formatMonth } from '../logic/describe';
+import { describeAnnouncedPeriod, describeNodeAt, describeShipAt, formatMonth } from '../logic/describe';
 import { tierName } from '../scene/town';
 import { sparkline } from './sparkline';
 import { extLink, fmt, h, hostOf } from './dom';
@@ -95,9 +96,26 @@ function nodeHistory(idx: WorldIndex, id: string, i: number) {
   );
 }
 
+const NO_OWN_DATA: Partial<Record<FlowSource, string>> = {
+  'product-activity': 'No on-chain data of its own. It counts as active while the products it uses are active.',
+  assumed: 'No activity data, so it is assumed active.',
+  none: 'No activity data.',
+};
+
 function customerHistory(idx: WorldIndex, id: string, i: number) {
   const tl = idx.world.timeline;
-  return history(tl.customers[id].tx, i, 'transactions', [], describeShipAt(idx.world, id, i), tl.customers[id].state[i]);
+  const c = tl.customers[id];
+  const sentence = describeShipAt(idx.world, id, i);
+  // only real transaction counts get a chart; a placeholder flow would read as one burst of transactions
+  if (c.source === 'onchain' || c.source === 'products') return history(c.tx, i, 'transactions', [], sentence, c.state[i]);
+  const period = c.source === 'announced' ? describeAnnouncedPeriod(c.announced) : NO_OWN_DATA[c.source]!;
+  return h(
+    'div',
+    { class: 'history' },
+    h('h3', {}, 'History'),
+    h('p', { class: 'eyebrow' }, period),
+    h('p', { class: 'state-line', 'data-state': c.state[i] }, sentence),
+  );
 }
 
 /** Refresh only the month-dependent parts, so playback keeps focus and scroll position in the panel. */

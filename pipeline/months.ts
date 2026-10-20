@@ -4,6 +4,7 @@ const fromIndex = (i: number) => `${Math.floor(i / 12)}-${String((i % 12) + 1).p
 
 export const monthOf = (iso: string) => iso.slice(0, 7);
 export const monthDiff = (a: string, b: string) => toIndex(b) - toIndex(a);
+export const addMonths = (m: string, n: number) => fromIndex(toIndex(m) + n);
 
 export function monthRange(from: string, to: string): string[] {
   const out: string[] = [];

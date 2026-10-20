@@ -32,8 +32,17 @@ export function validateReferences(data: LoadedData): { errors: string[]; warnin
     });
   };
 
+  const checkWindow = (file: string, active: { from: string; until?: string; confirmed?: string } | undefined) => {
+    if (!active) return;
+    const { from, until, confirmed } = active;
+    if (until && until < from) errors.push(`${file}: active.until ${until} is before active.from ${from}`);
+    if (confirmed && confirmed < from) errors.push(`${file}: active.confirmed ${confirmed} is before active.from ${from}`);
+    if (confirmed && until && confirmed > until) errors.push(`${file}: active.confirmed ${confirmed} is after active.until ${until}`);
+  };
+
   for (const n of data.nodes) {
     const file = nodeFile(n.id);
+    checkWindow(file, n.active);
     const district = districts.get(n.district);
     if (!district) errors.push(`${file}: district "${n.district}" not found in districts.yaml`);
     if (n.primarySector !== null) {
@@ -53,6 +62,7 @@ export function validateReferences(data: LoadedData): { errors: string[]; warnin
     if (c.type === 'segment' && !c.metric)
       warnings.push(`${file}: segment has no metric; add a sourced metric so its harbor shows how big it is`);
     checkUses(file, c.id, c.uses);
+    checkWindow(file, c.active);
   }
 
   return { errors, warnings };
