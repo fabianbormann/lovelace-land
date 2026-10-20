@@ -1,17 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#15324a"/>
-  <!-- island block -->
-  <polygon points="5,38 32,53 32,60 5,45" fill="#c9a96b"/>
-  <polygon points="32,53 59,38 59,45 32,60" fill="#a8864e"/>
-  <polygon points="5,38 32,23 59,38 32,53" fill="#86b25a"/>
-  <!-- mountain -->
-  <polygon points="11,40 24,12 30,39" fill="#8e8b7d"/>
-  <polygon points="24,12 37,38 30,39" fill="#6f6c61"/>
-  <polygon points="24,12 20,21 24,20 28,22" fill="#f3f5f2"/>
-  <!-- house -->
-  <polygon points="39,43 46,39 46,34 39,38" fill="#efe4cc"/>
-  <polygon points="46,39 50,41 50,36 46,34" fill="#d6c7a6"/>
-  <polygon points="38,38.5 43,31 51,36 46,34.5" fill="#b24a32"/>
-  <!-- lovelace -->
-  <circle cx="47" cy="15" r="6.5" fill="#ffffff"/>
+  <polygon points="5.00,40.00 32.00,55.00 32.00,63.00 5.00,48.00" fill="#c9a96b"/>
+  <polygon points="32.00,55.00 59.00,40.00 59.00,48.00 32.00,63.00" fill="#a8864e"/>
+  <polygon points="32.00,25.00 59.00,40.00 32.00,55.00 5.00,40.00" fill="#86b25a"/>
+  <polyline points="40.91,41.05 35.78,43.90 30.38,40.90" fill="none" stroke="#c9b48a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <polygon points="24.30,44.54 16.48,44.13 20.12,18.40" fill="#878579" stroke="#878579" stroke-width="0.3" stroke-linejoin="round"/>
+  <polygon points="16.48,44.13 10.26,41.27 20.12,18.40" fill="#89867b" stroke="#89867b" stroke-width="0.3" stroke-linejoin="round"/>
+  <polygon points="28.85,40.80 24.30,44.54 20.12,18.40" fill="#626058" stroke="#626058" stroke-width="0.3" stroke-linejoin="round"/>
+  <polygon points="21.46,26.76 19.25,24.57 20.12,18.40" fill="#eceeeb"/>
+  <polygon points="19.25,24.57 16.77,26.17 20.12,18.40" fill="#edefec"/>
+  <polygon points="22.74,25.12 21.46,26.76 20.12,18.40" fill="#cdcfcc"/>
+  <polygon points="37.67,39.25 44.69,43.15 44.69,36.65 37.67,32.75" fill="#efe4cc"/>
+  <polygon points="44.69,43.15 49.82,40.30 49.82,33.80 44.69,36.65" fill="#d6c7a6"/>
+  <polygon points="44.69,36.65 49.82,33.80 47.25,30.23" fill="#d6c7a6"/>
+  <polygon points="36.59,33.75 44.69,38.25 47.80,30.52 39.69,26.02" fill="#b24a32"/>
+  <polygon points="40.64,40.90 41.72,41.50 41.72,37.50 40.64,36.90" fill="#6b4a2f"/>
+  <!-- the white dot stands in for the Cardano mark, which must not be drawn below 64 px -->
+  <circle cx="47" cy="14" r="6.5" fill="#ffffff"/>
 </svg>
