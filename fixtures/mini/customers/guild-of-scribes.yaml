@@ -1,0 +1,14 @@
+id: guild-of-scribes
+name: Guild of Scribes
+type: organization
+sectors: [proof-verification]
+stage: pilot
+description: Fictional notary guild piloting on-chain seals.
+uses:
+  - target: seal-notary
+    confidence: verified
+    evidence:
+      - url: https://example.org/guild/case-study
+        kind: case-study
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

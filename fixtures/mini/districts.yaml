@@ -1,0 +1,24 @@
+- id: core
+  name: Node & Network
+  description: Nodes and network infrastructure.
+  building: relay-tower
+  order: 0
+  color: "#8d7b68"
+- id: indexers
+  name: Chain Indexers
+  description: Chain followers and indexers.
+  building: watermill
+  order: 1
+  color: "#5b8fb9"
+- id: sdks
+  name: Off-chain SDKs
+  description: Libraries for building transactions.
+  building: workshop
+  order: 2
+  color: "#c08b5c"
+- id: products
+  name: Products & dApps
+  description: End-user facing products.
+  building: town
+  order: 3
+  color: "#9bbb59"

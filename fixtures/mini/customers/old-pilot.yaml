@@ -1,0 +1,14 @@
+id: old-pilot
+name: Old Pilot
+type: organization
+sectors: [defi]
+stage: ended
+description: Fictional pilot that ended.
+uses:
+  - target: seal-notary
+    confidence: reported
+    evidence:
+      - url: https://example.org/news/old-pilot
+        kind: article
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

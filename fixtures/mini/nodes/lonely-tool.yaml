@@ -1,0 +1,14 @@
+id: lonely-tool
+name: Lonely Tool
+district: sdks
+description: Fictional tool nobody ships to a customer.
+status: maintenance
+uses:
+  - target: hearth-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://example.org/lonely/readme
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20
