@@ -12,6 +12,15 @@ import { renderPanel } from './ui/panel';
 
 const $ = <T extends HTMLElement = HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
 
+/** Deep links are a convenience; sandboxed embeds may refuse history changes. */
+function setHash(hash: string) {
+  try {
+    history.replaceState(null, '', hash || location.pathname + location.search);
+  } catch {
+    /* ignore */
+  }
+}
+
 function webglAvailable() {
   try {
     const c = document.createElement('canvas');
@@ -102,14 +111,14 @@ function start(world: World) {
       selected = null;
       panel.hidden = true;
       island?.setSelected(null);
-      history.replaceState(null, '', location.pathname + location.search);
+      setHash('');
       return;
     }
     if (target.kind === 'customer' && state.lens === 'follow') {
       state.follow = target.id;
       refresh();
     }
-    history.replaceState(null, '', formatHash(target));
+    setHash(formatHash(target));
     showPanel(target, fly);
   };
 
