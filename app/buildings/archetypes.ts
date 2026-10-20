@@ -297,10 +297,8 @@ export function flames(s: number, seed: number) {
     g.add(p);
     return p;
   });
+  // No point light: a changing number of lights would recompile every shader during playback.
   g.traverse((c) => (c.userData.noAppearance = true));
-  const light = new THREE.PointLight('#ff7a2a', 6, 5 * s, 1.8);
-  light.position.y = 1.2 * s;
-  g.add(light);
   return {
     group: g,
     tick: (t: number) => {
@@ -311,7 +309,6 @@ export function flames(s: number, seed: number) {
         p.scale.setScalar(0.6 + k * 1.6);
         (p.material as THREE.MeshLambertMaterial).opacity = 0.65 * (1 - k);
       });
-      light.intensity = 4 + 3 * Math.abs(Math.sin(t * 9 + seed));
     },
   };
 }
