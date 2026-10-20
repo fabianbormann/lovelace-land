@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "districts": {
+    "api-providers": { "x0": 44, "columns": 3 },
+    "bridges": { "x0": 154, "columns": 3 },
+    "core": { "x0": 16, "columns": 3 },
+    "dev-tooling": { "x0": 114, "columns": 3 },
+    "indexers": { "x0": 30, "columns": 3 },
+    "onchain-languages": { "x0": 58, "columns": 3 },
+    "oracles": { "x0": 86, "columns": 3 },
+    "products": { "x0": 128, "columns": 6 },
+    "sdks": { "x0": 72, "columns": 3 },
+    "wallets": { "x0": 100, "columns": 3 }
+  },
+  "nodes": {}
+}

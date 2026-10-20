@@ -1,0 +1,61 @@
+- id: core
+  name: Node & Network
+  description: Block-producing nodes, networking and the ledger itself.
+  building: relay-tower
+  order: 0
+  color: "#8d7b68"
+- id: indexers
+  name: Chain Indexers & Followers
+  description: Tools that follow the chain and store or stream its data.
+  building: watermill
+  order: 1
+  color: "#5b8fb9"
+- id: api-providers
+  name: API Providers
+  description: Hosted or self-hosted APIs that expose chain data and submission.
+  building: market-hall
+  order: 2
+  color: "#b9855b"
+- id: onchain-languages
+  name: On-chain Languages
+  description: Languages and compilers for Plutus validators.
+  building: forge
+  order: 3
+  color: "#a64b2a"
+- id: sdks
+  name: Off-chain SDKs & Libraries
+  description: Libraries for building, signing and submitting transactions.
+  building: workshop
+  order: 4
+  color: "#c08b5c"
+- id: oracles
+  name: Oracles
+  description: Services that bring off-chain data on-chain.
+  building: lighthouse
+  order: 5
+  color: "#e0c068"
+- id: wallets
+  name: Wallets
+  description: Wallets and wallet infrastructure that hold users' keys.
+  building: vault
+  order: 6
+  color: "#7d6b91"
+- id: dev-tooling
+  name: Developer Tooling
+  description: Testing frameworks, emulators, devnets and debugging tools.
+  building: tool-shed
+  order: 7
+  color: "#6f8f72"
+- id: products
+  name: Products & dApps
+  description: Products that end customers use directly.
+  building: town
+  order: 8
+  color: "#9bbb59"
+  columns: 6
+- id: bridges
+  name: Bridges & Interop
+  description: Bridges and interoperability protocols to other chains.
+  building: bridge
+  order: 9
+  color: "#4f7c8a"
