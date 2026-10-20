@@ -1,0 +1,27 @@
+id: blockforce
+name: Blockforce
+district: products
+description: Brazilian traceability company that keeps supply-chain records
+  private on a Hyperledger Fabric network and anchors batched cryptographic
+  proofs of them on Cardano with uVerify, so auditors can check a record without
+  seeing the business data. Announced with the Cardano Foundation on 31 August
+  2026 with more than 500,000 records anchored and signed contracts for 6.5
+  million certified records through 2030.
+maintainer: Blockforce
+links: {}
+status: active
+primarySector: supply-chain
+uses:
+  - target: uverify
+    relation: service
+    confidence: reported
+    evidence:
+      - url: https://crypto.news/cardano-anchors-500000-supply-chain-records/
+        kind: article
+        retrieved: 2026-10-20
+        note: "Their published architecture uses Blockforce's uVerify system and configurable batching parameters ... The system has anchored cryptographic proofs for more than 500,000 records (1 September 2026)"
+      - url: https://www.coinspeaker.net/cardano-logs-500000-supply-chain-records-for-verifiable-proof/
+        kind: article
+        retrieved: 2026-10-20
+        note: "The Cardano Foundation's case study provides a deeper look at the architecture, including the uVerify component ... the batching approach used to combine certificates into Cardano transactions (31 August 2026)"
+lastVerified: 2026-10-20

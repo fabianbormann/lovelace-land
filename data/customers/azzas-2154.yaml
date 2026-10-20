@@ -1,0 +1,25 @@
+id: azzas-2154
+name: Azzas 2154
+type: organization
+sectors: [supply-chain]
+stage: production
+description: Brazilian fashion group that traces its leather supply chain
+  across more than 6,200 suppliers with Blockforce, with proofs of each record
+  anchored on Cardano. The first large-scale deployment of the system, which
+  the partners describe as live in production rather than a pilot.
+uses:
+  - target: blockforce
+    confidence: reported
+    evidence:
+      - url: https://en.cryptonomist.ch/2026/09/08/cardano-supply-chain-verification/
+        kind: article
+        retrieved: 2026-10-20
+        note: "Azzas 2154 is tracing its leather supply chain across more than 6,200 suppliers using the platform ... isn't a pilot or a proof-of-concept demo. It's live, in production (8 September 2026)"
+      - url: https://crypto.news/cardano-anchors-500000-supply-chain-records/
+        kind: article
+        retrieved: 2026-10-20
+        note: "It is already operating with major Brazilian fashion companies, including Azzas 2154 (1 September 2026)"
+active:
+  from: 2026-08
+  confirmed: 2026-09
+lastVerified: 2026-10-20
