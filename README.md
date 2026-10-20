@@ -9,6 +9,7 @@ A Settlers-style isometric map of the Cardano technology landscape: tools are bu
 - Validate only: `npm run check:data`
 - Tests: `npm test` (unit) and `npm run e2e` (browser)
 - Run the map locally: `npm run build:world && npm run dev`
+- Time axis data: `npm run collect:activity` (Yaci Store MCP + GitHub)
 - Weekly upkeep: `npm run check:links`, `npm run scan:manifests`
 - How to add projects and customers: `CONTRIBUTING.md`
 

@@ -68,6 +68,26 @@ Be honest about `stage`. Ended pilots stay on the map as wrecks; that history is
 - Test-only and development dependencies don't count as "uses".
 - Only `http://` and `https://` links are accepted.
 
+## The time axis: on-chain activity and dates
+
+The island has a timeline from September 2021 to today. Buildings and ships change with real activity:
+
+- Add `onchain` to a product or customer so its transactions can be counted. These are its script hashes, metadata labels or a documented issuer address, plus where you found them:
+
+  ```yaml
+  onchain:
+    scripts: [e1317b152faac13426e6a83e06ff88a4d62cce3c1634ab0a5ec13309]
+    source: https://github.com/example/contracts/blob/main/plutus.json
+  ```
+
+- Without on-chain data, add the announced period of use instead: `active: { from: 2024-03, until: 2025-01 }`.
+- `npm run collect:activity` fetches monthly transactions from the Yaci Store analytics service and monthly commits from GitHub into `data/activity/`. A weekly job refreshes them.
+
+What the timeline shows:
+- A building burns after 4 months without commits or traffic, falls into ruin after 6 and returns to grass after 12.
+- A building that is still used, but whose public repository has had no commits for 6 months, gets scaffolding: it is at risk.
+- Ships sail away when their transactions stop and come back when they resume.
+
 ## Check your change
 
 ```bash
