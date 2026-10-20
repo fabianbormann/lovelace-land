@@ -1,9 +1,11 @@
-# Cardano Island
+# Cardano Settlers
+
+**Live map:** https://fabianbormann.github.io/cardano-settlers/
 
 A Settlers-style isometric map of the Cardano technology landscape: tools are buildings,
 "uses" relationships are roads that grow with end-user traffic, end customers are ships in harbors.
 
-- Design: `docs/superpowers/specs/2026-10-20-cardano-island-design.md`
+- Design: `docs/superpowers/specs/2026-10-20-cardano-settlers-design.md`
 - Data: `data/` (CC-BY-4.0) — one YAML file per project or customer
 - Build the world: `npm run build:world` → `public/world.json`
 - Validate only: `npm run check:data`

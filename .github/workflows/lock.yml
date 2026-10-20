@@ -24,7 +24,7 @@ jobs:
       - name: Commit the updated lock
         run: |
           if git diff --quiet data/layout.lock.json; then exit 0; fi
-          git config user.name "cardano-island-bot"
+          git config user.name "cardano-settlers-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/layout.lock.json
           git commit -m "chore: place new buildings in the layout lock"
