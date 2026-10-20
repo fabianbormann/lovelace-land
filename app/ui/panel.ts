@@ -1,7 +1,9 @@
 import type { WorldEdge } from '../../pipeline/emit';
 import type { Target } from '../logic/hash';
 import type { WorldIndex } from '../logic/index';
+import { describeNodeAt, describeShipAt, formatMonth } from '../logic/describe';
 import { tierName } from '../scene/town';
+import { sparkline } from './sparkline';
 import { extLink, fmt, h, hostOf } from './dom';
 
 export interface PanelActions {
@@ -55,7 +57,21 @@ function relationSection(title: string, idx: WorldIndex, edges: WorldEdge[], sid
   return [h('h3', {}, `${title} (${edges.length})`), edges.length ? list : h('p', { class: 'eyebrow' }, empty)];
 }
 
-export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, showRumors: boolean, actions: PanelActions) {
+function history(series: number[], i: number, what: string, meta: (string | null)[], sentence: string, state: string) {
+  const total = series.reduce((a, b) => a + b, 0);
+  return h(
+    'div',
+    { class: 'history' },
+    h('h3', {}, `History · ${what}`),
+    total > 0 ? sparkline(series, i, `${what} per month`) : h('p', { class: 'eyebrow' }, `No ${what} recorded.`),
+    h('div', { class: 'history-meta' }, ...meta.filter((m): m is string => !!m).map((m) => h('span', {}, m))),
+    h('p', { class: 'state-line', 'data-state': state }, sentence),
+  );
+}
+
+export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, showRumors: boolean, actions: PanelActions, time: number) {
+  const tl = idx.world.timeline;
+  const i = Math.min(Math.max(Math.floor(time), 0), tl.months.length - 1);
   root.replaceChildren();
   const close = h('button', { type: 'button', class: 'close', 'aria-label': 'Close details' }, '✕');
   close.addEventListener('click', actions.close);
@@ -80,12 +96,24 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
       h('h2', { tabindex: -1 }, n.name),
       pills,
       h('p', {}, n.description),
+      (() => {
+        const t = tl.nodes[n.id];
+        const hasTx = t.tx.some((v) => v > 0);
+        return history(
+          hasTx ? t.tx : t.commits,
+          i,
+          hasTx ? 'on-chain transactions' : 'commits',
+          [t.lastCommit && `Last commit ${formatMonth(t.lastCommit)}`, t.lastUse && `Last used ${formatMonth(t.lastUse)}`],
+          describeNodeAt(idx.world, n.id, i),
+          t.state[i],
+        );
+      })(),
       h(
         'div',
         { class: 'facts' },
-        h('div', { class: 'fact' }, h('b', {}, fmt(n.traffic)), h('span', {}, 'customer traffic')),
+        h('div', { class: 'fact' }, h('b', {}, fmt(tl.nodes[n.id].traffic[i])), h('span', {}, `traffic in ${formatMonth(tl.months[i])}`)),
         h('div', { class: 'fact' }, h('b', {}, String(n.dependents)), h('span', {}, 'direct dependents')),
-        h('div', { class: 'fact' }, h('b', {}, tierName(n.tier)), h('span', {}, 'building size')),
+        h('div', { class: 'fact' }, h('b', {}, tierName(Number(tl.nodes[n.id].tier[i]) || n.tier)), h('span', {}, 'building size')),
       ),
       links.length ? h('div', { class: 'links' }, ...links.map(([k, url]) => extLink(url, k === 'repo' ? 'Source code' : k === 'docs' ? 'Documentation' : 'Website'))) : '',
       n.packages.length ? h('p', { class: 'eyebrow' }, 'Packages: ', ...n.packages.map((p, i) => h('span', { class: 'mono' }, `${i ? ', ' : ''}${p.ecosystem}:${p.name}`))) : '',
@@ -113,6 +141,7 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
         ...c.sectors.slice(1).map((s) => h('span', { class: 'pill' }, idx.world.sectors.find((x) => x.id === s)?.name ?? s)),
       ),
       h('p', {}, c.description),
+      history(tl.customers[c.id].tx, i, 'transactions', [], describeShipAt(idx.world, c.id, i), tl.customers[c.id].state[i]),
       c.metric
         ? h('p', {}, h('b', { class: 'mono' }, String(c.metric.value)), ` ${c.metric.label} · `, extLink(c.metric.source, hostOf(c.metric.source)), h('span', { class: 'rel-meta' }, ` · ${c.metric.retrieved}`))
         : '',

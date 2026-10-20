@@ -6,7 +6,10 @@ const fixture = serializeWorld(runPipeline('fixtures/mini', null, '2026-10-20T00
 
 async function open(page: Page, hash = '') {
   const errors: string[] = [];
-  page.on('pageerror', (e) => errors.push(e.message));
+  page.on('pageerror', (e) => {
+    errors.push(e.message);
+    console.log('pageerror', e.stack);
+  });
   await page.route('**/world.json', (route) => route.fulfill({ body: fixture, contentType: 'application/json' }));
   await page.goto(`/${hash}`);
   await expect(page.locator('#stats')).toContainText('6 buildings');
@@ -52,7 +55,7 @@ test('deep link opens a customer and following its ship sets the lens', async ({
 test('stranded lens explains what it shows', async ({ page }) => {
   await open(page);
   await page.locator('.lens[data-lens="stranded"]').click();
-  await expect(page.locator('#lens-hint')).toHaveText('1 buildings have no road to any active customer.');
+  await expect(page.locator('#lens-hint')).toHaveText('3 buildings have no road to any active customer in Oct 2026.');
 });
 
 test('list view lists every building and jumps back to the map', async ({ page }) => {
@@ -126,4 +129,18 @@ test('an unknown deep link is ignored', async ({ page }) => {
   await page.evaluate(() => (location.hash = '#node=does-not-exist'));
   await page.waitForTimeout(300);
   await expect(page.locator('#panel')).toBeHidden();
+});
+
+test('the time axis moves the island to an earlier month', async ({ page }) => {
+  await open(page, '#customer=harbor-traders');
+  await expect(page.locator('#tl-month')).toHaveText('Oct 2026');
+  await expect(page.locator('#panel .state-line')).toContainText('Away in Oct 2026');
+  const slider = page.locator('#tl-slider');
+  await slider.focus();
+  for (let i = 0; i < 3; i++) await page.keyboard.press('ArrowLeft');
+  await expect(page.locator('#tl-month')).toHaveText('Jul 2026');
+  await expect(page.locator('#panel .state-line')).toHaveText('Docked in Jul 2026 with 999 transactions through the products it uses.');
+  await expect(page.locator('#stats')).toContainText('ships docked');
+  await page.click('#tl-now');
+  await expect(page.locator('#tl-month')).toHaveText('Oct 2026');
 });

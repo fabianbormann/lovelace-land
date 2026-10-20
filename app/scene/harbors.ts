@@ -10,6 +10,8 @@ export interface PlacedShip {
   customer: WorldCustomer;
   root: THREE.Group;
   label: HTMLElement;
+  /** docked 1 = at the berth, 0 = beyond the horizon; wreck shows the wrecked hull */
+  setPresence(docked: number, wreck: boolean): void;
 }
 
 const SEAWARD = { east: [1, 0], north: [0, -1], south: [0, 1] } as const;
@@ -96,20 +98,19 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
   for (const customer of world.customers) {
     const sector = sectorById.get(customer.harbor);
     if (!sector) continue;
-    const kind = shipKind(customer.stage);
-    const spot = shipPlacement(sector.coast, sector.harbor.pos, customer.slot, customer.stage);
-    const ship = buildShip(kind, colorBySector.get(customer.harbor)!);
-    const root = new THREE.Group();
-    root.add(ship);
-    ship.scale.setScalar(kind === 'rowboat' ? 1.5 : 1.6);
-    root.position.set(spot.x, 0, spot.y);
-    root.rotation.y = spot.rotation;
-    if (kind === 'wreck') {
-      ship.rotation.x = 0.35;
-      ship.position.y = -0.3;
-    }
-    if (kind === 'horizon')
-      ship.traverse((c) => {
+    const staticKind = shipKind(customer.stage);
+    // ended customers sailed before they sank, so they carry both looks
+    const sailingKind: ShipKind = staticKind === 'wreck' ? 'galleon' : staticKind;
+    const spot = shipPlacement(sector.coast, sector.harbor.pos, customer.slot, customer.stage === 'ended' ? 'production' : customer.stage);
+    const flag = colorBySector.get(customer.harbor)!;
+    const sailing = buildShip(sailingKind, flag);
+    sailing.scale.setScalar(sailingKind === 'rowboat' ? 1.5 : 1.6);
+    const wreck = buildShip('wreck', flag);
+    wreck.scale.setScalar(1.6);
+    wreck.rotation.x = 0.35;
+    wreck.position.y = -0.3;
+    if (sailingKind === 'horizon')
+      sailing.traverse((c) => {
         if (c instanceof THREE.Mesh) {
           const m = c.material as THREE.MeshLambertMaterial;
           m.transparent = true;
@@ -117,6 +118,10 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
           m.userData.baseOpacity = 0.55;
         }
       });
+    const root = new THREE.Group();
+    root.add(sailing, wreck);
+    root.position.set(spot.x, 0, spot.y);
+    root.rotation.y = spot.rotation;
     root.userData = { kind: 'customer', id: customer.id };
     root.traverse((c) => (c.userData.pick ??= root.userData));
     const el = document.createElement('div');
@@ -126,8 +131,19 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     label.position.set(0, 3.6, 0);
     root.add(label);
     group.add(root);
-    ships.push({ customer, root, label: el });
-    bobbers.push({ obj: ship, phase: customer.slot * 1.3, base: ship.position.y, wreck: kind === 'wreck' });
+    const [ox, oy] = SEAWARD[sector.coast];
+    const berth = new THREE.Vector3(spot.x, 0, spot.y);
+    const setPresence = (docked: number, isWreck: boolean) => {
+      wreck.visible = isWreck;
+      sailing.visible = !isWreck && docked > 0.02;
+      root.visible = isWreck || docked > 0.02;
+      const away = (1 - docked) * 34;
+      root.position.set(berth.x + ox * away, -(1 - docked) * 0.5, berth.z + oy * away);
+      el.hidden = !root.visible;
+    };
+    setPresence(1, staticKind === 'wreck');
+    ships.push({ customer, root, label: el, setPresence });
+    bobbers.push({ obj: sailing, phase: customer.slot * 1.3, base: 0, wreck: false });
   }
   if (!stage.reducedMotion)
     stage.addTick((t) => {

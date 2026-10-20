@@ -212,7 +212,7 @@ const GENERATORS: Record<Building, Generator> = {
 const MOSS = new THREE.Color('#5f7046');
 
 /** Overgrown, roofless ruin for deprecated projects. */
-function ruinify(obj: THREE.Object3D, seed: number) {
+export function ruinify(obj: THREE.Object3D, seed: number) {
   const roofs: THREE.Object3D[] = [];
   obj.traverse((child) => {
     if (child.name === 'roof') roofs.push(child);
@@ -232,7 +232,7 @@ function ruinify(obj: THREE.Object3D, seed: number) {
 }
 
 let questionTexture: THREE.CanvasTexture | null = null;
-function strandedFlag(s: number) {
+export function strandedFlag(s: number) {
   if (!questionTexture && typeof document !== 'undefined') {
     const c = document.createElement('canvas');
     c.width = c.height = 64;
@@ -263,3 +263,69 @@ export function buildBuilding(archetype: Building, options: BuildingOptions): Bu
 }
 
 export { mat };
+
+/** Scaffolding poles around a footprint: construction, or one side when at risk. */
+export function scaffold(s: number, oneSide = false) {
+  const g = new THREE.Group();
+  const half = 0.75 * s;
+  const h = 1.3 * s;
+  const corners: [number, number][] = oneSide ? [[half, -half], [half, half]] : [[-half, -half], [half, -half], [-half, half], [half, half]];
+  for (const [x, z] of corners) g.add(at(cylinder(0.035, 0.035, h, P.timber, 4), x, 0, z));
+  const rails = oneSide ? [[half, 0, 0]] : [[0, -half, Math.PI / 2], [0, half, Math.PI / 2], [-half, 0, 0], [half, 0, 0]];
+  for (const level of [0.45, 0.9])
+    for (const [x, z, rot] of rails) g.add(at(box(0.04, 0.04, half * 2, P.timber), x, h * level, z, rot));
+  g.userData.noAppearance = true;
+  g.traverse((c) => (c.userData.noAppearance = true));
+  return g;
+}
+
+/** Flickering flames and dark smoke for a building that has been idle for months. */
+export function flames(s: number, seed: number) {
+  const g = new THREE.Group();
+  const fire = new THREE.MeshBasicMaterial({ color: '#ff8a2a', transparent: true, opacity: 0.9 });
+  const core = new THREE.MeshBasicMaterial({ color: '#ffd35a', transparent: true, opacity: 0.95 });
+  const tongues = Array.from({ length: 5 }, (_, i) => {
+    const a = seed + i * 1.3;
+    const m = new THREE.Mesh(new THREE.ConeGeometry(0.16 * s, 0.7 * s, 5).translate(0, 0.35 * s, 0), i % 2 ? core : fire);
+    m.position.set(Math.cos(a) * 0.35 * s, 0.6 * s, Math.sin(a) * 0.35 * s);
+    g.add(m);
+    return m;
+  });
+  const smoke = new THREE.MeshLambertMaterial({ color: '#2b2622', transparent: true, opacity: 0.6 });
+  const puffs = [0, 1, 2, 3].map(() => {
+    const p = new THREE.Mesh(new THREE.IcosahedronGeometry(0.22 * s, 0), smoke.clone());
+    g.add(p);
+    return p;
+  });
+  g.traverse((c) => (c.userData.noAppearance = true));
+  const light = new THREE.PointLight('#ff7a2a', 6, 5 * s, 1.8);
+  light.position.y = 1.2 * s;
+  g.add(light);
+  return {
+    group: g,
+    tick: (t: number) => {
+      tongues.forEach((m, i) => m.scale.set(1, 0.7 + 0.5 * Math.abs(Math.sin(t * 7 + i * 2.1 + seed)), 1));
+      puffs.forEach((p, i) => {
+        const k = (t * 0.25 + i / 4 + seed * 0.1) % 1;
+        p.position.set(Math.sin(i + seed) * 0.3 * s + k * 0.4, 0.9 * s + k * 2.4 * s, Math.cos(i) * 0.2 * s);
+        p.scale.setScalar(0.6 + k * 1.6);
+        (p.material as THREE.MeshLambertMaterial).opacity = 0.65 * (1 - k);
+      });
+      light.intensity = 4 + 3 * Math.abs(Math.sin(t * 9 + seed));
+    },
+  };
+}
+
+/** Where a building once stood: a low stone outline overgrown with grass. */
+export function plotMarker(s: number, seed: number) {
+  const g = new THREE.Group();
+  const half = 0.7 * s;
+  for (const [x, z, rot] of [[0, -half, 0], [0, half, 0], [-half, 0, Math.PI / 2], [half, 0, Math.PI / 2]] as const)
+    g.add(at(box(half * 2, 0.08, 0.12, P.stoneDark), x, 0, z, rot));
+  for (let i = 0; i < 6; i++) {
+    const a = seed * 3 + i * 1.7;
+    const r = (0.2 + ((i * 37) % 10) / 20) * half;
+    g.add(at(cone(0.09, 0.28, '#6d9b46', 4), Math.cos(a) * r, 0, Math.sin(a) * r));
+  }
+  return g;
+}

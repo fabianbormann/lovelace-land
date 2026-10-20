@@ -3,7 +3,9 @@ import type { World } from '../pipeline/emit';
 import { formatHash, parseHash, type Target } from './logic/hash';
 import { indexWorld, type WorldIndex } from './logic/index';
 import { computeAppearance, defaultViewState, type Lens, type ViewState } from './logic/lenses';
+import { formatMonth } from './logic/describe';
 import { search } from './logic/search';
+import { cursorAt, flagsAt, statsAt } from './logic/time';
 import { createIsland, type IslandMap } from './scene/island';
 import { SECTOR_COLORS } from './scene/town';
 import { h } from './ui/dom';
@@ -79,13 +81,11 @@ function start(world: World) {
   const hasGL = island !== null;
   $('#app').classList.toggle('no-gl', !hasGL);
 
-  $('#stats').textContent = [
-    `${world.nodes.length} buildings`,
-    `${world.customers.length} ships`,
-    `${world.edges.filter((e) => e.confidence !== 'inferred').length} roads`,
-    `${world.nodes.filter((n) => n.stranded).length} stranded`,
-    `${world.nodes.filter((n) => n.hiddenHighway).length} hidden highways`,
-  ].join(' · ');
+  // Time axis: T is a continuous month position; everything shown is a function of it.
+  const tl = world.timeline;
+  const lastMonth = tl.months.length - 1;
+  let T = lastMonth;
+  state.time = lastMonth;
 
   let panelRumors = state.showRumors;
   const refresh = () => {
@@ -100,7 +100,7 @@ function start(world: World) {
     const followed = state.follow ? idx.customer.get(state.follow)?.name : null;
     const text =
       state.lens === 'stranded'
-        ? `${world.nodes.filter((n) => n.stranded).length} buildings have no road to any active customer.`
+        ? `${flagsAt(world, state.time ?? world.timeline.months.length - 1).stranded.size} buildings have no road to any active customer in ${formatMonth(world.timeline.months[state.time ?? world.timeline.months.length - 1])}.`
         : state.lens === 'highways'
           ? 'Glowing: buildings that carry heavy customer traffic but are named directly by few projects.'
           : state.lens === 'follow'
@@ -125,7 +125,7 @@ function start(world: World) {
         refresh();
       },
       close: () => select(null),
-    });
+    }, T);
     panel.hidden = false;
     island?.setSelected(target);
     if (opts.fly ?? true) island?.focus(target, { liftForBottomPanel: matchMedia('(max-width: 720px)').matches });
@@ -221,6 +221,96 @@ function start(world: World) {
 
   setupSearch(idx, (t) => select(t, { focus: true }));
 
+  // Timeline bar
+  const slider = $<HTMLInputElement>('#tl-slider');
+  const monthLabel = $('#tl-month');
+  const playBtn = $('#tl-play');
+  const speedBtn = $('#tl-speed');
+  const spark = $<HTMLCanvasElement>('#tl-spark');
+  slider.max = String(lastMonth);
+  let playing = false;
+  let speed = 1;
+  const setTime = (next: number) => {
+    T = Math.min(Math.max(next, 0), lastMonth);
+    const { index, month } = cursorAt(tl.months, T);
+    slider.value = String(T);
+    slider.setAttribute('aria-valuetext', formatMonth(month));
+    monthLabel.textContent = formatMonth(month);
+    island?.setTime(T);
+    if (state.time !== index) {
+      state.time = index;
+      const s = statsAt(world, index);
+      $('#stats').textContent = `${s.buildings} buildings · ${s.ships} ships docked · ${s.stranded} stranded · ${Math.round(s.tx).toLocaleString('en')} tx`;
+      refresh();
+      if (selected) showPanel(selected, { fly: false });
+    }
+  };
+  const setPlaying = (on: boolean) => {
+    playing = on;
+    playBtn.textContent = on ? '❚❚' : '▶';
+    playBtn.setAttribute('aria-label', on ? 'Pause history' : 'Play history');
+    if (on && T >= lastMonth) setTime(0);
+    let prev = performance.now();
+    const step = (now: number) => {
+      if (!playing) return;
+      const dt = Math.min((now - prev) / 1000, 0.1);
+      prev = now;
+      setTime(T + dt * speed);
+      if (T >= lastMonth) return setPlaying(false);
+      requestAnimationFrame(step);
+    };
+    if (on) requestAnimationFrame(step);
+  };
+  playBtn.addEventListener('click', () => setPlaying(!playing));
+  speedBtn.addEventListener('click', () => {
+    speed = speed === 1 ? 4 : 1;
+    speedBtn.textContent = `${speed}×`;
+  });
+  $('#tl-now').addEventListener('click', () => {
+    setPlaying(false);
+    setTime(lastMonth);
+  });
+  slider.addEventListener('input', () => {
+    setPlaying(false);
+    setTime(Number(slider.value));
+  });
+  slider.addEventListener('keydown', (e) => {
+    const steps: Record<string, number> = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1, PageDown: -12, PageUp: 12 };
+    if (e.key in steps) {
+      e.preventDefault();
+      setPlaying(false);
+      setTime(Math.round(T) + steps[e.key]);
+    } else if (e.key === 'Home' || e.key === 'End') {
+      e.preventDefault();
+      setTime(e.key === 'Home' ? 0 : lastMonth);
+    }
+  });
+  const drawSpark = () => {
+    const dpr = Math.min(devicePixelRatio, 2);
+    spark.width = spark.clientWidth * dpr;
+    spark.height = spark.clientHeight * dpr;
+    const ctx = spark.getContext('2d');
+    if (!ctx) return;
+    const css = getComputedStyle(document.documentElement);
+    const values = tl.totals.map((v) => Math.log10(1 + v));
+    const max = Math.max(...values, 1e-9);
+    const w = spark.width;
+    const h = spark.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    values.forEach((v, i) => ctx.lineTo((i / Math.max(1, values.length - 1)) * w, h - (v / max) * (h - 6 * dpr) - 2 * dpr));
+    ctx.lineTo(w, h);
+    ctx.closePath();
+    ctx.fillStyle = css.getPropertyValue('--brass-soft').trim() || '#f1dfb4';
+    ctx.fill();
+    ctx.strokeStyle = css.getPropertyValue('--ink-soft').trim() || '#476377';
+    ctx.lineWidth = 1.2 * dpr;
+    ctx.stroke();
+  };
+  new ResizeObserver(drawSpark).observe(spark);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawSpark);
+
   addEventListener('keydown', (e) => {
     if ((e.target as HTMLElement).closest('input, textarea')) return;
     if (e.key === 'Escape') {
@@ -283,7 +373,8 @@ function start(world: World) {
     $('.legend').hidden = true;
   }
 
-  refresh();
+  state.time = -1; // force the first setTime to fill stats and appearance
+  setTime(lastMonth);
   const initial = parseHash(location.hash);
   if (initial && exists(initial)) select(initial);
   addEventListener('hashchange', () => {

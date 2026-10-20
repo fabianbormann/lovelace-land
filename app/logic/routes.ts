@@ -46,14 +46,23 @@ export function settlerRoutes(world: World, idx: WorldIndex, customerId: string)
   return routes;
 }
 
-/** Position of settler i of n on a route after `seconds`; a pure function of its inputs. */
-export function settlerPosition(route: Pos[], i: number, n: number, seconds: number): Pos {
+/** Tiles walked along the route by settler i of n after `seconds` (wraps back to the harbor). */
+export function settlerDistance(route: Pos[], i: number, n: number, seconds: number): number {
+  const len = route.length - 1;
+  return len <= 0 ? 0 : ((i / n) * len + seconds * SETTLER_SPEED) % len;
+}
+
+export function pointAt(route: Pos[], d: number): Pos {
   const len = route.length - 1;
   if (len <= 0) return [route[0][0], route[0][1]];
-  const d = ((i / n) * len + seconds * SETTLER_SPEED) % len;
-  const k = Math.floor(d);
+  const k = Math.min(Math.floor(d), len - 1);
   const f = d - k;
   const [ax, ay] = route[k];
   const [bx, by] = route[k + 1];
   return [ax + (bx - ax) * f, ay + (by - ay) * f];
+}
+
+/** Position of settler i of n on a route after `seconds`; a pure function of its inputs. */
+export function settlerPosition(route: Pos[], i: number, n: number, seconds: number): Pos {
+  return pointAt(route, settlerDistance(route, i, n, seconds));
 }

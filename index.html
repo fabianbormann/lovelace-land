@@ -85,7 +85,17 @@
         <button type="button" id="rotate-right" class="round-btn" aria-label="Rotate right (E)">⟳</button>
       </div>
 
-      <p id="stats" class="stats"></p>
+      <section class="timeline" aria-label="Time">
+        <button type="button" id="tl-play" class="round-btn" aria-label="Play history">▶</button>
+        <div class="tl-track">
+          <canvas id="tl-spark" aria-hidden="true"></canvas>
+          <input id="tl-slider" type="range" min="0" max="0" step="0.01" value="0" aria-label="Month on the time axis" />
+        </div>
+        <output id="tl-month" for="tl-slider" class="tl-month"></output>
+        <button type="button" id="tl-speed" class="chip-btn" aria-label="Playback speed">1×</button>
+        <button type="button" id="tl-now" class="chip-btn">Now</button>
+        <p id="stats" class="stats"></p>
+      </section>
 
       <section id="listview" class="listview" hidden aria-label="List view">
         <div class="listview-head">

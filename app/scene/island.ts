@@ -4,6 +4,7 @@ import type { Target } from '../logic/hash';
 import { tileKey, type WorldIndex } from '../logic/index';
 import type { Appearance } from '../logic/lenses';
 import { buildTerrain, MOUNTAIN_PEAK } from '../logic/terrain';
+import { cursorAt, edgeTrafficAt, flagsAt, shipPresence, surfaceAt } from '../logic/time';
 import { applyLook } from './appearance';
 import { buildHarbors } from './harbors';
 import { buildCardanoMark, buildRafts, buildSignposts, buildTerrainMesh, buildWater, makeSurface } from './landscape';
@@ -27,6 +28,8 @@ export interface IslandMap {
   onHover(cb: (pick: Pick | null) => void): void;
   onSelect(cb: (pick: Pick | null) => void): void;
   setSelected(target: Target | null): void;
+  /** show the island at time T (months since the first month, fractional) */
+  setTime(T: number): void;
 }
 
 /** Assemble the whole island scene from world.json and wire pointer picking. */
@@ -38,7 +41,8 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   const ground = buildTerrainMesh(world, terrain);
   stage.scene.add(ground);
   stage.scene.add(buildWater(terrain, stage));
-  stage.scene.add(buildCardanoMark(stage, surfaceY));
+  const mark = buildCardanoMark(stage, surfaceY);
+  stage.scene.add(mark);
   stage.scene.add(buildSignposts(world, surfaceY));
   stage.scene.add(buildRafts(terrain, stage));
   const roads = buildRoads(world, surfaceY);
@@ -46,7 +50,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   const town = buildTown(world, stage, surfaceY);
   const harbors = buildHarbors(world, stage, surfaceY);
   stage.scene.add(harbors.group);
-  const settlers = buildSettlers(world, stage, surfaceY);
+  const settlers = buildSettlers(world, idx, stage, surfaceY);
   stage.scene.add(settlers.mesh);
   addDistantIslands(world, stage);
 
@@ -78,12 +82,12 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
     const key = `${kind}:${id}`;
     if (kind === 'node') {
       const b = buildingById.get(id);
-      if (b) applyLook(b.root, current.nodes.get(id)!, key === hovered || key === selected);
+      if (b) b.applyLook(current.nodes.get(id)!, key === hovered || key === selected);
     } else {
       const s = shipById.get(id);
       if (!s) return;
       const look = current.customers.get(id)!;
-      applyLook(s.root, look, key === hovered || key === selected);
+      applyShipLook(s.root, look, key === hovered || key === selected);
       s.label.classList.toggle('is-shown', key === hovered || key === selected || look.glow);
     }
   };
@@ -151,6 +155,40 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
     selectCb(pickAt(e.clientX, e.clientY));
   });
 
+  // The Cardano mark glows brighter the more activity reaches it.
+  const markLight = mark.children.find((c): c is THREE.PointLight => c instanceof THREE.PointLight);
+  stage.addTick((t) => {
+    if (markLight) markLight.intensity = 18 + 60 * settlers.arriving * (0.85 + 0.15 * Math.sin(t * 3));
+  });
+
+  // Time axis
+  const tl = world.timeline;
+  let T = tl.months.length - 1;
+  let surfaces: Map<string, number> | null = null;
+  const tileEdges = [...idx.edgesAtTile].map(([key, edges]) => [key, edges.map((e) => world.edges.indexOf(e))] as const);
+  const computeSurfaces = () => {
+    const map = new Map<string, number>();
+    for (const [key, edgeIdx] of tileEdges) map.set(key, surfaceAt(edgeIdx.reduce((sum, e) => sum + edgeTrafficAt(tl, e, T), 0)));
+    return map;
+  };
+  let shownMonth = -1;
+  const applyTime = () => {
+    const { index } = cursorAt(tl.months, T);
+    if (index !== shownMonth) {
+      shownMonth = index;
+      const { stranded } = flagsAt(world, index);
+      for (const b of town) b.setState(tl.nodes[b.node.id].state[index], Number(tl.nodes[b.node.id].tier[index]), stranded.has(b.node.id));
+    }
+    for (const s of harbors.ships) {
+      const p = shipPresence(tl, s.customer.id, T);
+      s.setPresence(p.docked, p.wreck);
+    }
+    settlers.setTime(T);
+    surfaces = computeSurfaces();
+    if (current) roads.apply(current, surfaces);
+  };
+  applyTime();
+
   stage.setColors(DAY);
   stage.start();
 
@@ -173,7 +211,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
     stage,
     apply(appearance) {
       current = appearance;
-      roads.apply(appearance);
+      roads.apply(appearance, surfaces);
       for (const b of town) {
         const look = appearance.nodes.get(b.node.id)!;
         refreshObject('node', b.node.id);
@@ -181,7 +219,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
         b.label.classList.toggle('is-glow', look.glow);
       }
       for (const s of harbors.ships) refreshObject('customer', s.customer.id);
-      settlers.setVisibleEdges(new Set([...appearance.edges].filter(([, l]) => !l.hidden && !l.dim).map(([id]) => id)));
+      settlers.setVisibleCustomers(new Set([...appearance.customers].filter(([, l]) => !l.hidden && !l.dim).map(([id]) => id)));
     },
     focus(target, opts = {}) {
       const p = positionOf(target);
@@ -191,12 +229,20 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
     setNight: (night) => stage.setColors(night ? NIGHT : DAY),
     onHover: (cb) => (hoverCb = cb),
     onSelect: (cb) => (selectCb = cb),
+    setTime(next) {
+      T = next;
+      applyTime();
+    },
     setSelected(target) {
       const prev = selected;
       selected = target && (target.kind === 'node' || target.kind === 'customer') ? `${target.kind}:${target.id}` : null;
       for (const key of [prev, selected]) if (key) refreshObject(key.split(':')[0] as 'node', key.slice(key.indexOf(':') + 1));
     },
   };
+}
+
+function applyShipLook(root: THREE.Object3D, look: Appearance['customers'] extends Map<string, infer L> ? L : never, hovered: boolean) {
+  applyLook(root, { ...look, hidden: false }, hovered);
 }
 
 function initialZoom(world: World, host: HTMLElement) {
