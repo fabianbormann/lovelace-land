@@ -1,0 +1,18 @@
+id: cardano-serialization-lib
+name: "Cardano Serialization Lib"
+district: sdks
+description: "Rust library (compiled to WebAssembly for JS) for serialising and deserialising Cardano ledger data structures and building transactions. It is the long-standing low-level base for many wallets and SDKs."
+maintainer: "EMURGO"
+links:
+  repo: https://github.com/Emurgo/cardano-serialization-lib
+packages:
+  - ecosystem: cargo
+    name: "cardano-serialization-lib"
+  - ecosystem: npm
+    name: "@emurgo/cardano-serialization-lib-nodejs"
+  - ecosystem: npm
+    name: "@emurgo/cardano-serialization-lib-browser"
+status: active
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

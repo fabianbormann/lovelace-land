@@ -1,0 +1,15 @@
+id: coinstore
+name: Coinstore
+type: organization
+sectors: [payments]
+stage: production
+description: Centralized crypto exchange that listed the Anzens USDA stablecoin against USDT with no trading fees.
+uses:
+  - target: usda
+    confidence: verified
+    evidence:
+      - url: https://forum.cardano.org/t/usda-on-cardano-our-journey-our-commitments-and-what-comes-next/149109
+        kind: announcement
+        retrieved: 2026-10-20
+        note: 'Anzens update, 4 Sep 2025: "Launched $USDA on Coinstore ... against USDT Tether with no trading fees"'
+lastVerified: 2026-10-20

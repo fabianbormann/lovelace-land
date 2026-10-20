@@ -1,0 +1,22 @@
+id: undp-tadamon
+name: UNDP Tadamon Accelerator
+type: organization
+sectors: [identity, proof-verification]
+stage: pilot
+description: UNDP's Tadamon programme for civil society organizations ran a proof of concept in which the Tadamon team approves a CSO, signs its certificate with an identity wallet and anchors it on Cardano, giving CSOs a portable verifiable credential.
+uses:
+  - target: veridian
+    confidence: verified
+    evidence:
+      - url: https://cardanofoundation.org/case-studies/undp-tadamon
+        kind: case-study
+        retrieved: 2026-10-20
+        note: "the program sought to develop a scalable and replicable solution by leveraging Veridian ... a Proof of Concept (PoC) ... for CSOs participating in the Tadamon Accelerator for Food Security"
+  - target: uverify
+    confidence: verified
+    evidence:
+      - url: https://github.com/UVerify-io/uverify-additional-templates/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "tadamon - CSO certificate template for the UNDP Tadamon programme"
+lastVerified: 2026-10-20

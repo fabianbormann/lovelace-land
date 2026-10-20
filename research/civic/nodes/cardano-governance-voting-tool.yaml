@@ -1,0 +1,20 @@
+id: cardano-governance-voting-tool
+name: Cardano Governance Voting Tool
+district: products
+description: Cardano Foundation web tool (voting.cardanofoundation.org) that helps SPOs, DReps and Constitutional Committee members build votes from key or script credentials, write CIP-100 rationales, pin them to IPFS and produce PDFs. Elm frontend with a Python backend.
+maintainer: Cardano Foundation
+links:
+  website: https://voting.cardanofoundation.org/
+  repo: https://github.com/cardano-foundation/cardano-governance-voting-tool
+status: active
+primarySector: governance
+uses:
+  - target: elm-cardano
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cardano-governance-voting-tool/blob/production/frontend/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"elm-cardano": "^0.8.0"; build script "elm-cardano make src/Main.elm"'
+lastVerified: 2026-10-20

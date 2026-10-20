@@ -1,0 +1,9 @@
+id: plutigo
+name: plutigo
+district: onchain-languages
+description: Untyped Plutus Core virtual machine written in Go.
+maintainer: Blink Labs
+links:
+  repo: https://github.com/blinklabs-io/plutigo
+status: active
+lastVerified: 2026-10-20

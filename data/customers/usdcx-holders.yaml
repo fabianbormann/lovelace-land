@@ -1,0 +1,20 @@
+id: usdcx-holders
+name: USDCx holders
+type: segment
+sectors: [payments]
+stage: production
+description: Users holding and moving Circle's USDC-backed USDCx on Cardano.
+metric:
+  label: USDC circulating on Cardano (bridged via Circle, i.e. USDCx)
+  value: "$44.0M"
+  source: https://stablecoins.llama.fi/stablecoin/2
+  retrieved: 2026-10-20
+uses:
+  - target: usdcx
+    confidence: verified
+    evidence:
+      - url: https://stablecoins.llama.fi/stablecoin/2
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to usdcx'
+lastVerified: 2026-10-20

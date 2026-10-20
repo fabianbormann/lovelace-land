@@ -1,0 +1,52 @@
+id: nmkr
+name: NMKR
+district: products
+description: NFT and token minting platform (NMKR Studio, API, pay-in links) used by creators, brands and projects to mint and sell Cardano NFTs; reported more than 500,000 NFTs minted by January 2022. NMKR Studio is open source (C#/.NET).
+maintainer: NMKR
+links:
+  website: https://www.nmkr.io/
+  repo: https://github.com/nftmakerio/NMKR-Studio
+status: active
+primarySector: nfts-gaming-media
+uses:
+  - target: cardanosharp
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/nftmakerio/NMKR-Studio/blob/main/NMKR.Shared/NMKR.Shared.csproj
+        kind: manifest
+        retrieved: 2026-10-20
+        note: PackageReference CardanoSharp.Wallet 5.1.0
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/nftmakerio/NMKR-Studio/blob/main/NMKR.Shared/NMKR.Shared.csproj
+        kind: manifest
+        retrieved: 2026-10-20
+        note: PackageReference Blockfrost.Api 1.0.1; Readme lists a Blockfrost account as a required service
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/nftmakerio/NMKR-Studio/blob/main/Readme.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"Koios Account - Cardano blockchain API service" listed under Required Services; NMKR.Shared/Classes/Koios/*'
+  - target: maestro
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/nftmakerio/NMKR-Studio/blob/main/Readme.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"Maestro Account - Cardano blockchain infrastructure" listed under Required Services; NMKR.Shared/Functions/Meastro/MaestroFunctions.cs'
+  - target: cardano-cli
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/nftmakerio/NMKR-Studio/blob/main/Readme.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"NMKR.CardanoCliApi - A separate API that encapsulates the Cardano CLI functionality"'
+lastVerified: 2026-10-20

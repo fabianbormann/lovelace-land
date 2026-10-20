@@ -1,0 +1,36 @@
+id: liqwid
+name: Liqwid
+district: products
+description: Non-custodial lending and borrowing protocol on Cardano with pooled markets (ADA, stablecoins and native tokens); the largest Cardano lending protocol by TVL.
+maintainer: Liqwid Labs
+links:
+  website: https://www.liqwid.finance
+  repo: https://github.com/liqwid-labs
+status: active
+primarySector: defi
+uses:
+  - target: plutarch
+    relation: language
+    confidence: inferred
+    evidence:
+      - url: https://github.com/liqwid-labs/liqwid-libs
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'Liqwid Labs maintains "a monorepo for Liqwid Labs plutarch libraries" (liqwid-plutarch-extra etc.); the Liqwid protocol contracts themselves are closed source'
+  - target: pyth
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/liqwid-labs/liqwid-pyth-oracle
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"Repository holding the on-chain and sample off-chain code for Liqwid on-chain Pyth oracle support"'
+  - target: charli3
+    relation: service
+    confidence: reported
+    evidence:
+      - url: https://crypto.news/cardanos-defi-landscape-advances-with-launch-of-its-first-oracle-integrator/
+        kind: article
+        retrieved: 2026-10-20
+        note: '"Liqwid, a top DeFi project on Cardano, has integrated Charli3" (April 2023; current status unknown)'
+lastVerified: 2026-10-20

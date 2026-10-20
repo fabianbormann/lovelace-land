@@ -1,0 +1,15 @@
+id: pallas
+name: "Pallas"
+district: sdks
+description: "Pallas is TxPipe's collection of Rust-native building blocks for Cardano: CBOR codecs, ledger primitives, crypto, addresses, Ouroboros mini-protocols, tx building and validation. It sits underneath Aiken, Dolos, Oura and several SDKs."
+maintainer: "TxPipe"
+links:
+  repo: https://github.com/txpipe/pallas
+  docs: https://docs.rs/pallas
+packages:
+  - ecosystem: cargo
+    name: "pallas"
+status: active
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

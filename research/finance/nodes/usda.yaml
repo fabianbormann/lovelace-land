@@ -1,0 +1,11 @@
+id: usda
+name: USDA (Anzens)
+district: products
+description: USD-backed stablecoin on Cardano issued by Anzens (originally an EMURGO initiative), with fiat minting and burning in 14 US states and 48 countries and off-ramp via Encryptus.
+maintainer: Anzens
+links:
+  website: https://anzens.com
+status: active
+primarySector: payments
+uses: []
+lastVerified: 2026-10-20

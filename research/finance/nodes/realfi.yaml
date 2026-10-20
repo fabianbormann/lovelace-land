@@ -1,0 +1,20 @@
+id: realfi
+name: RealFi
+district: products
+description: Cardano stablecoin protocol connecting on-chain capital to real-world credit; USDrf is a reserve-backed digital dollar and sUSDrf a staked junior token earning returns from private credit, floating-rate bonds and T-bills. Mainnet since 1 Oct 2026.
+maintainer: RealFi
+links:
+  website: https://realfi.co
+  docs: https://docs.realfi.co
+status: active
+primarySector: rwa
+uses:
+  - target: usdcx
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://docs.realfi.co/getting-started/launch-functionality.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'Retail users can "Acquire USDrf via in-app swap (or via partner platforms) with USDCx"'
+lastVerified: 2026-10-20

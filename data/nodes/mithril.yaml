@@ -1,0 +1,33 @@
+id: mithril
+name: "Mithril"
+district: core
+description: "A stake-based threshold multi-signature protocol and network that produces certified Cardano chain snapshots, so that nodes and clients can bootstrap quickly and securely."
+maintainer: "Intersect (IntersectMBO)"
+links:
+  website: https://mithril.network
+  repo: https://github.com/IntersectMBO/mithril
+packages:
+  - ecosystem: cargo
+    name: "mithril-client"
+  - ecosystem: npm
+    name: "@mithril-dev/mithril-client-wasm"
+status: active
+primarySector: null
+uses:
+  - target: cardano-node
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/mithril/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Mithril cardano-node-chain: mechanisms to read and interact with the Cardano chain through a Cardano node, used by Mithril network nodes"
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/mithril/blob/main/internal/cardano-node/mithril-cardano-node-chain/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "pallas-network, pallas-primitives, pallas-traverse = 1.4.0"
+lastVerified: 2026-10-20

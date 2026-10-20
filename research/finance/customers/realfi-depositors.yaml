@@ -1,0 +1,20 @@
+id: realfi-depositors
+name: RealFi USDrf and sUSDrf holders
+type: segment
+sectors: [rwa]
+stage: production
+description: Non-US/EU/UK users holding USDrf or staking it as sUSDrf to earn returns from a real-world credit portfolio.
+metric:
+  label: USDrf circulating supply
+  value: "$5.39M"
+  source: https://stablecoins.llama.fi/stablecoins?includePrices=true
+  retrieved: 2026-10-20
+uses:
+  - target: realfi
+    confidence: verified
+    evidence:
+      - url: https://stablecoins.llama.fi/stablecoins?includePrices=true
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to realfi'
+lastVerified: 2026-10-20

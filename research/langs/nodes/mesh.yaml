@@ -1,0 +1,109 @@
+id: mesh
+name: "Mesh SDK"
+district: sdks
+description: "TypeScript SDK for Cardano dApps (transaction builder, wallets, React components, providers). Its core is assembled from the Cardano JS SDK, Harmonic Labs UPLC libraries, Scalus and, for the CSL path, SIDAN Lab's Whisky."
+maintainer: "MeshJS"
+links:
+  website: https://meshjs.dev
+  repo: https://github.com/MeshJS/mesh
+packages:
+  - ecosystem: npm
+    name: "@meshsdk/core"
+  - ecosystem: npm
+    name: "@meshsdk/core-cst"
+  - ecosystem: npm
+    name: "@meshsdk/core-csl"
+  - ecosystem: npm
+    name: "@meshsdk/provider"
+status: active
+primarySector: null
+uses:
+  - target: cardano-js-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/mesh/blob/main/packages/mesh-core-cst/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@meshsdk/core-cst depends on @cardano-sdk/core, @cardano-sdk/crypto, @cardano-sdk/input-selection, @cardano-sdk/util"
+  - target: plu-ts
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/mesh/blob/main/packages/mesh-core-cst/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@meshsdk/core-cst depends on @harmoniclabs/uplc, @harmoniclabs/plutus-data, @harmoniclabs/cbor (plu-ts component libraries)"
+  - target: scalus
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/mesh/blob/main/packages/mesh-core-cst/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@meshsdk/core-cst depends on \"scalus\": \"^1.3.0\""
+  - target: whisky
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/mesh/blob/main/packages/mesh-core-csl/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@meshsdk/core-csl depends on @sidan-lab/whisky-js-nodejs / -browser"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/providers/blob/main/src/blockfrost.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "BlockfrostProvider in @meshsdk/provider"
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/providers/blob/main/src/koios.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "KoiosProvider in @meshsdk/provider"
+  - target: maestro
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/providers/blob/main/src/maestro.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "MaestroProvider in @meshsdk/provider"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/providers/blob/main/src/ogmios.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "OgmiosProvider in @meshsdk/provider"
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/providers/blob/main/src/kupo.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "KupoProvider in @meshsdk/provider"
+  - target: yaci-devkit
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/providers/blob/main/src/yaci.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "YaciProvider docstring: 'Yaci DevKit is a development tool...'"
+  - target: hydra
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/MeshJS/hydra/blob/main/src/hydra-provider.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "HydraProvider in @meshsdk/hydra"
+lastVerified: 2026-10-20

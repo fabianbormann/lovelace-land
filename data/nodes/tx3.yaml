@@ -1,0 +1,9 @@
+id: tx3
+name: Tx3
+district: dev-tooling
+description: A language for describing and visualising transactions in UTxO-based blockchains, with SDKs to run them.
+maintainer: TxPipe
+links:
+  repo: https://github.com/tx3-lang/tx3
+status: active
+lastVerified: 2026-10-20

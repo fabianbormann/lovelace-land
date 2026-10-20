@@ -1,0 +1,81 @@
+id: lucid-evolution
+name: "Lucid Evolution"
+district: sdks
+description: "Lucid Evolution is Anastasia Labs' maintained successor to Lucid: an Effect-based TypeScript transaction builder and off-chain framework built on a vendored Cardano Multiplatform Lib and Aiken's UPLC evaluator."
+maintainer: "Anastasia Labs"
+links:
+  website: https://anastasia-labs.github.io/lucid-evolution
+  repo: https://github.com/Anastasia-Labs/lucid-evolution
+packages:
+  - ecosystem: npm
+    name: "@lucid-evolution/lucid"
+  - ecosystem: npm
+    name: "@lucid-evolution/provider"
+status: active
+primarySector: null
+uses:
+  - target: cardano-multiplatform-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/cml/rust/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "'cardano-multiplatform-lib, vendored from https://github.com/Anastasia-Labs/cardano-multiplatform-lib (develop)' as @lucid-evolution/cml"
+  - target: aiken
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/uplc/rust/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "uplc = { git = colll78/aiken fork } (Aiken UPLC crate) for script evaluation"
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/uplc/rust/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "pallas-crypto = \"0.35.0\""
+  - target: plu-ts
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/utils/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@lucid-evolution/utils depends on @harmoniclabs/plutus-data and @harmoniclabs/uplc (plu-ts component libraries)"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/provider/src/blockfrost.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Blockfrost provider in @lucid-evolution/provider"
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/provider/src/koios.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Koios provider in @lucid-evolution/provider"
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/provider/src/kupmios.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Kupmios (Kupo + Ogmios) provider"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Anastasia-Labs/lucid-evolution/blob/main/packages/provider/src/kupmios.ts
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Kupmios (Kupo + Ogmios) provider"
+lastVerified: 2026-10-20

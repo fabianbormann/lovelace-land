@@ -1,0 +1,15 @@
+id: veralidity
+name: Veralidity
+type: organization
+sectors: [payments]
+stage: announced
+description: Adobe Commerce (Magento) agency building a Cardano checkout gateway so e-commerce merchants can accept USDM at checkout; no named live merchants found.
+uses:
+  - target: usdm
+    confidence: verified
+    evidence:
+      - url: https://moneta.global/ecosystem/partners/veralidity/
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"USDM as the stable crypto payment option in Veralidity''s Cardano-based P2B gateway for Adobe Magento merchants"'
+lastVerified: 2026-10-20

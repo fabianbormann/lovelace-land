@@ -1,0 +1,27 @@
+id: cardano-rosetta
+name: "Cardano Rosetta"
+district: api-providers
+description: "The original TypeScript implementation of the Rosetta (now Mesh) API for Cardano, running on cardano-db-sync. No commits since January 2023. The Cardano Foundation's cardano-rosetta-java is the maintained implementation."
+maintainer: "Input Output (input-output-hk)"
+links:
+  repo: https://github.com/input-output-hk/cardano-rosetta
+status: deprecated
+primarySector: null
+uses:
+  - target: cardano-db-sync
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/cardano-rosetta
+        kind: docs
+        retrieved: 2026-10-20
+        note: "be required to refresh the state managed by cardano-db-sync"
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/input-output-hk/cardano-rosetta
+        kind: docs
+        retrieved: 2026-10-20
+        note: "the internal instance of cardano-node must be synced past the snapshot point"
+lastVerified: 2026-10-20

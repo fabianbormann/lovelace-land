@@ -1,0 +1,36 @@
+id: blockfrost
+name: "Blockfrost"
+district: api-providers
+description: "A hosted Cardano API-as-a-service (REST, IPFS) with official SDKs in many languages. Its backend is open source as blockfrost-backend-ryo and reads chain data from cardano-db-sync."
+maintainer: "Blockfrost.io"
+links:
+  website: https://blockfrost.io
+  repo: https://github.com/blockfrost/blockfrost-backend-ryo
+  docs: https://docs.blockfrost.io
+packages:
+  - ecosystem: npm
+    name: "@blockfrost/blockfrost-js"
+  - ecosystem: pypi
+    name: "blockfrost-python"
+  - ecosystem: cargo
+    name: "blockfrost"
+status: active
+primarySector: null
+uses:
+  - target: cardano-db-sync
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/blockfrost/blockfrost-backend-ryo
+        kind: docs
+        retrieved: 2026-10-20
+        note: "Blockchain data are queried from cardano-db-sync"
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/blockfrost/blockfrost-backend-ryo
+        kind: docs
+        retrieved: 2026-10-20
+        note: "blockfrost-backend, cardano-node, cardano-db-sync and postgresql on the same machine"
+lastVerified: 2026-10-20

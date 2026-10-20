@@ -1,0 +1,46 @@
+id: chrysalis
+name: "Chrysalis"
+district: sdks
+description: "Chrysalis is a native .NET toolkit for Cardano covering CBOR serialization, transaction building, wallets, Ouroboros mini-protocols and a pure C# UPLC interpreter."
+maintainer: "SAIB Inc"
+links:
+  repo: https://github.com/SAIB-Inc/Chrysalis
+  docs: https://docs.saib.dev
+packages:
+  - ecosystem: nuget
+    name: "Chrysalis"
+status: active
+primarySector: null
+uses:
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/SAIB-Inc/Chrysalis/blob/main/src/Chrysalis.Tx/Providers/Blockfrost.cs
+        kind: docs
+        retrieved: 2026-10-20
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/SAIB-Inc/Chrysalis/blob/main/src/Chrysalis.Tx/Providers/Kupmios.cs
+        kind: docs
+        retrieved: 2026-10-20
+        note: "'Kupo+Ogmios (Kupmios) implementation of the Cardano data provider'"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/SAIB-Inc/Chrysalis/blob/main/src/Chrysalis.Tx/Providers/Kupmios.cs
+        kind: docs
+        retrieved: 2026-10-20
+        note: "'Kupo+Ogmios (Kupmios) implementation of the Cardano data provider'"
+  - target: cardano-node
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/SAIB-Inc/Chrysalis/blob/main/src/Chrysalis.Tx/Providers/Ouroboros.cs
+        kind: docs
+        retrieved: 2026-10-20
+        note: "provider over the Cardano node Unix socket (node-to-client)"
+lastVerified: 2026-10-20

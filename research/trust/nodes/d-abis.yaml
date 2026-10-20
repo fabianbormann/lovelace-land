@@ -1,0 +1,42 @@
+id: d-abis
+name: d'ABIS (Decentralized Automated Ballistic Identification System)
+district: products
+description: Cardano Foundation proof of concept that matches ballistic evidence scans (x3p files) and anchors records to Cardano through the Foundation's "metabus" transaction pipeline, so forensic data can be shared between agencies. Listed in the Foundation's 2024 Activity Report.
+maintainer: Cardano Foundation
+links:
+  repo: https://github.com/cardano-foundation/cf-abis-poc
+status: maintenance
+primarySector: proof-verification
+uses:
+  - target: cardano-client-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-abis-poc/blob/develop/metabus/cardano-metabus-txsubmitter/pom.xml
+        kind: manifest
+        retrieved: 2026-10-20
+  - target: yaci-store
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-abis-poc/blob/develop/metabus/cardano-metabus-txwatcher/pom.xml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: yaci-store-spring-boot-starter
+  - target: yaci
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-abis-poc/blob/develop/metabus/cardano-metabus-txsubmitter/pom.xml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: yaci-core and yaci-helper
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-abis-poc/blob/develop/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "backend config requires a Blockfrost API key 'start with ipfs' (Blockfrost IPFS service)"
+lastVerified: 2026-10-20

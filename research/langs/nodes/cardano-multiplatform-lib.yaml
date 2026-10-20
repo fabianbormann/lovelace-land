@@ -1,0 +1,18 @@
+id: cardano-multiplatform-lib
+name: "Cardano Multiplatform Lib"
+district: sdks
+description: "Rust implementation of Cardano ledger types generated from the CDDL spec, with WebAssembly builds for JavaScript. It underpins Lucid-family transaction builders."
+maintainer: "dcSpark"
+links:
+  repo: https://github.com/dcSpark/cardano-multiplatform-lib
+packages:
+  - ecosystem: cargo
+    name: "cml-chain"
+  - ecosystem: npm
+    name: "@dcspark/cardano-multiplatform-lib-nodejs"
+  - ecosystem: npm
+    name: "@dcspark/cardano-multiplatform-lib-browser"
+status: active
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

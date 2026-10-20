@@ -1,0 +1,31 @@
+id: x402-cardano
+name: x402 for Cardano
+district: products
+description: Cardano implementation of the x402 HTTP payment protocol, letting apps and AI agents pay per API request in ADA or native tokens; USDM is the default stablecoin asset.
+maintainer: x402 Foundation
+links:
+  website: https://www.x402.org
+  repo: https://github.com/x402-foundation/x402/tree/main/typescript/packages/mechanisms/cardano
+packages:
+  - ecosystem: npm
+    name: "@x402/cardano"
+status: active
+primarySector: payments
+uses:
+  - target: evolution-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/x402-foundation/x402/blob/main/typescript/packages/mechanisms/cardano/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'depends on @evolution-sdk/evolution; README: "CBOR transaction decoding in the facilitator uses Intersect''s Evolution SDK"'
+  - target: usdm
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/x402-foundation/x402/blob/main/typescript/packages/mechanisms/cardano/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"A default-asset table (DEFAULT_ASSETS ...) listing USDM on mainnet and preprod"'
+lastVerified: 2026-10-20

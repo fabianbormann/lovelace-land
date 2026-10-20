@@ -1,0 +1,15 @@
+id: ford-motor-company
+name: Ford Motor Company
+type: organization
+sectors: [enterprise-government]
+stage: pilot
+description: Advises and stress-tests a June 2025 proof of concept by Iagon and Cloud Court for encrypted off-chain storage of legal data, with Cardano handling permissions, access logs and verification.
+uses:
+  - target: iagon
+    confidence: reported
+    evidence:
+      - url: https://cryptoslate.com/ford-explores-decentralized-legal-data-storage-on-cardano-blockchain/?rand=6792
+        kind: article
+        retrieved: 2026-10-20
+        note: Proof of concept announced 18 June 2025; Ford acts as advisor.
+lastVerified: 2026-10-20

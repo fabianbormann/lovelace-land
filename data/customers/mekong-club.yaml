@@ -1,0 +1,15 @@
+id: mekong-club
+name: The Mekong Club
+type: organization
+sectors: [nfts-gaming-media]
+stage: production
+description: Anti-slavery nonprofit that launched an NFT collection with NMKR to raise funds.
+uses:
+  - target: nmkr
+    confidence: verified
+    evidence:
+      - url: https://www.nmkr.io/
+        kind: case-study
+        retrieved: 2026-10-20
+        note: 'Testimonial: "NMKR was an indispensable partner in our nonprofit''s journey to harness the power of NFTs for fundraising."'
+lastVerified: 2026-10-20

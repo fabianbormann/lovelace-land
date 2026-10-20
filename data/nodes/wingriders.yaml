@@ -1,0 +1,52 @@
+id: wingriders
+name: WingRiders
+district: products
+description: AMM decentralized exchange on Cardano (DEX v2 plus the newer Rapid DEX with direct pool interactions), built by Vacuumlabs alumni.
+maintainer: WingRiders
+links:
+  website: https://www.wingriders.com
+  repo: https://github.com/WingRiders/dex-v2-contracts
+status: active
+primarySector: defi
+uses:
+  - target: plutarch
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/WingRiders/dex-v2-contracts/blob/master/wingriders-plutarch.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"WingRiders DEX - Plutarch contracts"; depends on plutarch and liqwid-plutarch-extra'
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/WingRiders/rapid-dex-contracts/blob/master/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'Rapid DEX preamble compiler "Aiken" v1.1.9'
+  - target: mesh
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/WingRiders/rapid-dex/blob/main/backend/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'Rapid DEX backend, frontend and common packages depend on @meshsdk/core'
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/WingRiders/rapid-dex/blob/main/backend/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'depends on @cardano-ogmios/client'
+  - target: cardano-js-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/WingRiders/rapid-dex/blob/main/common/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'Rapid DEX common package depends on @cardano-sdk/core'
+lastVerified: 2026-10-20

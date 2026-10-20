@@ -1,0 +1,28 @@
+id: iagon
+name: Iagon
+district: products
+description: DePIN marketplace for decentralised storage and compute where node operators stake IAG and rent out capacity; offers private distributed cloud storage to enterprises. Tagged DePIN.
+maintainer: Iagon
+links:
+  website: https://iagon.com
+  repo: https://github.com/Iagonorg/staking-and-rewards-contract
+status: active
+primarySector: enterprise-government
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/Iagonorg/staking-and-rewards-contract/blob/main/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: Aiken project iagon/staking with plutus.json (staking and rewards contract)
+  - target: lucid
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Iagonorg/staking-and-rewards-contract/blob/main/offchain/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"lucid-cardano": "^0.10.7"'
+lastVerified: 2026-10-20

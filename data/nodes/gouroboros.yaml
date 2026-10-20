@@ -1,0 +1,15 @@
+id: gouroboros
+name: "gouroboros"
+district: sdks
+description: "gouroboros is Blink Labs' Go implementation of the Cardano Ouroboros network protocols and ledger types, used as the foundation for Go tooling such as Apollo."
+maintainer: "Blink Labs"
+links:
+  repo: https://github.com/blinklabs-io/gouroboros
+  docs: https://pkg.go.dev/github.com/blinklabs-io/gouroboros
+packages:
+  - ecosystem: go
+    name: "github.com/blinklabs-io/gouroboros"
+status: active
+primarySector: null
+uses: []
+lastVerified: 2026-10-20

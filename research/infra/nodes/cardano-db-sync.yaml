@@ -1,0 +1,55 @@
+id: cardano-db-sync
+name: "cardano-db-sync"
+district: indexers
+description: "Follows the Cardano chain through a local cardano-node and writes blocks, transactions and ledger-derived data into a PostgreSQL database. Many API providers are built on it."
+maintainer: "Intersect (IntersectMBO)"
+links:
+  repo: https://github.com/IntersectMBO/cardano-db-sync
+status: active
+primarySector: null
+uses:
+  - target: cardano-node
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/cardano-db-sync/blob/master/Readme.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "The cardano-db-sync node connects to a locally running cardano-node ... using a Unix domain socket"
+      - url: https://github.com/IntersectMBO/cardano-db-sync/blob/master/cardano-db-sync/cardano-db-sync.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: cardano-node"
+  - target: cardano-ledger
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/cardano-db-sync/blob/master/cardano-db-sync/cardano-db-sync.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: cardano-ledger-core, cardano-ledger-conway, ..."
+  - target: ouroboros-consensus
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/cardano-db-sync/blob/master/cardano-db-sync/cardano-db-sync.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: ouroboros-consensus"
+  - target: ouroboros-network
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/cardano-db-sync/blob/master/cardano-db-sync/cardano-db-sync.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: ouroboros-network"
+  - target: plutus-core
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/cardano-db-sync/blob/master/cardano-db-sync/cardano-db-sync.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: plutus-ledger-api"
+lastVerified: 2026-10-20

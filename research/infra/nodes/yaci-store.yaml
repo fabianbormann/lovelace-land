@@ -1,0 +1,55 @@
+id: yaci-store
+name: "Yaci Store"
+district: indexers
+description: "A modular Java (Spring Boot) Cardano indexer and datastore built on the Yaci mini-protocol library. It can run as a standalone app or be embedded via starter modules."
+maintainer: "BloxBean"
+links:
+  website: https://store.yaci.xyz/
+  repo: https://github.com/bloxbean/yaci-store
+packages:
+  - ecosystem: maven
+    name: "com.bloxbean.cardano:yaci-store-spring-boot-starter"
+status: active
+primarySector: null
+uses:
+  - target: cardano-client-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-store/blob/main/components/core/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "implementation libs.cardano.client.lib"
+      - url: https://github.com/bloxbean/yaci-store/blob/main/gradle/libs.versions.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "com.bloxbean.cardano:cardano-client-lib:0.8.0-pre4"
+  - target: yaci
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-store/blob/main/components/core/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "implementation(libs.yaci)"
+      - url: https://github.com/bloxbean/yaci-store/blob/main/gradle/libs.versions.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "com.bloxbean.cardano:yaci:0.4.7"
+  - target: scalus
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-store/blob/main/components/submit/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "implementation(libs.scalus.bloxbean.cardano.client.lib) - org.scalus:scalus-bloxbean-cardano-client-lib_3:1.1.0, used for transaction evaluation"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/bloxbean/yaci-store/blob/main/components/submit/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "implementation libs.cardano.client.backend.ogmios (Ogmios backend in the submit component)"
+lastVerified: 2026-10-20

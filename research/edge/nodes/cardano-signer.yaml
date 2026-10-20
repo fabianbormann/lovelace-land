@@ -1,0 +1,19 @@
+id: cardano-signer
+name: Cardano Signer
+district: dev-tooling
+description: Command-line tool to sign and verify data with Cardano keys, produce CIP-8/30/36 payloads, sign CIP-100/108/119 governance documents and derive payment, stake, DRep, committee and pool keys from mnemonics.
+maintainer: gitmachtl (community)
+links:
+  repo: https://github.com/gitmachtl/cardano-signer
+status: active
+primarySector: null
+uses:
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/gitmachtl/cardano-signer/blob/main/src/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@emurgo/cardano-serialization-lib-nodejs ^14.1.1"
+lastVerified: 2026-10-20

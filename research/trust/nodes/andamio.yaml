@@ -1,0 +1,36 @@
+id: andamio
+name: Andamio
+district: products
+description: Verified-trust protocol for distributed work where organizations issue on-chain credentials for completed learning modules and contributions, and contributors build a verifiable track record. Listed in the Identity category on cardano.org.
+maintainer: Andamio
+links:
+  website: https://www.andamio.io/
+  repo: https://github.com/Andamio-Platform
+status: active
+primarySector: identity
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/Andamio-Platform/plumbline-global-state/blob/main/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "Andamio V2 global/local state validators written in Aiken"
+  - target: plinth
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/Andamio-Platform/access-token/blob/main/andamio-blueprints.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "Andamio V2 access-token contracts depend on plutus-tx"
+  - target: mesh
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Andamio-Platform/andamio-app-template/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@meshsdk/core, @meshsdk/react, @meshsdk/wallet"
+lastVerified: 2026-10-20

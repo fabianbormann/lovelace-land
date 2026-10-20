@@ -1,0 +1,31 @@
+id: carp
+name: "Carp"
+district: indexers
+description: "dcSpark's modular Cardano indexer with a PostgreSQL backend, an alternative to cardano-db-sync, plus a TypeScript REST server and client. No commits since September 2024."
+maintainer: "dcSpark"
+links:
+  repo: https://github.com/dcSpark/carp
+  docs: https://dcspark.github.io/carp/docs/intro
+packages:
+  - ecosystem: npm
+    name: "@dcspark/carp-client"
+status: deprecated
+primarySector: null
+uses:
+  - target: oura
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/dcSpark/carp/blob/main/indexer/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "oura = { git = \"https://github.com/txpipe/oura.git\", rev = \"e1b9713...\" }"
+  - target: cardano-multiplatform-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/dcSpark/carp/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "cml-chain = { version = \"6.0.0\" }, cml-core, cml-crypto, cml-multi-era"
+lastVerified: 2026-10-20

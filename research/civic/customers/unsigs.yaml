@@ -1,0 +1,15 @@
+id: unsigs
+name: unsigs
+type: organization
+sectors: [nfts-gaming-media]
+stage: production
+description: Generative art collection that minted and sold more than 26,000 Cardano NFTs in 2021 through a white-label API built on NMKR Studio.
+uses:
+  - target: nmkr
+    confidence: verified
+    evidence:
+      - url: https://nmkr.io/blog/nft-maker-pro-release-cardano-nft-mintingtool-cnft
+        kind: announcement
+        retrieved: 2026-10-20
+        note: '"more than 26000 files of art have been minted and sold via an API white label solution based on NMKR Studio" (10 July 2021).'
+lastVerified: 2026-10-20

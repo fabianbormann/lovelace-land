@@ -1,0 +1,15 @@
+id: pragma
+name: PRAGMA
+type: organization
+sectors: [governance]
+stage: production
+description: Open-source member association behind Amaru; manages its treasury-withdrawal budget with a scoped Aiken treasury that re-uses Sundae's treasury contracts and pays vendors via the disburse action.
+uses:
+  - target: sundae-treasury-contracts
+    confidence: verified
+    evidence:
+      - url: https://github.com/pragma-org/amaru-treasury/blob/main/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: dependency SundaeSwap-finance/treasury-contracts; README "Each treasury validator (one per scope) re-uses Sundae's treasury management setup".
+lastVerified: 2026-10-20

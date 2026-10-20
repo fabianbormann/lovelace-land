@@ -1,0 +1,36 @@
+id: reeve
+name: Reeve
+district: products
+description: Cardano Foundation enterprise reporting platform that connects to an organisation's ERP and anchors audited financial statements and transaction data on Cardano for verifiable, tamper-evident reporting.
+maintainer: Cardano Foundation
+links:
+  website: https://www.cardanofoundation.org/reeve
+  repo: https://github.com/cardano-foundation/cf-reeve-platform
+status: active
+primarySector: enterprise-government
+uses:
+  - target: cardano-client-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-reeve-platform/blob/main/blockchain_publisher/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: com.bloxbean.cardano:cardano-client-quicktx / -crypto / -backend-blockfrost
+  - target: yaci-store
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-reeve-indexer/blob/main/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: yaci-store-spring-boot-starter + metadata/utxo/script starters (Reeve metadata indexer)
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/cardano-foundation/cf-reeve-platform/blob/main/_backend-services/cf-reeve-ledger-follower-app/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: io.blockfrost:blockfrost-java 0.1.3 and cardano-client-backend-blockfrost
+lastVerified: 2026-10-20

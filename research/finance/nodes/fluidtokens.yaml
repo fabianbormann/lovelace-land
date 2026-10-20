@@ -1,0 +1,52 @@
+id: fluidtokens
+name: FluidTokens
+district: products
+description: Cardano lending protocol (P2P loans against tokens and NFTs, boosted staking) that also runs Aquarium, a service letting users pay transaction fees in tokens other than ADA.
+maintainer: FluidTokens
+links:
+  website: https://fluidtokens.com
+  repo: https://github.com/FluidTokens
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/FluidTokens/ft-cardano-loans-v4/blob/main/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'loans preamble compiler "Aiken" v1.1.21'
+  - target: cardano-client-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/FluidTokens/ft-aquarium-node/blob/main/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "Aquarium node: implementation 'com.bloxbean.cardano:cardano-client-lib:0.7.2'"
+  - target: yaci-store
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/FluidTokens/ft-aquarium-node/blob/main/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "implementation 'com.bloxbean.cardano:yaci-store-spring-boot-starter:0.1.7'"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/FluidTokens/ft-aquarium-node/blob/main/build.gradle
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "implementation 'com.bloxbean.cardano:cardano-client-backend-blockfrost:0.7.2'"
+  - target: minswap
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/FluidTokens/ft-cardano-loans-v4/blob/main/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'Aiken dependency on "minswap/minswap-dex-v2" v2.1 (on-chain composability with Minswap pools)'
+lastVerified: 2026-10-20

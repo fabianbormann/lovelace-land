@@ -1,0 +1,9 @@
+id: cardano-peer-connect
+name: cardano-peer-connect
+district: sdks
+description: CIP-45 library that connects dApps and mobile wallets over WebRTC.
+maintainer: Fabian Bormann
+links:
+  repo: https://github.com/fabianbormann/cardano-peer-connect
+status: active
+lastVerified: 2026-10-20

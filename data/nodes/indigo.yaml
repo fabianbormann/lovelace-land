@@ -1,0 +1,42 @@
+id: indigo
+name: Indigo Protocol
+district: products
+description: Synthetic-asset (CDP) protocol on Cardano; users lock ADA to mint iAssets such as iUSD, iBTC, iETH and iSOL.
+maintainer: Indigo Labs / Indigo Foundation
+links:
+  website: https://indigoprotocol.io
+  repo: https://github.com/IndigoProtocol
+packages:
+  - ecosystem: npm
+    name: "@indigo-labs/indigo-sdk"
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: reported
+    evidence:
+      - url: https://lidonation.com/en/proposals/indigo-protocol-v2-audit-f11
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'Catalyst F11 proposal: "MLabs to do a 1 month audit of the V2 Aiken Smart Contracts" (V1 was written in PlutusTx)'
+  - target: lucid-evolution
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IndigoProtocol/sdk/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"Indigo SDK for interacting with Indigo endpoints via lucid-evolution"; depends on @lucid-evolution/lucid'
+  - target: pyth
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/IndigoProtocol/indigo-ai/blob/main/packages/plugins/indigo-data/skills/indigo-oracle/references/pyth.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"Pyth pricing on Indigo": Pyth-priced iAssets carry a signed Pyth message verified by an on-chain feed validator'
+      - url: https://github.com/IndigoProtocol/sdk/tree/main/src/contracts/pyth-feed
+        kind: manifest
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

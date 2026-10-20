@@ -1,0 +1,19 @@
+id: flip-app
+name: The Flip App
+district: products
+description: Non-custodial mobile money app (50% owned by NBX) for holding and sending digital dollars such as USDM on Cardano by phone number or address, without needing ADA for fees.
+maintainer: NBX / Flip
+links:
+  website: https://www.theflip.app/
+status: active
+primarySector: payments
+uses:
+  - target: usdm
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://moneta.global/ecosystem/partners/flip/
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"Users can send and receive USDM on Cardano using just a phone number or wallet address, without needing to hold ADA for fees"'
+lastVerified: 2026-10-20

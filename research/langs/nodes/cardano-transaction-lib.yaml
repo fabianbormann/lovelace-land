@@ -1,0 +1,56 @@
+id: cardano-transaction-lib
+name: "Cardano Transaction Lib (CTL)"
+district: sdks
+description: "CTL is a PureScript library for building smart-contract transactions on Cardano, running in browser and Node.js. It now uses MLabs' TypeScript cardano-data-lite in place of the CSL WASM build, and queries Ogmios/Kupo or Blockfrost."
+maintainer: "MLabs"
+links:
+  repo: https://github.com/Plutonomicon/cardano-transaction-lib
+  docs: https://plutonomicon.github.io/cardano-transaction-lib/
+status: active
+primarySector: null
+uses:
+  - target: cardano-data-lite
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/spago.dhall
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "spago dependency \"cardano-data-lite\"; npm meta package @mlabs-haskell/ctl-npm-meta depends on @mlabs-haskell/cardano-data-lite"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/spago.dhall
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "\"cardano-kupmios-provider\", \"cardano-ogmios-mempool\""
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "'Ogmios for chain queries'"
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/spago.dhall
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "\"cardano-kupmios-provider\""
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "'Kupo for chain queries'"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/spago.dhall
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "\"cardano-blockfrost-provider\""
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "'Blockfrost support'"
+lastVerified: 2026-10-20

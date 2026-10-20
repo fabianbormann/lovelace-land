@@ -1,0 +1,28 @@
+id: ouroboros-consensus
+name: "Ouroboros Consensus"
+district: core
+description: "The Haskell consensus layer for the Ouroboros family of protocols, including chain selection, the storage layer and the Cardano-specific protocol instantiation."
+maintainer: "Intersect (IntersectMBO)"
+links:
+  repo: https://github.com/IntersectMBO/ouroboros-consensus
+  docs: https://ouroboros-consensus.cardano.intersectmbo.org
+status: active
+primarySector: null
+uses:
+  - target: cardano-ledger
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/ouroboros-consensus/blob/main/ouroboros-consensus.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: cardano-ledger-core, cardano-ledger-conway, ..."
+  - target: ouroboros-network
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/IntersectMBO/ouroboros-consensus/blob/main/ouroboros-consensus.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: ouroboros-network"
+lastVerified: 2026-10-20

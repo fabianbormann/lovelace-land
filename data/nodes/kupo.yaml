@@ -1,0 +1,60 @@
+id: kupo
+name: "Kupo"
+district: indexers
+description: "A fast, lightweight and configurable chain index for Cardano that tracks UTxOs, datums and scripts matching user-defined patterns and serves them over HTTP."
+maintainer: "Cardano Solutions"
+links:
+  repo: https://github.com/CardanoSolutions/kupo
+  docs: https://cardanosolutions.github.io/kupo/
+status: active
+primarySector: null
+uses:
+  - target: cardano-node
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/kupo/blob/master/docs/man/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "(--node-socket FILEPATH --node-config FILEPATH | --ogmios-host ... | --hydra-host ...)"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/kupo/blob/master/docs/man/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "--ogmios-host: Ogmios' host address"
+  - target: hydra
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/kupo/blob/master/docs/man/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "--hydra-host: Hydra-node host address"
+  - target: cardano-ledger
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/kupo/blob/master/kupo.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: cardano-ledger-core, cardano-ledger-conway, ..."
+  - target: ouroboros-consensus
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/kupo/blob/master/kupo.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: ouroboros-consensus"
+  - target: ouroboros-network
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/CardanoSolutions/kupo/blob/master/kupo.cabal
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "build-depends: ouroboros-network"
+lastVerified: 2026-10-20

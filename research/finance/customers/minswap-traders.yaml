@@ -1,0 +1,23 @@
+id: minswap-traders
+name: Minswap traders and liquidity providers
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users swapping Cardano native tokens and providing liquidity on Minswap pools.
+metric:
+  label: 30-day DEX volume
+  value: "$18.4M (TVL $15.5M)"
+  source: https://api.llama.fi/summary/dexs/minswap
+  retrieved: 2026-10-20
+uses:
+  - target: minswap
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/summary/dexs/minswap
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to minswap'
+      - url: https://api.llama.fi/tvl/minswap
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

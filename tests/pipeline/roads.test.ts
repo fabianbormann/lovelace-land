@@ -20,7 +20,7 @@ function route(data: LoadedData, layout?: Layout) {
 
 describe('surfaceFor', () => {
   it('maps traffic to footprints, mud, gravel, cobblestone', () => {
-    expect([0, 0.5, 1, 3.9, 4, 9.9, 10, 50].map(surfaceFor)).toEqual([0, 0, 1, 1, 2, 2, 3, 3]);
+    expect([0, 0.5, 1, 7.9, 8, 49.9, 50, 500].map(surfaceFor)).toEqual([0, 0, 1, 1, 2, 2, 3, 3]);
   });
 });
 

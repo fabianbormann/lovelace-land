@@ -1,0 +1,60 @@
+id: masumi
+name: Masumi
+district: products
+description: Payment and identity network on Cardano that lets AI agents discover and pay each other for services through escrow smart contracts; built by NMKR and Serviceplan and powering the Sokosumi agent marketplace.
+maintainer: Masumi Network (NMKR, Serviceplan)
+links:
+  website: https://masumi.network
+  repo: https://github.com/masumi-network/masumi-payment-service
+status: active
+primarySector: payments
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/masumi-network/masumi-payment-service/blob/main/smart-contracts/payment-v2/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'preamble "nmkr/masumi-payment", compiler "Aiken" v1.1.23'
+  - target: mesh
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/masumi-network/masumi-payment-service/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@meshsdk/core 1.9.0-beta.96 pinned for V1/V2 payment sources'
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/masumi-network/masumi-payment-service/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'depends on @emurgo/cardano-serialization-lib-nodejs 15.0.3'
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/masumi-network/masumi-payment-service/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'depends on @blockfrost/blockfrost-js; README requires BLOCKFROST_API_KEY'
+  - target: hydra
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/masumi-network/masumi-payment-service/blob/main/docs/hydra-operations.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"Running Hydra in production": two-party Hydra heads as payment channels for agent payments'
+  - target: usdm
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://moneta.global/ecosystem/partners/masumi/
+        kind: docs
+        retrieved: 2026-10-20
+        note: '"USDM is used to pay for AI-agent services across Masumi and the Sokosumi marketplace"'
+lastVerified: 2026-10-20

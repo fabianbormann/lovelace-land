@@ -1,0 +1,8 @@
+id: trivolve-fms
+name: Trivolve Forensic Management System
+district: products
+description: Closed-source forensic evidence management system by Trivolve Tech and Quixy that records chain-of-custody steps on Cardano mainnet. Launched in October 2025 with Uttar Pradesh as the pilot state.
+maintainer: Trivolve Tech
+status: active
+primarySector: proof-verification
+lastVerified: 2026-10-20

@@ -1,0 +1,52 @@
+id: pycardano
+name: "PyCardano"
+district: sdks
+description: "PyCardano is a lightweight Python library for building and signing Cardano transactions, with chain-context backends for Blockfrost, Ogmios, Kupo and cardano-cli."
+maintainer: "Python-Cardano community"
+links:
+  repo: https://github.com/Python-Cardano/pycardano
+  docs: https://pycardano.readthedocs.io
+packages:
+  - ecosystem: pypi
+    name: "pycardano"
+status: active
+primarySector: null
+uses:
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Python-Cardano/pycardano/blob/main/pyproject.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "blockfrost-python = \">=0.6.0\""
+      - url: https://github.com/Python-Cardano/pycardano/blob/main/pycardano/backend/blockfrost.py
+        kind: docs
+        retrieved: 2026-10-20
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Python-Cardano/pycardano/blob/main/pyproject.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "ogmios = \">=1.4.2\""
+      - url: https://github.com/Python-Cardano/pycardano/blob/main/pycardano/backend/ogmios_v6.py
+        kind: docs
+        retrieved: 2026-10-20
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Python-Cardano/pycardano/blob/main/pycardano/backend/kupo.py
+        kind: docs
+        retrieved: 2026-10-20
+  - target: cardano-cli
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Python-Cardano/pycardano/blob/main/pycardano/backend/cardano_cli.py
+        kind: docs
+        retrieved: 2026-10-20
+        note: "chain context backed by cardano-cli"
+lastVerified: 2026-10-20

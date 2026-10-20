@@ -1,0 +1,52 @@
+id: apollo
+name: "Apollo (Go)"
+district: sdks
+description: "Apollo is a pure Go library for constructing Cardano transactions. Version 2 builds on Blink Labs' gouroboros ledger packages and offers Blockfrost, Ogmios/Kupo and UTxO RPC backends."
+maintainer: "Salvionied"
+links:
+  repo: https://github.com/Salvionied/apollo
+  docs: https://pkg.go.dev/github.com/Salvionied/apollo/v2
+packages:
+  - ecosystem: go
+    name: "github.com/Salvionied/apollo/v2"
+status: active
+primarySector: null
+uses:
+  - target: gouroboros
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Salvionied/apollo/blob/master/go.mod
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "require github.com/blinklabs-io/gouroboros v0.213.7"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Salvionied/apollo/blob/master/go.mod
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "require github.com/SundaeSwap-finance/ogmigo/v6"
+      - url: https://github.com/Salvionied/apollo/blob/master/backend/ogmios/ogmios.go
+        kind: docs
+        retrieved: 2026-10-20
+  - target: kupo
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Salvionied/apollo/blob/master/go.mod
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "require github.com/SundaeSwap-finance/kugo (Kupo client)"
+      - url: https://github.com/Salvionied/apollo/blob/master/backend/ogmios/ogmios.go
+        kind: docs
+        retrieved: 2026-10-20
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Salvionied/apollo/blob/master/backend/blockfrost/blockfrost.go
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

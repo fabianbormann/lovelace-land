@@ -8,7 +8,8 @@
     "check:data": "tsx pipeline/cli.ts --check",
     "dev": "vite",
     "build": "npm run build:world && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "e2e": "playwright test"
   },
   "license": "MIT",
   "private": true,

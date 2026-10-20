@@ -6,8 +6,8 @@ import { cmp } from './util';
 export const BASE_COST = 1;
 export const REUSE_COST = 0.5;
 export const GRID_MARGIN = 4;
-/** traffic >= 1 → mud, >= 4 → gravel, >= 10 → cobblestone; below 1 → footprints. */
-export const SURFACE_THRESHOLDS = [1, 4, 10] as const;
+/** traffic >= 1 → mud, >= 8 → gravel, >= 50 → cobblestone; below 1 → footprints. Tuned on the first real dataset (median tile traffic 8, p75 54). */
+export const SURFACE_THRESHOLDS = [1, 8, 50] as const;
 
 export type Surface = 0 | 1 | 2 | 3;
 export interface RoadTile { pos: Pos; traffic: number; surface: Surface; dashed: boolean; rumor: boolean }

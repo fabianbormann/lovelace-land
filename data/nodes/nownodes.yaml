@@ -1,0 +1,27 @@
+id: nownodes
+name: "NOWNodes"
+district: api-providers
+description: "A multi-chain hosted node provider that offers Cardano access through RPC, Blockfrost-compatible, GraphQL and Ogmios WebSocket endpoints."
+maintainer: "NOWNodes"
+links:
+  website: https://nownodes.io
+status: active
+primarySector: null
+uses:
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://nownodes.io/nodes/cardano-ada
+        kind: docs
+        retrieved: 2026-10-20
+        note: "NOWNodes supports multiple Cardano APIs, including RPC, Blockfrost, GraphQL, and Ogmios WebSocket (WSS) APIs."
+  - target: blockfrost
+    relation: service
+    confidence: inferred
+    evidence:
+      - url: https://nownodes.io/nodes/cardano-ada
+        kind: docs
+        retrieved: 2026-10-20
+        note: "lists a Blockfrost API; whether it runs blockfrost-backend-ryo is not stated"
+lastVerified: 2026-10-20

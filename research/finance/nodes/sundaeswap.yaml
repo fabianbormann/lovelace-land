@@ -1,0 +1,39 @@
+id: sundaeswap
+name: SundaeSwap
+district: products
+description: Decentralized exchange on Cardano (V3 AMM and V4 pools) built by Sundae Labs; the official DEX partner of the USDM stablecoin.
+maintainer: Sundae Labs
+links:
+  website: https://sundae.fi
+  repo: https://github.com/SundaeSwap-finance/sundae-contracts
+packages:
+  - ecosystem: npm
+    name: "@sundaeswap/core"
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/sundae-contracts/blob/main/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'preamble compiler "Aiken" v1.0.26-alpha'
+  - target: blaze
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/sundae-sdk/blob/main/packages/core/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '@sundaeswap/core depends on @blaze-cardano/sdk, @blaze-cardano/core and @blaze-cardano/data'
+  - target: acropolis
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/SundaeSwap-finance/scooper-v2/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'scooper v2 ("powering v4 of the SundaeSwap DEX") depends on input-output-hk/acropolis modules incl. custom indexer and mithril snapshot fetcher'
+lastVerified: 2026-10-20

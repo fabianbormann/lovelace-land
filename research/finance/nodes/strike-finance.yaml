@@ -1,0 +1,28 @@
+id: strike-finance
+name: Strike Finance
+district: products
+description: Derivatives protocol on Cardano offering perpetual futures (and earlier options and forwards) trading.
+maintainer: Strike Finance
+links:
+  website: https://www.strikefinance.org
+  repo: https://github.com/strike-finance/perpetuals-smart-contracts
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/strike-finance/perpetuals-smart-contracts/blob/main/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-20
+        note: 'preamble "strike-finance/perpetuals", compiler "Aiken", Plutus v3'
+  - target: lucid-evolution
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/strike-finance/strike-sdk-v1/blob/master/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: 'depends on @lucid-evolution/lucid'
+lastVerified: 2026-10-20

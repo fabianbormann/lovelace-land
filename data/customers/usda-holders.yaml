@@ -1,0 +1,20 @@
+id: usda-holders
+name: USDA holders
+type: segment
+sectors: [payments]
+stage: production
+description: Users minting, holding and redeeming the Anzens USDA stablecoin.
+metric:
+  label: USDA circulating supply
+  value: "$3.92M"
+  source: https://stablecoins.llama.fi/stablecoins?includePrices=true
+  retrieved: 2026-10-20
+uses:
+  - target: usda
+    confidence: verified
+    evidence:
+      - url: https://stablecoins.llama.fi/stablecoins?includePrices=true
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to usda'
+lastVerified: 2026-10-20

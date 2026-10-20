@@ -1,0 +1,23 @@
+id: djed-holders
+name: DJED and SHEN holders
+type: segment
+sectors: [defi, payments]
+stage: production
+description: Anonymous users minting the over-collateralized DJED stablecoin or providing reserve capital via SHEN.
+metric:
+  label: DJED circulating supply
+  value: "$1.47M (protocol TVL $5.3M)"
+  source: https://stablecoins.llama.fi/stablecoins?includePrices=true
+  retrieved: 2026-10-20
+uses:
+  - target: djed
+    confidence: verified
+    evidence:
+      - url: https://stablecoins.llama.fi/stablecoins?includePrices=true
+        kind: docs
+        retrieved: 2026-10-20
+        note: 'DefiLlama data attributed to djed'
+      - url: https://api.llama.fi/tvl/djed-stablecoin
+        kind: docs
+        retrieved: 2026-10-20
+lastVerified: 2026-10-20

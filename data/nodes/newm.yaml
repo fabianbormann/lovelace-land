@@ -1,0 +1,28 @@
+id: newm
+name: NEWM
+district: products
+description: Music platform where artists distribute releases and sell "stream tokens" (fractional streaming-royalty rights) to fans on Cardano through the NEWM marketplace.
+maintainer: Project NEWM
+links:
+  website: https://newm.io
+  repo: https://github.com/projectNEWM/newm-server
+status: active
+primarySector: nfts-gaming-media
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/projectNEWM/newm-market/blob/master/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: '"The NEWM Marketplace contracts allow the selling of stream tokens for NEWM or USD paid in NEWM."'
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/projectNEWM/newm-server/blob/master/newm-chain/build.gradle.kts
+        kind: manifest
+        retrieved: 2026-10-20
+        note: implementation(Dependencies.Newm.KOGMIOS) - NEWM's Kotlin Ogmios client (github.com/projectNEWM/kogmios)
+lastVerified: 2026-10-20

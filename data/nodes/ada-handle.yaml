@@ -1,0 +1,52 @@
+id: ada-handle
+name: ADA Handle
+district: products
+description: Standardized NFT that maps a Cardano address to a human-readable $handle, used by wallets and dApps as the network's de facto naming layer. Listed in the Identity category on cardano.org.
+maintainer: Kora Labs
+links:
+  website: https://handle.me/
+  repo: https://github.com/koralabs
+status: active
+primarySector: identity
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/koralabs/decentralized-minting/blob/master/smart-contract/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "Aiken contracts + TypeScript SDK that mint Ada Handles"
+  - target: cardano-js-sdk
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/koralabs/decentralized-minting/blob/master/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@cardano-sdk/core, input-selection, tx-construction"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/koralabs/decentralized-minting/blob/master/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@blockfrost/blockfrost-js ^6.0.0"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/koralabs/api.handle.me/blob/mainnet/package.json
+        kind: manifest
+        retrieved: 2026-10-20
+        note: "@cardano-ogmios/client ^6.11.0; README: 'It follows the chain through Ogmios'"
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/koralabs/api.handle.me/blob/mainnet/README.md
+        kind: docs
+        retrieved: 2026-10-20
+        note: "One image runs cardano-node, Ogmios and the API together"
+lastVerified: 2026-10-20

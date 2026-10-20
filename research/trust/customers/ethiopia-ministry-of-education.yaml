@@ -1,0 +1,19 @@
+id: ethiopia-ministry-of-education
+name: Ethiopia Ministry of Education
+type: government
+sectors: [identity]
+stage: pilot
+description: Signed with IOHK in April 2021 to give about 5 million students and 750,000 teachers in 3,500 schools tamper-proof digital IDs and attainment records via Atala PRISM. In March 2023 Charles Hoskinson said the system was live and expected to reach one million students by end of 2023; no later independent status update was found.
+uses:
+  - target: hyperledger-identus
+    confidence: reported
+    evidence:
+      - url: https://www.cityam.com/ethiopia-overhauls-its-education-system-with-iohk-blockchain-partnership/
+        kind: article
+        retrieved: 2026-10-20
+        note: "IOHK's Atala PRISM ID ... 5 million students, 3,500 schools, 750,000 teachers (27 April 2021)"
+      - url: https://www.investing.com/news/cryptocurrency-news/ethiopia-id-system-is-live-cardano-founder-responds-to-critics-3031974
+        kind: article
+        retrieved: 2026-10-20
+        note: "Hoskinson: 'The MoE deal was never a nation-scale ID system. It's a credential management system for students.' (16 March 2023)"
+lastVerified: 2026-10-20
