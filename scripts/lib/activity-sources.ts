@@ -31,29 +31,72 @@ const HEX = /^[0-9a-f]{56}$/;
 const ADDR = /^addr1[0-9a-z]+$/;
 const list = (values: string[]) => values.map((v) => `'${v}'`).join(', ');
 
-/** One SQL statement per window, counting distinct transactions per month across all identifiers. */
-export function txQueries(onchain: Onchain, ...windows: [string, string][]): string[] {
-  const scripts = onchain.scripts ?? [];
+/** The analytics service refuses longer statements. */
+export const MAX_SQL_LENGTH = 9500;
+
+function query(range: string, scriptFilter: string | null, labels: number[], addresses: string[]) {
+  const parts: string[] = [];
+  if (scriptFilter) parts.push(`SELECT date, tx_hash FROM transaction_scripts WHERE ${range} AND ${scriptFilter}`);
+  if (labels.length) parts.push(`SELECT date, tx_hash FROM transaction_metadata WHERE ${range} AND CAST(label AS VARCHAR) IN (${list(labels.map(String))})`);
+  if (addresses.length) parts.push(`SELECT date, tx_hash FROM address_utxo WHERE ${range} AND owner_addr IN (${list(addresses)})`);
+  return `SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (${parts.join(' UNION ALL ')}) GROUP BY 1 ORDER BY 1`;
+}
+
+export interface TxPlan {
+  /** one statement per window */
+  queries: string[];
+  /** set when scripts are matched by prefix: run checkQuery and exclude any foreign hashes it returns */
+  prefix?: { length: number; checkQuery: string };
+}
+
+/**
+ * SQL counting distinct transactions per month across all identifiers. Long script lists do not fit
+ * the server's statement limit, so they are matched by hash prefix; checkQuery lists every script the
+ * prefixes match, and foreign ones are passed back in `excluded` so the count stays exact.
+ */
+export function txPlan(onchain: Onchain, windows: [string, string][], excluded: string[] = []): TxPlan {
+  const scripts = [...new Set(onchain.scripts ?? [])];
   const labels = onchain.metadataLabels ?? [];
   const addresses = onchain.addresses ?? [];
-  if (scripts.some((s) => !HEX.test(s)) || addresses.some((a) => !ADDR.test(a)) || labels.some((l) => !Number.isInteger(l)))
+  if ([...scripts, ...excluded].some((s) => !HEX.test(s)) || addresses.some((a) => !ADDR.test(a)) || labels.some((l) => !Number.isInteger(l)))
     throw new Error('invalid on-chain identifier');
-  if (!scripts.length && !labels.length && !addresses.length) return [];
-  return windows.map(([from, to]) => {
-    const range = `date >= DATE '${from}' AND date < DATE '${to}'`;
-    const parts: string[] = [];
-    if (scripts.length) parts.push(`SELECT date, tx_hash FROM transaction_scripts WHERE ${range} AND script_hash IN (${list(scripts)})`);
-    if (labels.length) parts.push(`SELECT date, tx_hash FROM transaction_metadata WHERE ${range} AND CAST(label AS VARCHAR) IN (${list(labels.map(String))})`);
-    if (addresses.length) parts.push(`SELECT date, tx_hash FROM address_utxo WHERE ${range} AND owner_addr IN (${list(addresses)})`);
-    return `SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (${parts.join(' UNION ALL ')}) GROUP BY 1 ORDER BY 1`;
-  });
+  if (!scripts.length && !labels.length && !addresses.length) return { queries: [] };
+  const range = ([from, to]: [string, string]) => `date >= DATE '${from}' AND date < DATE '${to}'`;
+  const exact = scripts.length ? `script_hash IN (${list(scripts)})` : null;
+  if (query(range(windows[0]), exact, labels, addresses).length <= MAX_SQL_LENGTH)
+    return { queries: windows.map((w) => query(range(w), exact, labels, addresses)) };
+  for (let length = 16; length >= 6; length--) {
+    const prefixes = [...new Set(scripts.map((s) => s.slice(0, length)))];
+    const filter = `substr(script_hash, 1, ${length}) IN (${list(prefixes)})${excluded.length ? ` AND script_hash NOT IN (${list(excluded)})` : ''}`;
+    if (query(range(windows[0]), filter, labels, addresses).length > MAX_SQL_LENGTH) continue;
+    const all: [string, string] = [windows[0][0], windows[windows.length - 1][1]];
+    return {
+      queries: windows.map((w) => query(range(w), filter, labels, addresses)),
+      prefix: {
+        length,
+        checkQuery: `SELECT DISTINCT script_hash FROM transaction_scripts WHERE ${range(all)} AND substr(script_hash, 1, ${length}) IN (${list(prefixes)})`,
+      },
+    };
+  }
+  throw new Error(`${scripts.length} scripts are too many to query, even by prefix`);
+}
+
+/** Back-compatible: the statements of a plan without prefix exclusions. */
+export function txQueries(onchain: Onchain, ...windows: [string, string][]): string[] {
+  return txPlan(onchain, windows).queries;
+}
+
+/** Rows of a query result as plain objects. */
+export function parseRows(text: string): Record<string, unknown>[] {
+  const json = JSON.parse(text) as { rows?: Record<string, unknown>[]; truncated?: boolean; error?: string };
+  if (!json.rows) throw new Error(`query failed: ${json.error ?? text.slice(0, 200)}`);
+  if (json.truncated) throw new Error('query result was truncated');
+  return json.rows;
 }
 
 export function parseSqlRows(text: string): MonthCounts {
-  const json = JSON.parse(text) as { rows?: { month: string; txs: number }[]; error?: string };
-  if (!json.rows) throw new Error(`query failed: ${json.error ?? text.slice(0, 200)}`);
   const out: MonthCounts = {};
-  for (const r of json.rows) if (Number(r.txs) > 0) out[r.month] = Number(r.txs);
+  for (const r of parseRows(text)) if (Number(r.txs) > 0) out[String(r.month)] = Number(r.txs);
   return out;
 }
 

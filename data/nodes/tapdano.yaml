@@ -1,7 +1,10 @@
 id: tapdano
 name: TapDano
 district: products
-description: Catalyst-funded (Fund 10) open-source project that combines NFC hardware (a JavaCard applet signing with Ed25519) with Cardano records for NFC wallets, physical product authentication and proof of attendance. Listed in the Identity category on cardano.org.
+description: Catalyst-funded (Fund 10) open-source project that combines NFC
+  hardware (a JavaCard applet signing with Ed25519) with Cardano records for NFC
+  wallets, physical product authentication and proof of attendance. Listed in
+  the Identity category on cardano.org.
 maintainer: TapDano
 links:
   website: https://tapdano.com
@@ -16,5 +19,19 @@ uses:
       - url: https://github.com/tapdano/cardano-tapdano-validation/blob/main/aiken.toml
         kind: manifest
         retrieved: 2026-10-20
-        note: "on-chain validation of ED25519 signatures from the TapDano JavaCard applet (Aiken, plutus v2)"
+        note: "on-chain validation of ED25519 signatures from the TapDano JavaCard
+          applet (Aiken, plutus v2)"
+onchain:
+  metadataLabels:
+    - 544
+  source: https://github.com/cardano-foundation/cardano-org/blob/main/src/data/apps.js
+  note: "metadataLabel 544 was set on TapDano's cardano.org showcase entry by
+    boemekeld (commit b395d17, 2026-03-25), the only contributor to
+    tapdano/applet. Not found in TapDano's public repos. All 1998 label-544 tx
+    (2026-04-13 to 2026-06) have the same shape: an Ed25519 signature split into
+    two parts plus a hashed proof-of-attendance payload (session, student,
+    course, cohort, nonce). That matches TapDano's NFC-signature
+    proof-of-attendance use case. 0 in Sept 2026. TapDano's soulbound NFTs use
+    per-tag policies, and the Aiken validation repo is testnet-only, so no
+    scripts are listed."
 lastVerified: 2026-10-20

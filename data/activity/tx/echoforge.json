@@ -1,0 +1,10 @@
+{
+  "id": "echoforge",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/EchoForge-Dev/Aiken_Smart-Contract/blob/main/credential/legacy/evidence/policy-derivation.md",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_scripts WHERE date in <year window> AND script_hash IN ('32fd4d6013971be1074d83dc9b4ae3f9512184f10bfad9d1b8e7a158')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2026-04": 2,
+    "2026-06": 1
+  }
+}

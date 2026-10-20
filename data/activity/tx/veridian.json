@@ -1,0 +1,12 @@
+{
+  "id": "veridian",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/veridian-id/cardano-backer/blob/main/src/backer/constants.py",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <year window> AND CAST(label AS VARCHAR) IN ('13456', '13457')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2025-04": 16,
+    "2025-07": 16,
+    "2025-08": 369,
+    "2025-09": 56
+  }
+}

@@ -51,13 +51,23 @@ const at = (counts: MonthCounts | undefined, months: string[]) => months.map((m)
 export function computeTimeline(graph: Graph, activity: Activity, months: string[]): Timeline {
   const { nodes, customers } = graph.data;
   const last = months.length - 1;
+  const nodeById = new Map(nodes.map((n) => [n.id, n] as const));
+  const inWindow = (active: { from: string; until?: string } | undefined, m: string) =>
+    !!active && monthDiff(active.from, m) >= 0 && (!active.until || monthDiff(m, active.until) >= 0);
+  /** A product's own transactions, ignoring any after its announced end (its contracts may live on elsewhere). */
+  const ownTx = (id: string): MonthCounts | undefined => {
+    const series = activity.tx.get(id);
+    const until = nodeById.get(id)?.active?.until;
+    if (!series || !until) return series;
+    return Object.fromEntries(Object.entries(series).filter(([m]) => monthDiff(m, until) >= 0));
+  };
 
   // 1. Customer flows
   const customerTl: Record<string, CustomerTimeline> = {};
   for (const c of customers) {
     let tx: number[];
     let source: FlowSource;
-    const products = c.uses.map((u) => activity.tx.get(u.target)).filter((s): s is MonthCounts => s !== undefined);
+    const products = c.uses.map((u) => ownTx(u.target)).filter((s): s is MonthCounts => s !== undefined);
     if (activity.tx.has(c.id)) {
       tx = at(activity.tx.get(c.id), months);
       source = 'onchain';
@@ -107,12 +117,13 @@ export function computeTimeline(graph: Graph, activity: Activity, months: string
   const nodeTl: Record<string, NodeTimeline> = {};
   for (const n of nodes) {
     const commitSeries = activity.commits.get(n.id);
-    const txSeries = activity.tx.get(n.id);
+    const txSeries = ownTx(n.id);
     const hasRepo = commitSeries !== undefined;
     const traffic = nodeTraffic.get(n.id)!;
     const commits = at(commitSeries, months);
     const tx = at(txSeries, months);
-    const used = months.map((_, i) => traffic[i] > 0 || tx[i] > 0);
+    // without transaction data, an announced active window stands in for use
+    const used = months.map((m, i) => traffic[i] > 0 || tx[i] > 0 || (txSeries === undefined && inWindow(n.active, m)));
     // Month offsets relative to the window start; commits may predate it.
     const commitOffsets = Object.entries(commitSeries ?? {})
       .filter(([, v]) => v > 0)

@@ -1,7 +1,9 @@
 id: milkomeda
 name: Milkomeda C1
 district: bridges
-description: EVM-compatible sidechain (C1) for Cardano by dcSpark, connected to Cardano mainnet through a bridge. Shutdown was announced on 22 April 2025, with funds to be withdrawn before 1 September 2025.
+description: EVM-compatible sidechain (C1) for Cardano by dcSpark, connected to
+  Cardano mainnet through a bridge. Shutdown was announced on 22 April 2025,
+  with funds to be withdrawn before 1 September 2025.
 maintainer: dcSpark
 links:
   website: https://milkomeda.com
@@ -9,4 +11,21 @@ links:
 status: deprecated
 primarySector: null
 uses: []
+onchain:
+  scripts:
+    - c246c16d83b6d06d0a1b5742b440fc448484a159e1cfce48efc98736
+  addresses:
+    - addr1w8pydstdswmdqmg2rdt59dzql3zgfp9pt8sulnjgalycwdsj9js7w
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/MilkomedaC1.json
+  note: "Cardano-C1 bridge address, a NATIVE multisig script, per the CRFA
+    registry (also in the Eternl registry). Because it is native it does not
+    appear in transaction_scripts: measure it through the address or payment
+    credential (address_utxo shows about 97k tx, ramping up in 2022-03).
+    Shutdown announced 2025-04-22 by @Milkomeda_com on X
+    (https://x.com/milkomeda_com), with withdrawals required before 2025-09-01
+    and the service off by 2025-09-05. The Milkomeda metadata label 87 is
+    excluded because it is shared with other protocols."
+active:
+  from: 2022-03
+  until: 2025-09
 lastVerified: 2026-10-20

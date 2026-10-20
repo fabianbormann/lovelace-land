@@ -1,7 +1,9 @@
 id: asteria
 name: Asteria
 district: products
-description: Fully on-chain strategy game by TxPipe in which ships, fuel and the grid are Cardano eUTxOs governed by Plutus validators; built as a developer challenge and showcase.
+description: Fully on-chain strategy game by TxPipe in which ships, fuel and the
+  grid are Cardano eUTxOs governed by Plutus validators; built as a developer
+  challenge and showcase.
 maintainer: TxPipe
 links:
   website: https://asteria.txpipe.io
@@ -40,7 +42,8 @@ uses:
       - url: https://github.com/txpipe/asteria/blob/main/sdk/blaze/package.json
         kind: manifest
         retrieved: 2026-10-20
-        note: '@asteria/blaze-sdk depends on @blaze-cardano/sdk and @blaze-cardano/ogmios'
+        note: '@asteria/blaze-sdk depends on @blaze-cardano/sdk and
+          @blaze-cardano/ogmios'
   - target: tx3
     relation: library
     confidence: verified
@@ -56,5 +59,17 @@ uses:
       - url: https://github.com/txpipe/asteria/blob/main/frontend/package.json
         kind: manifest
         retrieved: 2026-10-20
-        note: 'local devnet script "devnet:start": "cd devnet && dolos daemon" (development only)'
+        note: 'local devnet script "devnet:start": "cd devnet && dolos daemon"
+          (development only)'
+onchain:
+  scripts:
+    - 0291ae7aebaf064b785542093c2b13169effb34462301e68d4b44f43
+    - 3babcffc6102ec25ced40e1a24fba20371925c46f0299b2b9456360e
+    - d55e332cd46d2abfe24dfa0558c2dedd0114d00424352eb807aac137
+  source: https://github.com/txpipe/asteria/blob/main/frontend/src/pages/challenge/mainnet-challenge.mdx
+  note: "Mainnet Challenge validators: Asteria (addr1w824...), Pellet (spend +
+    FUEL mint policy) and Spacetime (spend + ship mint policy). Addresses are
+    cross-checked in frontend/src/stores/challenge.ts. Activity runs from
+    2025-08-06 to 2026-06-11, so 0 in Sept 2026 (the challenge appears
+    finished)."
 lastVerified: 2026-10-20

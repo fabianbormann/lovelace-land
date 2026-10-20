@@ -1,7 +1,10 @@
 id: veridian
 name: Veridian
 district: products
-description: Digital identity platform and mobile wallet built on KERI identifiers and ACDC credentials, with an optional trust layer that anchors key events on Cardano. Launched by the Cardano Foundation in April 2025 and spun out as an independent Swiss company in October 2026.
+description: Digital identity platform and mobile wallet built on KERI
+  identifiers and ACDC credentials, with an optional trust layer that anchors
+  key events on Cardano. Launched by the Cardano Foundation in April 2025 and
+  spun out as an independent Swiss company in October 2026.
 maintainer: Veridian (spun out of the Cardano Foundation)
 links:
   website: https://www.veridian.id
@@ -17,7 +20,8 @@ uses:
       - url: https://github.com/veridian-id/cardano-backer/blob/main/setup.py
         kind: manifest
         retrieved: 2026-10-20
-        note: "Cardano backer (KERI witness that anchors key events on Cardano) depends on pycardano==0.13.0"
+        note: "Cardano backer (KERI witness that anchors key events on Cardano) depends
+          on pycardano==0.13.0"
   - target: ogmios
     relation: service
     confidence: verified
@@ -25,7 +29,8 @@ uses:
       - url: https://github.com/veridian-id/cardano-backer/blob/main/setup.py
         kind: manifest
         retrieved: 2026-10-20
-        note: "depends on the ogmios Python client (ogmios>=1.3.0); README starts Ogmios on :1337"
+        note: "depends on the ogmios Python client (ogmios>=1.3.0); README starts Ogmios
+          on :1337"
   - target: keripy
     relation: library
     confidence: verified
@@ -50,4 +55,14 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: "@fabianbormann/cardano-peer-connect ^1.2.18 (CIP-45 dApp connection)"
+onchain:
+  metadataLabels:
+    - 13456
+    - 13457
+  source: https://github.com/veridian-id/cardano-backer/blob/main/src/backer/constants.py
+  note: "Cardano backer (KERI witness) constants: METADATUM_LABEL_KEL=13456 (key
+    event log anchoring) and METADATUM_LABEL_SCHEMA=13457. 457 tx under 13456,
+    all KERI10JSON event payloads, 2025-04-03 to 2025-09 (none since). 13457 is
+    unused on mainnet. 0 in Sept 2026, so the optional Cardano trust layer looks
+    dormant on mainnet."
 lastVerified: 2026-10-20

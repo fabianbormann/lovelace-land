@@ -1,7 +1,10 @@
 id: realfi
 name: RealFi
 district: products
-description: Cardano stablecoin protocol connecting on-chain capital to real-world credit; USDrf is a reserve-backed digital dollar and sUSDrf a staked junior token earning returns from private credit, floating-rate bonds and T-bills. Mainnet since 1 Oct 2026.
+description: Cardano stablecoin protocol connecting on-chain capital to
+  real-world credit; USDrf is a reserve-backed digital dollar and sUSDrf a
+  staked junior token earning returns from private credit, floating-rate bonds
+  and T-bills. Mainnet since 1 Oct 2026.
 maintainer: RealFi
 links:
   website: https://realfi.co
@@ -16,5 +19,26 @@ uses:
       - url: https://docs.realfi.co/getting-started/launch-functionality.md
         kind: docs
         retrieved: 2026-10-20
-        note: 'Retail users can "Acquire USDrf via in-app swap (or via partner platforms) with USDCx"'
+        note: 'Retail users can "Acquire USDrf via in-app swap (or via partner
+          platforms) with USDCx"'
+onchain:
+  scripts:
+    - 01dc62d1b7ba8c23b4706eb74127ffa1694160e30c21f43ff76ade5c
+    - 2430e30b1b595fdd6d8e248b4125a9e84cded4b449e293576403c10e
+    - 2efab7b9fe036476f6e095f69cf4728917755e1f9c75204dcf510e89
+    - 6f1a5f04e94ea4b96c6beab2f10dfe78d5639db84f5d43d16bb97d01
+    - 6f62eb156a99a618608c0b8161f636d3f22b347cb7e2200d2cbc9407
+    - 7b5d4f9cb7209596c776aafce45a15c9faba1e88bb11d96e16c96f01
+    - 7d2ddbadbe784afcf07442e5b2c35e9097da4be61162b5ee8848fe00
+    - 7d9e4a0ee1a3f5d5ff8159ea91a83310cf2795ee7a87170c7aea05ae
+    - aadd6ebebadc62c4881949c489c0bb8224aa5310875359b59e5feb4f
+    - b1a939dd2bed1ba23ea3d10bb00819891154a96c456c43692ee9a54c
+    - d77c0bea8bf5a2f8b3b401329ba22e77b2cd8fe88f2b8e2fc3781223
+    - ef30fb14092d2175284248d8ed82fcfd65cbefdb2e2df9b45bc41711
+  source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/real-fi.json
+  note: Eternl registry RealFi set (orchestrator/mint/stake/management withdraw
+    scripts, order, treasury, staking vault, USDrf/sUSDrf policy, oracles, proxy
+    NFT, native governance multisig). USDrf/sUSDrf policy 7d9e4a0e and staking
+    vault 2efab7b9 are confirmed in docs.realfi.co. Pre-launch setup tx since
+    2026-06; public mainnet 1 Oct 2026.
 lastVerified: 2026-10-20

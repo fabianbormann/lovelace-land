@@ -75,4 +75,15 @@ uses:
       - url: https://github.com/masumi-network/masumi-payment-service/blob/HEAD/package.json
         kind: manifest
         retrieved: 2026-10-20
+onchain:
+  scripts:
+    - 67ab0c92c4ac1610895a1c965ee50aba41a8f1513b15240723b3bd0b
+    - a15ce9d82d2f67645fc624e2edac03c6f1c106d0ad1af5815a3b14ad
+    - ad6424e3ce9e47bbd8364984bd731b41de591f1d11f6d7d43d0da9b9
+    - bd2adb685621e224aae7571cb6bd8f0beb0fdd31875eb3a27feee6c0
+  source: https://github.com/masumi-network/masumi-payment-service/blob/main/packages/payment-core/src/config.ts
+  note: Payment escrow V1 (bd2adb68) and V2 (a15ce9d8) from
+    PAYMENT_SMART_CONTRACT_ADDRESS(_V2)_MAINNET, agent registry policies V1
+    (ad6424e3) and V2 (67ab0c92) from REGISTRY_POLICY_ID(_V2)_MAINNET; V1 escrow
+    + registry also in StricaHQ/Eternl registries.
 lastVerified: 2026-10-20

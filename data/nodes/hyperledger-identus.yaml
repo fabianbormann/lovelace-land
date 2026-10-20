@@ -1,7 +1,11 @@
 id: hyperledger-identus
 name: Hyperledger Identus (formerly Atala PRISM)
 district: products
-description: Self-sovereign identity framework (cloud agent, mediator, edge SDKs, PRISM node) for issuing and verifying W3C verifiable credentials, using Cardano as the verifiable data registry for did:prism identifiers. Originally IOG's Atala PRISM, contributed to Hyperledger / LF Decentralized Trust in 2023-2024.
+description: Self-sovereign identity framework (cloud agent, mediator, edge
+  SDKs, PRISM node) for issuing and verifying W3C verifiable credentials, using
+  Cardano as the verifiable data registry for did:prism identifiers. Originally
+  IOG's Atala PRISM, contributed to Hyperledger / LF Decentralized Trust in
+  2023-2024.
 maintainer: LF Decentralized Trust (contributors incl. Input Output)
 links:
   website: https://identus.io/
@@ -16,7 +20,8 @@ uses:
       - url: https://github.com/hyperledger-identus/neoprism/blob/main/Cargo.toml
         kind: manifest
         retrieved: 2026-10-20
-        note: NeoPRISM (PRISM node and VDR indexer) depends on pallas-codec / pallas-primitives 0.30
+        note: NeoPRISM (PRISM node and VDR indexer) depends on pallas-codec /
+          pallas-primitives 0.30
   - target: oura
     relation: library
     confidence: verified
@@ -32,7 +37,8 @@ uses:
       - url: https://github.com/hyperledger-identus/neoprism/blob/main/README.md
         kind: docs
         retrieved: 2026-10-20
-        note: "Ingests DID operations from ... Oura, DBSync, and Blockfrost (blockfrost crate in Cargo.toml)"
+        note: "Ingests DID operations from ... Oura, DBSync, and Blockfrost (blockfrost
+          crate in Cargo.toml)"
   - target: cardano-db-sync
     relation: service
     confidence: verified
@@ -48,5 +54,15 @@ uses:
       - url: https://github.com/hyperledger-identus/neoprism/blob/main/README.md
         kind: docs
         retrieved: 2026-10-20
-        note: "Submitter publishes DID operations to Cardano; 'Integrates with Cardano-wallet'"
+        note: "Submitter publishes DID operations to Cardano; 'Integrates with
+          Cardano-wallet'"
+onchain:
+  metadataLabels:
+    - 21325
+  source: https://github.com/hyperledger-identus/neoprism/blob/main/lib/did-prism-indexer/src/dlt/oura.rs
+  note: Label 21325 = PRISM Verifiable Data Registry for did:prism (CIP-10). The
+    NeoPRISM indexer filters and the submitter writes this label, and the
+    Identus SDK docs use setMetadata(21325, ...). 6833 tx 2022-09-13 to
+    2026-08-29. Last tx 2026-08-29 and 0 in Sept 2026. Activity is low and
+    bursty in 2026 (1 tx each in Jul and Aug).
 lastVerified: 2026-10-20

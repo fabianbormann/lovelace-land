@@ -1,7 +1,9 @@
 id: agora
 name: Agora
 district: products
-description: Open-source set of Plutus governance scripts (stakes, proposals, effects, treasury) from Liqwid Labs, used for LiqwidDAO governance and by Clarity. Repository has had no pushes since August 2024.
+description: Open-source set of Plutus governance scripts (stakes, proposals,
+  effects, treasury) from Liqwid Labs, used for LiqwidDAO governance and by
+  Clarity. Repository has had no pushes since August 2024.
 maintainer: Liqwid Labs
 links:
   repo: https://github.com/Liqwid-Labs/agora
@@ -17,4 +19,21 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: build-depends plutarch, liqwid-plutarch-extra, plutarch-script-export
+onchain:
+  scripts:
+    - 26aea7e03a53e374c1d82c560a91b4147b8954d2ec4ecbd128e0c18c
+    - 34293de1784ad1dec6f8c975e220c5dab93e636c8d877f99d89c42ce
+    - 5785b71b54365b450c048b5721860ea0477f0f890421b7d503d1ea89
+    - 9cae3d41ae05882f5f357f0042d71842f1cc8a8e5230411ddb4daf17
+    - ac07d4fad3bc9982009880f6d6272d25a12d435ca95a8c7d209baa4e
+    - b575da974ec756ba2afdccdc07cbd1839acaf0a24c4f80afd81d3fb6
+    - d062d56e91347e47d9e8d7587722e394bded511a693cd0b09d0a8e16
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/LiqwidFinance.json
+  note: "LiqwidDAO's mainnet Agora deployment, listed under Liqwid Finance in the
+    CRFA and Eternl registries as 'Agora validators
+    governor/proposal/freeMultisig' plus the Agora
+    Stake/Proposal/MultiSig/Governor token mint policies. This is the Liqwid
+    instance, so it overlaps with Liqwid's own identifiers if those are tracked
+    separately. Other Agora users (e.g. Clarity) are parameterised separately
+    and not included. NOTE: these 7 hashes are also part of the liqwid entry."
 lastVerified: 2026-10-20

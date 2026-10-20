@@ -1,7 +1,8 @@
 id: optim-finance
 name: Optim Finance
 district: products
-description: Cardano yield protocols including OADA (liquid staking-style ADA yield token) and liquidity bonds; bond tokens trade on Danogo.
+description: Cardano yield protocols including OADA (liquid staking-style ADA
+  yield token) and liquidity bonds; bond tokens trade on Danogo.
 maintainer: Optim Finance
 links:
   website: https://www.optim.finance
@@ -33,4 +34,39 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: 'depends on @dcspark/cardano-multiplatform-lib-browser'
+onchain:
+  scripts:
+    - 02a574e2f048e288e2a77f48872bf8ffd61d73f9476ac5a83601610b
+    - 05cf16b9e73370782b72e92f33e3c8f36beed36074b5f24730aa7423
+    - 1152c3116ed9dac7f6eb898f83657b8af954d7d6e81a834f243ef9ab
+    - 1d2390bab44f6267c0145456dc2f5f8ea2586fcb0aadac5525d9a406
+    - 229ecc1a0dc72964f5cfd537a9556a99e2d34e7a186aef53294bbff7
+    - 27387e35d2fe59dd4956681c55c57de33ce4add8e15285aab561bcb0
+    - 3a6b7f80e5e5ab105a5ca6fe3e13456084ffd4b17d9408a62fe172fa
+    - 424908746d3ccfd5072b0c2390ea6d1a27cb84a8da174e17c2429ac9
+    - 4702f1ff21a54f728a59b3f5f0f351891c99015a2158b816c721ea72
+    - 515a216c87846970aecb9d5605014c53ae2a7e8c5c5ef517eb1f60ec
+    - 52c3116ed9dac7f6eb898f83657b8af954d7d6e81a834f243ef9abc8
+    - 53fb41609e208f1cd3cae467c0b9abfc69f1a552bf9a90d51665a4d6
+    - 5f1dd3192cbdaa2c1a91560a6147466efb18d33a5d6516b266ce6b6f
+    - 5fb0abdfd1b8d096da6ffd7d3f5a8212a318447528f91a925e7fcd0f
+    - 68fa031807f52dfea48be90d3ba788935386126b63463c84c31baac0
+    - 6c17e65dc1d6fd4a4ffb0fa686b5a1e24aa81771ba40d6c5e14bf9c5
+    - 82a78b81ad2328074e640e0ee1e351be8ff7bad601cc81c6b93c6bbb
+    - 9a3ed6b29dda73af0a4fb34c4134abf6621b415cdffc6102e9d9f4d0
+    - 9b1caab1926f575887c8c7a93d9d3181ee5c8aeb8c8fba6a64f41456
+    - 9f0821a4c5e1b9036c927483887c81c3150ffdac614fa03aeb61cb57
+    - a07e21ec112b9dd2e19277844f7404c4cfdb6a5fccbc8c4272a1b2ad
+    - a4af487cf64baeb2b6c398a4112fa9f2f4c8466a60bf77245dc92be1
+    - c59ef3a0abe4dafc913723021ee3e45cd2384df37635e1c69b403296
+    - df813b840c7c44c5eef705ae2ecd789049b08041232804853a92cef2
+    - f6099832f9563e4cf59602b3351c3c5a8a7dda2d44575ef69b82cf8d
+    - f8f753c9ace9a78cddd22366aff9c3618f176fdd679231717a155bdb
+    - fa5c32107aeb17a87a8145776e02193611fae5a19719910ef5f7b83f
+    - fb41125d010b1efa222eeab45d52328f40c9691947c967e4bda09f5a
+  source: https://yaci-playground.cf-app.org/mcp
+  note: Yaci Store dApp registry. Optim liquidity bonds/loans scripts from Yaci
+    Store dApp registry, CRFA and Eternl registries (these end 2025-2026); plus
+    OADA and sOADA minting policies from OptimFinance/oada-ui
+    src/mainnet/oada-config.ts, which carry the current activity.
 lastVerified: 2026-10-20

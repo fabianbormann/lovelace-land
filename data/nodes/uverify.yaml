@@ -1,7 +1,10 @@
 id: uverify
 name: UVerify
 district: products
-description: Open-source notary service that anchors file and text hashes on Cardano and renders each one as a shareable, verifiable certificate page (diplomas, product passports, lab reports, connected goods). Started inside the Cardano Foundation and listed in the Notary category on cardano.org.
+description: Open-source notary service that anchors file and text hashes on
+  Cardano and renders each one as a shareable, verifiable certificate page
+  (diplomas, product passports, lab reports, connected goods). Started inside
+  the Cardano Foundation and listed in the Notary category on cardano.org.
 maintainer: UVerify (Fabian Bormann)
 links:
   website: https://uverify.io
@@ -17,7 +20,8 @@ uses:
       - url: https://github.com/UVerify-io/uverify-scripts/blob/main/aiken.toml
         kind: manifest
         retrieved: 2026-10-20
-        note: "UVerify validators are an Aiken project (compiler v1.1.23, aiken-lang/stdlib 3.0.0, sidan-lab/vodka)"
+        note: "UVerify validators are an Aiken project (compiler v1.1.23,
+          aiken-lang/stdlib 3.0.0, sidan-lab/vodka)"
   - target: cardano-client-lib
     relation: library
     confidence: verified
@@ -25,7 +29,8 @@ uses:
       - url: https://github.com/UVerify-io/uverify-backend/blob/main/pom.xml
         kind: manifest
         retrieved: 2026-10-20
-        note: com.bloxbean.cardano cardano-client-lib 0.8.0-pre5-dev1 plus backend, annotation-processor and merkle-patricia-forestry modules
+        note: com.bloxbean.cardano cardano-client-lib 0.8.0-pre5-dev1 plus backend,
+          annotation-processor and merkle-patricia-forestry modules
   - target: yaci-store
     relation: library
     confidence: verified
@@ -33,7 +38,8 @@ uses:
       - url: https://github.com/UVerify-io/uverify-backend/blob/main/pom.xml
         kind: manifest
         retrieved: 2026-10-20
-        note: yaci-store-spring-boot-starter plus utxo, transaction and script starters 2.0.2.1 (embedded indexer)
+        note: yaci-store-spring-boot-starter plus utxo, transaction and script starters
+          2.0.2.1 (embedded indexer)
   - target: scalus
     relation: library
     confidence: verified
@@ -57,7 +63,8 @@ uses:
       - url: https://github.com/UVerify-io/uverify-backend/blob/main/.env.example
         kind: docs
         retrieved: 2026-10-20
-        note: Koios is the documented alternative primary backend (cardano-client-backend-koios in pom.xml)
+        note: Koios is the documented alternative primary backend
+          (cardano-client-backend-koios in pom.xml)
   - target: cardano-connect-with-wallet
     relation: library
     confidence: verified
@@ -66,4 +73,26 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: "@cardano-foundation/cardano-connect-with-wallet ^0.2.22"
+onchain:
+  scripts:
+    - 07d07e14f58a908a89d065faa28c969f4e1b7174b0075e233127f270
+    - 1919c122cba719a9bf760e4e463bbcf8a3d46327569cdb5edd8b7d0e
+    - 20c3394ac4946a389853a545719ea3080c494e578903239c36bd8b0b
+    - 2be4b4dccb1e87fbb81f5e3ec518646792b1909c7add563bc162f97b
+    - 314cdf9ea60ee354ff1b87da74f15dedd4070604b2819a1d6bac3453
+    - 499b5f203848362b46c6e0958e8ef318fe5f928f880b6c1baf9f6d7e
+    - a8172157733dd50ef6f0f8d38e361745037f0a79c1f5da9b1d8079ff
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/uverify.json
+  note: "Proxy 07d07e14, State V1 499b5f20, Library 20c3394a (reference-script
+    holder, never executed), and legacy V0 Auth Token a8172157, Issue State
+    1919c122, Update State 314cdf9e and Connected Goods 2be4b4dc come from the
+    StricaHQ contracts registry. They are cross-checked against uverify-backend:
+    the V0 hashes are hardcoded for MAINNET in ValidatorUtils.java, and the
+    proxy is parameterized with application.yml PROXY_TX_HASH e87045af...#1. A
+    newer state-contract version (c054825a..., Aug 2026+) is deliberately not
+    listed because no published source names it; every one of its transactions
+    also runs the listed proxy, so counts are unaffected. It runs as a withdraw
+    script only in tx that also run the proxy (1842/1842), as 499b5f20 does
+    (11465/11465). Activity: V0 2025-04 to 2025-09, V1 2026-02-18 to 2026-09-30.
+    No proxy or state tx since 2026-09-30 (0 in Oct 1-19)."
 lastVerified: 2026-10-20

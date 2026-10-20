@@ -1,7 +1,10 @@
 id: rosen-bridge
 name: Rosen Bridge
 district: bridges
-description: Cross-chain bridge connecting Cardano and Ergo with Ethereum, EVM chains and other networks; watcher nodes observe events and guard services validate approved events and execute transfers via multi-signature or threshold signing.
+description: Cross-chain bridge connecting Cardano and Ergo with Ethereum, EVM
+  chains and other networks; watcher nodes observe events and guard services
+  validate approved events and execute transfers via multi-signature or
+  threshold signing.
 maintainer: Rosen Bridge team
 links:
   website: https://rosen.tech
@@ -22,7 +25,8 @@ uses:
       - url: https://github.com/rosen-bridge/guard-service/blob/dev/packages/chains/cardano/package.json
         kind: manifest
         retrieved: 2026-10-20
-        note: "@rosen-chains/cardano depends on @emurgo/cardano-serialization-lib-nodejs ^13.2.0"
+        note: "@rosen-chains/cardano depends on @emurgo/cardano-serialization-lib-nodejs
+          ^13.2.0"
   - target: koios
     relation: service
     confidence: verified
@@ -47,4 +51,15 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: "@rosen-bridge/cardano-scanner depends on @cardano-ogmios/client ^6.6.1"
+onchain:
+  addresses:
+    - addr1v8kqhz5lkdxqm8qtkn4lgd9f4890v0j6advjfmk5k9amu4c535lsu
+    - addr1x8x6ca648w25x085dg8xs6k5e69yemr5hakcnl0gshmal6gahwzvy33q3jhr74lurpr9p0n8derw58fh7snq2zwxe8zsdkcqrj
+  source: https://github.com/rosen-bridge/contract/releases/tag/7.1.1
+  note: "Cardano lock address (key credential ec0b8a9f..., TSS-controlled) and
+    cold-storage address from the contracts-public-launch-7.1.1.json release
+    asset (cardano.addresses.lock/cold; the same values are in
+    rosen-bridge/contract application.conf). There are no Cardano Plutus
+    scripts: the bridge logic is on Ergo. Activity starts 2023-12. sept2026Tx
+    counts distinct txs with outputs to these addresses."
 lastVerified: 2026-10-20

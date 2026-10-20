@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { commitsQuery, parseCommits, parseSqlRows, repoOf, txQueries, yearChunks } from '../../scripts/lib/activity-sources';
+import { commitsQuery, MAX_SQL_LENGTH, parseCommits, parseSqlRows, repoOf, txPlan, txQueries, yearChunks } from '../../scripts/lib/activity-sources';
 
 const HASH = 'e1317b152faac13426e6a83e06ff88a4d62cce3c1634ab0a5ec13309';
 
@@ -25,6 +25,29 @@ describe('txQueries', () => {
 
   it('refuses identifiers that could break out of the SQL string', () => {
     expect(() => txQueries({ scripts: ["x' OR 1=1 --"] }, ['2026-01-01', '2026-02-01'])).toThrow(/invalid/);
+  });
+
+  it('matches long script lists by hash prefix so the count stays exact and under the limit', () => {
+    const many = Array.from({ length: 700 }, (_, i) => (i * 7919).toString(16).padStart(8, '0') + 'a'.repeat(48));
+    const plan = txPlan({ scripts: many }, [['2026-01-01', '2026-02-01']]);
+    expect(plan.queries).toHaveLength(1);
+    expect(plan.queries[0].length).toBeLessThan(MAX_SQL_LENGTH);
+    expect(plan.queries[0]).toMatch(/substr\(script_hash, 1, \d+\) IN/);
+    expect(plan.prefix!.checkQuery).toMatch(/SELECT DISTINCT script_hash FROM transaction_scripts/);
+    expect(plan.prefix!.checkQuery.length).toBeLessThan(MAX_SQL_LENGTH);
+  });
+
+  it('excludes foreign scripts that share a prefix', () => {
+    const many = Array.from({ length: 700 }, (_, i) => (i * 7919).toString(16).padStart(8, '0') + 'a'.repeat(48));
+    const foreign = many[3].slice(0, 20) + 'f'.repeat(36);
+    const plan = txPlan({ scripts: many }, [['2026-01-01', '2026-02-01']], [foreign]);
+    expect(plan.queries[0]).toContain(`script_hash NOT IN ('${foreign}')`);
+  });
+
+  it('keeps short lists exact without prefixes', () => {
+    const plan = txPlan({ scripts: [HASH] }, [['2026-01-01', '2026-02-01']]);
+    expect(plan.prefix).toBeUndefined();
+    expect(plan.queries[0]).toContain(`script_hash IN ('${HASH}')`);
   });
 
   it('returns nothing without identifiers', () => {

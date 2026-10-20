@@ -1,7 +1,8 @@
 id: sundaeswap
 name: SundaeSwap
 district: products
-description: Decentralized exchange on Cardano (V3 AMM and V4 pools) built by Sundae Labs; the official DEX partner of the USDM stablecoin.
+description: Decentralized exchange on Cardano (V3 AMM and V4 pools) built by
+  Sundae Labs; the official DEX partner of the USDM stablecoin.
 maintainer: Sundae Labs
 links:
   website: https://sundae.fi
@@ -27,7 +28,8 @@ uses:
       - url: https://github.com/SundaeSwap-finance/sundae-sdk/blob/main/packages/core/package.json
         kind: manifest
         retrieved: 2026-10-20
-        note: '@sundaeswap/core depends on @blaze-cardano/sdk, @blaze-cardano/core and @blaze-cardano/data'
+        note: '@sundaeswap/core depends on @blaze-cardano/sdk, @blaze-cardano/core and
+          @blaze-cardano/data'
   - target: acropolis
     relation: infrastructure
     confidence: verified
@@ -35,5 +37,50 @@ uses:
       - url: https://github.com/SundaeSwap-finance/scooper-v2/blob/main/Cargo.toml
         kind: manifest
         retrieved: 2026-10-20
-        note: 'scooper v2 ("powering v4 of the SundaeSwap DEX") depends on input-output-hk/acropolis modules incl. custom indexer and mithril snapshot fetcher'
+        note: 'scooper v2 ("powering v4 of the SundaeSwap DEX") depends on
+          input-output-hk/acropolis modules incl. custom indexer and mithril
+          snapshot fetcher'
+onchain:
+  scripts:
+    - 0029cb7c88c7567b63d1a512c0ed626aa169688ec980730c0473b913
+    - 07eb2fb09d9dd6603870ce6f84c8f8506249152173ddf0c77f1f07ec
+    - 1351c687e6359b0030086fc7ddd6cd389f55f97faba3f531c5535688
+    - 21c9b7b965646069f9becebf8b4c3cedaf84c19b109eaa5980a14a26
+    - 267eabb980be6699144e85b24283659838b0746e0fd2f08be1423e70
+    - 295f0471e1c9e5865ac198d685c3eb6d982c640396e9f2e46d789208
+    - 30f1fac08a15ef84ea6a5aa04989b1c2ceeb3b437f2c3103df5aca68
+    - 31d2328d6ddc3d5dfc48c5b827aa922506a80e7db40f25ef807d0fd5
+    - 35a9eebba5ea685d1deb20e269ca0045b9ff35df85cedde95c619a70
+    - 371738e95ab3f0afba69c6b0896df05d7851a5307a830677b77c2ead
+    - 3776bcc4e4f8a06cf8e18d5507b782c4b539fcbab46ccc02d90a47b4
+    - 4020e7fc2de75a0729c3cc3af715b34d98381e0cdbcfa99c950bc3ac
+    - 4399813dad91bb78a5eb17c26ff50852bc75d3fa7b6e9ae87232ccc1
+    - 4de79a0c17180030bff4c36825cb6e99caa007bc632f789561a26d56
+    - 4e1a435f8d55f26068150579c18964e58078082b899e6bb560be7cd5
+    - 518c4a6ef444c2f0631b3a7adb7514d80212dff988e35c1318da88a2
+    - 598e5522eeb4faef80158a5c1d47ec1f1eaf7750b538dc3110a1cf64
+    - 646ad13fb9e22d3b802049d85e95dc04edb6471eaa9237a932d38d49
+    - 6ab62945d0d8d6288e243b3b6437ff9c099a38e088288f5a6b7c5e8b
+    - 6d9d7acac59a4469ec52bb207106167c5cbfa689008ffa6ee92acc50
+    - 73275b9e267fd927bfc14cf653d904d1538ad8869260ab638bf73f5c
+    - 74db9c7a23605cacae4ee635a15af6e63c5a39915c481254eeb9758b
+    - 7dc752dd5ff6151e44621e6e10636ba5d0aa4de4ed14b63365edb898
+    - 808db58d7d66d348b0cc7d83c202ef1d19534d00bf6c463a531020ad
+    - 99e5aacf401fed0eb0e2993d72d423947f42342e8f848353d03efe61
+    - ba158766c1bae60e2117ee8987621441fac66a5e0fb9c7aca58cf20a
+    - bcdca3ffc967ed2a5bf2dc9040f9f17d97f574122f7561fe26ef565b
+    - d42d10695c0c2f7b3f7e32a0559c80704da8cf320289e7831b99d825
+    - d9d5985e0657933005d6eb953aeadad29aa8c36f17e493e2962584ec
+    - e0302560ced2fdcbfcb2602697df970cd0d6a38f94b32703f51c312b
+    - e0fccbbfb75923bff6dac5f23805dcf6cecfaae8aa3a6d3e474ee670
+    - e8a447d4e19016ca2aa74d20b4c4de87adb1f21dfb5493bf2d7281a6
+    - f47f6594cab956302f7f1cd81ac4122e9ee128146102497feca1a79f
+    - f50153654bd0e167563cd0bbbff1b73c40157e53408a0ef517e67a5d
+    - fa6a58bbe2d0ff05534431c8e2f0ef2cbdc1602a8456e4b13c8f3077
+  source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/sundae-swap.json
+  note: V1, V3, Stableswaps and V4 (launched 2026-09-17) validators; hash list
+    cross-checked against the official Sundae API protocol blueprints
+    (https://api.sundae.fi/graphql, query protocols{blueprint{validators}}) and
+    scooper-v2 config/mainnet.json; plus V1-era yield-farming scripts from Yaci
+    Store dApp registry and CRFA registry.
 lastVerified: 2026-10-20

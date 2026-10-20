@@ -1,7 +1,8 @@
 id: strike-finance
 name: Strike Finance
 district: products
-description: Derivatives protocol on Cardano offering perpetual futures (and earlier options and forwards) trading.
+description: Derivatives protocol on Cardano offering perpetual futures (and
+  earlier options and forwards) trading.
 maintainer: Strike Finance
 links:
   website: https://www.strikefinance.org
@@ -25,4 +26,18 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: 'depends on @lucid-evolution/lucid'
+onchain:
+  scripts:
+    - 148c5cbcebfcf7f62d4555171b0e354273eb759929c8f410d6a1fe03
+    - 1e0c1a445e185485277c044d77d2b1aaf80aa489a28a4c1e11ec8df0
+    - 37ec634d8f988ba9157f31bc7f024a6a2d8b8d483fa082de62d43bd1
+    - 497a8b0085517f1c9065cf3006af4c266454b39c6fa32a9d116c75ee
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/StrikeFinance.json
+  note: V1 perps LP + batcher scripts (May-Sep 2025) and V1/V2 STRIKE staking
+    scripts; hashes taken from the CRFA contractAddress fields (CRFA scriptHash
+    fields for staking are wrong) and matching Eternl entries. Excluded
+    Eternl/CRFA entries labelled "Unknown but associated with Strike". Strike V2
+    (CLOB, since 2026) settles via a locker/vault address that the docs do not
+    publish, so current perps volume is NOT covered; Sept count is staking only
+    (cardano.org also shows ~23 tx/30d).
 lastVerified: 2026-10-20

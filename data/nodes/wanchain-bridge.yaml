@@ -1,7 +1,11 @@
 id: wanchain-bridge
 name: Wanchain Bridge (Cardano)
 district: bridges
-description: Decentralized cross-chain bridge whose MPC "Storeman" nodes connect Cardano mainnet (since August 2023) to Bitcoin, Ethereum, EVM chains and others, bringing assets such as USDT/USDC to Cardano. Its Cardano-to-BNB Chain route was exploited on 2026-07-20 via a non-injective signed-message encoding in the TreasuryCheck validator (about 515M NIGHT drained).
+description: Decentralized cross-chain bridge whose MPC "Storeman" nodes connect
+  Cardano mainnet (since August 2023) to Bitcoin, Ethereum, EVM chains and
+  others, bringing assets such as USDT/USDC to Cardano. Its Cardano-to-BNB Chain
+  route was exploited on 2026-07-20 via a non-injective signed-message encoding
+  in the TreasuryCheck validator (about 515M NIGHT drained).
 maintainer: Wanchain
 links:
   website: https://www.wanchain.org
@@ -15,9 +19,29 @@ uses:
       - url: https://www.newsfilecorp.com/release/176894/Wanchain-Announces-Successful-Deployment-of-New-Cardano-Bridge-Solution
         kind: announcement
         retrieved: 2026-10-20
-        note: Wanchain "needed to fully develop Haskell smart contracts which support cross-chain transactions"
+        note: Wanchain "needed to fully develop Haskell smart contracts which support
+          cross-chain transactions"
       - url: https://github.com/DarkNavySecurity/web3-exploit-analysis/blob/main/artifacts/analysis_0a4861be5dd1cd0a5ccd7d38855ef8fe233563274c22c27adb4f5980535d2ea1/report.md
         kind: article
         retrieved: 2026-10-20
-        note: Third-party exploit analysis correlates the deployed Plutus V2 scripts with Wanchain's PlutusTx source (TreasuryCheck.hs, now-removed wanchain/cardanoCatalyst repo)
+        note: Third-party exploit analysis correlates the deployed Plutus V2 scripts
+          with Wanchain's PlutusTx source (TreasuryCheck.hs, now-removed
+          wanchain/cardanoCatalyst repo)
+onchain:
+  scripts:
+    - 1cfb41dc0b8d13fe53600e17059dcbcda2d8647347ec25288b4f5234
+    - 25c5de5f5b286073c593edfd77b48abc7a48e5a4f3d4cd9d428ff935
+    - 485aa10343f63bcc2a43f1625dc841093488e4685ba607cc187ba495
+    - 520b2576e83cfd074de6d0a300bfc4abc2c9eef6e02465eebc853f2d
+    - 60ec1132e41b27b94a69b679a67041c8b6ea30643f0130cd4f08bd73
+    - 8d4c43c5a72fe731513ebecf5f44d717164d254e08eb4a57ee234bb7
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/Wanchain.json
+  note: "CRFA and Eternl registries: 'Cross chain bridge' treasury validators
+    520b2576/1cfb41dc/8d4c43c5 (shared stake credential 259b187a), plus mint
+    25c5de5f and spend 60ec1132, both unnamed in the registry. 485aa103 =
+    TreasuryCheck validator per the DarkNavy exploit analysis (third party),
+    which also identifies 1cfb41dc as the treasury validator. 520b2576 and
+    8d4c43c5 have been inactive since 2024-08. TreasuryCheck 485aa103 was last
+    used on the 2026-07-20 exploit date and has likely been replaced by a
+    version that is not documented, so Sept 2026 (15 tx) may undercount."
 lastVerified: 2026-10-20

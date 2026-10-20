@@ -1,7 +1,10 @@
 id: book-io
 name: Book.io
 district: products
-description: Marketplace for e-books and audiobooks sold as Decentralized Encrypted Assets (DEAs) on Cardano that readers can own, resell or gift; backed by Ingram Content Group, whose Mint & Print service fulfils print copies.
+description: Marketplace for e-books and audiobooks sold as Decentralized
+  Encrypted Assets (DEAs) on Cardano that readers can own, resell or gift;
+  backed by Ingram Content Group, whose Mint & Print service fulfils print
+  copies.
 maintainer: Book.io
 links:
   website: https://book.io
@@ -15,7 +18,8 @@ uses:
       - url: https://www.nmkr.io/
         kind: case-study
         retrieved: 2026-10-20
-        note: 'NMKR use-case card: "The \"Meditations\" NFT collection by Book.io" (encrypted DEA on Cardano).'
+        note: 'NMKR use-case card: "The \"Meditations\" NFT collection by Book.io"
+          (encrypted DEA on Cardano).'
   - target: cardano-serialization-lib
     relation: library
     confidence: inferred
@@ -23,5 +27,18 @@ uses:
       - url: https://github.com/book-io/cardano-serialization-lib
         kind: manifest
         retrieved: 2026-10-20
-        note: Book.io's GitHub org maintains a fork of CSL (last push Aug 2025); product source is closed.
+        note: Book.io's GitHub org maintains a fork of CSL (last push Aug 2025); product
+          source is closed.
+onchain:
+  scripts:
+    - 46afcc024d90db382187d637b0749f1dab783e9d113ff494637dd2ed
+    - 4a84b71b33b2aedf259e259b4d73526f80f212a50feaa2bbf26b8f58
+    - 54a8ac62c311ea39dfee423fc0a2761279f0ffa10aa596d6577ff548
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/Book.json
+  note: Book.io Plutus time-lock / swap / archive validators (CRFA + Eternl; last
+    used Feb 2025). Book.io's main activity is minting DEAs under 893 native
+    collection policies listed by the official API
+    https://api.book.io/api/v0/collections (saved to scratchpad
+    bookio_policies.json); those are native scripts not in transaction_scripts;
+    assets table shows 38 mint/burn tx in Sept 2026 across them.
 lastVerified: 2026-10-20

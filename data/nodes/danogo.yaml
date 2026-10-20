@@ -1,7 +1,9 @@
 id: danogo
 name: Danogo (Dano Finance)
 district: products
-description: Cardano DeFi platform for fixed-income style products; its DEX trades bond tokens issued via Optim and it offers a concentrated-liquidity (CLMM) pool SDK.
+description: Cardano DeFi platform for fixed-income style products; its DEX
+  trades bond tokens issued via Optim and it offers a concentrated-liquidity
+  (CLMM) pool SDK.
 maintainer: Danogo
 links:
   website: https://dano.finance
@@ -35,5 +37,56 @@ uses:
       - url: https://github.com/dano-finance/clmm-sdk/blob/init-sdk/README.md
         kind: docs
         retrieved: 2026-10-20
-        note: 'Prerequisites: "A Kupmios provider for blockchain data and transaction submission" (Kupo + Ogmios)'
+        note: 'Prerequisites: "A Kupmios provider for blockchain data and transaction
+          submission" (Kupo + Ogmios)'
+onchain:
+  scripts:
+    - 003a6fb5d426c5f1db82a40f3dad0435b745365f80881efe7bc89ec6
+    - 012a6bd4ae76261c1d3b5067caa4010f781f5c1c64ce2779bba2f90a
+    - 122904fda33efe3bfbb60626e363d468300c79338f57540d9d3d9607
+    - 1265e81d9cf29a844264861d0230d7c632efa38a67c2f24e669062fd
+    - 1ab195cc35a6e84164403677f81096a6a7a4a5a95b8c4e04c9f11025
+    - 1adf21d53a99c21d63c69758fcbb882795a90ff99c9254a33bf04a1a
+    - 203cf07b27c8a1de07cc4d1f6927298be436a73526418edb97cbc9a5
+    - 22e212c5278964fba8f90cb8240c1c2926fe4a24758eabc3258b8c9c
+    - 511d3a02d3a7850dec3eb97caa7e0d491138284af9303df5d0ddfc2b
+    - 534de3c0c26a8db1fdfc34b4efa5039879c4b4b09e6e3ae92881f22f
+    - 537071da0b93b2c126ffeb754e9147f816d6da1ef13e72aba4d22523
+    - 67adaa1f0c90925d42ac1d444f6b18f695370deb0b270a3f08cc40be
+    - 6c7831efc56f019518ff9a2bad54848c7ee689b99dbca042b251a096
+    - 73f29518da0013a671458d52624a4828c5b5bedaff8a950b0063b1cf
+    - 79a5116ee2ff13ffd53b2615568574fc804740a07bc2ff8930d2d6fb
+    - 814de8a99452972a9fa9fe2c0f59f49697f208005c001ecac1ddfd57
+    - 8786a2761c8a5b43af6b936fd852080820a9051ae9e707a7f1d6492a
+    - 8bffef8c538fbe549269e86f56fd5174ad3128828befeabc4e7df9bf
+    - 93e8809888a2ee78edb41151c1460eccd1c4e89f65b69aab636f4d53
+    - 94dca24a1f1fcc2ff51cd90f32f4fe9e786d861a2dbf7d27598d26e8
+    - 9759bfd89ffa91652064f3a2ef66dcc5c52ca85b55e938ad29198f72
+    - 9a0054cf2ab678edcd7528d16a388e5b1cefa3af40d5b9634ab96de6
+    - a2a39081978098ade606768c8b688d1ecc57910e8708511b48da82d2
+    - a59752e18abd49e8c795d553c3a6abf8453d8479d6af631335992fd6
+    - a950bd8041cf8c9ca4522373fccfcf6b0c7fe070461668513fe8aa9a
+    - ac9cc4f7781ff5e1d6bb7dfc7caa655aee41bb92ca3c4b05122ac107
+    - aca8e306eda3eb6c25a838bebac37d929c216aab13c8d463fca5a08d
+    - b49635995d909a262fe030bb92886257a24e8b96eab5fa03ef9ff517
+    - bd23e2977937bb6054f625e5b566e28e294dcd8f7e8d0d33979ed90c
+    - c6ffee02caa95e0a25b55387f17695b0e365ade57422b249d263fc4d
+    - c72a1aa3e4568cbe681734582d660383b2cabf3f27289643021e89c6
+    - c9f72aa64eab2ad96f4becbf739233212a4acabba7643212cd6182e2
+    - d156b23f34ad66a506a40003ef4008be65dcdd424f41834c5677c2ba
+    - d8b69fc53637bcfadbc4469083f706bc293f4d9d2296646c5ca167bb
+    - e1e60f758e3215e2bfc2cd6d8d143566a8cae27d48e16e7f8ab4195e
+    - e99bdbaa35c8adb221ce6feafcab06cd33575f7518ba5f970c7eb702
+    - f2a240156e3e051ccdc19642c793f807b3bb8b3fb414e1160dd4f40f
+    - fa991bc2f9c4206e72d713bc3487a72e7901057cabb8d364bebeef8f
+    - fe16cfefe72d4c363e49abc93e91976c4933849b8fc155e978861561
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/danoFinance.json
+  note: Dano Finance contracts from StricaHQ registry (CLMM pool,
+    flexible/fixed/leverage lending pools+loans+params, oracle v1/v2, staking,
+    BTC-grow, bond/borrow validators) plus Eternl-registry CLMM
+    config/param/ref-holder scripts and 2023 bond swap validators (CRFA
+    DanogoBond, address-checked). CLMM pool hash d8b69fc5 confirmed by official
+    dano-finance/clmm-sdk constants.ts (POOL_SCRIPT_HASH_MAINNET). Excluded
+    1d2390ba "OptimBond Validator" (also registered to Optim Finance). Sept is
+    dominated by the CLMM pool (~35k tx).
 lastVerified: 2026-10-20

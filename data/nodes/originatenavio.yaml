@@ -1,7 +1,10 @@
 id: originatenavio
 name: OriginateNavio (Originate)
 district: products
-description: Cardano Foundation open-source traceability platform that signs certification and supply-chain events and anchors them as Cardano transaction metadata, with a dashboard, mobile QR app and APIs. It powers the Georgian wine (Bolnisi) traceability programme.
+description: Cardano Foundation open-source traceability platform that signs
+  certification and supply-chain events and anchors them as Cardano transaction
+  metadata, with a dashboard, mobile QR app and APIs. It powers the Georgian
+  wine (Bolnisi) traceability programme.
 maintainer: Cardano Foundation
 links:
   website: https://cardanofoundation.org/blog/introducing-originate
@@ -40,5 +43,8 @@ uses:
       - url: https://github.com/cardano-foundation/originatenavio/blob/main/README.md
         kind: docs
         retrieved: 2026-10-20
-        note: "Metabus 'Builds the corresponding metadata transaction - Submits it through a local node'"
+        note: "Metabus 'Builds the corresponding metadata transaction - Submits it
+          through a local node'"
+active:
+  from: 2023-10
 lastVerified: 2026-10-20

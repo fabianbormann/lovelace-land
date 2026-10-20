@@ -1,7 +1,9 @@
 id: usdm
 name: USDM (Moneta)
 district: products
-description: Fiat-backed USD stablecoin native to Cardano, launched March 2024 (originally by Mehen); issued by Moneta Digital in the US and co-issued by NBX in the EEA, with reserves attested on-chain by an oracle.
+description: Fiat-backed USD stablecoin native to Cardano, launched March 2024
+  (originally by Mehen); issued by Moneta Digital in the US and co-issued by NBX
+  in the EEA, with reserves attested on-chain by an oracle.
 maintainer: Moneta Digital
 links:
   website: https://moneta.global
@@ -16,7 +18,8 @@ uses:
       - url: https://cdn.sundaeswap.finance/audits/mehen.pdf
         kind: docs
         retrieved: 2026-10-20
-        note: 'Sundae Labs audit of the Mehen/USDM protocol lists "Aiken Compiler aiken v1.0.24-alpha"; contracts are not open source'
+        note: 'Sundae Labs audit of the Mehen/USDM protocol lists "Aiken Compiler aiken
+          v1.0.24-alpha"; contracts are not open source'
   - target: charli3
     relation: service
     confidence: verified
@@ -24,9 +27,22 @@ uses:
       - url: https://cdn.sundaeswap.finance/audits/mehen.pdf
         kind: docs
         retrieved: 2026-10-20
-        note: 'minting is disallowed if it would bring circulating supply above the value reported by the Charli3 oracle'
+        note: 'minting is disallowed if it would bring circulating supply above the
+          value reported by the Charli3 oracle'
       - url: https://www.inderes.dk/releases/nbx-otc-minting-and-burning-of-usdm-now-available-at-nbx
         kind: announcement
         retrieved: 2026-10-20
-        note: 'NBX (co-issuer), 28 Mar 2025: "reserve values continuously verified by the decentralized oracle Charli3"'
+        note: 'NBX (co-issuer), 28 Mar 2025: "reserve values continuously verified by
+          the decentralized oracle Charli3"'
+onchain:
+  scripts:
+    - 3e7530a023f5780a8fb800d23f9a338b76e5c4f2dd2edd19b29610fb
+    - 6b3cb86f8aee9b5d754ba7aff3acea986297e833d52af0b00efe37c7
+    - c48cbb3d5e57ed56e276bc45f99ab39abe94e6cd7ac39fb402da47ad
+    - e319d8e6629ff7991c8ae4f8aec2e0f10463ebdf29b57d26d34914f6
+  source: https://moneta.global/developers/
+  note: USDM minting policy c48cbb3d... (documented by Moneta; Plutus, counted per
+    mint/burn transaction) plus token-counter and two USDM scripts from Yaci
+    Store dApp registry/CRFA/Eternl. Ordinary USDM transfers involve no script,
+    so this measures issuance activity only.
 lastVerified: 2026-10-20

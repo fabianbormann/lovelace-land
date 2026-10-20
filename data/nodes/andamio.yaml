@@ -1,7 +1,10 @@
 id: andamio
 name: Andamio
 district: products
-description: Verified-trust protocol for distributed work where organizations issue on-chain credentials for completed learning modules and contributions, and contributors build a verifiable track record. Listed in the Identity category on cardano.org.
+description: Verified-trust protocol for distributed work where organizations
+  issue on-chain credentials for completed learning modules and contributions,
+  and contributors build a verifiable track record. Listed in the Identity
+  category on cardano.org.
 maintainer: Andamio
 links:
   website: https://www.andamio.io/
@@ -33,4 +36,24 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: "@meshsdk/core, @meshsdk/react, @meshsdk/wallet"
+onchain:
+  scripts:
+    - 03a30e09a88abff86a6d88d47a9ed472a451920f5cb2f2d0449d9587
+    - 0de83d7df97fcf539c56a43605d77800d93917a678af5d2c1702c423
+    - 16c5b8eaf75a95d04cfdaa20d4a227835ec9c52db75ff0df12806a5f
+    - 6415f31b6f942d2140717076eeab1934e39235ee15df4d7c6c9fb3ff
+    - 98128687f1622463d2d37cba33150c14b32651ebc96cbb52ad975cba
+    - a8d2f21558831626a4ab01582a4568be1dac3298e6b92450a8e839a3
+    - da109ad01a8d7050e079ed7537930ba074b37fa3fdad76320788b2e8
+    - e760308d0c14096ff479ec5f2495455505feb790503903fe976c4fd2
+    - ebcf819ea5b1539df63472a549d9c5293f7476e8a5f91235053a6371
+  source: https://github.com/Andamio-Platform/andamio-docs/blob/main/content/docs/contract-verification.mdx
+  note: "Andamio Protocol V2 mainnet global contracts from the official
+    contract-verification page (also mainnet-v2/params.yaml). Policies: Access
+    Token, Instance, Instance Admin, Instance Provider, Index Admin, Index Ref
+    Token. Spend-validator payment hashes: Global State ebcf819e, Index Ref
+    03a30e09, Instance Governance 6415f31b. Index/Instance/Instance-Provider
+    scripts share hashes with their policies. Per-project treasuries and
+    per-course/project instance scripts are parameterized and not listed, so
+    this undercounts. Active 2025-02-21 to 2026-07-20, 0 in Sept 2026."
 lastVerified: 2026-10-20

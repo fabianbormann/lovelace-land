@@ -1,0 +1,14 @@
+{
+  "id": "commitproof",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://commitproof.com/_astro/cardano.B_cTHFFk.js",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <year window> AND CAST(label AS VARCHAR) IN ('8413')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2026-03": 15,
+    "2026-04": 2,
+    "2026-05": 1,
+    "2026-06": 13,
+    "2026-07": 1,
+    "2026-09": 1
+  }
+}

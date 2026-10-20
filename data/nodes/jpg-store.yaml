@@ -1,7 +1,9 @@
 id: jpg-store
 name: JPG Store
 district: products
-description: Formerly the largest Cardano NFT marketplace (listings, bids, launchpad). It disabled new listings in April 2026 and shut down on 23 May 2026; its v3 Aiken contracts continue to be served by Wayup.
+description: Formerly the largest Cardano NFT marketplace (listings, bids,
+  launchpad). It disabled new listings in April 2026 and shut down on 23 May
+  2026; its v3 Aiken contracts continue to be served by Wayup.
 maintainer: JPG Store
 links:
   website: https://www.jpg.store
@@ -16,7 +18,8 @@ uses:
       - url: https://github.com/jpg-store/contracts-v3/blob/main/aiken.toml
         kind: manifest
         retrieved: 2026-10-20
-        note: 'README: "This repo contains the smart contracts powering jpg.store. 100% written in Aiken."'
+        note: 'README: "This repo contains the smart contracts powering jpg.store. 100%
+          written in Aiken."'
   - target: lucid
     relation: library
     confidence: verified
@@ -24,5 +27,22 @@ uses:
       - url: https://github.com/jpg-store/contracts-v3/blob/main/e2e/main.ts
         kind: manifest
         retrieved: 2026-10-20
-        note: 'End-to-end tests import https://deno.land/x/lucid@0.10.1/mod.ts (production off-chain stack not public)'
+        note: 'End-to-end tests import https://deno.land/x/lucid@0.10.1/mod.ts
+          (production off-chain stack not public)'
+onchain:
+  scripts:
+    - 25da22dfd99bf874e59d74c304a1d28e921310327c3e4d6960123f2e
+    - 4a59ebd93ea53d1bbf7f82232c7b012700a0cf4bb78d879dabb1a20a
+    - 9068a7a3f008803edac87af1619860f2cdcde40c26987325ace138ad
+    - a55f409501bf65805bb0dc76f6f9ae90b61e19ed870bc00256813608
+    - beb881c47075b2910ae7e13fb268908f70878d06638ff86a5caaa16c
+    - c727443d77df6cff95dca383994f4c3024d03ff56b02ecc22b0f3f65
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/jpgStore.json
+  note: JPG Store v1/v2/v3 ask+bid contracts (StricaHQ, CRFA, Eternl, Yaci Store
+    dApp registry). JPG Store shut down 2026-05-23; its contracts are still
+    served by Wayup afterwards, so activity after 2026-05 belongs to Wayup (see
+    active.until).
+active:
+  from: 2021-10
+  until: 2026-05
 lastVerified: 2026-10-20

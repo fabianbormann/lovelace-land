@@ -1,7 +1,9 @@
 id: ada-handle
 name: ADA Handle
 district: products
-description: Standardized NFT that maps a Cardano address to a human-readable $handle, used by wallets and dApps as the network's de facto naming layer. Listed in the Identity category on cardano.org.
+description: Standardized NFT that maps a Cardano address to a human-readable
+  $handle, used by wallets and dApps as the network's de facto naming layer.
+  Listed in the Identity category on cardano.org.
 maintainer: Kora Labs
 links:
   website: https://handle.me/
@@ -40,7 +42,8 @@ uses:
       - url: https://github.com/koralabs/api.handle.me/blob/mainnet/package.json
         kind: manifest
         retrieved: 2026-10-20
-        note: "@cardano-ogmios/client ^6.11.0; README: 'It follows the chain through Ogmios'"
+        note: "@cardano-ogmios/client ^6.11.0; README: 'It follows the chain through
+          Ogmios'"
   - target: cardano-node
     relation: infrastructure
     confidence: verified
@@ -49,4 +52,34 @@ uses:
         kind: docs
         retrieved: 2026-10-20
         note: "One image runs cardano-node, Ogmios and the API together"
+onchain:
+  scripts:
+    - 020c5d23c38087ae006e01926cba57ff0022287f9e6fafeb891b77a0
+    - 0d2b729731ca4db1edf8305572a38a60ab12913e8b83a9f2121be41d
+    - 1fcfe6fd763e2f268625a8b70841a319df08a140adb09602f1e6dcae
+    - 4cd9e0bd6c1639f6c61d46288bc2094112cefa216ff501d75ccdea41
+    - 503d94a31d3e6c3592323962a263273e2557c749f35e36e5a2d69011
+    - 51530e22383d924a8e6955d3c63f5622d079eb7cbd6794242c457230
+    - 5298e0e10ca0d3b90be2a8022f60954dfb7c48856f4f5c01f6dad0a6
+    - 553de54adecc5c9bfa806cbe0341de9c8a8f8ef13d28e86a81284333
+    - 5cd18d995b79d3dab1d5190f84d73f3966610420254ac0379bbbfe1a
+    - 6c043fc9e3f4dfbabe01e07a54fcf8aa3eaa38e82777b10f9461859c
+    - 6c32db33a422e0bc2cb535bb850b5a6e9a9572222056d6ddc9cbc26e
+    - 7a04600f22a7101eaad5fdb86d0a91c78bf5c8eb29e86799bda830ed
+    - 7cf105586f77934a524c9e78f8879a33460104f9578e9ac927f577e3
+    - 83d1a3c701d88332edad6df0cc0cffcb7412be02774d38ff33e2302b
+    - acbb75f1996b1f50a4a8719307695b6e280c6c3db0d50207c390b6dd
+    - d84e5bd5394b96cb61104439732fdf31fe272275f4a3235c105bc332
+    - d9b3709892158087eceb93c4fd46d112d1f81c76a874e052d1e671cb
+    - f0ff48bbb7bbe9d59a40f1ce90e9e9d0ff5002ec48f232b49ca0fb9a
+    - f2799138a412ce749f50fab3ae1537400cc3ce7099bbd850a6dec03c
+  source: https://api.handle.me/scripts
+  note: "Kora Labs handlecontract scripts from official api.handle.me/scripts:
+    decentralized minting (demimnt/demimntmpt/demimntprx/demiord),
+    personalization (pers1-5, persprx/perspz/persdsg/perslfc), subhandles; plus
+    2023 Personalization 6c043fc9 (CRFA/Eternl). Excluded hal*/mkpl contracts
+    also registered there. $handle policy f0ff48bb (legacy_policy_id in
+    koralabs/decentralized-minting deploy/mainnet yaml) is a native script: not
+    in transaction_scripts; assets table shows 42 mint tx in Sept 2026 (~150k
+    all-time). sept2026Tx is Plutus-script-based only."
 lastVerified: 2026-10-20

@@ -1,7 +1,10 @@
 id: orcfax
 name: Orcfax
 district: oracles
-description: Decentralized oracle that publishes signed "fact statements" (e.g. currency exchange rates and Cardano native token prices) on Cardano for smart contracts to read as reference inputs, with a public explorer for each published fact.
+description: Decentralized oracle that publishes signed "fact statements" (e.g.
+  currency exchange rates and Cardano native token prices) on Cardano for smart
+  contracts to read as reference inputs, with a public explorer for each
+  published fact.
 maintainer: Orcfax
 links:
   website: https://orcfax.io
@@ -17,7 +20,8 @@ uses:
       - url: https://github.com/orcfax/publish/blob/main/aik/aiken.toml
         kind: manifest
         retrieved: 2026-10-20
-        note: The publish dApp's validators are an Aiken project (orcfax/orcfax-pub) with plutus.json
+        note: The publish dApp's validators are an Aiken project (orcfax/orcfax-pub)
+          with plutus.json
   - target: lucid
     relation: library
     confidence: verified
@@ -25,7 +29,8 @@ uses:
       - url: https://github.com/orcfax/publish/blob/main/kio/deps.ts
         kind: manifest
         retrieved: 2026-10-20
-        note: Deno deps pin spacebudz/lucid (and its bundled cardano-multiplatform-lib) at a fixed commit
+        note: Deno deps pin spacebudz/lucid (and its bundled cardano-multiplatform-lib)
+          at a fixed commit
   - target: kupo
     relation: infrastructure
     confidence: verified
@@ -33,7 +38,8 @@ uses:
       - url: https://github.com/orcfax/publish/blob/main/cli/README.md
         kind: docs
         retrieved: 2026-10-20
-        note: Publisher CLI uses a "kupmios" provider (Kupo + Ogmios); Blockfrost is listed as alternative
+        note: Publisher CLI uses a "kupmios" provider (Kupo + Ogmios); Blockfrost is
+          listed as alternative
   - target: ogmios
     relation: infrastructure
     confidence: verified
@@ -41,5 +47,21 @@ uses:
       - url: https://github.com/orcfax/publish/blob/main/cli/README.md
         kind: docs
         retrieved: 2026-10-20
-        note: '--provider kupmios --provider-opts "{{KUPO_URL}} {{OGMIOS_HOST}} {{OGMIOS_PORT}}"'
+        note: '--provider kupmios --provider-opts "{{KUPO_URL}} {{OGMIOS_HOST}}
+          {{OGMIOS_PORT}}"'
+onchain:
+  scripts:
+    - 193ee65211bb3b4e0ea5f751f415269355a650e2e3706f625cdf1a4b
+    - 28ba0bba6fc7bea013932f3014b000ec2844dfb4f7da3e8f463fbca8
+    - 2cccc05192920ff1eb02bcfa7bb2a1fc5352ce58391d7ba3c66a555b
+    - 84da51fd8041b6a1073f1154ddde0c846d71c4081fc1f7ba66e0e6b5
+    - 8793893b5dda6a513ba63c80e9d7b2d4f108060c11979bfc7d863ff0
+    - d78ce124f4c3183782994a94f18701950e9d85f7bef303e7c77df459
+    - e51a6cc459080aa690e32cccb20701dda601f604d5573dc8290c58a8
+  source: https://docs.orcfax.io/deployments
+  note: v1 FSP 8793893b... and FS policy/validator 193ee652... (documented
+    deployments page; FSP datum on-chain confirms the FS hash) plus 2023-24 v0
+    scripts from Yaci Store dApp registry, CRFA and Eternl. Fact-statement
+    publishing on the documented FS stops on 2026-06-18 and no newer deployment
+    is documented, so Sept 2026 = 0.
 lastVerified: 2026-10-20

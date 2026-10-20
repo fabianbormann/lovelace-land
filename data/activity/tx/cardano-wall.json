@@ -1,0 +1,23 @@
+{
+  "id": "cardano-wall",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/cardanowall/label-309",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <year window> AND CAST(label AS VARCHAR) IN ('309')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-20",
+  "months": {
+    "2021-12": 1,
+    "2022-01": 1,
+    "2022-02": 5,
+    "2022-03": 3,
+    "2022-04": 4,
+    "2022-05": 2,
+    "2022-06": 2,
+    "2022-07": 1,
+    "2022-08": 1,
+    "2022-09": 1,
+    "2023-02": 1,
+    "2026-06": 1,
+    "2026-07": 4,
+    "2026-09": 3,
+    "2026-10": 2
+  }
+}

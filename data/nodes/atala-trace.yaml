@@ -1,8 +1,13 @@
 id: atala-trace
 name: Atala TRACE
 district: products
-description: IOHK's early supply-chain traceability offering built on Cardano, part of the Atala enterprise suite. It was used by Wyoming's BeefChain to record cattle RFID data in a 2020 trial. No current Atala TRACE offering was found in 2026; listed for historical significance.
+description: IOHK's early supply-chain traceability offering built on Cardano,
+  part of the Atala enterprise suite. It was used by Wyoming's BeefChain to
+  record cattle RFID data in a 2020 trial. No current Atala TRACE offering was
+  found in 2026; listed for historical significance.
 maintainer: IOHK (Input Output)
 status: deprecated
 primarySector: supply-chain
+active:
+  from: 2020-07
 lastVerified: 2026-10-20

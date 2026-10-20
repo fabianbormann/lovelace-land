@@ -102,6 +102,17 @@ describe('building lifecycle', () => {
     expect(t.nodes.app.state.slice(2, 9)).toBe('aaaabbu');
   });
 
+  it('counts an announced active window as use for a product without transactions', () => {
+    const t = timeline(makeData({ nodes: [node('card', 'products', [], { active: { from: '2025-02', until: '2025-10' } })] }), act());
+    // in use Feb–Oct 2025, then idle: burning from Feb 2026 (4 months after Oct)
+    expect(t.nodes.card.state.slice(1, 14)).toBe('caaaaaaaaaaab');
+  });
+
+  it('ignores a product’s own transactions after its announced end', () => {
+    const t = timeline(makeData({ nodes: [node('shop', 'products', [], { active: { from: '2025-01', until: '2025-03' } })] }), act({ shop: every(10) }));
+    expect(t.nodes.shop.state.slice(6, 10)).toBe('bbuu');
+  });
+
   it('keeps a building without any activity data standing', () => {
     const t = timeline(makeData({ nodes: [node('quiet', 'sdks')] }), act());
     expect(t.nodes.quiet.state).toBe('a'.repeat(MONTHS.length));

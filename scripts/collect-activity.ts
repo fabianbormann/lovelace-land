@@ -15,7 +15,7 @@ import type { MonthCounts } from '../pipeline/activity';
 import { loadDataDir } from '../pipeline/load';
 import { monthOf, monthRange } from '../pipeline/months';
 import { TIMELINE_START } from '../pipeline/timeline';
-import { commitsQuery, parseCommits, parseSqlRows, repoOf, txQueries, yearChunks, type Onchain } from './lib/activity-sources';
+import { commitsQuery, parseCommits, parseRows, parseSqlRows, repoOf, txPlan, yearChunks, type Onchain } from './lib/activity-sources';
 
 const { values } = parseArgs({
   options: {
@@ -47,6 +47,10 @@ function write(kind: 'tx' | 'commits', id: string, body: Record<string, unknown>
 
 let rpcId = 0;
 async function sql(query: string): Promise<MonthCounts> {
+  return parseSqlRows(await sqlText(query));
+}
+
+async function sqlText(query: string): Promise<string> {
   const res = await fetch(MCP, {
     method: 'POST',
     headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' },
@@ -61,17 +65,25 @@ async function sql(query: string): Promise<MonthCounts> {
   const json = (await res.json()) as { result?: { content?: { text: string }[]; isError?: boolean }; error?: { message: string } };
   const text = json.result?.content?.map((c) => c.text).join('') ?? '';
   if (json.error || json.result?.isError) throw new Error(json.error?.message ?? text.slice(0, 300));
-  return parseSqlRows(text);
+  return text;
 }
 
 async function collectTx(id: string, onchain: Onchain & { source?: string }) {
   const windows = yearChunks(TIMELINE_START, current);
-  const queries = txQueries(onchain, ...windows);
+  let plan = txPlan(onchain, windows);
+  if (plan.prefix) {
+    // prefixes may also match foreign scripts: list them and exclude them by full hash
+    const ours = new Set(onchain.scripts);
+    const matched = parseRows(await sqlText(plan.prefix.checkQuery)).map((r) => String(r.script_hash));
+    const foreign = matched.filter((h) => !ours.has(h));
+    if (foreign.length) plan = txPlan(onchain, windows, foreign);
+  }
+  const queries = plan.queries;
   const months: MonthCounts = {};
-  for (const q of queries) Object.assign(months, await sql(q));
+  for (const q of queries) for (const [m, n] of Object.entries(await sql(q))) months[m] = (months[m] ?? 0) + n;
   write('tx', id, {
     id,
-    source: `Yaci Store analytics (${MCP})${onchain.source ? `; identifiers from ${onchain.source}` : ''}`,
+    source: `Yaci Store analytics (${MCP})${onchain.source ? `; identifiers from ${onchain.source}` : ''}${plan.prefix ? `; scripts matched by ${plan.prefix.length}-character hash prefix with foreign matches excluded` : ''}`,
     query: queries[0]?.replace(/date >= DATE '[^']+' AND date < DATE '[^']+'/, 'date in <year window>'),
     collected: today,
     months,

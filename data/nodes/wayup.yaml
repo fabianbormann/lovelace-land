@@ -1,7 +1,10 @@
 id: wayup
 name: Wayup
 district: products
-description: Cardano NFT marketplace built by Anvil that continues JPG Store's smart contracts after JPG Store's shutdown, so existing listings and royalties keep working. cardano.org reports 6,741 on-chain transactions in the 30 days to 2026-10-16.
+description: Cardano NFT marketplace built by Anvil that continues JPG Store's
+  smart contracts after JPG Store's shutdown, so existing listings and royalties
+  keep working. cardano.org reports 6,741 on-chain transactions in the 30 days
+  to 2026-10-16.
 maintainer: Anvil
 links:
   website: https://www.wayup.io
@@ -20,4 +23,13 @@ uses:
         kind: manifest
         retrieved: 2026-10-20
         note: JPG Store v3 contracts are 100% Aiken.
+onchain:
+  scripts:
+    - 27d46ecbec94b052d8f875cf3beafd0e8ca40e8ad069f677e0a128ea
+    - a76f0fb801a29f591e9871576508d85b0b5f3c38774f65032f58fdad
+  source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/wayup.json
+  note: Wayup own Marketplace and Offer validators (Eternl registry; Marketplace
+    also in StricaHQ registry). Wayup also serves JPG Store contracts after JPG
+    Store closed (2026-05); those hashes are listed under jpg-store and not
+    repeated here.
 lastVerified: 2026-10-20

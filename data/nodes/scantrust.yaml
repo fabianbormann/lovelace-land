@@ -1,10 +1,16 @@
 id: scantrust
 name: Scantrust (Cardano integration)
 district: products
-description: Swiss connected-goods platform whose secured, copy-resistant QR codes were linked to Cardano transaction metadata through a connector built by the Cardano Foundation (live April 2021). It is used for anti-counterfeit and traceability labels on Georgian wine. Whether the Cardano connector is still offered today was not confirmed.
+description: Swiss connected-goods platform whose secured, copy-resistant QR
+  codes were linked to Cardano transaction metadata through a connector built by
+  the Cardano Foundation (live April 2021). It is used for anti-counterfeit and
+  traceability labels on Georgian wine. Whether the Cardano connector is still
+  offered today was not confirmed.
 maintainer: Scantrust SA
 links:
   website: https://www.scantrust.com
 status: active
 primarySector: supply-chain
+active:
+  from: 2021-04
 lastVerified: 2026-10-20
