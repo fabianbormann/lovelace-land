@@ -1,6 +1,6 @@
 import type { WorldEdge } from '../../pipeline/emit';
 import type { Target } from '../logic/hash';
-import type { WorldIndex } from '../logic/index';
+import { nodeUpstream, type WorldIndex } from '../logic/index';
 import { describeNodeAt, describeShipAt, formatMonth } from '../logic/describe';
 import { tierName } from '../scene/town';
 import { sparkline } from './sparkline';
@@ -151,6 +151,12 @@ export function renderPanel(root: HTMLElement, idx: WorldIndex, target: Target, 
         h('div', { class: 'fact', 'data-role': 'size' }, h('b', {}, sizeAt(idx, n.id, i)), h('span', {}, 'building size')),
       ),
       links.length ? h('div', { class: 'links' }, ...links.map(([k, url]) => extLink(url, k === 'repo' ? 'Source code' : k === 'docs' ? 'Documentation' : 'Website'))) : '',
+      (() => {
+        const ships = nodeUpstream(idx, n.id, showRumors).customers.size;
+        const trace = h('button', { type: 'button', class: 'primary-btn', disabled: ships === 0 }, ships ? `Trace back to its ${ships} ship${ships === 1 ? '' : 's'}` : 'No ship relies on it');
+        trace.addEventListener('click', () => actions.follow(n.id));
+        return trace;
+      })(),
       n.packages.length ? h('p', { class: 'eyebrow' }, 'Packages: ', ...n.packages.map((p, i) => h('span', { class: 'mono' }, `${i ? ', ' : ''}${p.ecosystem}:${p.name}`))) : '',
       ...relationSection('Uses', idx, (idx.out.get(n.id) ?? []).filter(visible), 'to', actions, 'Uses nothing else on the island.'),
       ...relationSection('Used by', idx, (idx.incoming.get(n.id) ?? []).filter(visible), 'from', actions, 'Nothing on the island uses it yet.'),

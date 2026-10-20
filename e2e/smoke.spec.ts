@@ -167,3 +167,10 @@ test('on a phone the open panel leaves the timeline usable', async ({ page }) =>
   });
   expect(free).toBe(true);
 });
+
+test('a building can be traced back to the ships that rely on it', async ({ page }) => {
+  await open(page, '#node=anvil-lib');
+  await page.locator('#panel').getByRole('button', { name: /Trace back to its 3 ships/ }).click();
+  await expect(page.locator('.lens[data-lens="follow"]')).toHaveAttribute('aria-checked', 'true');
+  await expect(page.locator('#lens-hint')).toHaveText('Tracing Anvil Lib back to the 3 ships that rely on it.');
+});

@@ -168,6 +168,7 @@ a { color: var(--brass); }
 .conf.verified { border-color: var(--good); color: var(--good); }
 .conf.reported { border-style: dashed; }
 .conf.inferred { border-style: dotted; color: var(--ink-soft); }
+.primary-btn:disabled { opacity: 0.55; cursor: default; }
 .primary-btn { margin-top: 10px; border: 0; background: var(--ink); color: var(--paper); padding: 7px 14px; border-radius: 999px; cursor: pointer; }
 mono, .mono { font-family: var(--font-mono); font-size: 0.85em; }
 

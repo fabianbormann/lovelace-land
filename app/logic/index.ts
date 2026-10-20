@@ -77,3 +77,33 @@ export function highwayEdges(idx: WorldIndex): Set<string> {
       .map((e) => e.id),
   );
 }
+
+export interface Upstream {
+  customers: Set<string>;
+  nodes: Set<string>;
+  edges: Set<string>;
+}
+
+/** Everything that depends on a building, all the way back to the ships in the harbors. */
+export function nodeUpstream(idx: WorldIndex, nodeId: string, includeInferred: boolean): Upstream {
+  const customers = new Set<string>();
+  const nodes = new Set<string>();
+  const edges = new Set<string>();
+  const queue = [nodeId];
+  const seen = new Set([nodeId]);
+  while (queue.length) {
+    const current = queue.shift()!;
+    for (const e of idx.incoming.get(current) ?? []) {
+      if (!includeInferred && e.confidence === 'inferred') continue;
+      edges.add(e.id);
+      if (seen.has(e.from)) continue;
+      seen.add(e.from);
+      if (idx.customer.has(e.from)) customers.add(e.from);
+      else {
+        nodes.add(e.from);
+        queue.push(e.from);
+      }
+    }
+  }
+  return { customers, nodes, edges };
+}

@@ -1,7 +1,7 @@
 import './style.css';
 import type { World } from '../pipeline/emit';
 import { formatHash, parseHash, type Target } from './logic/hash';
-import { indexWorld, type WorldIndex } from './logic/index';
+import { indexWorld, nodeUpstream, type WorldIndex } from './logic/index';
 import { computeAppearance, defaultViewState, type Lens, type ViewState } from './logic/lenses';
 import { formatMonth } from './logic/describe';
 import { search } from './logic/search';
@@ -104,16 +104,25 @@ function start(world: World) {
       b.tabIndex = on ? 0 : -1;
     });
     const hint = $('#lens-hint');
-    const followed = state.follow ? idx.customer.get(state.follow)?.name : null;
+    const followedShip = state.follow ? idx.customer.get(state.follow)?.name : null;
+    const followedBuilding = state.follow ? idx.node.get(state.follow)?.name : null;
+    const month = formatMonth(world.timeline.months[state.time ?? world.timeline.months.length - 1]);
     const text =
       state.lens === 'stranded'
-        ? `${flagsAt(world, state.time ?? world.timeline.months.length - 1).stranded.size} buildings have no road to any active customer in ${formatMonth(world.timeline.months[state.time ?? world.timeline.months.length - 1])}.`
+        ? `${flagsAt(world, state.time ?? world.timeline.months.length - 1).stranded.size} buildings have no road to any active customer in ${month}.`
         : state.lens === 'highways'
           ? 'Glowing: buildings that carry heavy customer traffic but are named directly by few projects.'
           : state.lens === 'follow'
-            ? followed
-              ? `Following ${followed}: every road its goods travel, down to the mountain.`
-              : 'Click a ship in a harbor to follow its goods inland.'
+            ? followedShip
+              ? `Following ${followedShip}: every road its goods travel, down to the mountain.`
+              : followedBuilding
+                ? (() => {
+                    const ships = nodeUpstream(idx, state.follow!, state.showRumors).customers.size;
+                    return ships
+                      ? `Tracing ${followedBuilding} back to the ${ships} ship${ships === 1 ? '' : 's'} that rely on it.`
+                      : `No ship relies on ${followedBuilding}: nothing reaches it from a harbor.`;
+                  })()
+                : 'Click a ship to follow its goods inland, or a building to trace it back to its ships.'
             : '';
     hint.textContent = text;
     hint.hidden = !text;
@@ -148,7 +157,7 @@ function start(world: World) {
       setHash('');
       return;
     }
-    if (target.kind === 'customer' && state.lens === 'follow') {
+    if ((target.kind === 'customer' || target.kind === 'node') && state.lens === 'follow') {
       state.follow = target.id;
       refresh();
     }
@@ -182,7 +191,7 @@ function start(world: World) {
   const lensButtons = [...document.querySelectorAll<HTMLButtonElement>('.lens')];
   const chooseLens = (lens: Lens) => {
     state.lens = lens;
-    if (state.lens === 'follow' && !state.follow && selected?.kind === 'customer') state.follow = selected.id;
+    if (state.lens === 'follow' && !state.follow && (selected?.kind === 'customer' || selected?.kind === 'node')) state.follow = selected.id;
     if (state.lens !== 'follow') state.follow = null;
     refresh();
   };

@@ -1,11 +1,11 @@
-import { customerClosure, type WorldIndex } from './index';
+import { customerClosure, nodeUpstream, type WorldIndex } from './index';
 import { flagsAt, isStanding } from './time';
 
 export type Lens = 'none' | 'stranded' | 'highways' | 'follow';
 
 export interface ViewState {
   lens: Lens;
-  /** customer id for the follow lens */
+  /** follow lens: a customer id (down to the mountain) or a node id (back to its ships) */
   follow: string | null;
   showRumors: boolean;
   /** hide roads backed only by third-party reports */
@@ -54,7 +54,16 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
   };
   const filtered = (id: string) => filteredNode(id) || filteredCustomer(id);
 
-  const closure = state.lens === 'follow' && state.follow ? customerClosure(idx, state.follow, state.showRumors) : null;
+  const following = state.lens === 'follow' && state.follow ? state.follow : null;
+  const closure =
+    following && idx.customer.has(following)
+      ? { ...customerClosure(idx, following, state.showRumors), customers: new Set([following]) }
+      : following && idx.node.has(following)
+        ? (() => {
+            const up = nodeUpstream(idx, following, state.showRumors);
+            return { nodes: new Set([...up.nodes, following]), edges: up.edges, customers: up.customers };
+          })()
+        : null;
   const tl = world.timeline;
   const month = state.time === null ? null : Math.floor(state.time);
   const monthFlags = month === null ? null : flagsAt(world, month);
@@ -80,7 +89,7 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
 
   const customers = new Map<string, Look>();
   for (const c of world.customers) {
-    const followed = closure !== null && state.follow === c.id;
+    const followed = closure !== null && closure.customers.has(c.id);
     customers.set(c.id, look((closure !== null && !followed) || filteredCustomer(c.id), followed));
   }
 

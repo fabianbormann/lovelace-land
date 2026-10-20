@@ -66,3 +66,15 @@ describe('confidence filter', () => {
     expect(a.edges.get('swap-town->anvil-lib')!.hidden).toBe(false);
   });
 });
+
+describe('follow lens from a building', () => {
+  it('lights up the building, everything that depends on it and the ships behind them', () => {
+    const a = computeAppearance(idx, { ...defaultViewState(), lens: 'follow', follow: 'anvil-lib' });
+    expect(a.nodes.get('anvil-lib')!.glow).toBe(true);
+    expect(a.nodes.get('swap-town')!.glow).toBe(true);
+    expect(a.nodes.get('hearth-node')!.dim).toBe(true);
+    expect(a.customers.get('harbor-traders')!.glow).toBe(true);
+    expect(a.edges.get('swap-town->anvil-lib')!.glow).toBe(true);
+    expect(a.edges.get('anvil-lib->hearth-node')!.dim).toBe(true);
+  });
+});

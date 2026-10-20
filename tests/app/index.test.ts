@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { customerClosure, highwayEdges, indexWorld } from '../../app/logic/index';
+import { customerClosure, highwayEdges, indexWorld, nodeUpstream } from '../../app/logic/index';
 import { miniWorld } from './world';
 
 describe('indexWorld', () => {
@@ -54,5 +54,27 @@ describe('highwayEdges', () => {
       'seal-notary->anvil-lib',
       'swap-town->anvil-lib',
     ]);
+  });
+});
+
+describe('nodeUpstream', () => {
+  const idx = indexWorld(miniWorld());
+
+  it('traces a building back to every ship that relies on it', () => {
+    const up = nodeUpstream(idx, 'hearth-node', false);
+    expect([...up.customers].sort()).toEqual(['guild-of-scribes', 'harbor-traders', 'old-pilot']);
+    expect(up.nodes.has('anvil-lib')).toBe(true);
+    expect(up.nodes.has('lonely-tool')).toBe(true);
+    expect(up.edges.has('swap-town->anvil-lib')).toBe(true);
+    expect(up.edges.has('harbor-traders->swap-town')).toBe(true);
+  });
+
+  it('follows rumors only when asked', () => {
+    expect(nodeUpstream(idx, 'mill-indexer', false).customers.has('guild-of-scribes')).toBe(false);
+    expect(nodeUpstream(idx, 'mill-indexer', true).customers.has('guild-of-scribes')).toBe(true);
+  });
+
+  it('finds no ships for a stranded building', () => {
+    expect(nodeUpstream(idx, 'lonely-tool', false).customers.size).toBe(0);
   });
 });
