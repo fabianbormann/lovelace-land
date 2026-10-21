@@ -1,0 +1,25 @@
+id: saturn-nft
+name: SaturnNFT
+district: products
+description: No-code platform to create, mint and upgrade Cardano NFTs, with an
+  image generator, payment gateway and a CIP-68 upgrade (levelling) system for
+  dynamic NFTs, launched in 2022. Its website saturnnft.io no longer serves the
+  platform (it redirects to an unrelated site as of 2026-10-21; last archived
+  live in February 2026), but cardano.org reports 343 on-chain transactions of
+  its upgrade contract in the 30 days to 2026-10-16.
+maintainer: Saturn
+status: maintenance
+primarySector: nfts-gaming-media
+uses: []
+onchain:
+  scripts:
+    - d3f00c944c02e92d01373ba8401a0845ad9b2b98df54ad826c5858a2
+  source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/scripts/script-index.json
+  note: 'projectId saturn-nft, "Upgrade contract" (Plutus V2 spend). CRFA
+    dApps/SaturnNFT.json lists the same script as a 112-hex payment+stake pair
+    (d3f00c94...5858a2 + 5ea48152...). Archived site
+    https://web.archive.org/web/20260204235951/https://saturnnft.io/ ("Create,
+    Mint, and Upgrade Cardano Digital Collectables"); release year 2022 per
+    https://www.cardanocube.com/projects/saturn. Collection minting
+    policies made with the platform are not listed.'
+lastVerified: 2026-10-21

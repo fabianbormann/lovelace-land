@@ -1,0 +1,25 @@
+id: playermint
+name: PlayerMint
+district: products
+description: Play-to-earn layer for existing video games, starting with
+  Fortnite, that pays players in its PMX token at the end of each Cardano epoch
+  based on their in-game performance; PMX can be spent in its NFT marketplace.
+  It launched on Cardano mainnet in 2023, and MLabs' Cardano Transaction Lib
+  lists it as a production user.
+maintainer: PlayerMint
+links:
+  website: https://playermint.com
+status: active
+primarySector: nfts-gaming-media
+uses:
+  - target: cardano-transaction-lib
+    relation: library
+    confidence: reported
+    evidence:
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib/blob/develop/README.md#use-in-production
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'README "Use in production" lists "PlayerMint" (also listed under "Funding acknowledgements")'
+active:
+  from: 2023-10
+lastVerified: 2026-10-21

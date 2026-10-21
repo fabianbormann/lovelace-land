@@ -1,0 +1,28 @@
+id: unfrack-it-users
+name: Unfrack.it wallet users
+type: segment
+sectors: [payments]
+stage: production
+description: Cardano light-wallet users who consolidate fragmented UTxOs and
+  tokens with Unfrack.it.
+metric:
+  label: Transactions tagged "unfrack" (CIP-20), Sep 16 to Oct 16, 2026
+  value: "260"
+  source: https://cardano.org/apps/leaderboard/
+  retrieved: 2026-10-21
+uses:
+  - target: unfrack-it
+    confidence: verified
+    evidence:
+      - url: https://cardano.org/apps/leaderboard/
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'Unfrack.it, rank 30, 260 transactions (last 30 days, epoch 662)'
+      - url: https://github.com/cardano-foundation/tx-leaderboard-script/blob/staging/data/cip20_apps.json
+        kind: docs
+        retrieved: 2026-10-21
+        note: '{ "label": "unfrack.it", "match": ["unfrack"], "matchType": "substring" }'
+active:
+  from: 2023-05
+  confirmed: 2026-10
+lastVerified: 2026-10-21

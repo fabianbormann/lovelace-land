@@ -1,0 +1,15 @@
+id: chilled-kongs
+name: Chilled Kongs
+district: products
+description: Cardano PFP collection of 8,888 NFTs released in 2022, with its own
+  Plutus contract that is still in use (cardano.org reports 180 on-chain
+  transactions in the 30 days to 2026-10-16). Its website chilledkongs.com no
+  longer serves the project (it shows an unrelated casino page as of
+  2026-10-21).
+status: maintenance
+primarySector: nfts-gaming-media
+uses: []
+# The CRFA and Eternl registries attribute script c1b35bb893529376effc4083dc0a0ed90a1c07fe09550885b37aa27f
+# to Chilled Kongs, but it is a 46-byte validator whose address holds about 20,000 UTxOs with many other
+# projects' tokens, so its activity cannot be credited to Chilled Kongs alone and is not counted here.
+lastVerified: 2026-10-21

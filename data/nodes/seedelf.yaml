@@ -1,0 +1,76 @@
+id: seedelf
+name: Seedelf
+district: products
+description: Stealth wallet by Logical Mechanism that hides the receiver and
+  spender of funds inside a Plutus V3 contract, using a Schnorr-style proof
+  over the BLS12-381 curve. It ships as a command-line wallet and a Chrome
+  wallet extension.
+maintainer: Logical Mechanism
+links:
+  repo: https://github.com/logical-mechanism/Seedelf-Wallet
+packages:
+  - ecosystem: cargo
+    name: seedelf-cli
+status: active
+primarySector: payments
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Seedelf-Wallet/blob/main/seedelf-contracts/aiken.toml
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'compiler = "v1.1.24", plutus = "v3", depends on aiken-lang/stdlib v4.0.0'
+  - target: pallas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Seedelf-Wallet/blob/main/seedelf-platform/seedelf-core/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'pallas-addresses, pallas-primitives, pallas-txbuilder, pallas-wallet = "0.35.0"'
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Seedelf-Wallet/blob/main/seedelf-platform/seedelf-koios/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'crate seedelf-koios: "Koios Packages For Seedelf"; used by seedelf-core and seedelf-cli'
+  - target: cardano-db-sync
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Seedelf-Wallet/blob/main/seedelf-data/README.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: '"Seedelf Wallet''s data layer: the API in front of the home db-sync, Kupo and node. Mainnet only."'
+  - target: kupo
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Seedelf-Wallet/blob/main/seedelf-data/README.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'index "read from db-sync, or from the Seedelf-only Kupo when db-sync is down or behind"'
+  - target: ogmios
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Seedelf-Wallet/blob/main/seedelf-data/README.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: '"Koios''s /api/v1/submittx and /api/v1/ogmios paths, passed to the home cardano-submit-api and Ogmios"'
+onchain:
+  scripts:
+    - 94bca9c099e84ffd90d150316bb44c31a78702239076a0a80ea4a469
+    - 84967d911e1a10d5b4a38441879f374a07f340945bcf9e7697485255
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/seedelf.json
+  note: "Wallet (spend) and Minter (seedelf token policy), Plutus V3. Also in
+    CRFA (dApps/Seedelf.json, dApps_v2/Seedelf.json) and Eternl script index;
+    the same values are the deployed 'version 1' contracts in
+    seedelf-platform/seedelf-core/src/constants.rs (mainnet stake credential
+    fcfc7701...). The always_false reference-holder script is not in any
+    registry and is omitted."
+lastVerified: 2026-10-21

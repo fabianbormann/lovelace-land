@@ -1,0 +1,24 @@
+id: disco-solaris
+name: Disco Solaris
+district: products
+description: Story-driven Cardano PFP universe whose customizable avatars are
+  built with The Silk Toad's trait-customization dApp; The Silk Toad took over
+  the project in September 2023. Its website discosolaris.com no longer serves
+  the project (parked for sale as of 2026-10-21), and cardano.org reports 17
+  on-chain transactions in the 30 days to 2026-10-16.
+maintainer: The Silk Toad
+status: maintenance
+primarySector: nfts-gaming-media
+uses: []
+onchain:
+  scripts:
+    - fb43ee22000fb1ffc5e825253375df1bb80d4bacccc106f4ad534f8b
+    - 5a7a6d23f477638474c8db5d37d9f3af8edd4b160806d063add8aeed
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/DiscoSolaris.json
+  note: 'Two closed-source Plutus V2 spend validators (also in the Eternl
+    script-index, projectId disco-solaris). Takeover and customization dApp per
+    the interview https://forum.cardano.org/t/interview-cardano-nfts-061-disco-solaris/125919
+    (30 Dec 2023): "We acquired the Disco Solaris project in September 2023 for
+    the community" and "The Silk Toad''s customization trait dApp. This allows
+    individuals to create their own unique avatars".'
+lastVerified: 2026-10-21

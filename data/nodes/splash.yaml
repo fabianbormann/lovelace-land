@@ -3,6 +3,8 @@ name: Splash
 district: products
 description: Decentralized exchange and market-making protocol on Cardano
   (successor of Spectrum Finance on Cardano), with order-book and CFMM pools.
+  Spectrum Finance announced its wind-down on 7 August 2025
+  (https://spectrum.fi/sunset-notice).
 maintainer: Splash Protocol
 links:
   website: https://www.splash.trade

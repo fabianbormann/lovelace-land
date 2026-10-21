@@ -1,0 +1,45 @@
+id: singularitynet
+name: SingularityNET
+district: products
+description: Decentralised AI marketplace whose AGIX token is registered on
+  Cardano. In November 2023 it launched AGIX staking on Cardano, which provides
+  liquidity so other users can pay for AI services with fiat; its Cardano
+  staking front end was built on Cardano Transaction Lib.
+maintainer: SingularityNET
+links:
+  website: https://singularitynet.io
+  repo: https://github.com/singnet/snet-cardano-dapp-connector
+status: maintenance
+primarySector: defi
+uses:
+  - target: cardano-transaction-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/singnet/old_snet-cardano-staking-sdk/blob/master/spago.dhall
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'project "singularitynet-frontend" depends on "cardano-transaction-lib"
+          (packages.dhall pins Plutonomicon/cardano-transaction-lib); repo now archived'
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib#use-in-production
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'CTL README lists SingularityNet under "Use in production"'
+onchain:
+  scripts:
+    - f43a62fdc3965df486de8a0d32fe800963589c41b38946602a0dc535
+    - 80cac682cc252515e96b3cd8e2c235f5a0b4c1e24b7345193269ae69
+    - 48886999b2be126f37f53443590a5107ad2455d58f5c7ef7b0af438c
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/SingularityNET.json
+  note: "AGIX minting policy (Plutus V1; counts only mint/burn tx, not
+    transfers) and two AGIX staking validator versions (Plutus V1). Same entries
+    in CRFA dApps/SingularityNET.json and Eternl
+    registry/projects/singularity-net.json. The registries also list NTX
+    policy edfd7a1d77bcb8b884c474bdc92a16002d1fb720e454fa6e99344479, which the
+    Cardano token registry names 'NuNet Utility Token' (nunet.io), so it is
+    excluded as NuNet's identifier. Launch: City AM, 5 Nov 2023,
+    https://www.cityam.com/singularitynet-launches-staking-for-agix-tokens-on-the-cardano-blockchain/.
+    Status maintenance: the Cardano staking SDK repo is archived and DefiLlama
+    'SingularityNet AGIX Staking' (https://api.llama.fi/protocol/singularitynet-agix-staking)
+    reports 0 TVL; no dated shutdown notice found."
+lastVerified: 2026-10-21

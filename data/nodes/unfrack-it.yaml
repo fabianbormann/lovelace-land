@@ -1,0 +1,35 @@
+id: unfrack-it
+name: Unfrack.it
+district: wallets
+description: Open-source web app from the DripDropz team that connects to a
+  Cardano light wallet and consolidates or regroups its UTxOs and tokens into
+  tidier bundles. Each transaction carries the CIP-20 message
+  "https://unfrack.it", which the cardano.org leaderboard uses to count it
+  (260 transactions, Sep 16 to Oct 16, 2026).
+maintainer: DripDropz (Adam K. Dean)
+links:
+  website: https://unfrack.it/
+  repo: https://github.com/Crypto2099/unfrackit
+status: active
+primarySector: null
+uses:
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Crypto2099/unfrackit/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@emurgo/cardano-serialization-lib-asmjs": "^13.2.1"'
+  - target: koios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/Crypto2099/unfrackit/blob/main/src/App.vue
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'axios.post(`https://${subdomain}.koios.rest/api/v1/tx_status`) with a
+          Koios bearer key (projID "UnFrackIt")'
+active:
+  from: 2023-05
+lastVerified: 2026-10-21

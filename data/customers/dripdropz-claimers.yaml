@@ -1,0 +1,26 @@
+id: dripdropz-claimers
+name: DripDropz token claimers
+type: segment
+sectors: [payments]
+stage: production
+description: Cardano wallet holders and stake pool delegators who claim tokens
+  dropped by projects (staking rewards, ISO/ISPO rewards, airdrops) through
+  DripDropz.
+metric:
+  label: Registered users (About page counter; 1,772,200 total withdrawals)
+  value: "49,924"
+  source: https://dripdropz.io/about-us
+  retrieved: 2026-10-21
+uses:
+  - target: dripdropz
+    confidence: verified
+    evidence:
+      - url: https://dripdropz.io/about-us
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'Counters: Total Tokens 506, Total Withdrawals 1,772,200, Registered Users 49,924'
+      - url: https://cardano.org/apps/leaderboard/
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'DripDropz, category Distribution, rank 23, 738 transactions (Sep 16 to Oct 16, 2026)'
+lastVerified: 2026-10-21

@@ -1,0 +1,19 @@
+{
+  "id": "midnight",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/midnight.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('5986bfcc0cbfc60dec8df87715cc95d03817aac386b0e9d33da03b39', '73e4aea31b5b51d9b0ca386196fc6a4c422f74c5aea011e4b8bdf4e5')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-21",
+  "months": {
+    "2025-12": 10793,
+    "2026-01": 15490,
+    "2026-02": 17520,
+    "2026-03": 18662,
+    "2026-04": 20403,
+    "2026-05": 16922,
+    "2026-06": 13060,
+    "2026-07": 12861,
+    "2026-08": 13609,
+    "2026-09": 15919,
+    "2026-10": 18026
+  }
+}

@@ -1,0 +1,23 @@
+id: lenfi-users
+name: Lenfi lenders and borrowers
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users with deposits or collateral still locked in Lenfi
+  lending pools; the value has shrunk from about $78M in December 2024 to about
+  $150k in October 2026.
+metric:
+  label: Total value locked
+  value: "$149,905"
+  source: https://api.llama.fi/tvl/lenfi
+  retrieved: 2026-10-21
+uses:
+  - target: lenfi
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/protocol/lenfi
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'DefiLlama "Lenfi" (Cardano, Lending): currentChainTvls Cardano
+          149904.99; tvl series 77,813,650 USD on 2024-12-01'
+lastVerified: 2026-10-21

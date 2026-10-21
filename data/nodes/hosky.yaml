@@ -1,0 +1,30 @@
+id: hosky
+name: Hosky
+district: products
+description: Dog-themed meme token on Cardano whose "Doggie Bowl" faucet pays out
+  a random amount of HOSKY when a user sends 2 ADA and returns 1.5 ADA. The
+  Doggie Bowl address is the top app by transactions on the cardano.org
+  leaderboard (1,724,962 transactions, Sep 16 to Oct 16, 2026).
+links:
+  website: https://hosky.io/
+status: active
+primarySector: nfts-gaming-media
+uses:
+  - target: dripdropz
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://dripdropz.io/explore-projects/HOSKY
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'DripDropz project page for HOSKY: drop status "Active", "4,200,000
+          HOSKY every epoch", withdrawable every epoch regardless of stake pool'
+onchain:
+  addresses:
+    - addr1vy740r73x2w3du2xxt76cs4hdml4zw2c5h7tddcyf3jauys9tyns4
+  source: https://github.com/cardano-foundation/tx-leaderboard-script/blob/staging/data/address_apps.json
+  note: Hosky Doggie Bowl address, the first entry of the cardano.org leaderboard
+    address allowlist (PR https://github.com/cardano-foundation/tx-leaderboard-script/pull/12,
+    "First entry is Hosky, the Doggie Bowl address"). The leaderboard counts every
+    transaction that creates an output at or spends from this payment credential.
+lastVerified: 2026-10-21

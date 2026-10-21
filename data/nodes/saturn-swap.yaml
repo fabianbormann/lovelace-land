@@ -1,0 +1,33 @@
+id: saturn-swap
+name: Saturn Swap
+district: products
+description: Order-book DEX on Cardano that settles without a batcher, with market
+  making as a service and a public GraphQL API for aggregators. Its documentation is
+  published by Flux Point Studios.
+maintainer: Flux Point Studios
+links:
+  website: https://saturnswap.io
+  docs: https://docs.fluxpointstudios.com/saturnswap
+status: active
+primarySector: defi
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/Flux-Point-Studios/saturnswap-maker-verify/blob/main/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-21
+        note: 'preamble "SaturnSwap Option C market-maker staking validator", compiler
+          "Aiken" v1.1.22 (market-making validator; the language of the swap order
+          contract is not published)'
+onchain:
+  scripts:
+    - 73990b71041ceade6f867617f6ce9f187ab710ea2bf1ff8db7d0292f
+    - 1af84a9e697e1e7b042a0a06f061e88182feb9e9ada950b36a916bd5
+  source: https://github.com/Flux-Point-Studios/saturnswap-filler#readme
+  note: The project's filler README names the current 1% order contract
+    (73990b71...) and the legacy 4% run-off contract (1af84a9e..., Plutus V2,
+    audited by Cypher on 12-06-2024), which is also the one listed in the
+    StricaHQ and Eternl registries (projects/saturnswap.json).
+lastVerified: 2026-10-21

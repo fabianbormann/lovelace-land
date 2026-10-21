@@ -1,0 +1,24 @@
+id: 5am-earth
+name: 5am.earth
+district: products
+description: Gives smallholder farmers and agri-entrepreneurs a verifiable farm
+  and farmer identity, combining field records with satellite evidence through
+  a Cardano oracle contract, so lenders, buyers and NGOs can check a record
+  without seeing personal data. Its Cardano treasury proposal reports 10,500
+  farmers registered on mainnet in Maharashtra, India, with Syngenta Foundation
+  India's agri-entrepreneur model.
+maintainer: 5am.earth Foundation / AIQUANT Tech
+links:
+  website: https://5am.earth/
+status: active
+primarySector: identity
+uses: []
+onchain:
+  scripts:
+    - c4f37d2bc1a955cfdc33597b3c089179ebeffdc624bbcf05b33950ef
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/5am.earth.json
+  note: 'StricaHQ registry (category ORACLE): Plutus V3 "Oracle contract enabling
+    trusted data exchange for farm boundries, smallholder farmers and
+    agri-entrepreneurs". Counted by the cardano.org leaderboard under Identity
+    (49,928 transactions, Sep 16 to Oct 16, 2026).'
+lastVerified: 2026-10-21

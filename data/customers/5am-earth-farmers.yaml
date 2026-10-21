@@ -1,0 +1,34 @@
+id: 5am-earth-farmers
+name: Smallholder farmers registered on 5am.earth
+type: segment
+sectors: [identity]
+stage: production
+description: Smallholder farmers in Maharashtra, India, registered with a
+  verifiable farm identity on Cardano mainnet through 5am.earth's Project
+  Swaminathan, onboarded via Syngenta Foundation India's agri-entrepreneur network.
+metric:
+  label: Farmers registered on Cardano mainnet (self-reported, about 500 new per day, 6 districts)
+  value: "10,500"
+  source: https://5am.earth/cardano-proposal.html
+  retrieved: 2026-10-21
+uses:
+  - target: 5am-earth
+    confidence: verified
+    evidence:
+      - url: https://5am.earth/cardano-proposal.html
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'Cardano Budget 2026 treasury proposal: "Project Swaminathan -
+          infrastructure in production ... with Syngenta Foundation India''s
+          agri-entrepreneurs model"; "10,500 Farmers registered on Mainnet"'
+      - url: https://5am.earth/case-studies/
+        kind: case-study
+        retrieved: 2026-10-21
+        note: 'Satellite Oracle for smallholder agriculture, India, with Syngenta
+          Foundation''s Agri-Entrepreneur program; "Cardano infrastructure records
+          verifiable provenance"'
+      - url: https://cardano.org/apps/leaderboard/
+        kind: docs
+        retrieved: 2026-10-21
+        note: '5am.earth, category Identity, rank 3, 49,928 transactions (Sep 16 to Oct 16, 2026)'
+lastVerified: 2026-10-21

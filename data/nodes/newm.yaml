@@ -11,6 +11,14 @@ links:
 status: active
 primarySector: nfts-gaming-media
 uses:
+  - target: dripdropz
+    relation: service
+    confidence: reported
+    evidence:
+      - url: https://dripdropz.io/explore-projects/NEWM
+        kind: docs
+        retrieved: 2026-10-21
+        note: DripDropz lists an active NEWM token drop; NEWM's own announcement of it was not found
   - target: aiken
     relation: language
     confidence: verified

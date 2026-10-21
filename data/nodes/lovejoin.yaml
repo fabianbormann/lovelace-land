@@ -1,0 +1,53 @@
+id: lovejoin
+name: Lovejoin
+district: products
+description: Non-custodial privacy mixer for ADA by Logical Mechanism. Users
+  deposit a fixed amount into a shared pool that anyone can re-randomise, then
+  withdraw to a fresh address with a Schnorr proof; the unaudited contracts
+  were bootstrapped on mainnet on 26 September 2026.
+maintainer: Logical Mechanism
+links:
+  website: https://lovejo.in
+  repo: https://github.com/logical-mechanism/Lovejoin
+status: active
+primarySector: payments
+uses:
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Lovejoin/blob/main/contracts/plutus.opt.json
+        kind: plutus-json
+        retrieved: 2026-10-21
+        note: 'preamble compiler name "Aiken"; README: "Contracts: Aiken 1.1.24, Plutus V3, BLS12-381 G1"'
+  - target: mesh
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Lovejoin/blob/main/offchain/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@meshsdk/core": "1.8.14"'
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/logical-mechanism/Lovejoin/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: '"Backend indexer: Node + Fastify + ogmios chainsync (+ optional db-sync for history)"'
+onchain:
+  scripts:
+    - c145c10ff4bcaef7f5a4dbb3fcbfddca4b6c7b08191b0690b12f1fad
+    - 0dad3046f90d9cf8354eb8b743d50fb2c25d581269b94ffcdf59499e
+    - a072c7e839ab9ddf24344d0b2f70f56971f187fee8089f5f64212406
+    - f5592689c7ab35553a3234a54c0ee118090a5762c696819a53a5a826
+    - 288fea77a0f674c6080aadd8ed3ca42cd5a920bf1f00c0d3e63306e4
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/lovejoin.json
+  note: "Mix Box, Mix Logic, Fee Pool, Reference Minter and Reference Holder
+    (Plutus V3). Hashes match the project's mainnet address book
+    https://github.com/logical-mechanism/Lovejoin/blob/main/artifacts/mainnet/addresses.json;
+    mainnet bootstrap date from CHANGELOG.md ('Mainnet bootstrap
+    (2026-09-26)'). README: lovejo.in 'is where the mainnet pool will be
+    served' (hosted UI currently serves Preprod)."
+lastVerified: 2026-10-21

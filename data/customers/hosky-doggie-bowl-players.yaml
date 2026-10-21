@@ -1,0 +1,26 @@
+id: hosky-doggie-bowl-players
+name: Hosky Doggie Bowl players
+type: segment
+sectors: [nfts-gaming-media]
+stage: production
+description: Anonymous users who send ADA to the Hosky Doggie Bowl faucet for a
+  random HOSKY payout, the busiest app on the cardano.org transaction leaderboard.
+metric:
+  label: Transactions at the Doggie Bowl address, Sep 16 to Oct 16, 2026 (rank 1)
+  value: "1,724,962"
+  source: https://cardano.org/apps/leaderboard/
+  retrieved: 2026-10-21
+uses:
+  - target: hosky
+    confidence: verified
+    evidence:
+      - url: https://cardano.org/apps/leaderboard/
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'Rank 1, Hosky, category Distribution, 1,724,962 transactions (last 30 days, epoch 662)'
+      - url: https://netcoins.com/blog/hosky-cardanos-first-meme-coin
+        kind: article
+        retrieved: 2026-10-21
+        note: 'Nov 30, 2021: Doggie Bowl takes exactly 2 ADA, pays a random HOSKY
+          amount and returns 1.5 ADA'
+lastVerified: 2026-10-21

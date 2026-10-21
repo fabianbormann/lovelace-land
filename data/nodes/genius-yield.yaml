@@ -1,0 +1,95 @@
+id: genius-yield
+name: Genius Yield
+district: products
+description: Order-book DEX on Cardano with staking and smart liquidity vaults, built
+  by the team behind the Atlas framework. A CryptoNewz post on 24 September 2026
+  reported that Genius Yield is winding down and leaving its code open source; its
+  open-source Genius Zero client trades against the contracts without the company
+  website.
+maintainer: Genius Yield
+links:
+  repo: https://github.com/geniusyield/dex-contracts-api
+status: maintenance
+primarySector: defi
+uses:
+  - target: atlas
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/geniusyield/dex-contracts-api/blob/main/geniusyield-dex-api/geniusyield-dex-api.cabal
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'geniusyield-dex-api ("API code to interact with GeniusYield DEX") depends
+          on atlas-cardano; geniusyield-server-lib does too'
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/geniusyield/dex-contracts-api/blob/main/dex-v2-contracts/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-21
+        note: 'preamble title "geniusyield/dex-v2", compiler "Aiken" v1.1.10'
+  - target: plinth
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/geniusyield/dex-contracts-api/blob/main/geniusyield-onchain/geniusyield-onchain.cabal
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"GeniusYield onchain code" depends on plutus-tx and plutus-tx-plugin (v1
+          DEX contracts)'
+  - target: maestro
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/geniusyield/dex-contracts-api/blob/main/geniusyield-server-lib/geniusyield-server-lib.cabal
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'geniusyield-server-lib depends on maestro-sdk; README configures the API
+          server with a Maestro token (Kupo is an alternative)'
+  - target: lucid-evolution
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/geniusyield/genius-zero/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'Genius Zero, the client-side interface for Genius Yield DEX orders and
+          staking, depends on @lucid-evolution/lucid'
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/geniusyield/genius-zero/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: '"Queries Cardano smart contract payment credentials directly via
+          Blockfrost."'
+onchain:
+  scripts:
+    - 0a32c7d1a45fa861c8a68812919ba3ba187f2da6d84ff684385b2064
+    - 0d530d9b5ceaf073aafd6007c7ddaa69480dee14f2f700b5716bf11b
+    - 12d6e1808dc019408cefe273a0b04701038f4aa96f733d8f44cb9817
+    - 22f6999d4effc0ade05f6e1a70b702c65d6b3cdf0e301e4a8267f585
+    - 30fe42d793d37c176e4a9df5cb9b6102719d872349a827fa81b9ff21
+    - 36c8808b0d90be2ae2e5bd8b2974f74839956ab0b3865686b6bdca7b
+    - 3fe59383acf7788d43b3b4c84bff0a837376f9c004b6f600ec49716d
+    - 45505028e69c6bef5db72b657a8011a61a30bb48e1b955f806c417b0
+    - 7665c40357deba19c8bad6d739d805e9287b30c0fa00f1a003dfcfa4
+    - 77e800622d05045a1f973f291bc71dd8607544fd2b8cb9d841507d56
+    - 9ef926cd980f72e5b7eaea4d6ddecc4d3898d78c84944cd6fa0f83c9
+    - a8d7ff5cf4c117270288372f9ac8e1ce5b758ae15a7851c41661a48c
+    - c652c19ea10ab025a2b0880682f96a2794d7cea9bc4782645c0e114c
+    - dda5fdb1002f7389b33e036b6afee82a8189becb6cba852e8b79b4fb
+    - edfff663d37fc5f9753bc4222e0da2bfe08aa48db0837d2c329adeb3
+  source: https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/GeniusYield.json
+  note: DEX (v1) order validator edfff663..., DEX mint, GY token policies, staking and
+    order-book scripts from CRFA dApps_v2/GeniusYield.json, all also in the Eternl
+    registry/scripts/script-index.json (projectId genius-yield); "DEX V2 Order"
+    0a32c7d1... and the native "Genius" policy 45505028... come from the Eternl
+    script-index only. Status reasoning (2026-10-21) - the winding-down report is a
+    third-party post (https://www.kucoin.com/news/insight/GENIUS/6ab5324474fd460007c53413,
+    2026-09-24) with no primary announcement found; www.geniusyield.co redirects to
+    app.geniusyield.co, which did not respond; DefiLlama TVL .9K; the cardano.org
+    leaderboard shows 26 transactions in the 30 days to 2026-10-16.
+lastVerified: 2026-10-21

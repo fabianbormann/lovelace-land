@@ -1,0 +1,24 @@
+id: shadowbook
+name: Shadowbook
+district: products
+description: Proprietary orderbook DEX on Cardano that keeps limit and market
+  orders in an on-chain order book and settles matched trades through its own
+  contract. It has no trading interface of its own and is offered as a
+  liquidity venue through DexHunter.
+links:
+  website: https://shadowbook.io
+  docs: https://docs.shadowbook.io
+status: active
+primarySector: defi
+uses: []
+onchain:
+  scripts:
+    - 9e130eb0323f31df50bfbb731f35f5a795a630ef727b4ba272460b55
+  source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/shadowbook.json
+  note: "'Order' spend script (Plutus V3) in the Eternl registry; the same hash
+    is documented as the onChainOrder contract at
+    https://docs.shadowbook.io/on-chain-interactions/limit-order. Docs say the
+    stack is 'built entirely in Rust' but no public repository or manifest
+    exists, so no roads. DexHunter is named as 'live integration as a trading
+    venue' (https://docs.shadowbook.io/index.md)."
+lastVerified: 2026-10-21

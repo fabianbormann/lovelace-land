@@ -1,0 +1,102 @@
+id: midnight
+name: Midnight
+district: bridges
+description: Privacy-focused blockchain built as a Cardano partner chain; its
+  node embeds IOG's Partner Chains toolkit and follows Cardano through db-sync.
+  Its NIGHT token launched on Cardano as a native asset, distributed through the
+  Glacier Drop and Scavenger Mine claim contracts on Cardano, and NIGHT held on
+  Cardano generates DUST for fees on Midnight, whose network went live in March 2026.
+maintainer: Midnight Foundation
+links:
+  website: https://midnight.network/
+  repo: https://github.com/midnightntwrk/midnight-node
+status: active
+primarySector: null
+uses:
+  - target: partner-chains
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/midnight-node/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"# Partnerchains dependencies": pallet-sidechain,
+          pallet-session-validator-management, partner-chains-cli and other crates
+          from path "partner-chains/toolkit/..."'
+      - url: https://github.com/input-output-hk/partner-chains/blob/master/README.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: '"Partner chains is now directly part of Midnight. Please see that
+          repository for continued development."'
+  - target: cardano-db-sync
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/midnight-node/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'partner-chains-db-sync-data-sources (features block-source,
+          candidate-source) and db-sync-sqlx'
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/midnight-node/blob/main/Cargo.toml
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'cardano-serialization-lib = { default-features = false, version = "15.0.3" }'
+  - target: plinth
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/night-token-distribution/blob/main/mgdoc/src/Midnight/GlacierDrop/Scripts/Night/Terms.hs
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'Glacier Drop on Cardano (MGDOC) NIGHT validator imports PlutusTx,
+          PlutusTx.Prelude and PlutusLedgerApi.V3; README: "mgdoc/src - contains
+          the Plutus code that governs the smart contracts on Cardano"'
+  - target: aiken
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/night-token-distribution/blob/main/protocol-params/plutus.json
+        kind: plutus-json
+        retrieved: 2026-10-21
+        note: 'compiler Aiken v1.1.17; protocol_params and multisig validators that
+          control the NIGHT contract'
+  - target: lucid-evolution
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/midnight-cnight-to-dust-dapp/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@lucid-evolution/lucid": "^0.4.34" in the NIGHT-to-DUST registration dApp'
+  - target: blaze
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/midnight-cnight-to-dust-dapp/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@blaze-cardano/core": "^0.8.0", "@blaze-cardano/data", "@blaze-cardano/uplc"'
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/midnight-cnight-to-dust-dapp/blob/main/.env.example
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'NEXT_PUBLIC_BLOCKFROST_URL_MAINNET=https://cardano-mainnet.blockfrost.io/api/v0;
+          BLOCKFROST_KEY_MAINNET for the Blockfrost proxy'
+onchain:
+  scripts:
+    - 5986bfcc0cbfc60dec8df87715cc95d03817aac386b0e9d33da03b39
+    - 73e4aea31b5b51d9b0ca386196fc6a4c422f74c5aea011e4b8bdf4e5
+  source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/midnight.json
+  note: 'Eternl registry project "Midnight": "NIGHT Airdrop Escrow" (Plutus V3
+    spend) and "Cnight Generates Dust" (Plutus V3 spend/mint). These are what the
+    cardano.org leaderboard counts for Midnight under Distribution (24,610
+    transactions, Sep 16 to Oct 16, 2026). Other MGDOC validators in
+    midnightntwrk/night-token-distribution are not listed with deployed hashes.'
+lastVerified: 2026-10-21

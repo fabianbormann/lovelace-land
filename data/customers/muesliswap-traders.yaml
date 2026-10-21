@@ -1,0 +1,28 @@
+id: muesliswap-traders
+name: MuesliSwap traders and liquidity providers
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users placing order-book orders and providing liquidity on MuesliSwap.
+metric:
+  label: 30-day DEX volume
+  value: "$21.5K (TVL $124.6K; all-time volume $505.8M)"
+  source: https://api.llama.fi/summary/dexs/muesliswap
+  retrieved: 2026-10-21
+uses:
+  - target: muesliswap
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/summary/dexs/muesliswap
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'DefiLlama "MuesliSwap": total30d 21471.38, totalAllTime 505753447.36'
+      - url: https://api.llama.fi/tvl/muesliswap
+        kind: docs
+        retrieved: 2026-10-21
+        note: '124620 USD'
+      - url: https://cardano.org/apps/leaderboard/
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'rank 21, MuesliSwap, DEX, 1,075 transactions (Sep 16 - Oct 16, 2026)'
+lastVerified: 2026-10-21

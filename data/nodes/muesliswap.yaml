@@ -1,0 +1,60 @@
+id: muesliswap
+name: MuesliSwap
+district: products
+description: Hybrid decentralized exchange on Cardano that started as an on-chain order
+  book and added liquidity pools. Its pool contracts were adapted from Minswap's
+  published contracts, and it later added concentrated liquidity pools.
+maintainer: MuesliSwap
+links:
+  website: https://muesliswap.com
+  repo: https://github.com/MuesliSwapTeam/muesliswap-cardano-contracts
+status: active
+primarySector: defi
+uses:
+  - target: plinth
+    relation: language
+    confidence: verified
+    evidence:
+      - url: https://github.com/MuesliSwapTeam/muesliswap-cardano-contracts/blob/main/order-validator/order-validator.cabal
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'order-book validator depends on plutus-tx and plutus-tx-plugin; README:
+          "The contracts that power the order book model of MuesliSwap for Cardano,
+          written in Plutus V1."'
+      - url: https://github.com/MuesliSwapTeam/muesliswap-cardano-pool-contracts/blob/main/dex/muesliswappools.cabal
+        kind: manifest
+        retrieved: 2026-10-21
+        note: 'pool contracts depend on plutus-tx and plutus-tx-plugin'
+onchain:
+  scripts:
+    - 00fb107bfbd51b3a5638867d3688e986ba38ff34fb738f5bd42b20d5
+    - 0454355b392202e594ce74be2f5ff9ae64c6ac0fbb45cb676f8078a2
+    - 15b95fdaceeb507073a1bd198803373beeafbd82560fbf8abe9073ff
+    - 1b3c5a646a018e0cfbd40fba97518c8e955e5869f0afd4f8c568493e
+    - 4136eeede1a49030451ee3a09d900959bafeafd9b536e59345ac780f
+    - 6e3af9667763e915c9b3a901d3092625d515c2ad6d575eac92582aa8
+    - 7045237d1eb0199c84dffe58fe6df7dc5d255eb4d418e4146d5721f8
+    - 73ede893f547edbd25da6953fda33caacd01f44047922bf7c5ceb951
+    - 785331daeba8b0f238183d502e14ace037d1167ececb99b744a2aaaf
+    - 7a8041a0693e6605d010d5185b034d55c79eaf7ef878aae3bdcdbf67
+    - 8c9a2d459d2d8dc7c11192f971ab647fac65833121b7e8181e583c64
+    - 909133088303c49f3a30f1cc8ed553a73857a29779f6c6561cd8093f
+    - af3d70acf4bd5b3abb319a7d75c89fb3e56eafcdd46b2e9b57a2557f
+    - c2afd87ff836f64a20c33dc252e850cdd55f31627d64012d0960856f
+    - cae07bd684bcb2e2f15356882deac1b6cc782b025dc23aae10758471
+    - db21c4e1c2cad0e5cc67adaf1b97ad0c195125b90508e0258964fc43
+    - de9b756719341e79785aa13c164e7fe68c189ed04d61c9876b2fe53f
+    - e8baad9288dc9abdc099b46f2ac006b1a82c7df4996e067f00c04e8d
+    - ea184d0a7e640c4b5daa3f2cef851e75477729c2fd89f6ffbed7874c
+    - f1ec90d33208778214cdc7fa90858ac5620253d99f84c10335928cab
+    - f33bf12af1c23d660e29ebb0d3206b0bfc56ffd87ffafe2d36c42a45
+    - fc8fbdf64f25e04ec78052aa1a997b93867608951608fd74ca2fa83b
+    - fea3f75281aa7f3f9f1a488030006cecd96290e9d3e7921a6b10c903
+    - ffcdbb9155da0602280c04d8b36efde35e3416567f9241aff0955269
+  source: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/muesliswap.json
+  note: Order-book v0-v4, AMM pool, deposit, concentrated-liquidity pool/deposit and
+    vault contracts from the StricaHQ registry; staking-order, farming, yield, LP-token,
+    factory, NFT and concentrated-pool policies from CRFA dApps_v2/MuesliSwap.json;
+    all 24 also in the Eternl registry/scripts/script-index.json (projectId
+    muesli-swap). MuesliSwap also ran on Milkomeda, which is not counted here.
+lastVerified: 2026-10-21

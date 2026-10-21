@@ -1,0 +1,14 @@
+{
+  "id": "lovejoin",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/lovejoin.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('c145c10ff4bcaef7f5a4dbb3fcbfddca4b6c7b08191b0690b12f1fad', '0dad3046f90d9cf8354eb8b743d50fb2c25d581269b94ffcdf59499e', 'a072c7e839ab9ddf24344d0b2f70f56971f187fee8089f5f64212406', 'f5592689c7ab35553a3234a54c0ee118090a5762c696819a53a5a826', '288fea77a0f674c6080aadd8ed3ca42cd5a920bf1f00c0d3e63306e4')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-21",
+  "months": {
+    "2026-05": 65,
+    "2026-06": 126,
+    "2026-07": 42,
+    "2026-08": 18,
+    "2026-09": 57,
+    "2026-10": 224
+  }
+}

@@ -1,0 +1,28 @@
+id: saturn-swap-traders
+name: Saturn Swap traders and market makers
+type: segment
+sectors: [defi]
+stage: production
+description: Anonymous users placing and filling orders on the Saturn Swap order book.
+metric:
+  label: 30-day DEX volume
+  value: "$28.1K (TVL $20.6K; all-time volume $13.3M)"
+  source: https://api.llama.fi/summary/dexs/saturn-swap
+  retrieved: 2026-10-21
+uses:
+  - target: saturn-swap
+    confidence: verified
+    evidence:
+      - url: https://api.llama.fi/summary/dexs/saturn-swap
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'DefiLlama "Saturn Swap": total30d 28133.73, totalAllTime 13250924.64'
+      - url: https://api.llama.fi/tvl/saturn-swap
+        kind: docs
+        retrieved: 2026-10-21
+        note: '20619 USD'
+      - url: https://cardano.org/apps/leaderboard/
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'rank 32, Saturn Swap, 222 transactions (Sep 16 - Oct 16, 2026)'
+lastVerified: 2026-10-21

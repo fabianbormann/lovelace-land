@@ -1,0 +1,10 @@
+{
+  "id": "indianchain",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/indianchainbytrivolve.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('4b0caac56bd9b68c5e3806ab673627d16b568d1476743cca5fd3f39f')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-21",
+  "months": {
+    "2026-09": 5913,
+    "2026-10": 9562
+  }
+}

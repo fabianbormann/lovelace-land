@@ -13,6 +13,14 @@ packages:
 status: active
 primarySector: defi
 uses:
+  - target: dripdropz
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://sundae.fi/blog/iso-rewards-claiming-date-information-via-dripdropz/
+        kind: announcement
+        retrieved: 2026-10-21
+        note: SundaeSwap's ISO rewards became claimable through DripDropz.io on 1 March 2022
   - target: aiken
     relation: language
     confidence: verified

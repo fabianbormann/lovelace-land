@@ -1,0 +1,32 @@
+id: telangana-agriculture
+name: Telangana state government (agriculture)
+type: government
+sectors: [enterprise-government]
+stage: production
+description: Indian state government that uses Trivolve Tech's IndianChain to
+  record agricultural settlements on Cardano mainnet; the project went live in
+  September 2026, targeting more than 10 million settlements.
+uses:
+  - target: indianchain
+    confidence: reported
+    evidence:
+      - url: https://www.coingabbar.com/en/cardano-news-today-iog-youtube-hack-ada-price-surge
+        kind: article
+        retrieved: 2026-10-21
+        note: '"IndianChain by Trivolve went live on the Cardano mainnet ...
+          targeting over 10 million farming settlements in Telangana" (18 Sep
+          2026, citing a Cardanians post on X)'
+      - url: https://coinstats.app/news/62ab6b9f81ec85d6888a84efa2b4d17fb7b88bd9067ff7dde4ae60c1c9335feb_Why-Is-Cardano-Up-Today-IndianChain-News--Key-Breakout-Explained
+        kind: article
+        retrieved: 2026-10-21
+        note: '"project targeting more than 10 million agricultural settlements
+          for the Telangana state government in India" (18 Sep 2026)'
+      - url: https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/indianchainbytrivolve.json
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'contract description: "Agricultural records and settlement
+          management smart contract for Telangana by TrivolveTech"'
+active:
+  from: 2026-09
+  confirmed: 2026-09
+lastVerified: 2026-10-21

@@ -1,0 +1,38 @@
+id: night-claimants
+name: NIGHT Glacier Drop and Scavenger Mine claimants
+type: segment
+sectors: [payments]
+stage: production
+description: Holders from eight blockchain ecosystems who claimed Midnight's NIGHT
+  token in the Glacier Drop and Scavenger Mine, which ran on Cardano smart
+  contracts, and who redeem the thawing NIGHT to Cardano addresses until
+  December 4, 2026.
+metric:
+  label: NIGHT claims registered across participating addresses (Nov 2025)
+  value: "4.5 billion+ NIGHT, 8 million+ addresses"
+  source: https://midnight.network/blog/state-of-the-network-november-2025
+  retrieved: 2026-10-21
+uses:
+  - target: midnight
+    confidence: verified
+    evidence:
+      - url: https://github.com/midnightntwrk/night-token-distribution/blob/main/README.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: '"The first two phases occur prior to the launch of the Midnight
+          blockchain ... Instead, the Cardano blockchain provides the infrastructure."'
+      - url: https://midnight.network/blog/state-of-the-network-november-2025
+        kind: announcement
+        retrieved: 2026-10-21
+        note: 'Nov 25, 2025: "over 4.5 billion NIGHT claims registered across more
+          than 8 million participating addresses"'
+      - url: https://midnight.network/blog/guide-to-the-night-token-launch-and-redemption
+        kind: announcement
+        retrieved: 2026-10-21
+        note: 'Dec 4, 2025: NIGHT launched on Cardano as a Cardano Native Asset;
+          thawing begins December 10, 2025 and ends December 4, 2026'
+      - url: https://cardano.org/apps/leaderboard/
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'Midnight, category Distribution, rank 7, 24,610 transactions (Sep 16 to Oct 16, 2026)'
+lastVerified: 2026-10-21

@@ -11,6 +11,14 @@ links:
 status: active
 primarySector: defi
 uses:
+  - target: shadowbook
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://docs.shadowbook.io/index.md
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'Shadowbook docs: "DexHunter - live integration as a trading venue"'
   - target: aiken
     relation: language
     confidence: verified

@@ -1,0 +1,17 @@
+{
+  "id": "5am-earth",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/5am.earth.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('c4f37d2bc1a955cfdc33597b3c089179ebeffdc624bbcf05b33950ef')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-21",
+  "months": {
+    "2026-02": 6,
+    "2026-03": 1058,
+    "2026-04": 8367,
+    "2026-05": 11046,
+    "2026-06": 2295,
+    "2026-07": 143,
+    "2026-08": 9157,
+    "2026-09": 26668,
+    "2026-10": 39961
+  }
+}

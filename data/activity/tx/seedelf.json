@@ -1,0 +1,13 @@
+{
+  "id": "seedelf",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/seedelf.json",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('94bca9c099e84ffd90d150316bb44c31a78702239076a0a80ea4a469', '84967d911e1a10d5b4a38441879f374a07f340945bcf9e7697485255')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-21",
+  "months": {
+    "2025-01": 10,
+    "2025-02": 3,
+    "2025-03": 7,
+    "2026-09": 16,
+    "2026-10": 103
+  }
+}
