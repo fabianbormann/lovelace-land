@@ -22,3 +22,5 @@ docs/superpowers/
 
 # research drafts, reconciled into data/ after review; not published
 research/
+.xshots.mjs
+.xshot4.mjs

@@ -105,6 +105,7 @@ a { color: var(--brass); }
 .lens:hover { background: color-mix(in srgb, var(--brass-soft) 60%, transparent); }
 .lens.is-active { background: var(--ink); color: var(--paper); }
 .bar-actions { display: flex; gap: 6px; margin-left: auto; }
+.label-short { display: none; }
 .chip-btn {
   border: 1px solid var(--rule); background: var(--paper-2); padding: 4px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap;
 }
@@ -279,11 +280,22 @@ tbody tr:hover { background: var(--brass-soft); }
   .legend { bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (max-width: 720px) {
-  .bar { gap: 8px; padding: 8px 10px; }
-  .brand h1 { font-size: 1.2rem; }
+  /* Phones: the header is docked to the top edge and the map starts below it, instead of a floating card over the map. */
+  .bar {
+    top: 0; left: 0; right: 0; gap: 8px; border-width: 0 0 1px; border-radius: 0;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 8px max(12px, env(safe-area-inset-left, 0px));
+    background: var(--paper);
+  }
+  .map { top: var(--bar-bottom); }
+  .brand { gap: 8px; }
+  .brand h1 { font-size: 1.1rem; }
+  .brand-mark { width: 24px; height: 24px; }
+  .bar-actions { order: 2; margin-left: auto; gap: 4px; }
+  .bar-actions .chip-btn { padding: 3px 9px; font-size: 0.9rem; }
+  .label-long { display: none; }
+  .label-short { display: inline; }
   .search { max-width: none; flex-basis: 100%; order: 3; }
   .lenses { order: 4; flex-basis: 100%; }
-  .bar-actions { margin-left: auto; }
   .panel { top: auto; left: max(16px, env(safe-area-inset-left, 0px)); width: auto; height: min(58%, calc(100% - var(--bar-bottom) - var(--timeline-space, 96px) - 12px)); }
   .legend:not([open]) { width: auto; }
   .legend { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
