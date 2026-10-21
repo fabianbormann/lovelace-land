@@ -1,13 +1,13 @@
 {
   "id": "realfi",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/real-fi.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_scripts WHERE date in <year window> AND script_hash IN ('01dc62d1b7ba8c23b4706eb74127ffa1694160e30c21f43ff76ade5c', '2430e30b1b595fdd6d8e248b4125a9e84cded4b449e293576403c10e', '2efab7b9fe036476f6e095f69cf4728917755e1f9c75204dcf510e89', '6f1a5f04e94ea4b96c6beab2f10dfe78d5639db84f5d43d16bb97d01', '6f62eb156a99a618608c0b8161f636d3f22b347cb7e2200d2cbc9407', '7b5d4f9cb7209596c776aafce45a15c9faba1e88bb11d96e16c96f01', '7d2ddbadbe784afcf07442e5b2c35e9097da4be61162b5ee8848fe00', '7d9e4a0ee1a3f5d5ff8159ea91a83310cf2795ee7a87170c7aea05ae', 'aadd6ebebadc62c4881949c489c0bb8224aa5310875359b59e5feb4f', 'b1a939dd2bed1ba23ea3d10bb00819891154a96c456c43692ee9a54c', 'd77c0bea8bf5a2f8b3b401329ba22e77b2cd8fe88f2b8e2fc3781223', 'ef30fb14092d2175284248d8ed82fcfd65cbefdb2e2df9b45bc41711')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-20",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('01dc62d1b7ba8c23b4706eb74127ffa1694160e30c21f43ff76ade5c', '2430e30b1b595fdd6d8e248b4125a9e84cded4b449e293576403c10e', '2efab7b9fe036476f6e095f69cf4728917755e1f9c75204dcf510e89', '6f1a5f04e94ea4b96c6beab2f10dfe78d5639db84f5d43d16bb97d01', '6f62eb156a99a618608c0b8161f636d3f22b347cb7e2200d2cbc9407', '7b5d4f9cb7209596c776aafce45a15c9faba1e88bb11d96e16c96f01', '7d2ddbadbe784afcf07442e5b2c35e9097da4be61162b5ee8848fe00', '7d9e4a0ee1a3f5d5ff8159ea91a83310cf2795ee7a87170c7aea05ae', 'aadd6ebebadc62c4881949c489c0bb8224aa5310875359b59e5feb4f', 'b1a939dd2bed1ba23ea3d10bb00819891154a96c456c43692ee9a54c', 'd77c0bea8bf5a2f8b3b401329ba22e77b2cd8fe88f2b8e2fc3781223', 'ef30fb14092d2175284248d8ed82fcfd65cbefdb2e2df9b45bc41711')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-21",
   "months": {
     "2026-06": 18,
     "2026-07": 13,
-    "2026-08": 25,
-    "2026-09": 81,
-    "2026-10": 241
+    "2026-08": 27,
+    "2026-09": 150,
+    "2026-10": 539
   }
 }

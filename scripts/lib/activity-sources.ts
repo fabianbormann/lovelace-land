@@ -34,9 +34,18 @@ const list = (values: string[]) => values.map((v) => `'${v}'`).join(', ');
 /** The analytics service refuses longer statements. */
 export const MAX_SQL_LENGTH = 9500;
 
-function query(range: string, scriptFilter: string | null, labels: number[], addresses: string[]) {
+/**
+ * Every script hash h a transaction touches: scripts it runs, and scripts it pays to (outputs whose payment
+ * credential is the script). Paying to a script without running it is how DEX orders and notary records
+ * are placed, so counting only executions misses most of their activity.
+ */
+const scriptsTouched = (range: string, outputs: boolean) =>
+  `SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE ${range}` +
+  (outputs ? ` UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE ${range}` : '');
+
+function query(range: string, scriptFilter: string | null, labels: number[], addresses: string[], outputs: boolean) {
   const parts: string[] = [];
-  if (scriptFilter) parts.push(`SELECT date, tx_hash FROM transaction_scripts WHERE ${range} AND ${scriptFilter}`);
+  if (scriptFilter) parts.push(`SELECT date, tx_hash FROM (${scriptsTouched(range, outputs)}) WHERE ${scriptFilter}`);
   if (labels.length) parts.push(`SELECT date, tx_hash FROM transaction_metadata WHERE ${range} AND CAST(label AS VARCHAR) IN (${list(labels.map(String))})`);
   if (addresses.length) parts.push(`SELECT date, tx_hash FROM address_utxo WHERE ${range} AND owner_addr IN (${list(addresses)})`);
   return `SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (${parts.join(' UNION ALL ')}) GROUP BY 1 ORDER BY 1`;
@@ -45,6 +54,8 @@ function query(range: string, scriptFilter: string | null, labels: number[], add
 export interface TxPlan {
   /** one statement per window */
   queries: string[];
+  /** false when scripts are counted by runs only, because matching their outputs too would not fit */
+  outputs: boolean;
   /** set when scripts are matched by prefix: run checkQuery and exclude any foreign hashes it returns */
   prefix?: { length: number; checkQuery: string };
 }
@@ -54,27 +65,28 @@ export interface TxPlan {
  * the server's statement limit, so they are matched by hash prefix; checkQuery lists every script the
  * prefixes match, and foreign ones are passed back in `excluded` so the count stays exact.
  */
-export function txPlan(onchain: Onchain, windows: [string, string][], excluded: string[] = []): TxPlan {
+export function txPlan(onchain: Onchain, windows: [string, string][], excluded: string[] = [], outputs = true): TxPlan {
   const scripts = [...new Set(onchain.scripts ?? [])];
   const labels = onchain.metadataLabels ?? [];
   const addresses = onchain.addresses ?? [];
   if ([...scripts, ...excluded].some((s) => !HEX.test(s)) || addresses.some((a) => !ADDR.test(a)) || labels.some((l) => !Number.isInteger(l)))
     throw new Error('invalid on-chain identifier');
-  if (!scripts.length && !labels.length && !addresses.length) return { queries: [] };
+  if (!scripts.length && !labels.length && !addresses.length) return { queries: [], outputs };
   const range = ([from, to]: [string, string]) => `date >= DATE '${from}' AND date < DATE '${to}'`;
-  const exact = scripts.length ? `script_hash IN (${list(scripts)})` : null;
-  if (query(range(windows[0]), exact, labels, addresses).length <= MAX_SQL_LENGTH)
-    return { queries: windows.map((w) => query(range(w), exact, labels, addresses)) };
+  const exact = scripts.length ? `h IN (${list(scripts)})` : null;
+  if (query(range(windows[0]), exact, labels, addresses, outputs).length <= MAX_SQL_LENGTH)
+    return { queries: windows.map((w) => query(range(w), exact, labels, addresses, outputs)), outputs };
   for (let length = 16; length >= 6; length--) {
     const prefixes = [...new Set(scripts.map((s) => s.slice(0, length)))];
-    const filter = `substr(script_hash, 1, ${length}) IN (${list(prefixes)})${excluded.length ? ` AND script_hash NOT IN (${list(excluded)})` : ''}`;
-    if (query(range(windows[0]), filter, labels, addresses).length > MAX_SQL_LENGTH) continue;
+    const filter = `substr(h, 1, ${length}) IN (${list(prefixes)})${excluded.length ? ` AND h NOT IN (${list(excluded)})` : ''}`;
+    if (query(range(windows[0]), filter, labels, addresses, outputs).length > MAX_SQL_LENGTH) continue;
     const all: [string, string] = [windows[0][0], windows[windows.length - 1][1]];
     return {
-      queries: windows.map((w) => query(range(w), filter, labels, addresses)),
+      queries: windows.map((w) => query(range(w), filter, labels, addresses, outputs)),
+      outputs,
       prefix: {
         length,
-        checkQuery: `SELECT DISTINCT script_hash FROM transaction_scripts WHERE ${range(all)} AND substr(script_hash, 1, ${length}) IN (${list(prefixes)})`,
+        checkQuery: `SELECT DISTINCT h AS script_hash FROM (${scriptsTouched(range(all), outputs)}) WHERE substr(h, 1, ${length}) IN (${list(prefixes)})`,
       },
     };
   }
@@ -87,14 +99,24 @@ export function txPlan(onchain: Onchain, windows: [string, string][], excluded: 
  * prefix length is stable.
  */
 export async function resolvePlan(onchain: Onchain, windows: [string, string][], runCheck: (sql: string) => Promise<string[]>): Promise<TxPlan> {
+  try {
+    return await resolveWith(onchain, windows, runCheck, true);
+  } catch (e) {
+    // very long lists: wallets' key hashes share prefixes with the scripts' outputs far too often to exclude them all
+    if (!/too many to query/.test((e as Error).message)) throw e;
+    return resolveWith(onchain, windows, runCheck, false);
+  }
+}
+
+async function resolveWith(onchain: Onchain, windows: [string, string][], runCheck: (sql: string) => Promise<string[]>, outputs: boolean): Promise<TxPlan> {
   const ours = new Set(onchain.scripts ?? []);
   const excluded = new Set<string>();
-  let plan = txPlan(onchain, windows);
+  let plan = txPlan(onchain, windows, [], outputs);
   const checkedLengths = new Set<number>();
   for (let round = 0; plan.prefix && !checkedLengths.has(plan.prefix.length) && round < 8; round++) {
     checkedLengths.add(plan.prefix.length);
     for (const h of await runCheck(plan.prefix.checkQuery)) if (!ours.has(h)) excluded.add(h);
-    plan = txPlan(onchain, windows, [...excluded].sort());
+    plan = txPlan(onchain, windows, [...excluded].sort(), outputs);
   }
   return plan;
 }

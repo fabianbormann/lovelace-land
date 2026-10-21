@@ -2,7 +2,7 @@
   "id": "hyperledger-identus",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/hyperledger-identus/neoprism/blob/main/lib/did-prism-indexer/src/dlt/oura.rs",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <year window> AND CAST(label AS VARCHAR) IN ('21325')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-20",
+  "collected": "2026-10-21",
   "months": {
     "2022-09": 252,
     "2022-10": 91,

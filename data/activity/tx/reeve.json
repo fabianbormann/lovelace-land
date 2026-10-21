@@ -2,7 +2,7 @@
   "id": "reeve",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/cardano-foundation/cf-reeve-platform/blob/main/docs/onChainFormat.md",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <year window> AND CAST(label AS VARCHAR) IN ('1447')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-20",
+  "collected": "2026-10-21",
   "months": {
     "2025-06": 1,
     "2025-07": 519,

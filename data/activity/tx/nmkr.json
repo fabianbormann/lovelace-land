@@ -2,7 +2,7 @@
   "id": "nmkr",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/nftmakerio/NMKR-Studio/blob/main/NMKR.Shared/Functions/GlobalFunctions.cs",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM address_utxo WHERE date in <year window> AND owner_addr IN ('addr1vxrmu3m2cc5k6xltupj86a2uzcuq8r4nhznrhfq0pkwl4hgqj2v8w')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-20",
+  "collected": "2026-10-21",
   "months": {
     "2021-09": 54388,
     "2021-10": 83882,
@@ -65,6 +65,6 @@
     "2026-07": 1022,
     "2026-08": 774,
     "2026-09": 727,
-    "2026-10": 756
+    "2026-10": 784
   }
 }

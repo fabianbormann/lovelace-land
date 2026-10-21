@@ -2,7 +2,7 @@
   "id": "pragma",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/pragma-org/amaru-treasury/blob/main/journal/2025/ledger.md",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM address_utxo WHERE date in <year window> AND owner_addr IN ('addr1xxnev6rc25xwz8kg4qae8lq6dcg964z00py5gqgxd387pna8je58s4gvuy0v32pmj07p5msst42y77zfgsqsvmz0ur8sjjwfw8', 'addr1xxd74ehu0l4d5mx0sfz4fd0r5jvw4v2jqkkfyjxrlwvnkhumatn0cll2mfkvlqj92j678fyca2c4ypdvjfyv87ue8d0sn774ak', 'addr1xxrqac8khkprtpp2jz90mpkujjwye8dt6a9sjewrvjudx9vxpms0d0vzxkzz4yy2lkrde9yufjw6h46tp9juxe9c6v2shcjss3', 'addr1xxrh74lqhhxgzelfsn0wq5kcm4e5dmluprlcpg5mq30p5yy80at7p0wvs9n7npx7upfd3htngmhlcz8lsz3fkpz7rggqpymr9r', 'addr1x8jztxzwynajcp4dva5gy9udmmnwg7ueffvf4c7hpjqhc70yykvyuf8m9sr26emgsgtcmhhxu3aejjjcnt3awryp03usyfpxhc')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-20",
+  "collected": "2026-10-21",
   "months": {
     "2025-06": 2,
     "2025-07": 34,

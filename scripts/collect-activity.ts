@@ -96,7 +96,7 @@ async function collectTx(id: string, onchain: Onchain & { source?: string }) {
   for (const q of queries) for (const [m, n] of Object.entries(await sql(q))) months[m] = (months[m] ?? 0) + n;
   write('tx', id, {
     id,
-    source: `Yaci Store analytics (${MCP})${onchain.source ? `; identifiers from ${onchain.source}` : ''}${plan.prefix ? `; scripts matched by ${plan.prefix.length}-character hash prefix with foreign matches excluded` : ''}`,
+    source: `Yaci Store analytics (${MCP})${onchain.source ? `; identifiers from ${onchain.source}` : ''}${plan.prefix ? `; scripts matched by ${plan.prefix.length}-character hash prefix with foreign matches excluded` : ''}${plan.outputs ? '' : '; counts script runs only (too many scripts to also match payments to them)'}`,
     query: queries[0]?.replace(/date >= DATE '[^']+' AND date < DATE '[^']+'/, 'date in <year window>'),
     collected: today,
     months,

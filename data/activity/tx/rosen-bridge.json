@@ -2,7 +2,7 @@
   "id": "rosen-bridge",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/rosen-bridge/contract/releases/tag/7.1.1",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM address_utxo WHERE date in <year window> AND owner_addr IN ('addr1v8kqhz5lkdxqm8qtkn4lgd9f4890v0j6advjfmk5k9amu4c535lsu', 'addr1x8x6ca648w25x085dg8xs6k5e69yemr5hakcnl0gshmal6gahwzvy33q3jhr74lurpr9p0n8derw58fh7snq2zwxe8zsdkcqrj')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-20",
+  "collected": "2026-10-21",
   "months": {
     "2023-12": 103,
     "2024-01": 481,
@@ -38,6 +38,6 @@
     "2026-07": 29,
     "2026-08": 39,
     "2026-09": 39,
-    "2026-10": 21
+    "2026-10": 24
   }
 }

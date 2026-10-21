@@ -1,8 +1,8 @@
 {
   "id": "uverify",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/uverify.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_scripts WHERE date in <year window> AND script_hash IN ('07d07e14f58a908a89d065faa28c969f4e1b7174b0075e233127f270', '1919c122cba719a9bf760e4e463bbcf8a3d46327569cdb5edd8b7d0e', '20c3394ac4946a389853a545719ea3080c494e578903239c36bd8b0b', '2be4b4dccb1e87fbb81f5e3ec518646792b1909c7add563bc162f97b', '314cdf9ea60ee354ff1b87da74f15dedd4070604b2819a1d6bac3453', '499b5f203848362b46c6e0958e8ef318fe5f928f880b6c1baf9f6d7e', 'a8172157733dd50ef6f0f8d38e361745037f0a79c1f5da9b1d8079ff')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-20",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('07d07e14f58a908a89d065faa28c969f4e1b7174b0075e233127f270', '1919c122cba719a9bf760e4e463bbcf8a3d46327569cdb5edd8b7d0e', '20c3394ac4946a389853a545719ea3080c494e578903239c36bd8b0b', '2be4b4dccb1e87fbb81f5e3ec518646792b1909c7add563bc162f97b', '314cdf9ea60ee354ff1b87da74f15dedd4070604b2819a1d6bac3453', '499b5f203848362b46c6e0958e8ef318fe5f928f880b6c1baf9f6d7e', 'a8172157733dd50ef6f0f8d38e361745037f0a79c1f5da9b1d8079ff')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-10-21",
   "months": {
     "2025-04": 19,
     "2025-05": 6,
@@ -16,7 +16,7 @@
     "2026-04": 1,
     "2026-05": 9,
     "2026-06": 4,
-    "2026-07": 11446,
+    "2026-07": 11450,
     "2026-08": 3,
     "2026-09": 1840
   }

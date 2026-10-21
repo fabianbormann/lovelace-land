@@ -16,11 +16,19 @@ describe('yearChunks', () => {
 describe('txQueries', () => {
   it('counts distinct transactions per month for scripts, labels and addresses', () => {
     const [q] = txQueries({ scripts: [HASH], metadataLabels: [674], addresses: ['addr1qxy'] }, ['2026-01-01', '2026-02-01']);
-    expect(q).toContain("FROM transaction_scripts WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01' AND script_hash IN ('" + HASH + "')");
+    expect(q).toContain("SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01'");
+    expect(q).toContain("h IN ('" + HASH + "')");
     expect(q).toContain("FROM transaction_metadata WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01' AND CAST(label AS VARCHAR) IN ('674')");
     expect(q).toContain("FROM address_utxo WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01' AND owner_addr IN ('addr1qxy')");
     expect(q).toMatch(/count\(DISTINCT tx_hash\)/);
     expect(q).toMatch(/UNION/);
+  });
+
+  it('counts transactions that send outputs to a script, not only those that run it', () => {
+    // placing a DEX order or writing a notary record pays to the script address without executing it
+    const [q] = txQueries({ scripts: [HASH] }, ['2026-01-01', '2026-02-01']);
+    expect(q).toContain("SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01'");
+    expect(q.match(new RegExp(HASH, 'g'))).toHaveLength(1);
   });
 
   it('refuses identifiers that could break out of the SQL string', () => {
@@ -32,8 +40,9 @@ describe('txQueries', () => {
     const plan = txPlan({ scripts: many }, [['2026-01-01', '2026-02-01']]);
     expect(plan.queries).toHaveLength(1);
     expect(plan.queries[0].length).toBeLessThan(MAX_SQL_LENGTH);
-    expect(plan.queries[0]).toMatch(/substr\(script_hash, 1, \d+\) IN/);
-    expect(plan.prefix!.checkQuery).toMatch(/SELECT DISTINCT script_hash FROM transaction_scripts/);
+    expect(plan.queries[0]).toMatch(/substr\(h, 1, \d+\) IN/);
+    expect(plan.prefix!.checkQuery).toMatch(/FROM transaction_scripts/);
+    expect(plan.prefix!.checkQuery).toMatch(/owner_payment_credential AS h FROM address_utxo/);
     expect(plan.prefix!.checkQuery.length).toBeLessThan(MAX_SQL_LENGTH);
   });
 
@@ -41,13 +50,13 @@ describe('txQueries', () => {
     const many = Array.from({ length: 700 }, (_, i) => (i * 7919).toString(16).padStart(8, '0') + 'a'.repeat(48));
     const foreign = many[3].slice(0, 20) + 'f'.repeat(36);
     const plan = txPlan({ scripts: many }, [['2026-01-01', '2026-02-01']], [foreign]);
-    expect(plan.queries[0]).toContain(`script_hash NOT IN ('${foreign}')`);
+    expect(plan.queries[0]).toContain(`h NOT IN ('${foreign}')`);
   });
 
   it('keeps short lists exact without prefixes', () => {
     const plan = txPlan({ scripts: [HASH] }, [['2026-01-01', '2026-02-01']]);
     expect(plan.prefix).toBeUndefined();
-    expect(plan.queries[0]).toContain(`script_hash IN ('${HASH}')`);
+    expect(plan.queries[0]).toContain(`h IN ('${HASH}')`);
   });
 
   it('returns nothing without identifiers', () => {
@@ -92,7 +101,7 @@ describe('resolvePlan', () => {
     const checked: number[] = [];
     // each check reports a new foreign hash for the prefix length it was asked about
     const runCheck = async (q: string) => {
-      const len = Number(/substr\(script_hash, 1, (\d+)\)/.exec(q)![1]);
+      const len = Number(/substr\(h, 1, (\d+)\)/.exec(q)![1]);
       checked.push(len);
       // the chain holds 20 foreign scripts sharing our first 12 characters; excluding them forces a shorter prefix
       return Array.from({ length: 20 }, (_, k) => many[k].slice(0, 12) + 'f'.repeat(44)).filter((h) => many.some((m) => m.startsWith(h.slice(0, len))));
@@ -102,6 +111,19 @@ describe('resolvePlan', () => {
     expect(checked.length).toBeGreaterThan(1);
     expect(foreignInQuery.length).toBe(20);
     expect(plan.prefix!.length).toBe(checked[checked.length - 1]);
+  });
+
+  it('falls back to counting script runs only when outputs would make the statement too long', async () => {
+    // matching outputs by prefix also catches ordinary wallets' key hashes; excluding them all would not fit
+    const runCheck = async (q: string) => {
+      const len = Number(/substr\(h, 1, (\d+)\)/.exec(q)![1]);
+      const wallets = q.includes('address_utxo') ? Array.from({ length: 400 }, (_, k) => many[k].slice(0, len) + 'e'.repeat(56 - len)) : [];
+      return wallets;
+    };
+    const plan = await resolvePlan({ scripts: many }, [['2026-01-01', '2026-02-01']], runCheck);
+    expect(plan.outputs).toBe(false);
+    expect(plan.queries[0]).not.toContain('address_utxo');
+    expect(plan.queries[0].length).toBeLessThan(MAX_SQL_LENGTH);
   });
 
   it('skips the check for short lists', async () => {
