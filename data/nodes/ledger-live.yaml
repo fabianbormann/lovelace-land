@@ -35,4 +35,12 @@ uses:
         kind: manifest
         retrieved: 2026-10-21
         note: '"@ledgerhq/coin-cardano" depends on "@stricahq/cbors": "1.0.2"'
+  - target: yaci-devkit
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/LedgerHQ/ledger-live/commit/a9d4a846500b596dee5f24a6184bc88d0702428f
+        kind: manifest
+        retrieved: 2026-10-21
+        note: "fix(coin-tester-cardano): run yaci-devkit with docker (16 October 2026); the Cardano coin tester ran on the @bloxbean/yaci-devkit npm package (0.10.6) since 19 June 2026 and now starts the Yaci devnet in Docker"
 lastVerified: 2026-10-21
