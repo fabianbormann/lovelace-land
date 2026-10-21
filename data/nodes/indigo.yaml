@@ -13,6 +13,14 @@ packages:
 status: active
 primarySector: defi
 uses:
+  - target: cardano-transaction-lib
+    relation: library
+    confidence: reported
+    evidence:
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib#use-in-production
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'CTL README lists Indigo Protocol under "Use in production" (since 2 October 2023). Its own off-chain code is not public, so current use is unconfirmed.'
   - target: aiken
     relation: language
     confidence: reported

@@ -11,6 +11,18 @@ links:
 status: active
 primarySector: defi
 uses:
+  - target: cardano-transaction-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/Liqwid-Labs/agora-purescript-bridge/blob/main/spago.dhall
+        kind: manifest
+        retrieved: 2026-10-21
+        note: Liqwid Labs' PureScript off-chain bridge depends on cardano-transaction-lib; liqwid-nix also ships a CTL off-chain template
+      - url: https://github.com/Plutonomicon/cardano-transaction-lib#use-in-production
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'CTL README lists Liqwid under "Use in production" (since 2 October 2023).'
   - target: plutarch
     relation: language
     confidence: inferred
