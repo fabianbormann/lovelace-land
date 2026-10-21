@@ -69,7 +69,9 @@ export function flagsAt(world: World, monthIndex: number) {
   const tl = world.timeline;
   const standing = world.nodes.filter((n) => isStanding(tl.nodes[n.id].state[monthIndex]));
   const traffic = (id: string) => tl.nodes[id].traffic[monthIndex];
-  const stranded = new Set(standing.filter((n) => traffic(n.id) === 0).map((n) => n.id));
+  // own transactions that month or the month before mean it has users, named on the island or not
+  const ownTx = (id: string) => tl.nodes[id].tx[monthIndex] > 0 || (monthIndex > 0 && tl.nodes[id].tx[monthIndex - 1] > 0);
+  const stranded = new Set(standing.filter((n) => traffic(n.id) === 0 && !ownTx(n.id)).map((n) => n.id));
   const desc = standing.map((n) => traffic(n.id)).sort((a, b) => b - a);
   const k = Math.ceil(desc.length * TOP_FRACTION);
   const threshold = k > 0 ? desc[k - 1] : Infinity;

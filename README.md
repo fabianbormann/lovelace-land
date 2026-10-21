@@ -29,7 +29,7 @@ As in Settlers, paths wear down with use. A road crossed by one pilot customer s
 
 ## What it shows
 
-- **Stranded buildings**: projects with no road to any active customer, for example a tool nobody ships to end users.
+- **Stranded buildings**: projects with no road to any active customer and no on-chain transactions of their own, for example a tool nobody ships to end users.
 - **Hidden highways**: projects that carry a lot of traffic but are named directly by only a few others. These are the quiet central dependencies.
 - **At risk**: projects that others still depend on, but whose repository hasn't had a commit in six months.
 - **Follow**: click a ship to follow its goods down to the mountain, or click a building to trace it back to every ship that relies on it.

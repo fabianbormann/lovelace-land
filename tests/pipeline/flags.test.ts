@@ -26,6 +26,13 @@ describe('computeFlags', () => {
     expect(f.get('announced')!.stranded).toBe(false);
   });
 
+  it('does not call a building stranded when it has on-chain transactions of its own', () => {
+    const g = buildGraph(makeData({ nodes: [node('busy-dapp', 'products'), node('quiet-lib', 'sdks')] }));
+    const f = computeFlags(g, computeTraffic(g, { includeInferred: false }), new Set(['busy-dapp']));
+    expect(f.get('busy-dapp')!.stranded).toBe(false);
+    expect(f.get('quiet-lib')!.stranded).toBe(true);
+  });
+
   it('flags high-traffic nodes with few direct dependents as hidden highways', () => {
     // ledger <- csl <- sdk <- app1..app8 <- c1..c8
     const apps = Array.from({ length: 8 }, (_, i) => node(`app${i + 1}`, 'products', ['sdk']));

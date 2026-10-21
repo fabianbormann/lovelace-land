@@ -1,0 +1,26 @@
+id: sokosumi
+name: Sokosumi
+district: products
+description: Marketplace where teams hire ready-to-use AI agents ("AI coworkers")
+  for marketing and research work, built by Serviceplan Group with NMKR. Every
+  job is paid and verified on Masumi.
+maintainer: Serviceplan Group, NMKR
+links:
+  website: https://sokosumi.com
+  repo: https://github.com/masumi-network/sokosumi
+status: active
+primarySector: agentic-payments
+uses:
+  - target: masumi
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://www.masumi.network
+        kind: docs
+        retrieved: 2026-10-21
+        note: '"Sokosumi is the marketplace where teams hire ready-to-use AI agents — every job paid and verified on Masumi."'
+      - url: https://github.com/masumi-network/sokosumi/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: The Sokosumi monorepo builds and tests its own Masumi integration package, @sokosumi/masumi
+lastVerified: 2026-10-21

@@ -48,3 +48,8 @@
   description: Centralized exchanges and institutional custodians that list ADA or hold it for their own users.
   inclusion: The customer lets its own users buy, sell, hold or stake ADA through its platform.
   coast: east
+- id: agentic-payments
+  name: Agentic Payments
+  description: AI agents and the teams that hire them, paying for work on-chain.
+  inclusion: The customer runs, hires or pays AI agents that settle their work on-chain.
+  coast: north

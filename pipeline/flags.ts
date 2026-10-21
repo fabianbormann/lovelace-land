@@ -13,7 +13,11 @@ export interface NodeFlags {
   dependents: number;
 }
 
-export function computeFlags(graph: Graph, traffic: Traffic): Map<string, NodeFlags> {
+/**
+ * selfActive: buildings with on-chain transactions of their own right now. They have users even when
+ * no customer on the island is named, so they are never stranded.
+ */
+export function computeFlags(graph: Graph, traffic: Traffic, selfActive: ReadonlySet<string> = new Set()): Map<string, NodeFlags> {
   const nodes = graph.data.nodes;
   const t = (id: string) => traffic.node.get(id) ?? 0;
 
@@ -28,7 +32,7 @@ export function computeFlags(graph: Graph, traffic: Traffic): Map<string, NodeFl
   const flags = new Map<string, NodeFlags>();
   for (const n of nodes) {
     const value = t(n.id);
-    const stranded = value === 0;
+    const stranded = value === 0 && !selfActive.has(n.id);
     const dependents = new Set(
       (graph.incoming.get(n.id) ?? []).filter((e) => e.confidence !== 'inferred').map((e) => e.from),
     ).size;

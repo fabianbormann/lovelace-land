@@ -62,6 +62,15 @@ describe('flagsAt', () => {
     expect(stranded.has('swap-town')).toBe(false);
     expect(stranded.has('lonely-tool')).toBe(true);
   });
+
+  it('does not mark a building stranded in a month it has its own transactions, or the month after', () => {
+    const w: World = JSON.parse(JSON.stringify(world));
+    const i = w.timeline.months.indexOf('2026-05');
+    w.timeline.nodes['lonely-tool'].tx[i] = 120;
+    expect(flagsAt(w, i).stranded.has('lonely-tool')).toBe(false);
+    expect(flagsAt(w, i + 1).stranded.has('lonely-tool')).toBe(false);
+    expect(flagsAt(w, i + 2).stranded.has('lonely-tool')).toBe(true);
+  });
 });
 
 describe('time-aware appearance', () => {

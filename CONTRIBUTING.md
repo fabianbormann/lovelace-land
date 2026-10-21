@@ -256,7 +256,7 @@ Every pull request:
 ## What the map computes
 
 - **Traffic:** each customer's flow, `log10(1 + monthly transactions)`, walks from its harbor through everything it depends on, down to the Cardano mountain. Without on-chain data, announced periods count as a small fixed flow.
-- **Stranded:** no route from any active customer reaches the building.
+- **Stranded:** no route from any active customer reaches the building, and it had no on-chain transactions of its own this month or last.
 - **Hidden highway:** among the busiest 15% of buildings, yet named directly by three or fewer projects.
 - **At risk:** still depended on through others, but with no commits for 6 months and no transactions of its own.
 - **Ships:** a ship leaves after 3 months without transactions.

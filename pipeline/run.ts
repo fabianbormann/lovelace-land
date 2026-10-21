@@ -41,7 +41,11 @@ export function runPipeline(dataDir: string, lockText: string | null, generatedA
 
   const traffic = computeTraffic(graph, { includeInferred: false });
   const rumorTraffic = computeTraffic(graph, { includeInferred: true });
-  const flags = computeFlags(graph, traffic);
+  // own transactions this month or last (the current month is still being collected)
+  const thisMonth = monthOf(generatedAt);
+  const recent = monthRange(TIMELINE_START, thisMonth).slice(-2);
+  const selfActive = new Set(graph.data.nodes.filter((n) => recent.some((m) => (activity.tx.get(n.id)?.[m] ?? 0) > 0)).map((n) => n.id));
+  const flags = computeFlags(graph, traffic, selfActive);
   const layout = computeLayout(graph, lock);
   const roads = routeRoads(graph, layout, traffic, rumorTraffic);
   warnings.push(...roads.warnings);
