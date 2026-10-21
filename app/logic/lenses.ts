@@ -71,8 +71,12 @@ export function computeAppearance(idx: WorldIndex, state: ViewState): Appearance
   const isHighway = (id: string) => (monthFlags ? monthFlags.highways.has(id) : idx.node.get(id)!.hiddenHighway);
   const standing = (id: string) => month === null || !tl.nodes[id] || isStanding(tl.nodes[id].state[month]);
   const docked = (id: string) => month === null || tl.customers[id]?.state[month] === 'd';
-  // a ship that left or sank stays on the map as a ghost or wreck, so its roads stay too, dimmed
-  const present = (id: string) => !idx.node.has(id) || standing(id);
+  // a ship appears when it first docks (or sinks); after that it stays as a ghost or wreck, so its roads stay too, dimmed
+  const arrived = (id: string) => {
+    const s = tl.customers[id]?.state;
+    return month === null || !s || s[month] === 'w' || s.lastIndexOf('d', month) !== -1;
+  };
+  const present = (id: string) => (idx.node.has(id) ? standing(id) : arrived(id));
   const highways =
     state.lens === 'highways'
       ? new Set(world.edges.filter((e) => e.confidence !== 'inferred' && idx.node.has(e.to) && isHighway(e.to)).map((e) => e.id))

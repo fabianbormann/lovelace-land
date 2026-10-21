@@ -12,8 +12,8 @@ export interface PlacedShip {
   label: HTMLElement;
   /** where the ship docks, even while it is away */
   berth: THREE.Vector3;
-  /** docked 1 = at the berth, 0 = away: a ghost at its berth; wreck shows the wrecked hull */
-  setPresence(docked: number, wreck: boolean): void;
+  /** docked 1 = at the berth, 0 = away: a ghost at its berth; wreck shows the wrecked hull; arrived 0 = still beyond the horizon */
+  setPresence(docked: number, wreck: boolean, arrived?: number): void;
 }
 
 const SEAWARD = { east: [1, 0], north: [0, -1], south: [0, 1] } as const;
@@ -141,6 +141,7 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     label.position.set(0, 3.6, 0);
     root.add(label);
     group.add(root);
+    const [ox, oy] = SEAWARD[sector.coast];
     const berth = new THREE.Vector3(spot.x, 0, spot.y);
     const materials: THREE.MeshLambertMaterial[] = [];
     sailing.traverse((c) => {
@@ -151,7 +152,13 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     });
     let shown = -1;
     // A ship that has no activity stays at its berth as a ghost, so it can still be found, clicked and traced to.
-    const setPresence = (docked: number, isWreck: boolean) => {
+    const setPresence = (docked: number, isWreck: boolean, arrived = 1) => {
+      // before its first activity the ship is still on its way, beyond the horizon
+      const out = (1 - arrived) * 34;
+      root.position.x = berth.x + ox * out;
+      root.position.z = berth.z + oy * out;
+      root.visible = arrived > 0.02;
+      el.hidden = !root.visible;
       wreck.visible = isWreck;
       sailing.visible = !isWreck;
       el.classList.toggle('is-away', !isWreck && docked < 0.5);

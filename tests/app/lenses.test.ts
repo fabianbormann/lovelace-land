@@ -91,6 +91,16 @@ describe('ships that are away', () => {
     expect(wreck.edges.get('old-pilot->seal-notary')).toMatchObject({ hidden: false, dim: true });
   });
 
+  it('have no road yet before they first arrive', () => {
+    // old-pilot never docked: it only shows up, as a wreck, in the latest month
+    const months = idx.world.timeline.months;
+    const before = computeAppearance(idx, { ...defaultViewState(), time: months.length - 2 });
+    expect(idx.world.timeline.nodes['seal-notary'].state.at(-2)).toMatch(/[ar]/);
+    expect(before.edges.get('old-pilot->seal-notary')!.hidden).toBe(true);
+    const now = computeAppearance(idx, { ...defaultViewState(), time: months.length - 1 });
+    expect(now.edges.get('old-pilot->seal-notary')!.hidden).toBe(false);
+  });
+
   it('are still reached when a building is traced back to its ships', () => {
     const a = computeAppearance(idx, { ...defaultViewState(), lens: 'follow', follow: 'anvil-lib', time: at('2026-09') });
     expect(a.customers.get('harbor-traders')!.glow).toBe(true);

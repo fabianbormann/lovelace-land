@@ -196,7 +196,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
     }
     for (const s of harbors.ships) {
       const p = shipPresence(tl, s.customer.id, T);
-      s.setPresence(p.docked, p.wreck);
+      s.setPresence(p.docked, p.wreck, p.arrived);
     }
     settlers.setTime(T);
     const next = computeSurfaces(surfaces);

@@ -34,7 +34,7 @@ As in Settlers, paths wear down with use. A road crossed by one pilot customer s
 - **At risk**: projects that others still depend on, but whose repository hasn't had a commit in six months.
 - **Follow**: click a ship to follow its goods down to the mountain, or click a building to trace it back to every ship that relies on it.
 - **The timeline**: replay the ecosystem since smart contracts arrived in September 2021.
-  - Ships fade into ghosts at their berth when their transactions stop, and come back when they resume. A ship without on-chain data stays solid for 24 months after the latest public source that confirms its use. Click any ghost or wreck to see why.
+  - Ships sail in from the horizon when a customer starts using a product. They fade into ghosts at their berth when their transactions stop, and come back when they resume. A ship without on-chain data stays solid for 24 months after the latest public source that confirms its use. Click any ghost or wreck to see why.
   - Idle projects burn after 4 months, fall into ruin after 6 and return to grass after 12.
 
 ## The data

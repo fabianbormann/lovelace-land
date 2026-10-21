@@ -154,7 +154,7 @@ lastVerified: 2026-10-20
 ## Add on-chain activity for the timeline
 
 The timeline replays the ecosystem month by month from September 2021:
-- ships fade into ghosts at their berth when their transactions stop, and come back when they resume;
+- ships sail in when a customer starts using a product, fade into ghosts at their berth when their transactions stop, and come back when they resume;
 - buildings burn after 4 inactive months, become ruins after 6 and turn back to grass after 12;
 - busy roads wear into cobblestone.
 

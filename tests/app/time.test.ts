@@ -41,7 +41,17 @@ describe('shipPresence', () => {
   });
 
   it('keeps wrecks at the harbor', () => {
-    expect(shipPresence(tl, 'old-pilot', last)).toEqual({ docked: 1, wreck: true });
+    expect(shipPresence(tl, 'old-pilot', last)).toEqual({ docked: 1, wreck: true, arrived: 1 });
+  });
+
+  it('sails in from the horizon on its first active month, and stays as a ghost once it has been there', () => {
+    const at = (m: string, frac = 0) => shipPresence(tl, 'harbor-traders', tl.months.indexOf(m) + frac);
+    expect(tl.customers['harbor-traders'].state.slice(tl.months.indexOf('2026-02'), tl.months.indexOf('2026-02') + 3)).toBe('aad');
+    expect(at('2026-02').arrived).toBe(0);
+    expect(at('2026-03', 0.5)).toMatchObject({ arrived: 0.5, docked: 0.5 });
+    expect(at('2026-04')).toMatchObject({ arrived: 1, docked: 1 });
+    expect(at('2026-09')).toMatchObject({ arrived: 1, docked: 0 });
+    expect(shipPresence(tl, 'old-pilot', last - 1).arrived).toBe(0);
   });
 });
 

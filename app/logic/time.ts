@@ -47,15 +47,21 @@ export function nodeStateAt(tl: Timeline, nodeId: string, T: number) {
 
 const DOCKED: Record<string, number> = { d: 1, a: 0, w: 1 };
 
-/** 1 = docked, 0 = away (a ghost at its berth); ships fade during the month their activity changes. */
-export function shipPresence(tl: Timeline, customerId: string, T: number): { docked: number; wreck: boolean } {
+/**
+ * docked: 1 = docked, 0 = away (a ghost at its berth); ships fade during the month their activity changes.
+ * arrived: 0 = still beyond the horizon, 1 = at the harbor; a ship sails in during the month before it first docks,
+ * and once it has arrived it stays, as a ghost when it is quiet.
+ */
+export function shipPresence(tl: Timeline, customerId: string, T: number): { docked: number; wreck: boolean; arrived: number } {
   const { index, frac } = cursorAt(tl.months, T);
   const state = tl.customers[customerId].state;
   const now = state[index];
-  if (now === 'w') return { docked: 1, wreck: true };
+  if (now === 'w') return { docked: 1, wreck: true, arrived: 1 };
   const next = state[Math.min(index + 1, state.length - 1)];
   const target = next === 'w' ? 0 : DOCKED[next];
-  return { docked: DOCKED[now] + (target - DOCKED[now]) * frac, wreck: false };
+  const seen = state.lastIndexOf('d', index) !== -1;
+  const arrived = seen ? 1 : next === 'd' && index < state.length - 1 ? frac : 0;
+  return { docked: DOCKED[now] + (target - DOCKED[now]) * frac, wreck: false, arrived };
 }
 
 /** Stranded and hidden-highway buildings in a given month. */
