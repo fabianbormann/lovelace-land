@@ -86,7 +86,7 @@ export function buildWater(terrain: Terrain, stage: Stage) {
   const h = terrain.height + 260;
   const geometry = new THREE.PlaneGeometry(w, h, 90, 60).rotateX(-Math.PI / 2);
   geometry.translate(terrain.minX + terrain.width / 2, 0, terrain.minY + terrain.height / 2);
-  const material = new THREE.MeshPhongMaterial({ color: '#2f86b0', transparent: true, opacity: 0.86, flatShading: true, shininess: 60, specular: '#cfefff' });
+  const material = new THREE.MeshPhongMaterial({ color: '#2f86b0', transparent: true, opacity: 0.86, flatShading: true, shininess: 40, specular: '#2b4a58' });
   const water = new THREE.Mesh(geometry, material);
   water.name = 'water';
   // An endless seabed under the water so the edge of the terrain grid never shows.
