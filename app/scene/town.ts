@@ -27,7 +27,7 @@ function hash(id: string) {
   return (h >>> 0) / 4294967296;
 }
 
-export function buildTown(world: World, stage: Stage, surfaceY: (x: number, y: number) => number): PlacedBuilding[] {
+export function buildTown(world: World, stage: Stage, groundY: (x: number, y: number, r: number) => number): PlacedBuilding[] {
   const districtById = new Map(world.districts.map((d) => [d.id, d] as const));
   const sectorColor = new Map(world.sectors.map((s, i) => [s.id, SECTOR_COLORS[i % SECTOR_COLORS.length]] as const));
   const placed: PlacedBuilding[] = [];
@@ -53,7 +53,8 @@ export function buildTown(world: World, stage: Stage, surfaceY: (x: number, y: n
     body.rotation.y = facing;
     const root = new THREE.Group();
     root.add(body, plot);
-    root.position.set(node.pos[0], surfaceY(node.pos[0], node.pos[1]), node.pos[1]);
+    // stand on the lowest point under the footprint, so no corner hangs over a dip in the terrain
+    root.position.set(node.pos[0], groundY(node.pos[0], node.pos[1], 0.65 * s) - 0.03, node.pos[1]);
     root.userData = { kind: 'node', id: node.id };
     root.traverse((c) => (c.userData.pick ??= root.userData));
     plot.traverse((c) => (c.userData.pick = undefined));

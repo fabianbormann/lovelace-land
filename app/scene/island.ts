@@ -37,7 +37,7 @@ export interface IslandMap {
 export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): IslandMap {
   const stage = new Stage(host);
   const terrain = buildTerrain(world);
-  const { surfaceY } = makeSurface(terrain);
+  const { surfaceY, groundY } = makeSurface(terrain);
 
   const ground = buildTerrainMesh(world, terrain);
   stage.scene.add(ground);
@@ -48,7 +48,7 @@ export function createIsland(host: HTMLElement, world: World, idx: WorldIndex): 
   stage.scene.add(buildRafts(terrain, stage));
   const roads = buildRoads(world, surfaceY);
   stage.scene.add(roads.group);
-  const town = buildTown(world, stage, surfaceY);
+  const town = buildTown(world, stage, groundY);
   const harbors = buildHarbors(world, stage, surfaceY);
   stage.scene.add(harbors.group);
   const settlers = buildSettlers(world, idx, stage, surfaceY, makeTrail(world, terrain));

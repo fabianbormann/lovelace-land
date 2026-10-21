@@ -27,7 +27,14 @@ export function makeSurface(terrain: Terrain) {
   };
   const surfaceY = (x: number, y: number) =>
     Math.max(corner(x, y), corner(x + 1, y), corner(x, y + 1), corner(x + 1, y + 1));
-  return { corner, surfaceY };
+  /** Lowest terrain point under a footprint of radius r around (x, y), so a building never hangs over a dip. */
+  const groundY = (x: number, y: number, r: number) => {
+    let low = Infinity;
+    for (let cx = Math.floor(x - r); cx <= Math.ceil(x + r); cx++)
+      for (let cy = Math.floor(y - r); cy <= Math.ceil(y + r); cy++) low = Math.min(low, corner(cx, cy));
+    return Number.isFinite(low) ? low : surfaceY(Math.round(x), Math.round(y));
+  };
+  return { corner, surfaceY, groundY };
 }
 
 export function buildTerrainMesh(world: World, terrain: Terrain) {

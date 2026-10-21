@@ -84,7 +84,8 @@ export class Stage {
     this.sun.castShadow = true;
     const shadowSize = Math.min(screen.width, screen.height) < 800 ? 2048 : 4096;
     this.sun.shadow.mapSize.set(shadowSize, shadowSize);
-    this.sun.shadow.bias = -0.0008;
+    // a large depth bias detaches shadows from their objects ("peter panning") and makes houses look like they hover
+    this.sun.shadow.bias = -0.0002;
     this.sun.shadow.normalBias = 0.04;
     this.scene.add(this.sun);
     this.scene.add(this.sun.target);
