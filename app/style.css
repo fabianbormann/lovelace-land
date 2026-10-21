@@ -100,7 +100,8 @@ a { color: var(--brass); }
 .search-results li[aria-selected='true'], .search-results li:hover { background: var(--brass-soft); }
 .search-results small { color: var(--ink-soft); white-space: nowrap; }
 
-.lenses { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper-2); overflow-x: auto; max-width: 100%; }
+.lenses { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper-2); overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+.lenses::-webkit-scrollbar { display: none; }
 .lens { border: 0; background: transparent; padding: 4px 12px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
 .lens:hover { background: color-mix(in srgb, var(--brass-soft) 60%, transparent); }
 .lens.is-active { background: var(--ink); color: var(--paper); }
@@ -299,6 +300,11 @@ tbody tr:hover { background: var(--brass-soft); }
   .panel { top: auto; left: max(16px, env(safe-area-inset-left, 0px)); width: auto; height: min(58%, calc(100% - var(--bar-bottom) - var(--timeline-space, 96px) - 12px)); }
   .legend:not([open]) { width: auto; }
   .legend { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  /* opened on a phone, the legend is a sheet over the timeline: opaque, never taller than the map, scrolling inside */
+  .legend[open] {
+    z-index: 7; width: calc(100% - 32px); background: var(--paper);
+    max-height: calc(100% - var(--bar-bottom) - 32px - env(safe-area-inset-bottom, 0px)); overflow-y: auto;
+  }
   .timeline { left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); transform: none; width: auto; min-width: 0; bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
   .stats { display: none; }
 }
