@@ -39,16 +39,21 @@ As in Settlers, paths wear down with use. A road crossed by one pilot customer s
 
 ## The data
 
-Everything on the map comes from plain YAML files in [`data/`](data/), one per project or customer:
+Everything on the map comes from plain YAML files in [`data/`](data/), one per project or customer, and every claim in them links to a public source.
 
-- **About 160 projects, 70 customers and 470 roads**, linked by more than 500 evidence links: manifests, `plutus.json` files, docs, case studies and announcements.
-- **Every road has a confidence level:**
-  - *verified*: a primary source, drawn as a solid road;
-  - *reported*: a third-party source, drawn dashed;
-  - *inferred*: a plausible but unconfirmed link, hidden unless you turn on "Show rumors".
-- **Monthly on-chain transactions** for about 50 products and customers since 2021 (more than 26 million transactions), from the [Yaci Store](https://github.com/bloxbean/yaci-store) analytics service.
-- **Monthly commit activity** for about 120 project repositories, from GitHub.
-- **Kept up to date by weekly jobs**: they refresh the activity data, scan project manifests for new dependencies and check every source link.
+| What | Where it comes from |
+|---|---|
+| **About 160 projects, 70 customers and 480 roads** | Public dependency manifests (`package.json`, `pom.xml`, `aiken.toml`, …), project documentation, case studies and announcements: more than 550 evidence links, three quarters of them on GitHub |
+| **Confidence of each road** | *Verified* when a primary source such as a manifest shows it (solid road), *reported* when only third parties say so (dashed), *inferred* when unconfirmed (hidden unless you turn on "Show rumors") |
+| **Monthly on-chain transactions** for about 50 products and customers since September 2021, more than 26 million in total | The [Yaci Store](https://github.com/bloxbean/yaci-store) analytics service, matched against script hashes, metadata labels and addresses from public contract registries and the projects' own deployment files |
+| **Monthly commit activity** for about 120 repositories | The GitHub API |
+| **Customer sizes** | DefiLlama for DeFi volumes, app stores for wallet users, and the customers' own figures |
+
+**[data/README.md](data/README.md)** explains it in detail:
+- what each file holds and which sources back it;
+- how transactions are counted, with the exact query saved next to every number;
+- how a weekly job checks links, proposes new roads and refreshes activity;
+- what the data cannot tell you.
 
 The data is open under **CC BY 4.0**, so you're welcome to reuse it.
 
