@@ -19,3 +19,6 @@ docs/superpowers/
 .starburst.mjs
 .mark.mjs
 .mark2.mjs
+
+# research drafts, reconciled into data/ after review; not published
+research/

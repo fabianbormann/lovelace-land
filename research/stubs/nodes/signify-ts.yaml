@@ -1,9 +1,0 @@
-id: signify-ts
-name: Signify-TS
-district: sdks
-description: TypeScript client for signing KERI events at the edge. Not Cardano-specific; included because Cardano identity products build on it.
-maintainer: WebOfTrust
-links:
-  repo: https://github.com/WebOfTrust/signify-ts
-status: active
-lastVerified: 2026-10-20

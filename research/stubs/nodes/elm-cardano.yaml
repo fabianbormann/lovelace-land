@@ -1,9 +1,0 @@
-id: elm-cardano
-name: elm-cardano
-district: sdks
-description: Off-chain Cardano package for the Elm language.
-maintainer: elm-cardano
-links:
-  repo: https://github.com/elm-cardano/elm-cardano
-status: active
-lastVerified: 2026-10-20

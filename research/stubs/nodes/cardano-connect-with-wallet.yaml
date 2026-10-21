@@ -1,9 +1,0 @@
-id: cardano-connect-with-wallet
-name: Cardano Connect with Wallet
-district: sdks
-description: React hooks and components plus a framework-independent core for connecting dApps to CIP-30 wallets.
-maintainer: Cardano Foundation
-links:
-  repo: https://github.com/cardano-foundation/cardano-connect-with-wallet
-status: active
-lastVerified: 2026-10-20

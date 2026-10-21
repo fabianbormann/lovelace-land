@@ -1,9 +1,0 @@
-id: commitproof
-name: CommitProof
-district: products
-description: Web notary that hashes a file or text in the browser and commits only the salted hash to Cardano mainnet transaction metadata, returning a PDF/JSON proof for later verification. Listed in the Notary category on cardano.org; no public source code or tech stack disclosed.
-links:
-  website: https://commitproof.com
-status: active
-primarySector: proof-verification
-lastVerified: 2026-10-20

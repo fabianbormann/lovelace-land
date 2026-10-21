@@ -1,9 +1,0 @@
-id: keripy
-name: KERIpy
-district: sdks
-description: Reference Python implementation of KERI (Key Event Receipt Infrastructure). Not Cardano-specific; included because Cardano identity products build on it.
-maintainer: WebOfTrust
-links:
-  repo: https://github.com/WebOfTrust/keripy
-status: active
-lastVerified: 2026-10-20

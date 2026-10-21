@@ -1,9 +1,0 @@
-id: yaci
-name: Yaci
-district: sdks
-description: Java implementation of the Cardano Ouroboros mini-protocols; the base Yaci Store is built on.
-maintainer: BloxBean
-links:
-  repo: https://github.com/bloxbean/yaci
-status: active
-lastVerified: 2026-10-20

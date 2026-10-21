@@ -1,9 +1,0 @@
-id: plutus-core
-name: Plutus Core
-district: onchain-languages
-description: The Plutus Core evaluator and ledger API (plutus-core, plutus-ledger-api) that every Plutus script runs on.
-maintainer: IntersectMBO
-links:
-  repo: https://github.com/IntersectMBO/plutus
-status: active
-lastVerified: 2026-10-20
