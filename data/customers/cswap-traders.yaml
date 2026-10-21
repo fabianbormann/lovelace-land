@@ -6,7 +6,7 @@ stage: production
 description: Anonymous users swapping Cardano native tokens and providing liquidity on CSWAP pools.
 metric:
   label: Total value locked
-  value: "$536K (20,402 transactions in the 30 days to 2026-10-16 on the cardano.org leaderboard)"
+  value: "$536K"
   source: https://api.llama.fi/tvl/cswap-dex
   retrieved: 2026-10-21
 uses:

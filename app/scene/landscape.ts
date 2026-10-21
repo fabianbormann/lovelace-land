@@ -81,12 +81,17 @@ export function buildTerrainMesh(world: World, terrain: Terrain) {
   return mesh;
 }
 
+/** Height of the animated sea surface at (x, z) and time t; ships float on it. */
+export const waterLevel = (x: number, z: number, t: number) => Math.sin(x * 0.35 + t * 0.9) * 0.07 + Math.cos(z * 0.3 + t * 0.7) * 0.07;
+
 export function buildWater(terrain: Terrain, stage: Stage) {
   const w = terrain.width + 260;
   const h = terrain.height + 260;
   const geometry = new THREE.PlaneGeometry(w, h, 90, 60).rotateX(-Math.PI / 2);
   geometry.translate(terrain.minX + terrain.width / 2, 0, terrain.minY + terrain.height / 2);
-  const material = new THREE.MeshPhongMaterial({ color: '#2f86b0', transparent: true, opacity: 0.86, flatShading: true, shininess: 40, specular: '#2b4a58' });
+  // Lambert, not Phong: a specular highlight depends on the viewing angle, so the default view, which looks
+  // towards the sun, turned whole rows of wave facets pale while the other rotations did not.
+  const material = new THREE.MeshLambertMaterial({ color: '#2f86b0', transparent: true, opacity: 0.86, flatShading: true });
   const water = new THREE.Mesh(geometry, material);
   water.name = 'water';
   // An endless seabed under the water so the edge of the terrain grid never shows.
@@ -103,7 +108,7 @@ export function buildWater(terrain: Terrain, stage: Stage) {
       for (let i = 0; i < pos.count; i++) {
         const x = base[i * 3];
         const z = base[i * 3 + 2];
-        pos.setY(i, Math.sin(x * 0.35 + t * 0.9) * 0.07 + Math.cos(z * 0.3 + t * 0.7) * 0.07);
+        pos.setY(i, waterLevel(x, z, t));
       }
       pos.needsUpdate = true;
     });

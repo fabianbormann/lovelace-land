@@ -3,6 +3,7 @@ import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import type { World, WorldCustomer } from '../../pipeline/emit';
 import { at, box, cylinder, mat, PALETTE as P } from '../buildings/kit';
 import { placeShips, shipKind, type ShipKind } from '../logic/ships';
+import { waterLevel } from './landscape';
 import type { Stage } from './stage';
 import { SECTOR_COLORS } from './town';
 
@@ -66,11 +67,13 @@ function buildShip(kind: ShipKind, flag: string): THREE.Group {
 /** How solid a ship looks while it has no activity. */
 const GHOST_OPACITY = 0.3;
 const DIM_OPACITY = 0.55;
+/** How far a hull sits above the wave height, so low rowboats and barges never dip under a crest. */
+const SHIP_FREEBOARD = 0.12;
 
 export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y: number) => number) {
   const group = new THREE.Group();
   const ships: PlacedShip[] = [];
-  const bobbers: { obj: THREE.Object3D; phase: number; base: number; wreck: boolean }[] = [];
+  const bobbers: { obj: THREE.Object3D; root: THREE.Object3D; phase: number }[] = [];
 
   world.sectors.forEach((sector, i) => {
     const color = SECTOR_COLORS[i % SECTOR_COLORS.length];
@@ -115,6 +118,7 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     const flag = colorBySector.get(customer.harbor)!;
     const sailing = buildShip(sailingKind, flag);
     sailing.scale.setScalar(sailingKind === 'rowboat' ? 1.5 : 1.6);
+    sailing.position.y = SHIP_FREEBOARD;
     const wreck = buildShip('wreck', flag);
     wreck.scale.setScalar(1.6);
     wreck.rotation.x = 0.35;
@@ -165,7 +169,6 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
       const presence = isWreck ? 1 : GHOST_OPACITY + (1 - GHOST_OPACITY) * docked;
       if (presence === shown) return;
       shown = presence;
-      root.position.y = -(1 - presence) * 0.3;
       for (const m of materials) {
         const o = m.userData.shipOpacity * presence;
         m.userData.baseOpacity = o < 1 ? o : undefined;
@@ -175,13 +178,14 @@ export function buildHarbors(world: World, stage: Stage, surfaceY: (x: number, y
     };
     setPresence(1, staticKind === 'wreck');
     ships.push({ customer, root, label: el, berth, setPresence });
-    bobbers.push({ obj: sailing, phase: customer.slot * 1.3, base: 0, wreck: false });
+    bobbers.push({ obj: sailing, root, phase: customer.slot * 1.3 });
   }
+  // Ships float on the sea surface where they are, rocking gently; only wrecks sit below it.
   if (!stage.reducedMotion)
     stage.addTick((t) => {
       for (const b of bobbers) {
-        b.obj.position.y = b.base + Math.sin(t * 1.3 + b.phase) * (b.wreck ? 0.02 : 0.08);
-        if (!b.wreck) b.obj.rotation.x = Math.sin(t * 1.1 + b.phase) * 0.04;
+        b.obj.position.y = waterLevel(b.root.position.x, b.root.position.z, t) + SHIP_FREEBOARD;
+        b.obj.rotation.x = Math.sin(t * 1.1 + b.phase) * 0.04;
       }
     });
   return { group, ships };
