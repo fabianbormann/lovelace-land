@@ -1,0 +1,23 @@
+id: typhonjs
+name: typhonjs
+district: sdks
+description: Pure JavaScript Cardano wallet library by Strica for building,
+  serializing and signing transactions and handling addresses. It powers the
+  Typhon wallet and Ledger Live's Cardano support.
+maintainer: Strica
+links:
+  repo: https://github.com/StricaHQ/typhonjs
+packages:
+  - ecosystem: npm
+    name: "@stricahq/typhonjs"
+status: active
+uses:
+  - target: strica-cbors
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/StricaHQ/typhonjs/blob/main/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@stricahq/typhonjs" 4.0.0 depends on "@stricahq/cbors"'
+lastVerified: 2026-10-21

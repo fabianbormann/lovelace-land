@@ -1,0 +1,27 @@
+id: ledger-live-cardano-users
+name: Ledger Live users holding ADA
+type: segment
+sectors: [payments, defi]
+stage: production
+description: People who keep ADA and Cardano native tokens on a Ledger hardware
+  wallet and send, receive or stake them through Ledger Live.
+uses:
+  - target: ledger-live
+    confidence: verified
+    evidence:
+      - url: https://www.ledger.com/cardano-is-here-buy-manage-your-ada-in-ledger-live
+        kind: announcement
+        retrieved: 2026-10-21
+        note: "You can buy, send and receive your ADA coins directly with your Ledger Live app simply by creating an ADA account. (14 June 2022)"
+      - url: https://www.ledger.com/stake-your-cardano-ada-through-ledger-live
+        kind: announcement
+        retrieved: 2026-10-21
+        note: Cardano staking from Ledger Live desktop (August 2023)
+      - url: https://github.com/LedgerHQ/ledger-live/commit/94e247bcaa49bd601951be6f39182ee26ed67ecc
+        kind: manifest
+        retrieved: 2026-10-21
+        note: "fix(coin-cardano): don't count rewards as spendable (LIVE-38736), 7 October 2026"
+active:
+  from: 2022-06
+  confirmed: 2026-10
+lastVerified: 2026-10-21

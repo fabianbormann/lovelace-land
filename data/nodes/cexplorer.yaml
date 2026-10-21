@@ -1,0 +1,13 @@
+id: cexplorer
+name: Cexplorer
+district: api-providers
+description: Block explorer and analytics site for Cardano with a live API and
+  static JSON snapshots of network, pool, asset and DeFi data for developers.
+  Its backend is closed source.
+maintainer: Cexplorer
+links:
+  website: https://cexplorer.io
+  docs: https://github.com/cexplorer/cexplorer.io/blob/main/doc/welcome_devs.md
+status: active
+uses: []
+lastVerified: 2026-10-21

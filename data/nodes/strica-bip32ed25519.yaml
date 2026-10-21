@@ -1,0 +1,14 @@
+id: strica-bip32ed25519
+name: Strica bip32ed25519
+district: sdks
+description: Pure JavaScript implementation of BIP32-Ed25519 key derivation for
+  Cardano key pairs, by Strica.
+maintainer: Strica
+links:
+  repo: https://github.com/StricaHQ/bip32ed25519
+packages:
+  - ecosystem: npm
+    name: "@stricahq/bip32ed25519"
+status: active
+uses: []
+lastVerified: 2026-10-21

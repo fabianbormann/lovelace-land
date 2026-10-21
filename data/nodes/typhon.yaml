@@ -5,8 +5,15 @@ description: Non-custodial Cardano light wallet (browser extension) by Strica, t
 maintainer: Strica
 links:
   website: https://typhonwallet.io
-  repo: https://github.com/StricaHQ/typhonjs
 status: active
 primarySector: null
-uses: []
+uses:
+  - target: typhonjs
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/StricaHQ/typhonjs#used-by
+        kind: docs
+        retrieved: 2026-10-21
+        note: 'typhonjs README, "Used by": "Typhon Wallet"'
 lastVerified: 2026-10-20

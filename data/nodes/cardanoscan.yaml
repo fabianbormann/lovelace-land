@@ -1,0 +1,16 @@
+id: cardanoscan
+name: Cardanoscan
+district: api-providers
+description: Block explorer by Strica, the team behind the Typhon wallet, with a
+  public REST API for blocks, transactions, addresses, assets and governance and
+  official SDKs for JavaScript and Python. Its backend is closed source.
+maintainer: Strica
+links:
+  website: https://cardanoscan.io
+  docs: https://github.com/StricaHQ/cardanoscan-js
+packages:
+  - ecosystem: npm
+    name: "@stricahq/cardanoscan-js"
+status: active
+uses: []
+lastVerified: 2026-10-21

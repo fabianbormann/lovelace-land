@@ -1,0 +1,15 @@
+id: strica-cbors
+name: Strica CBORS
+district: sdks
+description: CBOR encoder and decoder for JavaScript by Strica, with streaming and
+  annotation support; the serialization layer under typhonjs and Ledger Live's
+  Cardano support.
+maintainer: Strica
+links:
+  repo: https://github.com/StricaHQ/cbors
+packages:
+  - ecosystem: npm
+    name: "@stricahq/cbors"
+status: active
+uses: []
+lastVerified: 2026-10-21

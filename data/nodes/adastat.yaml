@@ -1,0 +1,11 @@
+id: adastat
+name: AdaStat
+district: api-providers
+description: Block explorer and analytics site for Cardano with a public REST API
+  for epochs, pools, DReps and more. Its backend is closed source.
+maintainer: AdaStat
+links:
+  website: https://adastat.net
+status: active
+uses: []
+lastVerified: 2026-10-21

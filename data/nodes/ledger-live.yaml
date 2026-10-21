@@ -1,0 +1,38 @@
+id: ledger-live
+name: Ledger Live
+district: wallets
+description: Ledger's companion app for its hardware wallets. Its Cardano support
+  (send, receive and native tokens since June 2022, staking since August 2023)
+  builds and signs transactions with Strica's typhonjs, bip32ed25519 and cbors
+  libraries.
+maintainer: Ledger
+links:
+  website: https://www.ledger.com/ledger-live
+  repo: https://github.com/LedgerHQ/ledger-live
+status: active
+uses:
+  - target: typhonjs
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/LedgerHQ/ledger-live/blob/develop/libs/coin-modules/coin-cardano/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@ledgerhq/coin-cardano" depends on "@stricahq/typhonjs": "^3.0.0"; signOperation.ts and prepareTransaction.ts import it'
+  - target: strica-bip32ed25519
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/LedgerHQ/ledger-live/blob/develop/libs/coin-modules/coin-cardano/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@ledgerhq/coin-cardano" depends on "@stricahq/bip32ed25519": "^1.0.3"'
+  - target: strica-cbors
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/LedgerHQ/ledger-live/blob/develop/libs/coin-modules/coin-cardano/package.json
+        kind: manifest
+        retrieved: 2026-10-21
+        note: '"@ledgerhq/coin-cardano" depends on "@stricahq/cbors": "1.0.2"'
+lastVerified: 2026-10-21
