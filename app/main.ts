@@ -186,7 +186,6 @@ function start(world: World) {
     note.textContent = 'Your browser cannot draw the 3D island (WebGL is unavailable), so here is the same data as tables.';
     note.hidden = false;
   }
-  if (innerWidth < 1100) $<HTMLDetailsElement>('.legend').open = false;
 
   // Lenses: a radio group, so arrow keys move between them
   const lensButtons = [...document.querySelectorAll<HTMLButtonElement>('.lens')];

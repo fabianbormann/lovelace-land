@@ -184,6 +184,7 @@ mono, .mono { font-family: var(--font-mono); font-size: 0.85em; }
   width: min(280px, calc(100% - 32px)); background: color-mix(in srgb, var(--paper) 94%, transparent); border: 1px solid var(--rule);
   border-radius: var(--radius); box-shadow: var(--shadow); font-size: 0.9rem;
 }
+.legend:not([open]) { width: auto; }
 .legend summary { cursor: pointer; padding: 8px 12px; font: 400 1.05rem var(--font-display); }
 .legend-body { padding: 0 12px 10px; }
 .legend h3 { margin: 8px 0 4px; font: 600 0.72rem var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
@@ -298,7 +299,6 @@ tbody tr:hover { background: var(--brass-soft); }
   .search { max-width: none; flex-basis: 100%; order: 3; }
   .lenses { order: 4; flex-basis: 100%; }
   .panel { top: auto; left: max(16px, env(safe-area-inset-left, 0px)); width: auto; height: min(58%, calc(100% - var(--bar-bottom) - var(--timeline-space, 96px) - 12px)); }
-  .legend:not([open]) { width: auto; }
   .legend { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
   /* opened on a phone, the legend is a sheet over the timeline: opaque, never taller than the map, scrolling inside */
   .legend[open] {
