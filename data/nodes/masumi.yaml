@@ -87,3 +87,6 @@ onchain:
     (ad6424e3) and V2 (67ab0c92) from REGISTRY_POLICY_ID(_V2)_MAINNET; V1 escrow
     + registry also in StricaHQ/Eternl registries.
 lastVerified: 2026-10-20
+brand:
+  color: "#fa008c"
+  source: https://masumi.network

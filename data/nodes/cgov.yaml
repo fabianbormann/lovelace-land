@@ -34,3 +34,6 @@ uses:
         retrieved: 2026-10-20
         note: 'Backend: "Blockfrost API (for reading blockchain data)" MAINNET_BLOCKFROST_API_KEY'
 lastVerified: 2026-10-20
+brand:
+  color: "#0bd1a2"
+  source: https://app.cgov.io/

@@ -92,3 +92,6 @@ onchain:
     scooper-v2 config/mainnet.json; plus V1-era yield-farming scripts from Yaci
     Store dApp registry and CRFA registry.
 lastVerified: 2026-10-20
+brand:
+  color: "#f070d0"
+  source: https://sundae.fi

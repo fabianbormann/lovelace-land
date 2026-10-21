@@ -17,3 +17,6 @@ uses:
         retrieved: 2026-10-20
         note: "APIs & Addons: Ogmios (JSON-RPC), Ogmios (WebSocket), Rosetta"
 lastVerified: 2026-10-20
+brand:
+  color: "#3478f6"
+  source: https://getblock.io

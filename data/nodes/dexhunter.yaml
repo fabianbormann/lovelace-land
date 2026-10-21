@@ -54,3 +54,6 @@ onchain:
     Aggregated swaps run through the routed DEXes' own contracts and are not
     counted here.
 lastVerified: 2026-10-20
+brand:
+  color: "#007dff"
+  source: https://www.dexhunter.io

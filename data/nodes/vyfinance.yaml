@@ -767,3 +767,6 @@ onchain:
     vaults and BAR. Contracts are closed source, so no first-party deployment
     file exists."
 lastVerified: 2026-10-20
+brand:
+  color: "#1fc7d4"
+  source: https://vyfi.io

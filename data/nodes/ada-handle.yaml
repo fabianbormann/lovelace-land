@@ -83,3 +83,6 @@ onchain:
     in transaction_scripts; assets table shows 42 mint tx in Sept 2026 (~150k
     all-time). sept2026Tx is Plutus-script-based only."
 lastVerified: 2026-10-20
+brand:
+  color: "#4ade80"
+  source: https://handle.me/manifest.json

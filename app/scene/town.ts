@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { accentFor } from '../logic/colors';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import type { World, WorldNode } from '../../pipeline/emit';
 import { buildBuilding, flames, plotMarker, ruinify, scaffold, strandedFlag, TIER_SCALE, type BuiltBuilding, type Tier } from '../buildings/archetypes';
@@ -35,7 +36,7 @@ export function buildTown(world: World, stage: Stage, surfaceY: (x: number, y: n
   for (const node of world.nodes) {
     const district = districtById.get(node.district)!;
     const seed = hash(node.id);
-    const accent = node.primarySector ? (sectorColor.get(node.primarySector) ?? district.color) : district.color;
+    const accent = accentFor(node, district.color, sectorColor);
     const opts = { tier: node.tier, accent, deprecated: false, stranded: false, seed: seed * 10 };
     const s = TIER_SCALE[node.tier];
     const normal = buildBuilding(district.building, opts);

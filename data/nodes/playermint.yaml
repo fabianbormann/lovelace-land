@@ -23,3 +23,6 @@ uses:
 active:
   from: 2023-10
 lastVerified: 2026-10-21
+brand:
+  color: "#b6f848"
+  source: https://playermint.com

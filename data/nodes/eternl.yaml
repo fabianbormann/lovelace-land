@@ -17,3 +17,6 @@ uses:
         retrieved: 2026-10-20
         note: "Eternl/NMKR/VESPR/TosiDrop use their own instances with their own nodes"
 lastVerified: 2026-10-20
+brand:
+  color: "#641e67"
+  source: https://eternl.io/manifest.webmanifest

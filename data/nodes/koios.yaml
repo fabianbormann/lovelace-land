@@ -39,3 +39,6 @@ uses:
         retrieved: 2026-10-20
         note: "We do support transparent forwarding for various methods from Ogmios"
 lastVerified: 2026-10-20
+brand:
+  color: "#4fbc85"
+  source: https://koios.rest

@@ -90,3 +90,6 @@ onchain:
     1d2390ba "OptimBond Validator" (also registered to Optim Finance). Sept is
     dominated by the CLMM pool (~35k tx).
 lastVerified: 2026-10-20
+brand:
+  color: "#0f9aff"
+  source: https://dano.finance

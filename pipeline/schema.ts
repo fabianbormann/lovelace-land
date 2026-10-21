@@ -104,6 +104,8 @@ export const NodeSchema = z
       )
       .default([]),
     status: z.enum(['active', 'maintenance', 'deprecated']),
+    /** the project's own brand color, used for its roofs; source is where it was found (site theme-color, brand kit) */
+    brand: z.object({ color: z.string().regex(/^#[0-9a-f]{6}$/, 'must be a lowercase hex color like #1e5bd8'), source: httpUrl }).strict().optional(),
     primarySector: slug.nullable().default(null),
     uses: z.array(NodeUsesSchema).default([]),
     onchain: OnchainSchema.optional(),

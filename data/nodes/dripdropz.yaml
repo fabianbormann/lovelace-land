@@ -51,3 +51,6 @@ onchain:
     (registry/scripts/script-index.json), which the cardano.org leaderboard
     uses: 738 transactions Sep 16 to Oct 16, 2026.'
 lastVerified: 2026-10-21
+brand:
+  color: "#2ea9e2"
+  source: https://dripdropz.io/site.webmanifest?v=1.0.2

@@ -46,3 +46,6 @@ onchain:
     Store dApp registry/CRFA/Eternl. Ordinary USDM transfers involve no script,
     so this measures issuance activity only.
 lastVerified: 2026-10-20
+brand:
+  color: "#6cfbce"
+  source: https://moneta.global/manifest.json

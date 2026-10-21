@@ -129,6 +129,13 @@ describe('time axis fields', () => {
     expect(NodeSchema.safeParse({ ...baseNode, active: { from: '2022-01', confirmed: '2025-06' } }).success).toBe(false);
   });
 
+  it('accepts a sourced brand color on a node and rejects malformed ones', () => {
+    const n = NodeSchema.parse({ ...baseNode, brand: { color: '#1e5bd8', source: 'https://example.org' } });
+    expect(n.brand).toEqual({ color: '#1e5bd8', source: 'https://example.org' });
+    expect(NodeSchema.safeParse({ ...baseNode, brand: { color: 'blue', source: 'https://example.org' } }).success).toBe(false);
+    expect(NodeSchema.safeParse({ ...baseNode, brand: { color: '#1e5bd8' } }).success).toBe(false);
+  });
+
   it('rejects malformed hashes and months', () => {
     expect(NodeSchema.safeParse({ ...baseNode, onchain: { scripts: ['ABC'] } }).success).toBe(false);
     expect(NodeSchema.safeParse({ ...baseNode, active: { from: '2024-13' } }).success).toBe(false);

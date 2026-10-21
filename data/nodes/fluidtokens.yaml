@@ -127,3 +127,6 @@ onchain:
     2026-09-11..2026-10-01). Excluded smart-tokens (CIP-113) spend hash and one
     unidentified datum field. 16 listed hashes have no tx yet.
 lastVerified: 2026-10-20
+brand:
+  color: "#1b9ee5"
+  source: https://fluidtokens.com/assets/images/logos/logo.svg

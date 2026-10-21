@@ -62,7 +62,12 @@ packages:                                         # what it publishes; lets the 
 status: active                                    # active | maintenance | deprecated
 uses: []                                          # see "Add a road"
 lastVerified: 2026-10-20
+brand:                                            # optional: your brand color, used for the roofs
+  color: "#1b9ee5"                                # lowercase hex
+  source: https://example.org/logo.svg            # where the color comes from: logo, brand kit or site
 ```
+
+**Roof color.** A building's roofs, awnings and flags take the project's brand color when `brand` is set, and the color of its sector or district otherwise. A weekly job reads the theme color each project's website declares for browsers and proposes it; a color you set yourself is never overwritten. Pale, very dark and grey colors are skipped, because they don't show on a roof.
 
 ### Districts
 

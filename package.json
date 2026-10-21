@@ -12,7 +12,8 @@
     "e2e": "playwright test",
     "scan:manifests": "tsx scripts/scan-manifests.ts",
     "check:links": "tsx scripts/check-links.ts",
-    "collect:activity": "tsx scripts/collect-activity.ts"
+    "collect:activity": "tsx scripts/collect-activity.ts",
+    "scan:brand-colors": "tsx scripts/fetch-brand-colors.ts"
   },
   "license": "MIT",
   "private": true,

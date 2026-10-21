@@ -17,3 +17,6 @@ uses:
         retrieved: 2026-10-20
         note: '"Users can send and receive USDM on Cardano using just a phone number or wallet address, without needing to hold ADA for fees"'
 lastVerified: 2026-10-20
+brand:
+  color: "#1e1e3c"
+  source: https://www.theflip.app/site.webmanifest

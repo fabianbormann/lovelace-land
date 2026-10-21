@@ -49,6 +49,7 @@ jobs:
       - name: Scan project manifests for new dependencies
         run: |
           npm run --silent scan:manifests -- --write > "$RUNNER_TEMP/scan.md"
+          { echo; echo '### Brand colors'; echo '```'; npm run --silent scan:brand-colors -- --write | grep '^found' || echo 'none new'; echo '```'; } >> "$RUNNER_TEMP/scan.md"
           npm run build:world
       - uses: peter-evans/create-pull-request@v8
         with:
@@ -57,7 +58,7 @@ jobs:
           token: ${{ secrets.BOT_TOKEN || github.token }}
           branch: bot/manifest-scan
           add-paths: data/**
-          title: New roads found in project manifests
+          title: New roads and brand colors found on project sites
           body-path: ${{ runner.temp }}/scan.md
           commit-message: 'data: add dependencies found by the weekly manifest scan'
 
