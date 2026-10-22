@@ -1,9 +1,9 @@
 id: d-abis
 name: d'ABIS (Decentralized Automated Ballistic Identification System)
 district: products
-description: Cardano Foundation proof of concept that matches ballistic evidence scans (x3p files) and anchors records to Cardano through the Foundation's "metabus" transaction pipeline, so forensic data can be shared between agencies. Listed in the Foundation's 2024 Activity Report. Its source repository is no longer public (404 on 2026-10-20), so its dependency roads are marked reported rather than verified.
+description: Cardano Foundation proof of concept that matches ballistic evidence scans (x3p files) and anchors records to Cardano through the Foundation's "metabus" transaction pipeline, so forensic data can be shared between agencies. Listed in the Foundation's 2024 Activity Report. It was shown as a demonstrator at the World Police Summit in Dubai in March 2024; development stopped around August 2024 and the Cardano Foundation no longer maintains it. Its source repository is no longer public (404 on 2026-10-20), so its dependency roads are marked reported rather than verified.
 maintainer: Cardano Foundation
-status: maintenance
+status: deprecated
 primarySector: proof-verification
 uses:
   - target: cardano-client-lib
@@ -37,4 +37,7 @@ uses:
         kind: docs
         retrieved: 2026-10-20
         note: "backend config requires a Blockfrost API key 'start with ipfs' (Blockfrost IPFS service)"
-lastVerified: 2026-10-20
+lastVerified: 2026-10-22
+active:
+  from: 2024-02
+  until: 2024-08
