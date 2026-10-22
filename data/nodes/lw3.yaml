@@ -1,9 +1,11 @@
 id: lw3
 name: LW3 Battery Passport
 district: products
-description: Digital product passport platform for the EV battery supply chain, aligned with upcoming EU DPP requirements, that tokenizes batteries with CIP-68 on Cardano and uses Hydra for frequent operational updates. Presented at Cardano Developer Office Hours in October 2025.
+description: Digital product passport platform for the EV battery supply chain, aligned with upcoming EU DPP requirements, presented at Cardano Developer Office Hours in October 2025 as tokenizing batteries with CIP-68 on Cardano and using Hydra for frequent updates. Its Catalyst Fund 14 proposal to build this on Cardano was not approved (October 2025), and no Cardano contracts or on-chain activity have been published. LW3 itself continues; a company profile updated in October 2026 describes its current platform as anchored on Algorand.
 maintainer: LW3 Private Limited
-status: active
+links:
+  website: https://lw3.world
+status: deprecated
 primarySector: supply-chain
 uses:
   - target: hydra
@@ -14,4 +16,7 @@ uses:
         kind: talk
         retrieved: 2026-10-20
         note: "LW3's own presentation: Cardano Layer 1 and Hydra Layer 2, batteries tokenized with CIP-68"
-lastVerified: 2026-10-20
+lastVerified: 2026-10-22
+active:
+  from: 2025-10
+  until: 2025-10
