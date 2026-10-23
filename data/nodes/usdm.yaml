@@ -11,6 +11,14 @@ links:
 status: active
 primarySector: payments
 uses:
+  - target: cardano-client-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://www.youtube.com/watch?v=Kk11hXjsFgw&t=220s
+        kind: talk
+        retrieved: 2026-10-23
+        note: '"Cardano: NerdOut - Bloxbean" (Andrew Westberg''s channel): at about 3:40 Andrew says the USDM team uses the Java Cardano Client Lib day to day'
   - target: aiken
     relation: language
     confidence: verified
@@ -45,7 +53,7 @@ onchain:
     mint/burn transaction) plus token-counter and two USDM scripts from Yaci
     Store dApp registry/CRFA/Eternl. Ordinary USDM transfers involve no script,
     so this measures issuance activity only.
-lastVerified: 2026-10-20
+lastVerified: 2026-10-23
 brand:
   color: "#6cfbce"
   source: https://moneta.global/manifest.json
