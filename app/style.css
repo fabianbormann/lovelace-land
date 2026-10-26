@@ -228,6 +228,8 @@ mono, .mono { font-family: var(--font-mono); font-size: 0.85em; }
 .history .spark-line { fill: none; stroke: var(--ink); stroke-width: 1.5; }
 .history .spark-area { fill: color-mix(in srgb, var(--brass) 25%, transparent); }
 .history .spark-now { stroke: var(--brass); stroke-width: 2; }
+.history .spark-line.spark-running { stroke-dasharray: 3 3; opacity: 0.7; }
+.history .spark-area.spark-running { opacity: 0.45; }
 .history-meta { display: flex; justify-content: space-between; gap: 8px; font-size: 0.78rem; color: var(--ink-soft); }
 .state-line { margin: 8px 0 0; padding: 6px 10px; border-radius: 8px; background: var(--paper-2); font-size: 0.95rem; }
 .state-line[data-state='b'], .state-line[data-state='u'], .state-line[data-state='g'] { border-left: 3px solid var(--signal); }

@@ -319,16 +319,36 @@ function start(world: World) {
     const w = spark.width;
     const h = spark.height;
     ctx.clearRect(0, 0, w, h);
-    ctx.beginPath();
-    ctx.moveTo(0, h);
-    values.forEach((v, i) => ctx.lineTo((i / Math.max(1, values.length - 1)) * w, h - (v / max) * (h - 6 * dpr) - 2 * dpr));
-    ctx.lineTo(w, h);
-    ctx.closePath();
-    ctx.fillStyle = css.getPropertyValue('--brass-soft').trim() || '#f1dfb4';
-    ctx.fill();
-    ctx.strokeStyle = css.getPropertyValue('--ink-soft').trim() || '#476377';
-    ctx.lineWidth = 1.2 * dpr;
-    ctx.stroke();
+    const px = (i: number) => (i / Math.max(1, values.length - 1)) * w;
+    const py = (v: number) => h - (v / max) * (h - 6 * dpr) - 2 * dpr;
+    // the latest month is still running: draw its segment dashed and lighter so a partial count does not read as a drop
+    const split = Math.max(0, values.length - 2);
+    const area = (from: number, to: number, alpha: number) => {
+      ctx.beginPath();
+      ctx.moveTo(px(from), h);
+      for (let i = from; i <= to; i++) ctx.lineTo(px(i), py(values[i]));
+      ctx.lineTo(px(to), h);
+      ctx.closePath();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = css.getPropertyValue('--brass-soft').trim() || '#f1dfb4';
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    };
+    const line = (from: number, to: number, dashed: boolean) => {
+      ctx.beginPath();
+      for (let i = from; i <= to; i++) (i === from ? ctx.moveTo : ctx.lineTo).call(ctx, px(i), py(values[i]));
+      ctx.setLineDash(dashed ? [3 * dpr, 3 * dpr] : []);
+      ctx.strokeStyle = css.getPropertyValue('--ink-soft').trim() || '#476377';
+      ctx.lineWidth = 1.2 * dpr;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    };
+    area(0, split, 1);
+    line(0, split, false);
+    if (values.length > 1) {
+      area(split, values.length - 1, 0.5);
+      line(split, values.length - 1, true);
+    }
   };
   new ResizeObserver(drawSpark).observe(spark);
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawSpark);
