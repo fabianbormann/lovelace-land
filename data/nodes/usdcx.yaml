@@ -19,7 +19,7 @@ onchain:
     - d2c3f66c2c7154d9f0b913ee3cd9b0a25bbb7d1537953d7c36c07e86
     - d74de93a7e4940462c4509f59c712889422506f8b63dcfd0c266dc7b
   source: https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/usdcx.json
-  note: Every transaction that moves USDCx counts, through its policy 1f3aec8b
+  note: Every transaction in which USDCx changes holder counts, through its policy 1f3aec8b
     (fingerprint asset1e7eewpjw8ua3f2gpfx7y34ww9vjl63hayn80kl, matching IOG and the
     press). The scripts add the Eternl registry USDCx bridge set - mint policy,
     bridge processor, operator withdraw-zero and config.

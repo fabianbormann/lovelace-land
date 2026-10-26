@@ -15,7 +15,7 @@ import type { MonthCounts } from '../pipeline/activity';
 import { loadDataDir } from '../pipeline/load';
 import { monthOf, monthRange } from '../pipeline/months';
 import { TIMELINE_START } from '../pipeline/timeline';
-import { commitsQuery, parseCommits, parseRows, parseSqlRows, repoOf, resolvePlan, yearChunks, type Onchain } from './lib/activity-sources';
+import { commitsQuery, parseCommits, parseRows, parseSqlRows, repoOf, resolvePlan, monthChunks, yearChunks, type Onchain } from './lib/activity-sources';
 
 const { values } = parseArgs({
   options: {
@@ -88,7 +88,8 @@ async function sqlOnce(query: string): Promise<string> {
 }
 
 async function collectTx(id: string, onchain: Onchain & { source?: string }) {
-  const windows = yearChunks(TIMELINE_START, current);
+  // netting token flows per holder is heavy: a month per query keeps it inside the server's time limit
+  const windows = onchain.policies?.length ? monthChunks(TIMELINE_START, current) : yearChunks(TIMELINE_START, current);
   const plan = await resolvePlan(onchain, windows, async (q) => parseRows(await sqlText(q)).map((r) => String(r.script_hash)));
   const queries = plan.queries;
   if (!queries.length) return;
@@ -97,7 +98,7 @@ async function collectTx(id: string, onchain: Onchain & { source?: string }) {
   write('tx', id, {
     id,
     source: `Yaci Store analytics (${MCP})${onchain.source ? `; identifiers from ${onchain.source}` : ''}${plan.prefix ? `; scripts matched by ${plan.prefix.length}-character hash prefix with foreign matches excluded` : ''}${plan.outputs ? '' : '; counts script runs only (too many scripts to also match payments to them)'}`,
-    query: queries[0]?.replace(/date >= DATE '[^']+' AND date < DATE '[^']+'/, 'date in <year window>'),
+    query: queries[0]?.replace(/(i\.)?date >= DATE '[^']+' AND (i\.)?date < DATE '[^']+'/g, (_, a) => `${a ?? ''}date in <window>`),
     collected: today,
     months,
   });

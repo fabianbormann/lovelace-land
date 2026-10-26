@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { commitsQuery, MAX_SQL_LENGTH, parseCommits, parseSqlRows, repoOf, resolvePlan, txPlan, txQueries, yearChunks } from '../../scripts/lib/activity-sources';
+import { commitsQuery, MAX_SQL_LENGTH, monthChunks, parseCommits, parseSqlRows, repoOf, resolvePlan, txPlan, txQueries, yearChunks } from '../../scripts/lib/activity-sources';
 
 const HASH = 'e1317b152faac13426e6a83e06ff88a4d62cce3c1634ab0a5ec13309';
 
@@ -9,6 +9,16 @@ describe('yearChunks', () => {
       ['2021-09-01', '2022-01-01'],
       ['2022-01-01', '2023-01-01'],
       ['2023-01-01', '2023-03-01'],
+    ]);
+  });
+});
+
+describe('monthChunks', () => {
+  it('splits a month range into one window per month', () => {
+    expect(monthChunks('2025-11', '2026-01')).toEqual([
+      ['2025-11-01', '2025-12-01'],
+      ['2025-12-01', '2026-01-01'],
+      ['2026-01-01', '2026-02-01'],
     ]);
   });
 });
@@ -31,10 +41,13 @@ describe('txQueries', () => {
     expect(q.match(new RegExp(HASH, 'g'))).toHaveLength(1);
   });
 
-  it('counts every transaction that moves a token, by its policy', () => {
-    // a stablecoin's transfers and swaps run no script of its own; they only carry the token
+  it('counts a token transaction only when the token changes holder, is minted or is burned', () => {
+    // a wallet's USDM rides along in the change output of unrelated transactions; netting per holder and asset drops those
     const [q] = txQueries({ policies: [HASH] }, ['2026-01-01', '2026-02-01']);
-    expect(q).toContain("SELECT date, tx_hash FROM address_utxo WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01' AND policy_id IN ('" + HASH + "')");
+    expect(q).toContain(`FROM address_utxo WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01' AND policy_id IN ('${HASH}')`);
+    expect(q).toContain(`FROM tx_input i JOIN address_utxo a ON a.tx_hash = i.tx_hash AND a.output_index = i.output_index WHERE i.date >= DATE '2026-01-01' AND i.date < DATE '2026-02-01' AND a.policy_id IN ('${HASH}')`);
+    expect(q).toMatch(/GROUP BY t, h, asset\) WHERE n <> 0/);
+    expect(q).toContain('coalesce(owner_stake_credential, owner_payment_credential, owner_addr)');
     expect(() => txQueries({ policies: ["x' OR 1=1 --"] }, ['2026-01-01', '2026-02-01'])).toThrow(/invalid/);
   });
 

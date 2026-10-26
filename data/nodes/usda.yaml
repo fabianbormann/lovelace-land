@@ -16,7 +16,7 @@ onchain:
   scripts:
     - fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae456
   source: https://github.com/cardano-foundation/cardano-token-registry/blob/master/mappings/fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae45655534441.json
-  note: Every transaction that moves USDA counts, through its policy fe7c786a (a
+  note: Every transaction in which USDA changes holder counts, through its policy fe7c786a (a
     Plutus minting policy; token-registry entry name USDA, url anzens.com),
     which also covers mints and burns.
 lastVerified: 2026-10-26

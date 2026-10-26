@@ -173,7 +173,7 @@ onchain:
     - e1317b152faac13426e6a83e06ff88a4d62cce3c1634ab0a5ec13309
   metadataLabels: [1447]            # transaction metadata labels, for notary and supply-chain products
   addresses: [addr1q…]              # a documented issuer or treasury address
-  policies:                         # token policy IDs: counts every transaction that moves the token
+  policies:                         # token policy IDs: counts transactions in which the token changes holder
     - c48cbb3d5e57ed56e276bc45f99ab39abe94e6cd7ac39fb402da47ad
   source: https://github.com/minswap/minswap-dex-v2/blob/main/deployed/mainnet/script.json
   note: DEX v2 order, pool and factory validators

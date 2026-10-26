@@ -51,9 +51,11 @@ onchain:
     - c48cbb3d5e57ed56e276bc45f99ab39abe94e6cd7ac39fb402da47ad
     - e319d8e6629ff7991c8ae4f8aec2e0f10463ebdf29b57d26d34914f6
   source: https://moneta.global/developers/
-  note: Every transaction that moves USDM counts, through its policy c48cbb3d (the
-    USDM token and its CIP-68 reference token); this matches the ~290,000
-    transactions up to July 2025 in the STORM Partners on-chain impact study.
+  note: Transactions in which USDM changes holder, or is minted or burned, count
+    through its policy c48cbb3d (the USDM token and its CIP-68 reference token);
+    USDM that only rides along in a change output does not. Counting every
+    transaction that touches USDM instead gives 288,301 up to 23 July 2025, in
+    line with the ~290,000 in the STORM Partners on-chain impact study.
     The scripts add issuance - the minting policy documented by Moneta, plus the
     token counter and two USDM scripts from the Yaci Store dApp registry, CRFA
     and Eternl.

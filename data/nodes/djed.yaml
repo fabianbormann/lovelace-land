@@ -39,7 +39,7 @@ onchain:
     - d45f74956ff0d9a37d59f4f3bfad99d2797d8ccf77bcdc7c984da7f4
     - f780e15a96aa9ddeedd419404a9bb14c09a4c8deac716edeba87fe54
   source: https://github.com/artifi-labs/open-djed/blob/main/packages/registry/src/index.ts
-  note: Every transaction that moves the token counts through Djed policy 8db269c3 (DjedMicroUSD, ShenMicroUSD and the protocol NFT); the scripts add issuance. Current Djed contracts (order, pool, treasury validators; live since
+  note: Every transaction in which the tokens change holder counts through Djed policy 8db269c3 (DjedMicroUSD, ShenMicroUSD and the protocol NFT); the scripts add issuance. Current Djed contracts (order, pool, treasury validators; live since
     2024-12-16) from the Open DJED mainnet registry, plus the original 2023-01
     to 2024-08 Djed contracts from Yaci Store dApp registry, CRFA and Eternl.
     Djed oracle validators (old 8c6a7307..., new 89829415...) and oracle-NFT

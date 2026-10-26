@@ -29,6 +29,16 @@ export function yearChunks(from: string, to: string): [string, string][] {
   return chunks;
 }
 
+/** [startDate, endDate) windows of one month each, for queries too heavy to run a year at a time. */
+export function monthChunks(from: string, to: string): [string, string][] {
+  const months = monthRange(from, to);
+  const next = (m: string) => {
+    const [y, mo] = m.split('-').map(Number);
+    return mo === 12 ? `${y + 1}-01` : `${y}-${String(mo + 1).padStart(2, '0')}`;
+  };
+  return months.map((m) => [`${m}-01`, `${next(m)}-01`]);
+}
+
 const HEX = /^[0-9a-f]{56}$/;
 const ADDR = /^addr1[0-9a-z]+$/;
 const list = (values: string[]) => values.map((v) => `'${v}'`).join(', ');
@@ -45,12 +55,25 @@ const scriptsTouched = (range: string, outputs: boolean) =>
   `SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE ${range}` +
   (outputs ? ` UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE ${range}` : '');
 
+/**
+ * Transactions in which a token of one of the policies changes holder, or is minted or burned. Each
+ * transaction's flow is netted per holder (stake key, else payment credential, else address) and asset:
+ * a wallet's tokens that only ride along in the change output of an unrelated transaction net to zero.
+ */
+function tokenMoves(range: string, policies: string[]) {
+  const holder = (p: string) => `coalesce(${p}owner_stake_credential, ${p}owner_payment_credential, ${p}owner_addr)`;
+  const spentIn = range.replace(/\bdate\b/g, 'i.date');
+  const outs = `SELECT tx_hash AS t, date AS d, ${holder('')} AS h, asset_unit AS asset, quantity AS q FROM address_utxo WHERE ${range} AND policy_id IN (${list(policies)})`;
+  const ins = `SELECT i.spent_tx_hash AS t, i.date AS d, ${holder('a.')} AS h, a.asset_unit AS asset, -a.quantity AS q FROM tx_input i JOIN address_utxo a ON a.tx_hash = i.tx_hash AND a.output_index = i.output_index WHERE ${spentIn} AND a.policy_id IN (${list(policies)})`;
+  return `SELECT min(d) AS date, t AS tx_hash FROM (SELECT t, h, asset, min(d) AS d, sum(q) AS n FROM (${outs} UNION ALL ${ins}) GROUP BY t, h, asset) WHERE n <> 0 GROUP BY t`;
+}
+
 function query(range: string, scriptFilter: string | null, labels: number[], addresses: string[], outputs: boolean, policies: string[] = []) {
   const parts: string[] = [];
   if (scriptFilter) parts.push(`SELECT date, tx_hash FROM (${scriptsTouched(range, outputs)}) WHERE ${scriptFilter}`);
   if (labels.length) parts.push(`SELECT date, tx_hash FROM transaction_metadata WHERE ${range} AND CAST(label AS VARCHAR) IN (${list(labels.map(String))})`);
   if (addresses.length) parts.push(`SELECT date, tx_hash FROM address_utxo WHERE ${range} AND owner_addr IN (${list(addresses)})`);
-  if (policies.length) parts.push(`SELECT date, tx_hash FROM address_utxo WHERE ${range} AND policy_id IN (${list(policies)})`);
+  if (policies.length) parts.push(tokenMoves(range, policies));
   return `SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (${parts.join(' UNION ALL ')}) GROUP BY 1 ORDER BY 1`;
 }
 
