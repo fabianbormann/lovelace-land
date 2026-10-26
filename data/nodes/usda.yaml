@@ -11,10 +11,12 @@ status: active
 primarySector: payments
 uses: []
 onchain:
+  policies:
+    - fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae456
   scripts:
     - fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae456
   source: https://github.com/cardano-foundation/cardano-token-registry/blob/master/mappings/fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae45655534441.json
-  note: USDA minting policy (Plutus, appears in transaction_scripts;
-    token-registry entry name USDA, url anzens.com). Counts only mint/burn tx,
-    not transfers.
-lastVerified: 2026-10-20
+  note: Every transaction that moves USDA counts, through its policy fe7c786a (a
+    Plutus minting policy; token-registry entry name USDA, url anzens.com),
+    which also covers mints and burns.
+lastVerified: 2026-10-26

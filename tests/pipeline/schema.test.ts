@@ -136,6 +136,12 @@ describe('time axis fields', () => {
     expect(NodeSchema.safeParse({ ...baseNode, brand: { color: '#1e5bd8' } }).success).toBe(false);
   });
 
+  it('accepts token policies as on-chain identifiers', () => {
+    const n = NodeSchema.parse({ ...baseNode, onchain: { policies: [hash] } });
+    expect(n.onchain?.policies).toEqual([hash]);
+    expect(NodeSchema.safeParse({ ...baseNode, onchain: { policies: ['USDM'] } }).success).toBe(false);
+  });
+
   it('rejects malformed hashes and months', () => {
     expect(NodeSchema.safeParse({ ...baseNode, onchain: { scripts: ['ABC'] } }).success).toBe(false);
     expect(NodeSchema.safeParse({ ...baseNode, active: { from: '2024-13' } }).success).toBe(false);

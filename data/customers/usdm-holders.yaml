@@ -6,9 +6,9 @@ stage: production
 description: Individuals and businesses holding and transferring USDM as a regulated dollar on Cardano.
 metric:
   label: USDM circulating supply
-  value: "$9.61M per Moneta proof-of-reserves ($13.4M per DefiLlama)"
-  source: https://moneta.global/transparency/
-  retrieved: 2026-10-20
+  value: "$13.4M"
+  source: https://stablecoins.llama.fi/stablecoin/215
+  retrieved: 2026-10-26
 uses:
   - target: usdm
     confidence: verified
@@ -20,4 +20,4 @@ uses:
       - url: https://stablecoins.llama.fi/stablecoins?includePrices=true
         kind: docs
         retrieved: 2026-10-20
-lastVerified: 2026-10-20
+lastVerified: 2026-10-26

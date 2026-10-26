@@ -133,7 +133,7 @@ async function collectCommits(id: string, owner: string, repo: string) {
 
 const jobs: (() => Promise<void>)[] = [];
 const wanted = (id: string) => !values.only || values.only === id;
-const hasIdentifiers = (o: Onchain | undefined) => !!(o?.scripts?.length || o?.metadataLabels?.length || o?.addresses?.length);
+const hasIdentifiers = (o: Onchain | undefined) => !!(o?.scripts?.length || o?.metadataLabels?.length || o?.addresses?.length || o?.policies?.length);
 if (values.kind === 'all' || values.kind === 'tx')
   for (const entity of [...data.nodes, ...data.customers])
     if (hasIdentifiers(entity.onchain) && wanted(entity.id)) jobs.push(() => collectTx(entity.id, entity.onchain!));

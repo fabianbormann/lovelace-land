@@ -15,6 +15,8 @@ const OnchainSchema = z
     scripts: z.array(z.string().regex(/^[0-9a-f]{56}$/, 'must be a 56-character lowercase hex script hash')).optional(),
     metadataLabels: z.array(z.number().int().nonnegative()).optional(),
     addresses: z.array(z.string().regex(/^addr1[0-9a-z]+$/, 'must be a mainnet bech32 address')).optional(),
+    /** token policy IDs: every transaction that moves the token counts, which a token's own scripts do not show */
+    policies: z.array(z.string().regex(/^[0-9a-f]{56}$/, 'must be a 56-character lowercase hex policy ID')).optional(),
     source: httpUrl.optional(),
     note: z.string().optional(),
   })

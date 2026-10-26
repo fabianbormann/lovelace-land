@@ -5,6 +5,8 @@ export interface Onchain {
   scripts?: string[];
   metadataLabels?: number[];
   addresses?: string[];
+  /** token policy IDs: every transaction with an output holding the token */
+  policies?: string[];
 }
 
 /** [startDate, endDate) windows by calendar year, so each query stays within the server's time limit. */
@@ -43,11 +45,12 @@ const scriptsTouched = (range: string, outputs: boolean) =>
   `SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE ${range}` +
   (outputs ? ` UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE ${range}` : '');
 
-function query(range: string, scriptFilter: string | null, labels: number[], addresses: string[], outputs: boolean) {
+function query(range: string, scriptFilter: string | null, labels: number[], addresses: string[], outputs: boolean, policies: string[] = []) {
   const parts: string[] = [];
   if (scriptFilter) parts.push(`SELECT date, tx_hash FROM (${scriptsTouched(range, outputs)}) WHERE ${scriptFilter}`);
   if (labels.length) parts.push(`SELECT date, tx_hash FROM transaction_metadata WHERE ${range} AND CAST(label AS VARCHAR) IN (${list(labels.map(String))})`);
   if (addresses.length) parts.push(`SELECT date, tx_hash FROM address_utxo WHERE ${range} AND owner_addr IN (${list(addresses)})`);
+  if (policies.length) parts.push(`SELECT date, tx_hash FROM address_utxo WHERE ${range} AND policy_id IN (${list(policies)})`);
   return `SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (${parts.join(' UNION ALL ')}) GROUP BY 1 ORDER BY 1`;
 }
 
@@ -69,20 +72,21 @@ export function txPlan(onchain: Onchain, windows: [string, string][], excluded: 
   const scripts = [...new Set(onchain.scripts ?? [])];
   const labels = onchain.metadataLabels ?? [];
   const addresses = onchain.addresses ?? [];
-  if ([...scripts, ...excluded].some((s) => !HEX.test(s)) || addresses.some((a) => !ADDR.test(a)) || labels.some((l) => !Number.isInteger(l)))
+  const policies = [...new Set(onchain.policies ?? [])];
+  if ([...scripts, ...excluded, ...policies].some((s) => !HEX.test(s)) || addresses.some((a) => !ADDR.test(a)) || labels.some((l) => !Number.isInteger(l)))
     throw new Error('invalid on-chain identifier');
-  if (!scripts.length && !labels.length && !addresses.length) return { queries: [], outputs };
+  if (!scripts.length && !labels.length && !addresses.length && !policies.length) return { queries: [], outputs };
   const range = ([from, to]: [string, string]) => `date >= DATE '${from}' AND date < DATE '${to}'`;
   const exact = scripts.length ? `h IN (${list(scripts)})` : null;
-  if (query(range(windows[0]), exact, labels, addresses, outputs).length <= MAX_SQL_LENGTH)
-    return { queries: windows.map((w) => query(range(w), exact, labels, addresses, outputs)), outputs };
+  if (query(range(windows[0]), exact, labels, addresses, outputs, policies).length <= MAX_SQL_LENGTH)
+    return { queries: windows.map((w) => query(range(w), exact, labels, addresses, outputs, policies)), outputs };
   for (let length = 16; length >= 6; length--) {
     const prefixes = [...new Set(scripts.map((s) => s.slice(0, length)))];
     const filter = `substr(h, 1, ${length}) IN (${list(prefixes)})${excluded.length ? ` AND h NOT IN (${list(excluded)})` : ''}`;
-    if (query(range(windows[0]), filter, labels, addresses, outputs).length > MAX_SQL_LENGTH) continue;
+    if (query(range(windows[0]), filter, labels, addresses, outputs, policies).length > MAX_SQL_LENGTH) continue;
     const all: [string, string] = [windows[0][0], windows[windows.length - 1][1]];
     return {
-      queries: windows.map((w) => query(range(w), filter, labels, addresses, outputs)),
+      queries: windows.map((w) => query(range(w), filter, labels, addresses, outputs, policies)),
       outputs,
       prefix: {
         length,

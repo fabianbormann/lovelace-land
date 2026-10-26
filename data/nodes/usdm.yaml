@@ -43,17 +43,21 @@ uses:
         note: 'NBX (co-issuer), 28 Mar 2025: "reserve values continuously verified by
           the decentralized oracle Charli3"'
 onchain:
+  policies:
+    - c48cbb3d5e57ed56e276bc45f99ab39abe94e6cd7ac39fb402da47ad
   scripts:
     - 3e7530a023f5780a8fb800d23f9a338b76e5c4f2dd2edd19b29610fb
     - 6b3cb86f8aee9b5d754ba7aff3acea986297e833d52af0b00efe37c7
     - c48cbb3d5e57ed56e276bc45f99ab39abe94e6cd7ac39fb402da47ad
     - e319d8e6629ff7991c8ae4f8aec2e0f10463ebdf29b57d26d34914f6
   source: https://moneta.global/developers/
-  note: USDM minting policy c48cbb3d... (documented by Moneta; Plutus, counted per
-    mint/burn transaction) plus token-counter and two USDM scripts from Yaci
-    Store dApp registry/CRFA/Eternl. Ordinary USDM transfers involve no script,
-    so this measures issuance activity only.
-lastVerified: 2026-10-23
+  note: Every transaction that moves USDM counts, through its policy c48cbb3d (the
+    USDM token and its CIP-68 reference token); this matches the ~290,000
+    transactions up to July 2025 in the STORM Partners on-chain impact study.
+    The scripts add issuance - the minting policy documented by Moneta, plus the
+    token counter and two USDM scripts from the Yaci Store dApp registry, CRFA
+    and Eternl.
+lastVerified: 2026-10-26
 brand:
   color: "#6cfbce"
   source: https://moneta.global/manifest.json

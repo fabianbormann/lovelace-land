@@ -31,6 +31,13 @@ describe('txQueries', () => {
     expect(q.match(new RegExp(HASH, 'g'))).toHaveLength(1);
   });
 
+  it('counts every transaction that moves a token, by its policy', () => {
+    // a stablecoin's transfers and swaps run no script of its own; they only carry the token
+    const [q] = txQueries({ policies: [HASH] }, ['2026-01-01', '2026-02-01']);
+    expect(q).toContain("SELECT date, tx_hash FROM address_utxo WHERE date >= DATE '2026-01-01' AND date < DATE '2026-02-01' AND policy_id IN ('" + HASH + "')");
+    expect(() => txQueries({ policies: ["x' OR 1=1 --"] }, ['2026-01-01', '2026-02-01'])).toThrow(/invalid/);
+  });
+
   it('refuses identifiers that could break out of the SQL string', () => {
     expect(() => txQueries({ scripts: ["x' OR 1=1 --"] }, ['2026-01-01', '2026-02-01'])).toThrow(/invalid/);
   });

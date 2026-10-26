@@ -21,6 +21,8 @@ uses:
           modules such as onchain/Cardano/Djed/Contracts/StableCoin.hs; Djed
           runs its own oracle contract'
 onchain:
+  policies:
+    - 8db269c3ec630e06ae29f74bc39edd1f87c819f1056206e879a1cd61
   scripts:
     - 021a32ee5621d4e94df1d9bef6baa284a7cc75ba51bb5fb804c6c471
     - 0ccb659135a7098d40b5eaf97680c4d672ace8b13b750e95362f59ff
@@ -37,11 +39,11 @@ onchain:
     - d45f74956ff0d9a37d59f4f3bfad99d2797d8ccf77bcdc7c984da7f4
     - f780e15a96aa9ddeedd419404a9bb14c09a4c8deac716edeba87fe54
   source: https://github.com/artifi-labs/open-djed/blob/main/packages/registry/src/index.ts
-  note: Current Djed contracts (order, pool, treasury validators; live since
+  note: Every transaction that moves the token counts through Djed policy 8db269c3 (DjedMicroUSD, ShenMicroUSD and the protocol NFT); the scripts add issuance. Current Djed contracts (order, pool, treasury validators; live since
     2024-12-16) from the Open DJED mainnet registry, plus the original 2023-01
     to 2024-08 Djed contracts from Yaci Store dApp registry, CRFA and Eternl.
     Djed oracle validators (old 8c6a7307..., new 89829415...) and oracle-NFT
     policy are deliberately excluded because their transactions are price-feed
     updates, not usage (the new oracle alone has ~3.5k tx/month). No Djed
     activity between 2024-08-08 and 2024-12-16 (contract migration).
-lastVerified: 2026-10-20
+lastVerified: 2026-10-26
