@@ -64,11 +64,12 @@ export function describeShipAt(world: World, id: string, i: number): string {
         : `Away in ${month}: its announced use was last confirmed in ${formatMonth(a.confirmed)}, and nothing newer is on record.`;
     return `Away in ${month}: outside its announced period of activity.`;
   }
+  const soFar = i === tl.months.length - 1 ? ' so far this month' : '';
   switch (c.source) {
     case 'onchain':
-      return `Docked in ${month} with ${tx} on-chain transactions.`;
+      return `Docked in ${month} with ${tx} on-chain transactions${soFar}.`;
     case 'products':
-      return `Docked in ${month} with ${tx} transactions through the products it uses.`;
+      return `Docked in ${month} with ${tx} transactions through the products it uses${soFar}.`;
     case 'announced':
       return a
         ? `Docked in ${month}, based on announced use last confirmed in ${formatMonth(a.confirmed)} (no on-chain data).`

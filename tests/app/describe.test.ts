@@ -94,6 +94,20 @@ describe('describeShipAt', () => {
   });
 });
 
+describe('the running month', () => {
+  it('says the count is so far, because the month is not over yet', () => {
+    const w = miniWorld();
+    const last = w.timeline.months.length - 1;
+    const c = w.timeline.customers['harbor-traders'];
+    c.state = c.state.slice(0, last) + 'd';
+    c.source = 'onchain';
+    c.tx[last] = 19854;
+    expect(describeShipAt(w, 'harbor-traders', last)).toBe(`Docked in ${formatMonth(w.timeline.months[last])} with 19,854 on-chain transactions so far this month.`);
+    c.source = 'products';
+    expect(describeShipAt(w, 'harbor-traders', last)).toBe(`Docked in ${formatMonth(w.timeline.months[last])} with 19,854 transactions through the products it uses so far this month.`);
+  });
+});
+
 describe('describeAnnouncedPeriod', () => {
   it('summarises the window without pretending to show transactions', () => {
     const p = (announced: World['timeline']['customers'][string]['announced']) => describeAnnouncedPeriod(announced);

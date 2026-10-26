@@ -106,9 +106,10 @@ export function computeTimeline(graph: Graph, activity: Activity, months: string
       tx = months.map(() => DATED_FLOW);
       source = 'assumed';
     }
-    // The running month is still being collected: carry last month's flow so ships don't leave early.
-    if (last > 0 && source !== 'announced') tx[last] = Math.max(tx[last], tx[last - 1]);
     const w = tx.map((v) => round(Math.log10(1 + v)));
+    // The running month is still being collected: carry last month's weight so ships don't leave early,
+    // but keep the real count, which the panel shows as "so far this month".
+    if (last > 0 && source !== 'announced') w[last] = Math.max(w[last], w[last - 1]);
     const lastActive = w.reduce((found, v, i) => (v > 0 ? i : found), -1);
     const state = w
       .map((_, i) => {

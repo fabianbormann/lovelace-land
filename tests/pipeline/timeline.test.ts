@@ -95,7 +95,9 @@ describe('customer flow', () => {
   it('carries last month’s flow into the running month so ships do not leave on a partial month', () => {
     const t = timeline(makeData({ nodes, customers: [customer('c', ['defi'], ['app'])] }), act({ c: series({ 13: 40 }) }));
     expect(t.customers.c.state.slice(13)).toBe('dd');
-    expect(t.customers.c.tx[14]).toBe(40);
+    // the weight carries over for docking, but the count stays the real (partial) one
+    expect(t.customers.c.w[14]).toBe(t.customers.c.w[13]);
+    expect(t.customers.c.tx[14]).toBe(0);
   });
 
   it('turns an ended customer into a wreck once its transactions stop', () => {
