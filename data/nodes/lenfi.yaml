@@ -3,9 +3,9 @@ name: Lenfi
 district: products
 description: Lending and borrowing protocol on Cardano, formerly Aada Finance
   (renamed Lenfi on 28 June 2023); its pooled V2 launched in February 2024 with
-  contracts written in Aiken. DefiLlama TVL fell from about $78M (1 Dec 2024)
-  to about $150k (21 Oct 2026), and DefiLlama and CardanoCube now flag its
-  website as dead or archived.
+  contracts written in Aiken. DefiLlama TVL fell from about $78M (1 Dec 2024) to
+  about $150k (21 Oct 2026), and DefiLlama and CardanoCube now flag its website
+  as dead or archived.
 maintainer: Lenfi (formerly Aada Finance)
 links:
   repo: https://github.com/lenfiLabs/lenfi-smart-contracts
@@ -27,11 +27,19 @@ uses:
       - url: https://github.com/lenfiLabs/lenfi-sdk/blob/main/package.json
         kind: manifest
         retrieved: 2026-10-21
-        note: '"lucid-cardano": "^0.10.10" (lenfi-sdk, "SDK library to interact with Lenfi protocol")'
+        note: '"lucid-cardano": "^0.10.10" (lenfi-sdk, "SDK library to interact with
+          Lenfi protocol")'
       - url: https://github.com/lenfiLabs/lenfi-smart-contracts/blob/main/package.json
         kind: manifest
         retrieved: 2026-10-21
         note: '"lucid-cardano": "^0.10.11"'
+  - target: translucent
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/lenfiLabs/lenfi-smart-contracts/blob/HEAD/package.json
+        kind: manifest
+        retrieved: 2026-11-02
 onchain:
   scripts:
     - 0a43740237b12ebd028baaf90290b1379315e3d4258f91b532335ab7
@@ -75,7 +83,7 @@ onchain:
     has deadUrl: true and an empty url (V2 Launch hallmark 2024-02-22);
     CardanoCube https://www.cardanocube.com/projects/lenfi says 'This project
     has been archived by Cardano Cube'; on 2026-10-21 lenfi.io redirected to an
-    unrelated site. Rename date from https://coinmarketcap.com/assets/aada-finance
-    ('On 28 June 2023, the project rebranded to Lenfi'). No dated official
-    shutdown notice found."
+    unrelated site. Rename date from
+    https://coinmarketcap.com/assets/aada-finance ('On 28 June 2023, the project
+    rebranded to Lenfi'). No dated official shutdown notice found."
 lastVerified: 2026-10-21
