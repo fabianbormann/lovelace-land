@@ -1,8 +1,8 @@
 {
   "id": "dexhunter",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/dexhunter.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('6ec4acc3fbbd570ada625f24902777cec5d7a349fa0f3c7ba87b0cff', '97f1732964905b3c71d12163968814ac5f3be77abc94830a84d32cf9')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-21",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('6ec4acc3fbbd570ada625f24902777cec5d7a349fa0f3c7ba87b0cff', '97f1732964905b3c71d12163968814ac5f3be77abc94830a84d32cf9')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-02",
   "months": {
     "2023-10": 831,
     "2023-11": 832,
@@ -40,6 +40,6 @@
     "2026-07": 287,
     "2026-08": 321,
     "2026-09": 317,
-    "2026-10": 339
+    "2026-10": 614
   }
 }

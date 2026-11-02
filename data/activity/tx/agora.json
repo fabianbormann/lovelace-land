@@ -1,8 +1,8 @@
 {
   "id": "agora",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/LiqwidFinance.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('26aea7e03a53e374c1d82c560a91b4147b8954d2ec4ecbd128e0c18c', '34293de1784ad1dec6f8c975e220c5dab93e636c8d877f99d89c42ce', '5785b71b54365b450c048b5721860ea0477f0f890421b7d503d1ea89', '9cae3d41ae05882f5f357f0042d71842f1cc8a8e5230411ddb4daf17', 'ac07d4fad3bc9982009880f6d6272d25a12d435ca95a8c7d209baa4e', 'b575da974ec756ba2afdccdc07cbd1839acaf0a24c4f80afd81d3fb6', 'd062d56e91347e47d9e8d7587722e394bded511a693cd0b09d0a8e16')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-21",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('26aea7e03a53e374c1d82c560a91b4147b8954d2ec4ecbd128e0c18c', '34293de1784ad1dec6f8c975e220c5dab93e636c8d877f99d89c42ce', '5785b71b54365b450c048b5721860ea0477f0f890421b7d503d1ea89', '9cae3d41ae05882f5f357f0042d71842f1cc8a8e5230411ddb4daf17', 'ac07d4fad3bc9982009880f6d6272d25a12d435ca95a8c7d209baa4e', 'b575da974ec756ba2afdccdc07cbd1839acaf0a24c4f80afd81d3fb6', 'd062d56e91347e47d9e8d7587722e394bded511a693cd0b09d0a8e16')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-02",
   "months": {
     "2023-02": 258,
     "2023-03": 333,
@@ -48,6 +48,6 @@
     "2026-07": 377,
     "2026-08": 129,
     "2026-09": 145,
-    "2026-10": 126
+    "2026-10": 162
   }
 }

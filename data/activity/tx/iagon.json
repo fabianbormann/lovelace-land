@@ -1,8 +1,8 @@
 {
   "id": "iagon",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/iagon.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('1fa8c9199601924c312fb4f206ff632ca575b27f4f97dd02d9a9ae56', '3ec3f628639c989da3302724c61c90ced45571d611563d98cd528616', '5d16cc1a177b5d9ba9cfa9793b07e60f1fb70fea1f8aef064415d114', '6caa3ba78ac89b51aad2d06ab8a5cd097334faba23127fc6f665e272', 'a3959153cfd23daa1271b520bdf27dc7cbeab6ef24770fc72e458bd8', 'ac35ee89c26b1e582771ed05af54b67fd7717bbaebd7f722fbf430d6', 'faecb80eee6cadf9dac5184263ed4d164b38fe71d4f6f55e8f6b0da0')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-21",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('1fa8c9199601924c312fb4f206ff632ca575b27f4f97dd02d9a9ae56', '3ec3f628639c989da3302724c61c90ced45571d611563d98cd528616', '5d16cc1a177b5d9ba9cfa9793b07e60f1fb70fea1f8aef064415d114', '6caa3ba78ac89b51aad2d06ab8a5cd097334faba23127fc6f665e272', 'a3959153cfd23daa1271b520bdf27dc7cbeab6ef24770fc72e458bd8', 'ac35ee89c26b1e582771ed05af54b67fd7717bbaebd7f722fbf430d6', 'faecb80eee6cadf9dac5184263ed4d164b38fe71d4f6f55e8f6b0da0')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-02",
   "months": {
     "2022-04": 1,
     "2023-12": 94,
@@ -39,6 +39,6 @@
     "2026-07": 357,
     "2026-08": 1506,
     "2026-09": 700,
-    "2026-10": 287
+    "2026-10": 448
   }
 }

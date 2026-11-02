@@ -1,7 +1,7 @@
 {
   "id": "cardano-transaction-lib",
   "repo": "Plutonomicon/cardano-transaction-lib",
-  "collected": "2026-10-20",
+  "collected": "2026-11-02",
   "months": {
     "2021-12": 20,
     "2022-01": 202,
@@ -52,6 +52,6 @@
     "2026-07": 12,
     "2026-08": 14,
     "2026-09": 5,
-    "2026-10": 15
+    "2026-10": 20
   }
 }
