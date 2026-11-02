@@ -2,7 +2,7 @@
   "id": "usdcx",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/usdcx.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('1f3aec8bfe7ea4fe14c5f121e2a92e301afe414147860d557cac7e34', 'a3d5052864638828bc3fbc0d5b9a4223e233620d7911a5376ed4b658', 'd2c3f66c2c7154d9f0b913ee3cd9b0a25bbb7d1537953d7c36c07e86', 'd74de93a7e4940462c4509f59c712889422506f8b63dcfd0c266dc7b') UNION ALL SELECT min(d) AS date, t AS tx_hash FROM (SELECT t, h, asset, min(d) AS d, sum(q) AS n FROM (SELECT tx_hash AS t, date AS d, coalesce(owner_stake_credential, owner_payment_credential, owner_addr) AS h, asset_unit AS asset, quantity AS q FROM address_utxo WHERE date in <window> AND policy_id IN ('1f3aec8bfe7ea4fe14c5f121e2a92e301afe414147860d557cac7e34') UNION ALL SELECT i.spent_tx_hash AS t, i.date AS d, coalesce(a.owner_stake_credential, a.owner_payment_credential, a.owner_addr) AS h, a.asset_unit AS asset, -a.quantity AS q FROM tx_input i JOIN address_utxo a ON a.tx_hash = i.tx_hash AND a.output_index = i.output_index WHERE i.date in <window> AND a.policy_id IN ('1f3aec8bfe7ea4fe14c5f121e2a92e301afe414147860d557cac7e34')) GROUP BY t, h, asset) WHERE n <> 0 GROUP BY t) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-26",
+  "collected": "2026-11-02",
   "months": {
     "2026-02": 1816,
     "2026-03": 22551,
@@ -12,6 +12,6 @@
     "2026-07": 25238,
     "2026-08": 27809,
     "2026-09": 41879,
-    "2026-10": 38554
+    "2026-10": 46018
   }
 }

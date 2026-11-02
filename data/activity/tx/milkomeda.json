@@ -1,8 +1,8 @@
 {
   "id": "milkomeda",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/MilkomedaC1.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('c246c16d83b6d06d0a1b5742b440fc448484a159e1cfce48efc98736') UNION ALL SELECT date, tx_hash FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01' AND owner_addr IN ('addr1w8pydstdswmdqmg2rdt59dzql3zgfp9pt8sulnjgalycwdsj9js7w')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-21",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('c246c16d83b6d06d0a1b5742b440fc448484a159e1cfce48efc98736') UNION ALL SELECT date, tx_hash FROM address_utxo WHERE date in <window> AND owner_addr IN ('addr1w8pydstdswmdqmg2rdt59dzql3zgfp9pt8sulnjgalycwdsj9js7w')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-02",
   "months": {
     "2022-01": 14,
     "2022-02": 4,

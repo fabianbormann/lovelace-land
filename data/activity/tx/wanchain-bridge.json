@@ -1,8 +1,8 @@
 {
   "id": "wanchain-bridge",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/Wanchain.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('1cfb41dc0b8d13fe53600e17059dcbcda2d8647347ec25288b4f5234', '25c5de5f5b286073c593edfd77b48abc7a48e5a4f3d4cd9d428ff935', '485aa10343f63bcc2a43f1625dc841093488e4685ba607cc187ba495', '520b2576e83cfd074de6d0a300bfc4abc2c9eef6e02465eebc853f2d', '60ec1132e41b27b94a69b679a67041c8b6ea30643f0130cd4f08bd73', '8d4c43c5a72fe731513ebecf5f44d717164d254e08eb4a57ee234bb7')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-21",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('1cfb41dc0b8d13fe53600e17059dcbcda2d8647347ec25288b4f5234', '25c5de5f5b286073c593edfd77b48abc7a48e5a4f3d4cd9d428ff935', '485aa10343f63bcc2a43f1625dc841093488e4685ba607cc187ba495', '520b2576e83cfd074de6d0a300bfc4abc2c9eef6e02465eebc853f2d', '60ec1132e41b27b94a69b679a67041c8b6ea30643f0130cd4f08bd73', '8d4c43c5a72fe731513ebecf5f44d717164d254e08eb4a57ee234bb7')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-02",
   "months": {
     "2023-07": 28,
     "2023-08": 196,
@@ -43,6 +43,6 @@
     "2026-07": 356,
     "2026-08": 11,
     "2026-09": 19,
-    "2026-10": 42
+    "2026-10": 44
   }
 }

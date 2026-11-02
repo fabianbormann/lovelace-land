@@ -1,8 +1,8 @@
 {
   "id": "hosky",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/cardano-foundation/tx-leaderboard-script/blob/staging/data/address_apps.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM address_utxo WHERE date in <year window> AND owner_addr IN ('addr1vy740r73x2w3du2xxt76cs4hdml4zw2c5h7tddcyf3jauys9tyns4')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-21",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM address_utxo WHERE date in <window> AND owner_addr IN ('addr1vy740r73x2w3du2xxt76cs4hdml4zw2c5h7tddcyf3jauys9tyns4')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-02",
   "months": {
     "2021-11": 2168549,
     "2021-12": 367461,
@@ -50,6 +50,6 @@
     "2025-08": 2,
     "2025-09": 1,
     "2026-05": 1,
-    "2026-10": 1540542
+    "2026-10": 1540555
   }
 }

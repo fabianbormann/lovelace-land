@@ -1,8 +1,8 @@
 {
   "id": "trivolve-fms",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/fmsbytrivolve.json",
-  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <year window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date >= DATE '2021-09-01' AND date < DATE '2022-01-01') WHERE h IN ('26370b459e5eafe6e179c94a39bb1c278657de5c1875fb9c5d1fa0ba')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-10-21",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('26370b459e5eafe6e179c94a39bb1c278657de5c1875fb9c5d1fa0ba')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-02",
   "months": {
     "2025-09": 5647,
     "2025-10": 10540,
@@ -17,6 +17,6 @@
     "2026-07": 9382,
     "2026-08": 16735,
     "2026-09": 14520,
-    "2026-10": 11415
+    "2026-10": 19563
   }
 }
