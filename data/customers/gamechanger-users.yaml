@@ -1,0 +1,22 @@
+id: gamechanger-users
+name: GameChanger Wallet users
+type: segment
+sectors: [payments, defi]
+stage: production
+description: People using the GameChanger web wallet on desktop and mobile to send and receive ada and native tokens, mint, share multisig treasuries and connect to Cardano DApps through links and QR codes.
+uses:
+  - target: gamechanger
+    confidence: verified
+    evidence:
+      - url: https://gamechanger.finance
+        kind: docs
+        retrieved: 2026-11-03
+        note: "We launched in 2021, 2 weeks after Nami. The site publishes no user count."
+      - url: https://github.com/GameChangerFinance/gamechanger.wallet/commit/4785ac2b9a995cddf8c7b69ac23ef84e2a57c1f9
+        kind: announcement
+        retrieved: 2026-11-03
+        note: "19 March 2026: docs: set new v2 Production URLs. Add Beta notice."
+active:
+  from: 2021-08
+  confirmed: "2026-03"
+lastVerified: 2026-11-03

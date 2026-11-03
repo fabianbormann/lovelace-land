@@ -1,0 +1,44 @@
+id: dandelion
+name: Dandelion
+district: api-providers
+description: Community-run network of Cardano API nodes that wallets and apps can use instead of one central provider. Operators deploy a node with Dandelion Lite, a package that bundles cardano-node and a set of APIs.
+maintainer: Dandelion community (Gimbalabs, GameChanger Finance, M2Tec)
+links:
+  repo: https://github.com/GameChangerFinance/dandelion-lite
+  docs: https://github.com/GameChangerFinance/dandelion-lite/blob/main/docs/concept.md
+status: active
+primarySector: null
+uses:
+  - target: cardano-node
+    relation: infrastructure
+    confidence: verified
+    evidence:
+      - url: https://github.com/GameChangerFinance/dandelion-lite/blob/main/docker-compose.yml
+        kind: manifest
+        retrieved: 2026-11-03
+        note: "service cardano-node, image ${CARDANO_NODE_IMAGE}"
+  - target: cardano-db-sync
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/GameChangerFinance/dandelion-lite/blob/main/docker-compose.yml
+        kind: manifest
+        retrieved: 2026-11-03
+        note: "service cardano-db-sync, image ${CARDANO_DB_SYNC_IMAGE}"
+  - target: ogmios
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/GameChangerFinance/dandelion-lite/blob/main/docker-compose.yml
+        kind: manifest
+        retrieved: 2026-11-03
+        note: "service cardano-ogmios, image ${CARDANO_OGMIOS_IMAGE}"
+  - target: blockfrost
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://github.com/GameChangerFinance/dandelion-lite/blob/main/docker-compose.yml
+        kind: manifest
+        retrieved: 2026-11-03
+        note: "service blockfrost, image blockfrost/backend-ryo:v6.5.0"
+lastVerified: 2026-11-03

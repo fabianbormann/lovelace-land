@@ -1,0 +1,63 @@
+id: gamechanger
+name: GameChanger Wallet
+district: wallets
+description: Cardano wallet that runs as a web app on desktop and mobile with nothing to install, while you keep your own keys. Apps talk to it through links and QR codes written in GCScript, a JSON language for describing what a user is asked to do.
+maintainer: GameChanger Finance
+links:
+  website: https://gamechanger.finance
+  repo: https://github.com/GameChangerFinance/gamechanger.wallet
+  docs: https://gamechangerfinance.github.io/gamechanger.wallet/
+packages:
+  - ecosystem: npm
+    name: "@gamechanger-finance/gc"
+status: active
+primarySector: null
+uses:
+  - target: dandelion
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://gamechanger.finance
+        kind: docs
+        retrieved: 2026-11-03
+        note: "Decentralized Backend: Powered by the Dandelion Network, choose from official and community nodes"
+      - url: https://github.com/GameChangerFinance/gamechanger.wallet/blob/main/RELEASE.md
+        kind: docs
+        retrieved: 2026-11-03
+        note: "a non custodial web wallet powered by a distributed network of backend nodes run by our partners Dandelion APIs"
+      - url: https://projectcatalyst.io/funds/15/cardano-use-cases-prototype-and-launch/gamechanger-new-cardano-graphql-api-as-a-service-protocol
+        kind: announcement
+        retrieved: 2026-11-03
+        note: "Dandelion Lite, a Cardano Node and APIs self sovereign deployment solution [...] ARP Radio, Moments and GameChanger Wallet already use it."
+  - target: cardano-graphql
+    relation: service
+    confidence: verified
+    evidence:
+      - url: https://projectcatalyst.io/funds/15/cardano-use-cases-prototype-and-launch/gamechanger-new-cardano-graphql-api-as-a-service-protocol
+        kind: announcement
+        retrieved: 2026-11-03
+        note: "GameChanger Wallet and ecosystem dapps around us leveraged on it since the begining"
+  - target: helios
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://github.com/GameChangerFinance/gamechanger.wallet/blob/main/RELEASE.md
+        kind: docs
+        retrieved: 2026-11-03
+        note: "Helios Smart Contract compiler as API feature, allowing fully on-chain + off-chain code"
+      - url: https://gamechanger.finance
+        kind: docs
+        retrieved: 2026-11-03
+        note: 'Wallet features list "Helios compiler"'
+  - target: cardano-serialization-lib
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://wallet.gamechanger.finance/
+        kind: manifest
+        retrieved: 2026-11-03
+        note: "The wallet source is not public, so this comes from the deployed app: its bundle (assets/BR5FKAN0.js on the retrieval date; the file name changes with each release) loads ./cardano_serialization_lib_bg.js, the WebAssembly build of the library"
+lastVerified: 2026-11-03
+brand:
+  color: "#6d41a1"
+  source: https://wallet.gamechanger.finance/
