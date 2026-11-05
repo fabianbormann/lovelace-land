@@ -7,9 +7,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
-import { parseDocument } from 'yaml';
 import { loadDataDir, nodeFile } from '../pipeline/load';
-import { buildPackageIndex, dependenciesIn, MANIFESTS } from './lib/manifests';
+import { appendUse, buildPackageIndex, dependenciesIn, MANIFESTS } from './lib/manifests';
 
 const { values } = parseArgs({ options: { data: { type: 'string', default: 'data' }, write: { type: 'boolean', default: false } } });
 const dataDir = values.data!;
@@ -57,11 +56,8 @@ for (const p of proposals) console.log(`| ${p.from} | ${p.to} | ${p.url} |`);
 if (values.write) {
   for (const p of proposals) {
     const path = join(dataDir, nodeFile(p.from));
-    const doc = parseDocument(readFileSync(path, 'utf8'));
     const entry = { target: p.to, relation: 'library', confidence: 'verified', evidence: [{ url: p.url, kind: 'manifest', retrieved: today }] };
-    if (doc.has('uses')) doc.addIn(['uses'], doc.createNode(entry));
-    else doc.set('uses', doc.createNode([entry]));
-    writeFileSync(path, doc.toString());
+    writeFileSync(path, appendUse(readFileSync(path, 'utf8'), entry));
   }
   console.log(`\nAdded ${proposals.length} edge(s). Review them, then run npm run build:world.`);
 }

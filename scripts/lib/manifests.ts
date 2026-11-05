@@ -1,3 +1,4 @@
+import { Document, isSeq, parseDocument } from 'yaml';
 import type { Node } from '../../pipeline/schema';
 
 /** ecosystem → package name (lowercased) → node ids that publish it */
@@ -121,4 +122,26 @@ export function dependenciesIn(file: string, text: string, index: PackageIndex):
   const found = new Set<string>();
   for (const name of namesIn(file, text)) for (const id of byName.get(normalize(name)) ?? []) found.add(id);
   return [...found].sort();
+}
+
+/**
+ * Appends one `uses` entry to a node file's text. Only the new lines are written, so hand-wrapped
+ * descriptions and notes elsewhere in the file stay exactly as they were.
+ */
+export function appendUse(text: string, entry: object): string {
+  const lines = (indent: string) =>
+    new Document([entry]).toString({ lineWidth: 0 }).replace(/^(?=.)/gm, indent);
+  const uses = parseDocument(text).get('uses', true);
+  if (isSeq(uses) && uses.range) {
+    const [start, end] = uses.range;
+    if (uses.flow) {
+      if (uses.items.length) throw new Error('cannot append to a non-empty flow list of uses');
+      return `${text.slice(0, start).replace(/ +$/, '')}\n${lines('  ')}${text.slice(end).replace(/^\n/, '')}`;
+    }
+    const indent = ' '.repeat(start - text.lastIndexOf('\n', start - 1) - 1);
+    const head = text.slice(0, end);
+    return `${head}${head.endsWith('\n') ? '' : '\n'}${lines(indent)}${text.slice(end)}`;
+  }
+  if (uses !== undefined) throw new Error('uses is not a list');
+  return `${text}${text === '' || text.endsWith('\n') ? '' : '\n'}uses:\n${lines('  ')}`;
 }

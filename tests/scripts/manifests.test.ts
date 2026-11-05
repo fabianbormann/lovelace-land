@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buildPackageIndex, dependenciesIn } from '../../scripts/lib/manifests';
+import { parse } from 'yaml';
+import { appendUse, buildPackageIndex, dependenciesIn } from '../../scripts/lib/manifests';
 import { makeData, node } from '../helpers';
 
 const data = makeData({
@@ -68,5 +69,39 @@ describe('dependenciesIn — more manifest shapes', () => {
   it('skips maven test-scoped dependencies', () => {
     const pom = '<dependency><groupId>com.bloxbean.cardano</groupId><artifactId>cardano-client-lib</artifactId><scope>test</scope></dependency>';
     expect(dependenciesIn('pom.xml', pom, index)).toEqual([]);
+  });
+});
+
+describe('appendUse', () => {
+  const entry = { target: 'whisky', relation: 'library', confidence: 'verified', evidence: [{ url: 'https://example.org/Cargo.toml', kind: 'manifest', retrieved: '2026-11-05' }] };
+  const longLine = `description: ${'a long hand-wrapped line that is well over eighty characters wide '.repeat(2).trim()}`;
+  const added = `  - target: whisky
+    relation: library
+    confidence: verified
+    evidence:
+      - url: https://example.org/Cargo.toml
+        kind: manifest
+        retrieved: 2026-11-05
+`;
+
+  it('adds the entry after the last road and leaves every other line as written', () => {
+    const before = `id: midnight\n${longLine}\nuses:\n  - target: blaze\n    note: '"@blaze-cardano/core": "^0.8.0", "@blaze-cardano/data", "@blaze-cardano/uplc"'\nonchain:\n  scripts: []\n`;
+    const after = appendUse(before, entry);
+    expect(after).toBe(before.replace('onchain:', `${added}onchain:`));
+    expect(parse(after).uses.map((u: { target: string }) => u.target)).toEqual(['blaze', 'whisky']);
+  });
+
+  it('turns an empty uses list into a block list', () => {
+    const after = appendUse('id: a\nuses: []\nlastVerified: 2026-10-20\n', entry);
+    expect(after).toBe(`id: a\nuses:\n${added}lastVerified: 2026-10-20\n`);
+  });
+
+  it('adds a uses list when the file has none', () => {
+    expect(appendUse('id: a\nstatus: active', entry)).toBe(`id: a\nstatus: active\nuses:\n${added}`);
+  });
+
+  it('follows the indentation of the existing list', () => {
+    const after = appendUse('id: a\nuses:\n- target: b\n', entry);
+    expect(after).toBe(`id: a\nuses:\n- target: b\n${added.replace(/^  /gm, '')}`);
   });
 });
