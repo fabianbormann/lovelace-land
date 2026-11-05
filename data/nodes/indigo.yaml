@@ -34,9 +34,9 @@ uses:
     relation: library
     confidence: verified
     evidence:
-      - url: https://github.com/IndigoProtocol/sdk/blob/main/package.json
+      - url: https://github.com/IndigoProtocol/indigo-sdk/blob/main/package.json
         kind: manifest
-        retrieved: 2026-10-20
+        retrieved: 2026-11-05
         note: '"Indigo SDK for interacting with Indigo endpoints via lucid-evolution";
           depends on @lucid-evolution/lucid'
   - target: pyth
@@ -48,9 +48,12 @@ uses:
         retrieved: 2026-10-20
         note: '"Pyth pricing on Indigo": Pyth-priced iAssets carry a signed Pyth message
           verified by an on-chain feed validator'
-      - url: https://github.com/IndigoProtocol/sdk/tree/main/src/contracts/pyth-feed
-        kind: manifest
-        retrieved: 2026-10-20
+      - url: https://github.com/IndigoProtocol/indigo-mcp/blob/main/src/utils/pyth.ts
+        kind: docs
+        retrieved: 2026-11-05
+        note: '"In Indigo v3 most iAssets are priced via Pyth ... Those transactions
+          carry a signed Pyth price message plus a reference to the Pyth state
+          UTxO"; the message comes from Pyth Lazer.'
 onchain:
   scripts:
     - 0752abd65a0c983bfb1c9c3880cc632c099ba3adb2fe307afb4bbd9c

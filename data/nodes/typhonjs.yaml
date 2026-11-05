@@ -16,8 +16,8 @@ uses:
     relation: library
     confidence: verified
     evidence:
-      - url: https://github.com/StricaHQ/typhonjs/blob/main/package.json
+      - url: https://github.com/StricaHQ/typhonjs/blob/master/package.json
         kind: manifest
-        retrieved: 2026-10-21
+        retrieved: 2026-11-05
         note: '"@stricahq/typhonjs" 4.0.0 depends on "@stricahq/cbors"'
 lastVerified: 2026-10-21

@@ -46,8 +46,15 @@ uses:
     relation: infrastructure
     confidence: verified
     evidence:
-      - url: https://github.com/demeter-run/ext-cardano-dbsync-serverless
-        kind: docs
-        retrieved: 2026-10-20
-        note: "A serverless (aka: autoscaling) version of Cardano DBSync in Demeter"
+      - url: https://github.com/demeter-run/global/blob/main/cloudflare.tf
+        kind: manifest
+        retrieved: 2026-11-05
+        note: 'Demeter''s live DNS config routes "// DBSync" "*.dbsync-v3.dmtr.host".
+          The earlier source, demeter-run/ext-cardano-dbsync-serverless, was
+          deleted by 2026-10-26.'
+      - url: https://github.com/demeter-run/global/blob/main/grafana/dashboards/shared/dbsync.json
+        kind: manifest
+        retrieved: 2026-11-05
+        note: 'Grafana dashboard "Cardano DBSync v3" on cardano_db_sync_db_block_height
+          and cardano_db_sync_db_queue_length metrics'
 lastVerified: 2026-10-20
