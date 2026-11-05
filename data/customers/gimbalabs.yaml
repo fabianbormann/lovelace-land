@@ -1,0 +1,48 @@
+id: gimbalabs
+name: Gimbalabs
+type: organization
+sectors: [ identity, governance ]
+stage: production
+description: Open community that teaches Cardano development through
+  project-based courses such as Plutus PBL and Cardano Go. It runs its courses
+  on Andamio, where learners earn credentials for completed lessons, and votes
+  in on-chain governance as a collective DRep that follows governance actions
+  on GovTool.
+uses:
+  - target: andamio
+    confidence: verified
+    evidence:
+      - url: https://github.com/gimbalabs/ppbl2024-front-end/blob/main/src/pages/goals/index.tsx
+        kind: docs
+        retrieved: 2026-11-05
+        note: Plutus PBL 2024 goals page (added 2024-06-04) sends learners to
+          "https://www.andamio.io/course/ppbl2024/103/lesson/2".
+      - url: https://github.com/gimbalabs/cardano-go-pbl-2026/blob/main/README.md
+        kind: docs
+        retrieved: 2026-11-05
+        note: Catalyst-funded Cardano Go course with Blink Labs (course update Dec
+          2025 to Apr 2026, README updated 2026-04-09) links its "Andamio
+          course" at app.andamio.io/course/fd28cf17d1869bcb1f1f3ceaa7daf02d14358ba74691fd679ba3b633.
+          Andamio defines a course ID as the policy ID of the course's
+          LocalStateNFT; on mainnet that policy shows a single transaction, in
+          July 2025 (Yaci Store, checked 2026-11-05). Later course activity
+          moves none of its tokens between holders, so the timeline uses the
+          dated window below instead of on-chain counts.
+  - target: govtool
+    confidence: verified
+    evidence:
+      - url: https://github.com/gimbalabs/gimbalabs-drep/blob/main/README.md
+        kind: docs
+        retrieved: 2026-11-05
+        note: Links "Gimbalabs in the Gov.tools Directory" (DRep
+          drep1taxuxp3f9yvw5txzssxx54n6qy73r9ecc40c5mx4wthuw3r3mj6). The repo
+          starts 2025-01-03; its latest vote record (Dingo) is from 2026-04-09.
+      - url: https://github.com/gimbalabs/gimbalabs-project-archive/blob/main/drep/process.md
+        kind: docs
+        retrieved: 2026-11-05
+        note: 'Gimbalabs DRep process: "Monitor gov.tools for new governance
+          actions", then "Submit vote on-chain with rationale".'
+active:
+  from: 2024-06
+  confirmed: 2026-04
+lastVerified: 2026-11-05
