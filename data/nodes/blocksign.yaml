@@ -1,0 +1,30 @@
+id: blocksign
+name: BlockSign
+district: products
+description: German e-signature platform (BlockSign GmbH in Düsseldorf, formerly
+  Docufi3d, started by IAMX AG) for simple, advanced and qualified electronic
+  signatures, the latter two through Swisscom Trust Services. When a document
+  is sealed, or its delivery confirmed as digital registered mail, it writes
+  the document's hash to Cardano as transaction metadata.
+maintainer: BlockSign GmbH
+links:
+  website: https://blocksign.io
+  docs: https://docufi3d.gitbook.io/docufi3d/
+status: active
+primarySector: proof-verification
+uses: []
+onchain:
+  metadataLabels: [1774]
+  source: https://github.com/Docufi3d/Fund-13/blob/main/M1/A/A.md
+  note: 'Its Catalyst Fund 13 Milestone 1 report (July 2025) gives label 1774
+    with a sample transaction (d54fd2f4...) whose metadata is {"version": "1.0",
+    "docufi3d.com": "1.01", <document hash>: {hash, vuid, level: AES}}. From 26
+    Oct 2026 it writes "version": "2.0" without the docufi3d.com key and with
+    level AES or QES, for example 7b0b81c8..., which its Milestone 2 response
+    cites as its Cardano audit reference. 1774 is not in the CIP-10 registry;
+    on 2026-11-06 every label-1774 transaction since August 2024 followed one
+    of these two forms except a single signed payload on 2024-08-20, in the
+    month of its first 11 Docufi3d anchors. Its docs name no Cardano library
+    or API provider, so it has no roads yet; its technology page also lists a
+    "Midnight Privacy Layer" for audit trails, with no public evidence of use.'
+lastVerified: 2026-11-06

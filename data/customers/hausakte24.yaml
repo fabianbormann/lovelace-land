@@ -1,0 +1,42 @@
+id: hausakte24
+name: Hausakte24
+type: organization
+sectors: [ proof-verification ]
+stage: pilot
+description: Online service from Rayermann Immobilien in Düsseldorf that helps
+  landlords prepare utility cost statements. From early 2026 it delivers them
+  to tenants through BlockSign, whose automatic proof of delivery replaces a
+  registered letter and is recorded on Cardano.
+uses:
+  - target: blocksign
+    confidence: verified
+    evidence:
+      - url: https://www.linkedin.com/posts/hausakte24_meilenstein-erreicht-ab-anfang-2026-digitale-activity-7406633316189327360-u3c8
+        kind: announcement
+        retrieved: 2026-11-06
+        note: 'Hausakte24, 16 Dec 2025: "Meilenstein erreicht!" ... "Ab Anfang
+          2026: Digitale Zustellung der Nebenkostenabrechnung direkt aus
+          hausakte24", delivered with BlockSign and an automatic, audit-proof
+          proof of delivery: "Schluss mit dem postalischen Rückschein!"'
+      - url: https://github.com/Docufi3d/Fund-13/blob/main/M1/C/C.md
+        kind: case-study
+        retrieved: 2026-11-06
+        note: 'Catalyst Fund 13 Milestone 1 (July 2025): "Initiation of real-world
+          pilot - Hausakte24", a real estate partner managing ~5,000
+          documents/year, to "digitize rental processes with Docufi3d, Swisscom
+          Trust Services (Swisscom), and Cardano".'
+      - url: https://github.com/Docufi3d/Fund-13/blob/main/M2/Response_27_20_2026/Response.md
+        kind: case-study
+        retrieved: 2026-11-06
+        note: 'Milestone 2 response, 27 Oct 2026: "Output 10 - Hausakte24 Pilot
+          Collaboration", with a Hausakte24 integration video as pilot-specific
+          evidence.'
+      - url: https://docufi3d.gitbook.io/docufi3d/how-to/proof-of-delivery
+        kind: docs
+        retrieved: 2026-11-06
+        note: 'Proof of Delivery: "Each POD process creates a verifiable
+          transaction on the Cardano blockchain".'
+active:
+  from: 2026-01
+  confirmed: 2026-10
+lastVerified: 2026-11-06

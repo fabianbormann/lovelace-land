@@ -32,6 +32,7 @@
     "blockforce": [134, 24],
     "blockfrost": [46, 0],
     "blockfrost-platform": [50, 0],
+    "blocksign": [150, -28],
     "book-io": [150, 0],
     "cardano-api": [26, 0],
     "cardano-ballot": [130, -4],

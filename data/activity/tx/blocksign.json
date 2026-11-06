@@ -1,0 +1,24 @@
+{
+  "id": "blocksign",
+  "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Docufi3d/Fund-13/blob/main/M1/A/A.md",
+  "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM transaction_metadata WHERE date in <window> AND CAST(label AS VARCHAR) IN ('1774')) GROUP BY 1 ORDER BY 1",
+  "collected": "2026-11-06",
+  "months": {
+    "2024-08": 12,
+    "2024-09": 2,
+    "2024-10": 11,
+    "2024-11": 22,
+    "2025-10": 39,
+    "2025-11": 1,
+    "2025-12": 4,
+    "2026-01": 12,
+    "2026-02": 11,
+    "2026-03": 11,
+    "2026-04": 4,
+    "2026-05": 10,
+    "2026-06": 11,
+    "2026-07": 32,
+    "2026-10": 2,
+    "2026-11": 5
+  }
+}
