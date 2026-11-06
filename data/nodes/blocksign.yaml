@@ -21,10 +21,12 @@ onchain:
     "docufi3d.com": "1.01", <document hash>: {hash, vuid, level: AES}}. From 26
     Oct 2026 it writes "version": "2.0" without the docufi3d.com key and with
     level AES or QES, for example 7b0b81c8..., which its Milestone 2 response
-    cites as its Cardano audit reference. 1774 is not in the CIP-10 registry;
-    on 2026-11-06 every label-1774 transaction since August 2024 followed one
-    of these two forms except a single signed payload on 2024-08-20, in the
-    month of its first 11 Docufi3d anchors. Its docs name no Cardano library
+    cites as its Cardano audit reference. 1774 is not in the CIP-10 registry.
+    On 2026-11-06 all 189 label-1774 transactions came from two wallets: one
+    (credential 7722d053...) sent 182 from 2024-08-20 to 2026-07-15, all in
+    the 1.0 form except one signed payload on its first day, and a second
+    (b9ece0cc...) sent the 7 version-2.0 anchors since 26 Oct 2026, including
+    7b0b81c8.... Its docs name no Cardano library
     or API provider, so it has no roads yet; its technology page also lists a
     "Midnight Privacy Layer" for audit trails, with no public evidence of use.'
 lastVerified: 2026-11-06
