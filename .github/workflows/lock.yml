@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: write # to start the deploy after committing the lock
 
 jobs:
   lock:
@@ -22,6 +23,8 @@ jobs:
       - run: npm ci
       - run: npm run build:world
       - name: Commit the updated lock
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet data/layout.lock.json; then exit 0; fi
           git config user.name "lovelace-land-bot"
@@ -29,3 +32,5 @@ jobs:
           git add data/layout.lock.json
           git commit -m "chore: place new buildings in the layout lock"
           git push
+          # A push made with GITHUB_TOKEN starts no workflows; a dispatch does.
+          gh workflow run deploy.yml --ref main
