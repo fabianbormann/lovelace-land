@@ -2,7 +2,7 @@
   "id": "disco-solaris",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/DiscoSolaris.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('fb43ee22000fb1ffc5e825253375df1bb80d4bacccc106f4ad534f8b', '5a7a6d23f477638474c8db5d37d9f3af8edd4b160806d063add8aeed')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2023-06": 5,
     "2023-07": 900,

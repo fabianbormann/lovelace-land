@@ -2,7 +2,7 @@
   "id": "saturn-swap",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Flux-Point-Studios/saturnswap-filler#readme",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('73990b71041ceade6f867617f6ce9f187ab710ea2bf1ff8db7d0292f', '1af84a9e697e1e7b042a0a06f061e88182feb9e9ada950b36a916bd5')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2024-06": 1977,
     "2024-07": 28454,
@@ -32,6 +32,7 @@
     "2026-07": 14,
     "2026-08": 1,
     "2026-09": 216,
-    "2026-10": 11
+    "2026-10": 11,
+    "2026-11": 10
   }
 }

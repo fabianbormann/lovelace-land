@@ -2,7 +2,7 @@
   "id": "genius-yield",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/GeniusYield.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('0a32c7d1a45fa861c8a68812919ba3ba187f2da6d84ff684385b2064', '0d530d9b5ceaf073aafd6007c7ddaa69480dee14f2f700b5716bf11b', '12d6e1808dc019408cefe273a0b04701038f4aa96f733d8f44cb9817', '22f6999d4effc0ade05f6e1a70b702c65d6b3cdf0e301e4a8267f585', '30fe42d793d37c176e4a9df5cb9b6102719d872349a827fa81b9ff21', '36c8808b0d90be2ae2e5bd8b2974f74839956ab0b3865686b6bdca7b', '3fe59383acf7788d43b3b4c84bff0a837376f9c004b6f600ec49716d', '45505028e69c6bef5db72b657a8011a61a30bb48e1b955f806c417b0', '7665c40357deba19c8bad6d739d805e9287b30c0fa00f1a003dfcfa4', '77e800622d05045a1f973f291bc71dd8607544fd2b8cb9d841507d56', '9ef926cd980f72e5b7eaea4d6ddecc4d3898d78c84944cd6fa0f83c9', 'a8d7ff5cf4c117270288372f9ac8e1ce5b758ae15a7851c41661a48c', 'c652c19ea10ab025a2b0880682f96a2794d7cea9bc4782645c0e114c', 'dda5fdb1002f7389b33e036b6afee82a8189becb6cba852e8b79b4fb', 'edfff663d37fc5f9753bc4222e0da2bfe08aa48db0837d2c329adeb3')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2022-12": 900,
     "2023-01": 1969,
@@ -50,6 +50,7 @@
     "2026-07": 78,
     "2026-08": 61,
     "2026-09": 42,
-    "2026-10": 46
+    "2026-10": 46,
+    "2026-11": 14
   }
 }

@@ -2,7 +2,7 @@
   "id": "wayup",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/wayup.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('27d46ecbec94b052d8f875cf3beafd0e8ca40e8ad069f677e0a128ea', 'a76f0fb801a29f591e9871576508d85b0b5f3c38774f65032f58fdad')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2024-01": 1,
     "2024-02": 6,
@@ -37,6 +37,7 @@
     "2026-07": 5355,
     "2026-08": 5062,
     "2026-09": 5299,
-    "2026-10": 6705
+    "2026-10": 6705,
+    "2026-11": 1046
   }
 }
