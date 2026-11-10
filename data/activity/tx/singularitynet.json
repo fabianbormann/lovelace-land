@@ -2,7 +2,7 @@
   "id": "singularitynet",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps_v2/SingularityNET.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('f43a62fdc3965df486de8a0d32fe800963589c41b38946602a0dc535', '80cac682cc252515e96b3cd8e2c235f5a0b4c1e24b7345193269ae69', '48886999b2be126f37f53443590a5107ad2455d58f5c7ef7b0af438c')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2022-03": 2,
     "2022-04": 394,

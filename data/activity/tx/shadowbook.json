@@ -2,7 +2,7 @@
   "id": "shadowbook",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/projects/shadowbook.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('9e130eb0323f31df50bfbb731f35f5a795a630ef727b4ba272460b55')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2026-01": 643,
     "2026-02": 2342,
@@ -13,6 +13,7 @@
     "2026-07": 1916,
     "2026-08": 1902,
     "2026-09": 2824,
-    "2026-10": 3404
+    "2026-10": 3404,
+    "2026-11": 524
   }
 }

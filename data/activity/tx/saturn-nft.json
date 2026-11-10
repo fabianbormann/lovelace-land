@@ -2,7 +2,7 @@
   "id": "saturn-nft",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/Tastenkunst/eternl-cardano-registry/blob/main/registry/scripts/script-index.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('d3f00c944c02e92d01373ba8401a0845ad9b2b98df54ad826c5858a2')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2023-02": 4314,
     "2023-03": 10713,

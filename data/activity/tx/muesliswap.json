@@ -2,7 +2,7 @@
   "id": "muesliswap",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/StricaHQ/cardano-contracts-registry/blob/master/projects/muesliswap.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('00fb107bfbd51b3a5638867d3688e986ba38ff34fb738f5bd42b20d5', '0454355b392202e594ce74be2f5ff9ae64c6ac0fbb45cb676f8078a2', '15b95fdaceeb507073a1bd198803373beeafbd82560fbf8abe9073ff', '1b3c5a646a018e0cfbd40fba97518c8e955e5869f0afd4f8c568493e', '4136eeede1a49030451ee3a09d900959bafeafd9b536e59345ac780f', '6e3af9667763e915c9b3a901d3092625d515c2ad6d575eac92582aa8', '7045237d1eb0199c84dffe58fe6df7dc5d255eb4d418e4146d5721f8', '73ede893f547edbd25da6953fda33caacd01f44047922bf7c5ceb951', '785331daeba8b0f238183d502e14ace037d1167ececb99b744a2aaaf', '7a8041a0693e6605d010d5185b034d55c79eaf7ef878aae3bdcdbf67', '8c9a2d459d2d8dc7c11192f971ab647fac65833121b7e8181e583c64', '909133088303c49f3a30f1cc8ed553a73857a29779f6c6561cd8093f', 'af3d70acf4bd5b3abb319a7d75c89fb3e56eafcdd46b2e9b57a2557f', 'c2afd87ff836f64a20c33dc252e850cdd55f31627d64012d0960856f', 'cae07bd684bcb2e2f15356882deac1b6cc782b025dc23aae10758471', 'db21c4e1c2cad0e5cc67adaf1b97ad0c195125b90508e0258964fc43', 'de9b756719341e79785aa13c164e7fe68c189ed04d61c9876b2fe53f', 'e8baad9288dc9abdc099b46f2ac006b1a82c7df4996e067f00c04e8d', 'ea184d0a7e640c4b5daa3f2cef851e75477729c2fd89f6ffbed7874c', 'f1ec90d33208778214cdc7fa90858ac5620253d99f84c10335928cab', 'f33bf12af1c23d660e29ebb0d3206b0bfc56ffd87ffafe2d36c42a45', 'fc8fbdf64f25e04ec78052aa1a997b93867608951608fd74ca2fa83b', 'fea3f75281aa7f3f9f1a488030006cecd96290e9d3e7921a6b10c903', 'ffcdbb9155da0602280c04d8b36efde35e3416567f9241aff0955269')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2021-11": 4788,
     "2021-12": 110181,
@@ -63,6 +63,7 @@
     "2026-07": 520,
     "2026-08": 390,
     "2026-09": 873,
-    "2026-10": 859
+    "2026-10": 859,
+    "2026-11": 122
   }
 }

@@ -2,7 +2,7 @@
   "id": "usda",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/cardano-foundation/cardano-token-registry/blob/master/mappings/fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae45655534441.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae456') UNION ALL SELECT min(d) AS date, t AS tx_hash FROM (SELECT t, h, asset, min(d) AS d, sum(q) AS n FROM (SELECT tx_hash AS t, date AS d, coalesce(owner_stake_credential, owner_payment_credential, owner_addr) AS h, asset_unit AS asset, quantity AS q FROM address_utxo WHERE date in <window> AND policy_id IN ('fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae456') UNION ALL SELECT i.spent_tx_hash AS t, i.date AS d, coalesce(a.owner_stake_credential, a.owner_payment_credential, a.owner_addr) AS h, a.asset_unit AS asset, -a.quantity AS q FROM tx_input i JOIN address_utxo a ON a.tx_hash = i.tx_hash AND a.output_index = i.output_index WHERE i.date in <window> AND a.policy_id IN ('fe7c786ab321f41c654ef6c1af7b3250a613c24e4213e0425a7ae456')) GROUP BY t, h, asset) WHERE n <> 0 GROUP BY t) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2025-01": 50,
     "2025-02": 24,
@@ -25,6 +25,7 @@
     "2026-07": 12685,
     "2026-08": 9937,
     "2026-09": 14461,
-    "2026-10": 5933
+    "2026-10": 5933,
+    "2026-11": 1165
   }
 }

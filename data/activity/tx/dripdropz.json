@@ -2,7 +2,7 @@
   "id": "dripdropz",
   "source": "Yaci Store analytics (https://yaci-playground.cf-app.org/mcp); identifiers from https://github.com/mezuny/crfa-offchain-data-registry/blob/main/dApps/DripDropz.json",
   "query": "SELECT strftime(date_trunc('month', date), '%Y-%m') AS month, count(DISTINCT tx_hash) AS txs FROM (SELECT date, tx_hash FROM (SELECT date, tx_hash, script_hash AS h FROM transaction_scripts WHERE date in <window> UNION ALL SELECT date, tx_hash, owner_payment_credential AS h FROM address_utxo WHERE date in <window>) WHERE h IN ('c232edd30746e3bce85ffecdfcccb79f79c043e5a590260b19565453')) GROUP BY 1 ORDER BY 1",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2021-12": 7,
     "2022-01": 69086,
@@ -62,6 +62,7 @@
     "2026-07": 785,
     "2026-08": 763,
     "2026-09": 679,
-    "2026-10": 659
+    "2026-10": 659,
+    "2026-11": 130
   }
 }

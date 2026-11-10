@@ -1,7 +1,7 @@
 {
   "id": "cardano-rosetta-java",
   "repo": "cardano-foundation/cardano-rosetta-java",
-  "collected": "2026-11-02",
+  "collected": "2026-11-09",
   "months": {
     "2022-04": 1,
     "2023-03": 4,
@@ -41,6 +41,7 @@
     "2026-07": 7,
     "2026-08": 1,
     "2026-09": 3,
-    "2026-10": 11
+    "2026-10": 43,
+    "2026-11": 5
   }
 }
