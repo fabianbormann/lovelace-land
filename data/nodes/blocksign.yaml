@@ -30,3 +30,6 @@ onchain:
     or API provider, so it has no roads yet; its technology page also lists a
     "Midnight Privacy Layer" for audit trails, with no public evidence of use.'
 lastVerified: 2026-11-06
+brand:
+  color: "#0081ff"
+  source: https://blocksign.io
