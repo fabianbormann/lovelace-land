@@ -1,7 +1,7 @@
 {
   "id": "ouroboros-consensus",
   "repo": "IntersectMBO/ouroboros-consensus",
-  "collected": "2026-11-16",
+  "collected": "2026-11-23",
   "months": {
     "2020-09": 122,
     "2020-10": 179,
@@ -77,6 +77,6 @@
     "2026-08": 75,
     "2026-09": 187,
     "2026-10": 316,
-    "2026-11": 110
+    "2026-11": 150
   }
 }
